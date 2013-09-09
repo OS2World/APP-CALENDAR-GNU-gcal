@@ -1,0 +1,364 @@
+/* config.hin.  Generated automatically from configure.in by autoheader.  */
+#ifndef __CONFIG_H
+#  define __CONFIG_H
+/*
+*  config.h:  System and program specific preprocessor statements.
+*
+*
+*  Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+*
+*  This software doesn't claim completeness, correctness or usability.
+*  On principle I will not be liable for ANY damages or losses (implicit
+*  or explicit), which result from using or handling my software.
+*  If you use this software, you agree without any exception to this
+*  agreement, which binds you LEGALLY !!
+*
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the `GNU General Public License' as published by
+*  the `Free Software Foundation'; either version 2, or (at your option)
+*  any later version.
+*
+*  You should have received a copy of the `GNU General Public License'
+*  along with this program; if not, write to the:
+*
+*    Free Software Foundation, Inc.
+*    59 Temple Place - Suite 330
+*    Boston, MA 02111-1307,  USA
+*/
+
+
+
+/*
+*  $Id: config.h 2.40 1997/01/26 02:04:00 tom Exp $
+*/
+
+
+
+
+/* Define if on AIX 3.
+   System headers sometimes define this.
+   We just want to avoid a redefinition error message.  */
+#ifndef _ALL_SOURCE
+#undef _ALL_SOURCE
+#endif
+
+/* Define if using alloca.c.  */
+#undef C_ALLOCA
+
+/* Define to empty if the keyword does not work.  */
+#undef const
+
+/* Define to one of _getb67, GETB67, getb67 for Cray-2 and Cray-YMP systems.
+   This function is required for alloca.c support on those systems.  */
+#undef CRAY_STACKSEG_END
+
+/* Define if you have alloca, as a function or macro.  */
+#undef HAVE_ALLOCA
+
+/* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
+#undef HAVE_ALLOCA_H
+
+/* Define if you have a working `mmap' system call.  */
+#undef HAVE_MMAP
+
+/* Define if you have <sys/wait.h> that is POSIX.1 compatible.  */
+#undef HAVE_SYS_WAIT_H
+
+/* Define as __inline if that's what the C compiler calls it.  */
+#undef inline
+
+/* Define if on MINIX.  */
+#undef _MINIX
+
+/* Define to `long' if <sys/types.h> doesn't define.  */
+#undef off_t
+
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#undef pid_t
+
+/* Define if the system does not provide POSIX.1 features except
+   with this defined.  */
+#undef _POSIX_1_SOURCE
+
+/* Define if you need to in order for stat and other things to work.  */
+#undef _POSIX_SOURCE
+
+/* Define as the return type of signal handlers (int or void).  */
+#undef RETSIGTYPE
+
+/* Define to `unsigned' if <sys/types.h> doesn't define.  */
+#undef size_t
+
+/* If using the C implementation of alloca, define if you know the
+   direction of stack growth for your system; otherwise it will be
+   automatically deduced at run-time.
+ STACK_DIRECTION > 0 => grows toward higher addresses
+ STACK_DIRECTION < 0 => grows toward lower addresses
+ STACK_DIRECTION = 0 => direction of growth unknown
+ */
+#undef STACK_DIRECTION
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* Define if you can safely include both <sys/time.h> and <time.h>.  */
+#undef TIME_WITH_SYS_TIME
+
+/* Define to the name of the distribution.  */
+#undef PACKAGE
+
+/* Define to the version of the distribution.  */
+#undef VERSION
+
+/* Define as 1 if you have the stpcpy function.  */
+#undef HAVE_STPCPY
+
+/* Define to 1 if NLS is requested.  */
+#undef ENABLE_NLS
+
+/* Define as 1 if you have catgets and don't want to use GNU gettext.  */
+#undef HAVE_CATGETS
+
+/* Define as 1 if you have gettext and don't want to use GNU gettext.  */
+#undef HAVE_GETTEXT
+
+/* Define if your locale.h file contains LC_MESSAGES.  */
+#undef HAVE_LC_MESSAGES
+
+/*
+ * Regular expression library.
+ * Define exactly one of the following to be 1:
+ * HAVE_GNU_RE_COMPILE_PATTERN: GNU re_compile_pattern() and regex.h
+ * HAVE_POSIX_REGCOMP: POSIX regcomp() and regex.h
+ * HAVE_RE_COMP: BSD re_comp()
+ * HAVE_REGCMP: System V regcmp()
+ * HAVE_V8_REGCOMP: Henry Spencer V8 regcomp() and regexp.h
+ * NO_REGEX: pattern matching is supported, but without metacharacters.
+ */
+#undef HAVE_GNU_RE_COMPILE_PATTERN
+#undef HAVE_POSIX_REGCOMP
+#undef HAVE_RE_COMP
+#undef HAVE_REGCMP
+#undef HAVE_V8_REGCOMP
+#undef NO_REGEX
+
+/* Function/macro isalnum() is found.  */
+#undef HAVE_ISALNUM
+
+/* Function/macro isalpha() is found.  */
+#undef HAVE_ISALPHA
+
+/* Function/macro isdigit() is found.  */
+#undef HAVE_ISDIGIT
+
+/* Function/macro isspace() is found.  */
+#undef HAVE_ISSPACE
+
+/* Link -lncurses or -ltermcap or -ltermlib to executable.  */
+#undef HAVE_TTYLIBS
+
+/* Define if you have the m library (-lm), only necessary if USE_RC=1.  */
+#undef HAVE_LIBM
+
+/* The ospeed variable is defined in -lncurses or -ltermcap or -ltermlib.  */
+#undef HAVE_OSPEED
+
+/* Shell can interpret `#!' in first line of a shell script.  */
+#undef HAVE_SYS_INTERPRETER
+
+/* All termios functions are available.  */
+#undef HAVE_TERMIOS_FUNCS
+
+/* Type time_t is predefined.  */
+#undef HAVE_TIME_T
+
+/* Functions/macros toupper(), tolower(), isupper() and islower() are found.  */
+#undef HAVE_UPPER_LOWER
+
+/* Identifier void exists.  */
+#undef HAVE_VOID
+
+/* We must declare the ospeed variable.  */
+#undef MUST_DCL_OSPEED
+
+/* Enable preferred external pager program (`less').  */
+#undef PAGER1_PROG
+
+/* Enable alternative external pager program (`more').  */
+#undef PAGER2_PROG
+
+/* Enable second alternative external pager program (`pg').  */
+#undef PAGER3_PROG
+
+/* Enable displaying using the extended ASCII character set.  */
+#undef USE_EASC
+
+/* Enable highlighting sequences.  */
+#undef USE_HLS
+
+/* Enable simple internal pager feature.  */
+#undef USE_PAGER
+
+/* Enable fixed date feature.  */
+#undef USE_RC
+
+/* Define if you have the __argz_count function.  */
+#undef HAVE___ARGZ_COUNT
+
+/* Define if you have the __argz_next function.  */
+#undef HAVE___ARGZ_NEXT
+
+/* Define if you have the __argz_stringify function.  */
+#undef HAVE___ARGZ_STRINGIFY
+
+/* Define if you have the dcgettext function.  */
+#undef HAVE_DCGETTEXT
+
+/* Define if you have the dup function.  */
+#undef HAVE_DUP
+
+/* Define if you have the dup2 function.  */
+#undef HAVE_DUP2
+
+/* Define if you have the getcwd function.  */
+#undef HAVE_GETCWD
+
+/* Define if you have the getpagesize function.  */
+#undef HAVE_GETPAGESIZE
+
+/* Define if you have the munmap function.  */
+#undef HAVE_MUNMAP
+
+/* Define if you have the putenv function.  */
+#undef HAVE_PUTENV
+
+/* Define if you have the setenv function.  */
+#undef HAVE_SETENV
+
+/* Define if you have the setlocale function.  */
+#undef HAVE_SETLOCALE
+
+/* Define if you have the signal function.  */
+#undef HAVE_SIGNAL
+
+/* Define if you have the stpcpy function.  */
+#undef HAVE_STPCPY
+
+/* Define if you have the strcasecmp function.  */
+#undef HAVE_STRCASECMP
+
+/* Define if you have the strchr function.  */
+#undef HAVE_STRCHR
+
+/* Define if you have the strcspn function.  */
+#undef HAVE_STRCSPN
+
+/* Define if you have the strncasecmp function.  */
+#undef HAVE_STRNCASECMP
+
+/* Define if you have the strrchr function.  */
+#undef HAVE_STRRCHR
+
+/* Define if you have the strstr function.  */
+#undef HAVE_STRSTR
+
+/* Define if you have the strtol function.  */
+#undef HAVE_STRTOL
+
+/* Define if you have the <argz.h> header file.  */
+#undef HAVE_ARGZ_H
+
+/* Define if you have the <assert.h> header file.  */
+#undef HAVE_ASSERT_H
+
+/* Define if you have the <ctype.h> header file.  */
+#undef HAVE_CTYPE_H
+
+/* Define if you have the <errno.h> header file.  */
+#undef HAVE_ERRNO_H
+
+/* Define if you have the <fcntl.h> header file.  */
+#undef HAVE_FCNTL_H
+
+/* Define if you have the <limits.h> header file.  */
+#undef HAVE_LIMITS_H
+
+/* Define if you have the <locale.h> header file.  */
+#undef HAVE_LOCALE_H
+
+/* Define if you have the <malloc.h> header file.  */
+#undef HAVE_MALLOC_H
+
+/* Define if you have the <math.h> header file.  */
+#undef HAVE_MATH_H
+
+/* Define if you have the <nl_types.h> header file.  */
+#undef HAVE_NL_TYPES_H
+
+/* Define if you have the <regex.h> header file.  */
+#undef HAVE_REGEX_H
+
+/* Define if you have the <sgtty.h> header file.  */
+#undef HAVE_SGTTY_H
+
+/* Define if you have the <signal.h> header file.  */
+#undef HAVE_SIGNAL_H
+
+/* Define if you have the <stdio.h> header file.  */
+#undef HAVE_STDIO_H
+
+/* Define if you have the <stdlib.h> header file.  */
+#undef HAVE_STDLIB_H
+
+/* Define if you have the <string.h> header file.  */
+#undef HAVE_STRING_H
+
+/* Define if you have the <sys/ioctl.h> header file.  */
+#undef HAVE_SYS_IOCTL_H
+
+/* Define if you have the <sys/ptem.h> header file.  */
+#undef HAVE_SYS_PTEM_H
+
+/* Define if you have the <sys/stat.h> header file.  */
+#undef HAVE_SYS_STAT_H
+
+/* Define if you have the <sys/stream.h> header file.  */
+#undef HAVE_SYS_STREAM_H
+
+/* Define if you have the <sys/time.h> header file.  */
+#undef HAVE_SYS_TIME_H
+
+/* Define if you have the <sys/types.h> header file.  */
+#undef HAVE_SYS_TYPES_H
+
+/* Define if you have the <termcap.h> header file.  */
+#undef HAVE_TERMCAP_H
+
+/* Define if you have the <termio.h> header file.  */
+#undef HAVE_TERMIO_H
+
+/* Define if you have the <termios.h> header file.  */
+#undef HAVE_TERMIOS_H
+
+/* Define if you have the <unistd.h> header file.  */
+#undef HAVE_UNISTD_H
+
+/* Define if you have the <values.h> header file.  */
+#undef HAVE_VALUES_H
+
+/* Define if you have the PW library (-lPW).  */
+#undef HAVE_LIBPW
+
+/* Define if you have the gen library (-lgen).  */
+#undef HAVE_LIBGEN
+
+/* Define if you have the i library (-li).  */
+#undef HAVE_LIBI
+
+/* Define if you have the intl library (-lintl).  */
+#undef HAVE_LIBINTL
+
+/* Define if you have the regex library (-lregex).  */
+#undef HAVE_LIBREGEX
+
+#endif /* __CONFIG_H */

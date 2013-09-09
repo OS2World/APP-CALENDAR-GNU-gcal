@@ -1,0 +1,20 @@
+# List of files containing translatable strings.
+# Copyright (C) 1996 Thomas Esken
+
+# Package source files
+src/file-io.c
+src/gcal.c
+src/hd-data.c
+src/hd-use.c
+src/help.c
+src/print.c
+src/rc-check.c
+src/rc-insert.c
+src/rc-use.c
+src/rc-utils.c
+src/regexp.c
+src/tty.c
+src/utils.c
+src/tcal.c
+src/txt2gcal.c
+src/gcal2txt.c

@@ -1,0 +1,7 @@
+The GNU calendar, compiled with emx+gcc.
+For OS/2, DOS and Win32.
+- version 2.40
+- requires emx 0.9c runtime or newer
+  under OS/2 and RSXNT 1.31 under Win32
+- compiled by rommel@ars.de
+- ftp://ftp.leo.org/pub/comp/os/os2/leo/...

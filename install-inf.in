@@ -1,0 +1,637 @@
+#! /bin/sh
+#
+#  @configure_input@
+#
+#  $Id: install-inf.in 0.13 1997/02/14 00:01:03 tom Exp $
+#
+#  This is my private `install-info' script.
+#
+#  It inserts INFO-DIR-ENTRY lines of Texinfo files at the end of an EXISTING
+#  `dir.texi' file and recreates the `dir' file either in the directory given
+#  by the `--info-dir=DIR' option or in the first matching $INFOPATH directory,
+#  where it can be located.  This script also manages compressed/gzipped
+#  Texinfo `*.info' files like `*.info*.Z', `*.info*.z' and `*.info*.gz',
+#  also compressed/gzipped `dir' and `dir.texi' files.
+#
+#  If there is no existing `dir.texi' file, this script will create a new one!
+#
+#  Needs `test', `eval', `head', `basename', `cat', `echo', `cd', `rm',
+#  `cp', `makeinfo', `gzip', `sort', `sed' and `awk' for processing!
+#
+#
+#  Copyright (C) 1995, 1996  Thomas Esken      <esken@uni-muenster.de>
+#                            Im Hagenfeld 84
+#                            D-48147 M"unster
+#                            GERMANY
+#
+#  This software doesn't claim completeness, correctness or usability.
+#  On principle I will not be liable for ANY damages or losses (implicit
+#  or explicit), which result from using or handling my software.
+#  If you use this software, you agree without any exception to this
+#  agreement, which binds you LEGALLY !!
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the `GNU General Public License' as published by
+#  the `Free Software Foundation'; either version 2, or (at your option)
+#  any later version.
+#
+#  You should have received a copy of the `GNU General Public License'
+#  along with this program; if not, write to the:
+#
+#    Free Software Foundation, Inc.
+#    59 Temple Place - Suite 330
+#    Boston, MA 02111-1307,  USA
+#
+
+
+#
+# Basically used programs.
+#
+TEST="test"
+ECHO="echo"
+BASENAME="basename"
+
+#
+# Basically used texts.
+#
+myname=`"$BASENAME" "$0"`
+version="0.12"
+usage="usage: $myname [--help | --version | --verbose | --info[-]dir=DIR] INFOFILE..."
+
+if "$TEST" "$#" -ne 0
+then
+  #
+  # The suffix for the backup of the original `dir.texi' file.
+  #
+  backup_suffix="~"
+
+  #
+  # The suffixes of compressed/gzipped files.
+  #
+  gzip_2_suffix=".gz"
+  gzip_1_suffix=".z"
+  compress_suffix=".Z"
+
+  #
+  # Number of lines to scan for INFO-DIR-ENTRY texts in an INFOFILE.
+  #
+  lines_to_scan="200"
+
+  #
+  # The used programs.
+  #
+  HEAD="head"
+  HEAD_FLAGS="-$lines_to_scan"
+  EVAL="eval"
+  CAT="cat"
+  CD="cd"
+  RM="rm"
+  RM_FLAGS="-f"
+  CP="cp"
+  CP_FLAGS="-p"
+  MAKEINFO=@MAKEINFO@
+  GZIP=@GZIP@
+  COMPRESS=@COMPRESS@
+  GZIP_UNCOMPRESS_FLAGS="-cd"
+  SORT="sort"
+  SED="sed"
+  #
+  # Use @AWK@ in case you check for an AWK program implementation
+  #   on the system using AC_PROG_AWK by means of (auto)configure.
+  #
+  AWK="awk"
+
+  #
+  # Let's set some default directories and file names first.
+  #
+  tmpdir="/tmp"
+  prefix=@prefix@
+  infodir="$prefix/info"
+  dirfile="dir"
+  dir_texifile="$dirfile.texi"
+
+  #
+  # Let's set the compressor program to `compress' if no `gzip' is available.
+  #
+  if "$TEST" -z "$GZIP"
+  then
+    if "$TEST" -n "$COMPRESS"
+    then
+      GZIP="$COMPRESS"
+    fi
+  fi
+
+  #
+  # Respect a $TMPDIR or a $TMP environment variable.
+  #
+  if "$TEST" -n "$TMPDIR"
+  then
+    tmpdir="$TMPDIR"
+  else
+    if "$TEST" -n "$TMP"
+    then
+      tmpdir="$TMP"
+    fi
+  fi
+
+  #
+  # Let's check for command line arguments.
+  #
+  verbose="no"
+  infodir_set="no"
+  previous=""
+  for option in $*
+  do
+    #
+    # If the previous option needs an argument, assign it.
+    #
+    if "$TEST" -n "$previous"
+    then
+      "$EVAL" "$previous=\$option"
+      previous=""
+      continue
+    fi
+
+    case "$option" in
+      -*=*) optarg=`"$ECHO" "$option" | "$SED" 's/[-_a-zA-Z0-9]*=//'` ;;
+      *)    optarg="" ;;
+    esac
+    
+    #
+    # Manage the options.
+    #
+    case "$option" in
+      -help | --help | --hel | --he)
+        "$ECHO" "$usage"
+        exit 0 ;;
+
+      -version | --version | --versio | --versi | --vers)
+        "$ECHO" "$myname version $version"
+        exit 0 ;;
+      
+      -verbose | --verbose | --verbos | --verbo | --verb)
+        verbose="yes" ;;
+
+      -infodir | -info-dir | --infodir | --info-dir | --infodi | --info-di | --infod | --info-d | --info | --inf)
+        previous="infodir" ;;
+      -infodir=* | -info-dir=* | --infodir=* | --info-dir=* | --infodi=* | --info-di=* | --infod=* | --info-d=* | --info=* | --inf=*)
+        infodir_set="yes"
+        infodir="$optarg" ;;
+
+      -*) { "$ECHO" "$myname: error: $option: invalid option; use --help to show usage" 1>&2; exit 1; }
+        ;;
+    esac
+  done
+ 
+  #
+  # Override an existing $INFOPATH environment variable.
+  #
+  if "$TEST" "$infodir_set" = "yes" || "$TEST" -z "$INFOPATH"
+  then
+    INFOPATH="$infodir"
+  fi
+
+  #
+  # Detect where the original `dir.texi' and `dir' files are stored.
+  #
+  IFS="${IFS= 	}"
+  save_ifs="$IFS"
+  IFS="${IFS}:"
+  dirpath=""
+  real_dirfile=""
+  dirfile_gzipped_2="no"
+  dirfile_gzipped_1="no"
+  dirfile_compressed="no"
+  dir_texifile_gzipped_2="no"
+  dir_texifile_gzipped_1="no"
+  dir_texifile_compressed="no"
+  for dir in $INFOPATH
+  do
+    if "$TEST" -f "$dir/$dir_texifile$gzip_2_suffix" && \
+       "$TEST" -r "$dir/$dir_texifile$gzip_2_suffix"
+    then
+      dir_texifile_gzipped_2="yes"
+      dirpath="$dir/$dir_texifile$gzip_2_suffix"
+    fi
+    if "$TEST" "$dir_texi_file_gzipped_2" = "no"
+    then
+      if "$TEST" -f "$dir/$dir_texifile$gzip_1_suffix" && \
+         "$TEST" -r "$dir/$dir_texifile$gzip_1_suffix"
+      then
+        dir_texifile_gzipped_1="yes"
+        dirpath="$dir/$dir_texifile$gzip_1_suffix"
+      fi
+      if "$TEST" "$dir_texi_file_gzipped_1" = "no"
+      then
+        if "$TEST" -f "$dir/$dir_texifile$compress_suffix" && \
+           "$TEST" -r "$dir/$dir_texifile$compress_suffix"
+        then
+          dir_texifile_compressed="yes"
+          dirpath="$dir/$dir_texifile$compress_suffix"
+        fi
+      fi
+    fi
+    if "$TEST" "$dir_texifile_gzipped_2" = "yes" || \
+       "$TEST" "$dir_texifile_gzipped_1" = "yes" || \
+       "$TEST" "$dir_texifile_compressed" = "yes" || \
+       "$TEST" -f "$dir/$dir_texifile"
+    then
+      if "$TEST" -f "$dir/$dir_texifile" && \
+         "$TEST" -r "$dir/$dir_texifile"
+      then
+        dirpath="$dir/$dir_texifile"
+      fi
+      if "$TEST" -f "$dir/$dirfile$gzip_2_suffix" && \
+         "$TEST" -r "$dir/$dirfile$gzip_2_suffix"
+      then
+        dirfile_gzipped_2="yes"
+        real_dirfile="$dir/$dirfile$gzip_2_suffix"
+      fi
+      if "$TEST" "$dirfile_gzipped_2" = "no"
+      then
+        if "$TEST" -f "$dir/$dirfile$gzip_1_suffix" && \
+           "$TEST" -r "$dir/dirfile$gzip_1_suffix"
+        then
+          dirfile_gzipped_1="yes"
+          real_dirfile="$dir/$dirfile$gzip_1_suffix"
+        fi
+        if "$TEST" "$dirfile_gzipped_1" = "no"
+        then
+          if "$TEST" -f "$dir/$dirfile$compress_suffix" && \
+             "$TEST" -r "$dir/dirfile$compress_suffix"
+          then
+            dirfile_compressed="yes"
+            real_dirfile="$dir/$dirfile$compress_suffix"
+          else
+            real_dirfile="$dir/$dirfile"
+          fi
+        fi
+      fi
+      break
+    fi
+  done  
+  IFS="$save_ifs"
+  if "$TEST" -z "$dirpath"
+  then
+    if "$TEST" "$verbose" = "yes"
+    then
+      "$ECHO" "$myname: warning: no existing \`$dir_texifile' file found"
+      "$ECHO" "$myname: warning: a new \`$dir_texifile' file will be created now"
+      "$ECHO" "$myname: warning: in the \`$infodir' directory, please wait..."
+    fi
+    dirpath="$infodir/$dir_texifile"
+    "$ECHO" "@setfilename dir" > "$dirpath"
+    "$ECHO" "@node Top, (dir), (dir), (dir)" >> "$dirpath"
+    "$ECHO" "@center" >> "$dirpath"
+    "$ECHO" "Welcome to the FSF's Info Browser   =8^.@*" >> "$dirpath"
+    "$ECHO" "@center" >> "$dirpath"
+    "$ECHO" "Select one of the following basic documentations:" >> "$dirpath"
+    "$ECHO" "@menu" >> "$dirpath"
+    "$ECHO" "My favourite tools:" >> "$dirpath"
+    "$ECHO" "@end menu" >> "$dirpath"
+    "$ECHO" "@bye" >> "$dirpath"
+    if "$TEST" "$verbose" = "yes"
+    then
+      "$ECHO"
+      "$ECHO" "$myname: \`$dirpath' successfully created"
+      "$ECHO"
+      "$ECHO" "$myname: let's see if \`$dirpath'"
+      "$ECHO" "$myname: can be extended by some INFO-DIR-ENTRY lines"
+      "$ECHO"
+      "$ECHO" "$myname: please wait..."
+      "$ECHO"
+    fi
+  else
+    if "$TEST" ! -w "$dirpath"
+    then
+      "$ECHO" "$myname: error: \`$dirpath' file not writeable"
+      exit 1
+    else
+      if "$TEST" "$verbose" = "yes"
+      then
+        "$ECHO" "$myname: let's see if \`$dirpath'"
+        "$ECHO" "$myname: can be extended by some INFO-DIR-ENTRY lines"
+        "$ECHO"
+        "$ECHO" "$myname: please wait..."
+        "$ECHO"
+      fi
+    fi 
+  fi
+ 
+  #
+  # We need two temporary files for processing!
+  #
+  newtmp="n$$"
+  dirtmp="d$$"
+
+  #
+  # Let's start processing now.
+  #
+  files_given="no"
+  for file in $*
+  do
+    case "$file" in
+      -*) continue
+        ;;
+
+      *) files_given="yes"
+        #
+        # Store all lines between `START-INFO-DIR-ENTRY' and `END-INFO-DIR-ENTRY'.
+        #
+        if "$TEST" -f "$file" && "$TEST" -r "$file"
+        then
+          if "$TEST" "$verbose" = "yes"
+          then
+            "$ECHO" "$myname: working on \`$file' ..."
+          fi 
+          #
+          # Let's check for compressed/gzipped files.
+          #
+          infofile_gzipped_2=`"$ECHO" "$file" | \
+            "$SED" -e 's/\///g' -e "s/$gzip_2_suffix/\//" \
+                   -e 's/[-_\*\ \\^\!\$%&=?+#,;:|.~<>(){}a-zA-Z0-9]/@/g' \
+                   -e 's/@\/@//' -e 's/@\//yes/' -e 's/@//g'`
+          if "$TEST" "$infofile_gzipped_2" != "yes"
+          then
+            infofile_gzipped_1=`"$ECHO" "$file" | \
+              "$SED" -e 's/\///g' -e "s/$gzip_1_suffix/\//" \
+                     -e 's/[-_\*\ \\^\!\$%&=?+#,;:|.~<>(){}a-zA-Z0-9]/@/g' \
+                     -e 's/@\/@//' -e 's/@\//yes/' -e 's/@//g'`
+            if "$TEST" "$infofile_gzipped_1" != "yes"
+            then
+              infofile_compressed=`"$ECHO" "$file" | \
+                "$SED" -e 's/\///g' -e "s/$compress_suffix/\//" \
+                       -e 's/[-_\*\ \\^\!\$%&=?+#,;:|.~<>(){}a-zA-Z0-9]/@/g' \
+                       -e 's/@\/@//' -e 's/@\//yes/' -e 's/@//g'`
+            fi
+          fi
+          if "$TEST" "$infofile_gzipped_2" = "yes" || \
+             "$TEST" "$infofile_gzipped_1" = "yes" || \
+             "$TEST" "$infofile_compressed" = "yes"
+          then
+            if "$TEST" -n "$GZIP"
+            then
+              cmd=`"$GZIP" "$GZIP_UNCOMPRESS_FLAGS" "$file" | \
+                "$HEAD" "$HEAD_FLAGS"`
+            else
+              cmd=""
+            fi
+          else
+            cmd=`"$HEAD" "$HEAD_FLAGS" "$file"`
+          fi
+          if "$TEST" -n "$cmd"
+          then
+            "$ECHO" "$cmd" | \
+            "$AWK" "BEGIN {found = 0; lines = 0;} \
+                    {  \
+                      if (\$0 ~ /START-INFO-DIR-ENTRY/) \
+                        found = 1; \
+                      else \
+                        if (found == 1) \
+                         { \
+                           if (\$0 ~ /END-INFO-DIR-ENTRY/) \
+                            { \
+                              found = 0; \
+                              if (lines > 0) \
+                               { \
+                                 if (substr(buf, 1, 1) == \"*\") \
+                                   print buf; \
+                                 else \
+                                  { \
+                                    i = 1; \
+                                    while (substr(buf, i, 1) == \" \") \
+                                      i++; \
+                                    if (i == 1) \
+                                      i++; \
+                                    print substr(buf, i-1); \
+                                  } \
+                               } \
+                            } \
+                           else \
+                            { \
+                              if (lines == 0) \
+                                buf = \$0; \
+                              else \
+                               { \
+                                 nl_found = 0; \
+                                 if (substr(\$0, 1, 1) == \"*\") \
+                                   nl_found = 1; \
+                                 if (nl_found == 0) \
+                                   printf \"%s\", buf; \
+                                 else \
+                                  { \
+                                    i = 1; \
+                                    while (substr(buf, i, 1) == \" \") \
+                                      i++; \
+                                    if (i == 1) \
+                                      i++; \
+                                    print substr(buf, i-1); \
+                                  } \
+                                 buf = \$0; \
+                               } \
+                              lines++; \
+                            } \
+                         } \
+                    }" - >> "$tmpdir/$newtmp"
+          else
+            "$ECHO" "$myname: warning: can't operate on \`$file' by reason of missing compressor program"
+          fi
+        else
+          if "$TEST" ! -f "$file"
+          then
+            "$ECHO" "$myname: warning: \`$file' file not found"
+          else
+            "$ECHO" "$myname: warning: \`$file' file not readable"
+          fi
+        fi
+    esac
+  done
+  #
+  # Emit some diagnostic texts.
+  #
+  if "$TEST" -s "$tmpdir/$newtmp"
+  then 
+    #
+    # Some INFO-DIR-ENTRY lines detected, go ahead.
+    #
+    if "$TEST" "$verbose" = "yes"
+    then
+      "$ECHO"
+      "$ECHO" "$myname: some INFO-DIR-ENTRY lines detected..."
+      "$ECHO" "$myname: here they are:"
+      "$CAT" "$tmpdir/$newtmp"
+      "$ECHO"
+    fi
+  else
+    #
+    # No INFO-DIR-ENTRY lines detected, exit.
+    #
+    "$RM" "$RM_FLAGS" "$tmpdir/$newtmp"
+    if "$TEST" "$verbose" = "yes"
+    then
+      if "$TEST" "$files_given" = "yes"
+      then
+        "$ECHO"
+        "$ECHO" "$myname: no INFO-DIR-ENTRY lines detected,"
+        "$ECHO" "$myname: so modification of \`$dirpath' unnecessary..."
+        exit 0
+      else
+        "$ECHO" "$myname: error: no files specified"
+        exit 1
+      fi
+    else
+      #
+      # No INFO-DIR-ENTRY lines detected, exit with success.
+      #
+      "$ECHO" "$myname: nothing to do... bye bye"
+      exit 0
+    fi
+  fi
+  #
+  # Check whether the `dir' file is compressed/gzipped.
+  #
+  use_gzip_with_dirfile="no"
+  if "$TEST" "$dirfile_gzipped_2" = "yes" || \
+     "$TEST" "$dirfile_gzipped_1" = "yes" || \
+     "$TEST" "$dirfile_compressed" = "yes"
+  then
+    use_gzip_with_dirfile="yes"
+  fi
+  #
+  # Check whether the `dir.texi' file is compressed/gzipped.
+  #
+  use_gzip_with_dir_texifile="no"
+  if "$TEST" "$dir_texifile_gzipped_2" = "yes" || \
+     "$TEST" "$dir_texifile_gzipped_1" = "yes" || \
+     "$TEST" "$dir_texifile_compressed" = "yes"
+  then
+    use_gzip_with_dir_texifile="yes"
+  fi
+  #
+  # We can always continue our task if the `dir.texi' file is uncompressed...
+  #   If it is compressed/gzipped, check whether it can be uncompressed.
+  #   If former have failed, we have lost because our mission is impossible!
+  #
+  if "$TEST" "$use_gzip_with_dir_texifile" = "no" || "$TEST" -n "$GZIP"
+  then
+    #
+    # Now create the NEW `dir.texi' file.
+    #
+    if "$TEST" "$use_gzip_with_dir_texifile" = "yes"
+    then
+      "$GZIP" "$GZIP_UNCOMPRESS_FLAGS" "$dirpath" | \
+      "$AWK" "BEGIN {found = 0;} \
+              { \
+                if (found == 0) \
+                 { \
+                   if (\$0 ~ /@end menu/) \
+                     found = 1; \
+                   else \
+                     print \$0; \
+                 } \
+              }" - >> "$tmpdir/$dirtmp"
+    else
+      "$AWK" "BEGIN {found = 0;} \
+              { \
+                if (found == 0) \
+                 { \
+                   if (\$0 ~ /@end menu/) \
+                     found = 1; \
+                   else \
+                     print \$0; \
+                 } \
+              }" "$dirpath" >> "$tmpdir/$dirtmp"
+    fi
+    #
+    # After copying all text of the original `dir.texi' file until (exclusive)
+    # an "@end menu" line, append the extracted texts between START-INFO-DIR-ENTRY
+    # and END-INFO-DIR-ENTRY to the temporary file in sorted manner.
+    #
+    "$CAT" "$tmpdir/$newtmp" | "$SORT" >> "$tmpdir/$dirtmp"
+    #
+    # And append the rest of the original `dir.texi' file to the temporary file.
+    #
+    if "$TEST" "$use_gzip_with_dir_texifile" = "yes"
+    then
+      "$GZIP" "$GZIP_UNCOMPRESS_FLAGS" "$dirpath" | \
+      "$AWK" "BEGIN {found = 0;} \
+              { \
+                if (found != 0) \
+                  print \$0; \
+                else \
+                  if (\$0 ~ /@end menu/) \
+                   { \
+                     found = 1; \
+                     print \$0; \
+                   } \
+              }" - >> "$tmpdir/$dirtmp"
+    else
+      "$AWK" "BEGIN {found = 0;} \
+              { \
+                if (found != 0) \
+                  print \$0; \
+                else \
+                  if (\$0 ~ /@end menu/) \
+                   { \
+                     found = 1; \
+                     print \$0; \
+                   } \
+              }" "$dirpath" >> "$tmpdir/$dirtmp"
+    fi
+    if "$TEST" -n "$MAKEINFO"
+    then
+      #
+      # Create a NEW `dir' file by means of the `makeinfo' program,
+      #   but first backup the original `dir.texi' file and then copy
+      #   the results of processing to the NEW `dir.texi' file.
+      #
+      "$CD" "$dir"
+      "$CP" "$CP_FLAGS" "$dirpath" "$dirpath$backup_suffix"
+      "$CP" "$CP_FLAGS" "$tmpdir/$dirtmp" "$dir_texifile"
+      "$MAKEINFO" "$dir_texifile"
+      #
+      # And compress/gzip the resulting file now.
+      #
+      if "$TEST" "$use_gzip_with_dirfile" = "yes" && "$TEST" -n "$GZIP"
+      then
+        "$RM" "$RM_FLAGS" "$real_dirfile"
+        "$GZIP" "$dirfile"
+      fi
+    else
+      if "$TEST" "$verbose" = "yes"
+      then
+        "$ECHO" "$myname: warning: can't create \`$dirfile' by reason of missing makeinfo program"
+      fi
+    fi
+    if "$TEST" "$use_gzip_with_dir_texifile" = "yes"
+    then
+      "$RM" "$RM_FLAGS" "$dirpath"
+      "$GZIP" "$dir_texifile"
+    fi
+    #
+    # At last, clean the temporary files.
+    #
+    "$RM" "$RM_FLAGS" "$tmpdir/$newtmp"
+    "$RM" "$RM_FLAGS" "$tmpdir/$dirtmp"
+    if "$TEST" "$verbose" = "yes"
+    then
+      "$ECHO"
+    fi
+    "$ECHO" "$myname: all modifications successfully done"
+    exit 0
+  else
+    #
+    # At last, clean the one remaining temporary file.
+    #
+    "$RM" "$RM_FLAGS" "$tmpdir/$newtmp"
+    if "$TEST" "$verbose" = "yes"
+    then
+      "$ECHO"
+    fi
+    "$ECHO" "$myname: error: mission impossible by reason of missing compressor program"
+    exit 1
+  fi
+else
+  "$ECHO" "$usage"
+  exit 1
+fi

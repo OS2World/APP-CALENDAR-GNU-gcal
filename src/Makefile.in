@@ -1,0 +1,397 @@
+#  $Id: Makefile.in 0.38 1997/08/25 00:03:08 tom Exp $
+###############################################################################
+#
+#  Generic Makefile to create the `gcal' program by Autoconf.
+#
+#  Copyright (C) 1994-1997      Thomas Esken            <esken@uni-muenster.de>
+#                               Im Hagenfeld 84
+#                               D-48147 M"unster
+#                               GERMANY
+#
+###############################################################################
+#
+#
+#
+DEF = -D#
+#
+#  BEGIN: General program modification symbols,
+#           which may be changed by the user !!
+#
+
+
+
+#  Write the line `USE_EASC = $(DEF)USE_EASC=1'
+#    in case you want to use the 8-bit extended IBM-ASCII character set
+#    (IBM PC or ISO 8859-1 = ISO Latin-1 or Nextstep character sets).
+#
+#  Write the line `USE_EASC = $(DEF)USE_EASC=0'
+#    in case you want to use the 7-bit ISO-ASCII/EBCDIC character set.
+#
+#USE_EASC = $(DEF)USE_EASC=1#
+
+
+
+#  Write the line `USE_HLS = $(DEF)USE_HLS=1'
+#    to run this program using control sequences for highlighting the current
+#    day/holidays/text (MS/PC-DOS will use the [n]ansi.sys driver for emitting
+#    ANSI escape highlighting sequences; OS2/Linux/UN*X-like systems will use
+#    Termcap for emitting the terminal specific highlighting sequences.
+#    If this fails, default (generic) ANSI highlighting sequences will be used).
+#
+#  Write the line `USE_HLS = $(DEF)USE_HLS=0'
+#    to run this program without highlighting...
+#
+#USE_HLS = $(DEF)USE_HLS=1#
+
+
+
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=1'
+#    in case you want to use an external pager or if it fails
+#    a simple built-in pager.
+#
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=0'
+#    in case you don't like this feature...
+#
+#USE_PAGER = $(DEF)USE_PAGER=1#
+
+
+
+#  Write the line `USE_RC = $(DEF)USE_RC=1'
+#    for using the special month dates functions (print daily / weekly
+#    monthly / yearly / eternal / special fixed dates as stated in
+#    resource files).
+#
+#  Write the line `USE_RC = $(DEF)USE_RC=0'
+#    if you don't like this feature...
+#
+#USE_RC = $(DEF)USE_RC=1#
+
+
+
+#  Specify, which directories shall be used for the resource files:
+#
+#  (Define the empty string \"\" if you don't need data directories,
+#  so data files are searched in the actual and $HOME directory only)
+#
+#
+#  Name of user (private access) specific data directory
+#    (relative to $HOME directory)
+#
+GCAL_USR_DATADIR = \"share/$(PACKAGE)\"
+#
+#  Name of system (common access) specific data directory
+#    (static to $(datadir) directory, which is normally `$(prefix)/share')
+#
+GCAL_SYS_DATADIR = `echo \"$(datadir)/$(PACKAGE)\" | sed -e 's/\/\//\//g'`
+
+
+
+#
+#
+#
+DEFINES = $(USE_EASC) $(USE_HLS) $(USE_PAGER) $(USE_RC)
+DEFINES2 = $(DEF)GCAL_USR_DATADIR=$(GCAL_USR_DATADIR) \
+  $(DEF)GCAL_SYS_DATADIR=$(GCAL_SYS_DATADIR)
+
+
+
+#
+#  END: general program modification symbols,
+#         which may be changed by the user !!
+#
+
+
+
+#### Start of system configuration section. ####
+
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+
+subdir = src
+
+@SET_MAKE@
+
+LN_S = @LN_S@
+
+CC = @CC@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+
+DEFS = $(DEF)LOCALEDIR=\"$(localedir)\" @DEFS@
+INTL_LIBS = @INTLLIBS@
+MISC_LIBS = @LIBM@ @LIBS@
+LIBS = $(INTL_LIBS) $(MISC_LIBS)
+
+CFLAGS = @CFLAGS@
+CPPFLAGS = -I$(srcdir) -I.. -I../intl -I$(top_srcdir)/intl @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+
+X=
+# For OS/2 or MSDOS, use: X=.exe
+
+O=.o
+# For OS/2 or MSDOS, use: O=.obj
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+datadir = @datadir@
+localedir = $(prefix)/@DATADIRNAME@/locale
+# Where to install the executables.
+bindir = $(exec_prefix)/bin
+
+#### End of system configuration section. ####
+
+
+
+#### Start of package specific make variable definition section. ####
+
+SHELL = /bin/sh
+
+#
+# Standard names.
+#
+
+SRCS = gcal.c file-io.c hd-data.c hd-use.c help.c print.c rc-check.c \
+  rc-insert.c rc-use.c rc-utils.c regexp.c tty.c utils.c \
+  tcal.c txt2gcal.c gcal2txt.c
+
+HDRS = gcal.h defines.h tailor.h regexp.h
+
+GCAL_BASE_OBJS = gcal$O file-io$O hd-data$O hd-use$O help$O print$O \
+  tty$O utils$O
+
+GCAL_RC_OBJS = rc-check$O rc-insert$O rc-use$O rc-utils$O @REGEX_O@
+
+TCAL_OBJS = tcal$O
+
+TXT2GCAL_OBJS = txt2gcal$O
+
+GCAL2TXT_OBJS = gcal2txt$O
+
+DISTFILES = Makefile.in $(SRCS) $(HDRS)
+
+ALLDIRS = $(bindir)
+
+#### End of package specific make variable definition section. ####
+
+
+
+#### Start of default targets section. ####
+
+.SUFFIXES:
+.SUFFIXES: .c $O
+
+default: gcal$X tcal$X txt2gcal$X gcal2txt$X
+
+all: default
+
+check: gcal$X
+	./gcal$X -f /dev/null -Cxdt > ./_gcal.test 2>&1
+	if test "`wc -l < ./_gcal.test`" -eq 3; \
+	then \
+	  echo "OK ./gcal$X test"; \
+	else \
+	  echo "FAILED ./gcal$X test: program buggy - report to author"; \
+	  exit 1; \
+	fi; \
+	rm -f ./_gcal.test
+
+tags: TAGS
+
+TAGS: $(HDRS) $(SRCS)
+	here=`pwd`; \
+	cd $(srcdir) && etags -o $$here/TAGS $(HDRS) $(SRCS)
+
+id: ID
+
+ID: $(HDRS) $(SRCS)
+	here=`pwd`; \
+	cd $(srcdir) && mkid -f$$here/ID $(HDRS) $(SRCS)
+
+#### End of default targets section. ####
+
+
+
+#### Start of specific targets section. ####
+
+#
+# 'configure' works only on Unix systems. For other systems able to make
+# sense of this makefile, you can define target specific entries here.
+# For other systems such as MSDOS, separate Makefiles are
+# provided in subdirectories.
+#
+
+#
+# NeXT 2.x, 3.0, 3.1 thin. For gcc, replace -bsd with -D__STRICT_BSD__.
+#
+next:
+	$(MAKE) all \
+	CFLAGS="-O -bsd -DNeXT" \
+	DEFS="-UHAVE_STDLIB_H -UHAVE_STRING_H"
+#
+# NeXT 3.1 fat (68k + 386). For gcc, replace -bsd with -D__STRICT_BSD__.
+#
+next-fat:
+	$(MAKE) all \
+	CFLAGS="-O2 -bsd -fno-builtin -DNeXT" \
+	DEFS="-UHAVE_STDLIB_H -UHAVE_STRING_H"
+
+#
+# gcc with emx 0.8f kit (use by preference os2/makefile.emx)
+#
+os2_gcc:
+	$(MAKE) all \
+	CC=gcc \
+	CFLAGS="-O -DOS2" \
+	X=".exe"
+
+#
+# Xenix 2.3.2 for 286:
+#
+xenix_286:
+	$(MAKE) all \
+	CFLAGS="-DXENIX -HUGE -M2h"
+
+#
+# Coherent (with broken /bin/sh):
+#
+coherent:
+	$(MAKE) all \
+	CFLAGS="-DCOHERENT" \
+	DEFS="-DSTDC_HEADERS=1 -DHAVE_UNISTD_H=1"
+
+#### End of specific targets section. ####
+
+
+
+#### Start of implicit rules section. ####
+
+.c$O:
+	@echo "Compiling \`$<' ..."
+	$(CC) -c $(CPPFLAGS) $(DEFINES) $(DEFINES2) $(DEFS) $(CFLAGS) $<
+
+#### End of implicit rules section. ####
+
+
+
+#### Start of actual build-related targets section. ####
+
+#
+# Try to create the object files and the resulting executable file.
+#
+
+gcal$X: Makefile $(GCAL_BASE_OBJS) @GCAL_RC_OBJS@
+	@echo "Linking object files to \`$@'"
+	$(CC) $(LDFLAGS) -o $@ $(GCAL_BASE_OBJS) @GCAL_RC_OBJS@ $(LIBS)
+	@echo "Executable file \`$@' created"
+
+$(GCAL_BASE_OBJS) @GCAL_RC_OBJS@: ../config.h gcal.h defines.h tailor.h
+
+tcal$X: Makefile $(TCAL_OBJS)
+	@echo "Linking object files to \`$@'"
+	$(CC) $(LDFLAGS) -o $@ $(TCAL_OBJS) $(LIBS)
+	@echo "Executable file \`$@' created"
+
+$(TCAL_OBJS): ../config.h gcal.h defines.h tailor.h
+
+txt2gcal$X: Makefile $(TXT2GCAL_OBJS)
+	@echo "Linking object files to \`$@'"
+	$(CC) $(LDFLAGS) -o $@ $(TXT2GCAL_OBJS) $(LIBS)
+	@echo "Executable file \`$@' created"
+
+$(TXT2GCAL_OBJS): ../config.h gcal.h defines.h tailor.h
+
+gcal2txt$X: Makefile $(GCAL2TXT_OBJS)
+	@echo "Linking object files to \`$@'"
+	$(CC) $(LDFLAGS) -o $@ $(GCAL2TXT_OBJS) $(LIBS)
+	@echo "Executable file \`$@' created"
+
+$(GCAL2TXT_OBJS): ../config.h gcal.h defines.h tailor.h
+
+#### End of actual build-related targets section. ####
+
+
+
+#### Start of install section. ####
+
+install: installdirs installbin
+	@echo "All installs in $(subdir) done"
+
+installdirs: $(top_srcdir)/mkinstalldirs
+	$(NORMAL_INSTALL)
+	$(SHELL) $(top_srcdir)/mkinstalldirs $(ALLDIRS)
+
+installbin: all installdirs
+	$(NORMAL_INSTALL)
+	@echo "Installing \`gcal$X' as \`$(bindir)/gcal$X'"
+	$(INSTALL_PROGRAM) gcal$X $(bindir)/gcal$X
+	@echo "Installing \`tcal$X' as \`$(bindir)/tcal$X'"
+	$(INSTALL_PROGRAM) tcal$X $(bindir)/tcal$X
+	@echo "Installing \`txt2gcal$X' as \`$(bindir)/txt2gcal$X'"
+	$(INSTALL_PROGRAM) txt2gcal$X $(bindir)/txt2gcal$X
+	@echo "Installing \`gcal2txt$X' as \`$(bindir)/gcal2txt$X'"
+	$(INSTALL_PROGRAM) gcal2txt$X $(bindir)/gcal2txt$X
+	@echo "Binary files installed"
+
+install-strip:
+	$(NORMAL_INSTALL)
+	if test -n "$(LN_S)"; \
+	then \
+	  $(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' installbin; \
+	else \
+	  echo "Target $@ disabled, \`ln -s' does not work"; \
+	  echo "Installing without stripping instead"; \
+	  $(MAKE) installbin; \
+	fi
+
+uninstall:
+	$(NORMAL_UNINSTALL)
+	rm -f $(bindir)/gcal$X $(bindir)/tcal$X \
+	      $(bindir)/txt2gcal$X $(bindir)/gcal2txt$X
+	@echo "Binary files of distribution uninstalled"
+
+#### End of install section. ####
+
+
+
+#### Start of clean section. ####
+
+clean:
+	rm -f *$O gcal$X tcal$X txt2gcal$X gcal2txt$X a.out core *~ *.tmp _gcal.test
+
+distclean: clean
+	rm -f Makefile
+
+mostlyclean: distclean
+
+realclean: distclean
+	rm -f id ID tags TAGS
+
+maintainer-clean: realclean
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+#### End of clean section. ####
+
+
+
+dist dist-gcal distzip distzoo distlha distshar: Makefile $(DISTFILES)
+
+Makefile: $(srcdir)/Makefile.in ../config.status
+	cd .. \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	       $(SHELL) ./config.status
+
+
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
+
+# End of file

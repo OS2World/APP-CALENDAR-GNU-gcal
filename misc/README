@@ -1,0 +1,26 @@
+README file for miscellaneous targets.
+
+   * The simple sed script `gcalltx.sed' converts `gcal -n -u %0001
+     year' output to LaTeX tabular output for `gcal'.  Any but default
+     configuration might confuse this script.  It comes along with a
+     UN*X script `gcalltx' and a DOS batch `gcalltx.bat' which supports
+     the correct usage.  The program has been tested with the German,
+     English and French catalogs of `gcal' under IBM/AIX, SUN/Solaris
+     and MSDOS.  It should accept all country codes `gcal' uses.
+
+   * The simple sed script `wdays.sed' converts `gcal %mon -Cdl7+
+     -H::: ...' output so only all working days of the complete
+     week, except holidays, and the succeeding Monday are displayed for
+     the Anglo-American version of `gcal'.  It comes along with a UN*X
+     script `wdays' and a MS-DOS batch `wdays.bat' which supports the
+     correct usage.
+
+   * The directory contains a file `magic.add'.  This is intended to be
+     added to your `/etc/magic' file.  After adding this the `file'
+     command will recognize GNU message catalog files (`.mo' files).
+
+   * The locale name alias scheme implemented here is in a similar form
+     implemented in the X Windows Systems.  Especially the alias data
+     base file can be shared.  Normally this file is found at something
+     like `/usr/lib/X11/locale/locale.alias'.
+

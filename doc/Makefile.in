@@ -1,0 +1,535 @@
+#  $Id: Makefile.in 0.35 1997/04/23 00:03:05 tom Exp $
+###############################################################################
+#
+#  Generic Makefile to create the Gcal documentation.
+#
+#  Copyright (C) 1994-1997      Thomas Esken            <esken@uni-muenster.de>
+#                               Im Hagenfeld 84
+#                               D-48147 M"unster
+#                               GERMANY
+#
+###############################################################################
+#
+#
+#
+#### Start of system configuration section. ####
+
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+
+subdir = doc
+
+@SET_MAKE@
+
+doclang = @doclang@
+
+MAKEINFO = @MAKEINFO@
+MAKEINFOVERSION = @MAKEINFOVERSION@
+TEXI2DVI = @TEXI2DVI@
+
+PERL = @PERL@
+AWK = @AWK@
+
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+
+prefix = @prefix@
+# Where to install the info files.
+infodir = @infodir@
+# Extension (not including `.') for the installed manual page file names.
+manext = 1
+# Where to install the manual pages.
+mandir = @mandir@/man$(manext)
+
+#### End of system configuration section. ####
+
+
+
+#### Start of package specific make variable definition section. ####
+
+SHELL = /bin/sh
+
+#
+# Other utility program flags.
+#
+MAKEINFOFLAGS = --output
+#
+# For text documentation files, `makeinfo' HAS TO be called like this!
+#
+MAKEINFOFLAGS2 = --no-split --no-headers $(MAKEINFOFLAGS)
+
+#
+# Standard names.
+#
+lockfile = lockfile
+
+manDIR = man#
+texiDIR = texi#
+
+docTEXINFO = texinfo.tex
+
+docMISCFILES = 2accent.awk 2accent.pl GREG-REFORM calendar.faq \
+  ISO_3166 ISO_639 Makefile.in $(docTEXINFO)
+
+de = de#
+
+$(de)-infoFILES = $(de)/gcal.info $(de)/gcal.info-1 $(de)/gcal.info-2 \
+  $(de)/gcal.info-3 $(de)/gcal.info-4 $(de)/gcal.info-5 $(de)/gcal.info-6 \
+  $(de)/gcal.info-7 $(de)/gcal.info-8 $(de)/gcal.info-9
+
+$(de)-manFILES = $(de)/$(manDIR)/gcal.1 $(de)/$(manDIR)/tcal.1 \
+  $(de)/$(manDIR)/txt2gcal.1 $(de)/$(manDIR)/gcal2txt.1
+
+$(de)-texiFILES = $(de)/$(texiDIR)/gcal.texi
+
+$(de)-txtFILES = $(de)/gcal.txt
+
+en = en#
+
+$(en)-infoFILES = $(en)/gcal.info $(en)/gcal.info-1 $(en)/gcal.info-2 \
+  $(en)/gcal.info-3 $(en)/gcal.info-4 $(en)/gcal.info-5 $(en)/gcal.info-6 \
+  $(en)/gcal.info-7 $(en)/gcal.info-8
+
+$(en)-manFILES = $(en)/$(manDIR)/gcal.1 $(en)/$(manDIR)/tcal.1 \
+  $(en)/$(manDIR)/txt2gcal.1 $(en)/$(manDIR)/gcal2txt.1
+
+$(en)-texiFILES = $(en)/$(texiDIR)/gcal.texi
+
+$(en)-txtFILES = $(en)/gcal.txt
+
+infoFILES = $($(de)-infoFILES) $($(en)-infoFILES)
+
+man1FILES = $($(de)-manFILES) $($(en)-manFILES)
+
+manFILES = gcal tcal txt2gcal gcal2txt
+
+texiFILES = $($(de)-texiFILES) $($(en)-texiFILES)
+
+txtFILES = $($(de)-txtFILES) $($(en)-txtFILES)
+
+DISTFILES = $(docMISCFILES) $(man1FILES) $(texiFILES)
+
+ALLDIRS = $(infodir) $(mandir)
+
+ALLDOCS = $(de) $(en)
+
+#### End of package specific make variable definition section. ####
+
+
+
+#### Start of default targets section. ####
+
+default: gcal.txt gcal.info
+
+all: default
+
+check installbin install-strip ID id TAGS tags:
+	@echo "Nothing to be done for \`$@'"
+
+#### End of default targets section. ####
+
+
+
+#
+# If not exists, try to create the native language specific text documentation
+# file for distribution (dist, dist-gcal, distzip, distzoo, distlha and
+# distshar) from the native language specific `gcal.texi' file and remove
+# all index entries.
+#
+# Converts all `gcal.texi' files by means of `perl' (preferred) or `awk'
+# in order to put real ISO-8859-1 characters into the resulting file.
+#
+# Parallel processing of this target is *NOT* permitted!
+#
+$(txtFILES): $(texiFILES)
+	if test -f "$(lockfile)"; \
+	then \
+	  echo "Parallel processing of \`$@' target not permitted, $(lockfile) exists"; \
+	else \
+	  echo "Processing \`$@' ..." > $(lockfile); \
+	  for dir in $(ALLDOCS); \
+	  do \
+	    if test ! -f "$(srcdir)/$$dir/gcal.txt"; \
+	    then \
+	      if test -n "$(MAKEINFO)" && test -n "$(MAKEINFOVERSION)"; \
+	      then \
+	        echo "Creating distribution text documentation file \`$(srcdir)/$$dir/gcal.txt'"; \
+	        echo "Please wait..."; \
+	        case $$dir in \
+	          $(de)) \
+	            ;; \
+	          $(en)) \
+	            ;; \
+	          *) \
+	            echo "Error, LANG=$$dir is unsupported"; \
+	            rm -f $(lockfile); \
+	            exit 1;; \
+	        esac; \
+	        if test -n "$(PERL)"; \
+	        then \
+	          echo "$(PERL) converts all accent characters of \`$(srcdir)/$$dir/$(texiDIR)/gcal.texi' ..."; \
+	          $(PERL) $(srcdir)/2accent.pl $(srcdir)/$$dir/$(texiDIR)/gcal.texi > $(srcdir)/$$dir/gcal.texi; \
+	        else \
+	          if test -n "$(AWK)"; \
+	          then \
+	            echo "$(AWK) converts all accent characters of \`$(srcdir)/$$dir/$(texiDIR)/gcal.texi' ..."; \
+	            $(AWK) -f $(srcdir)/2accent.awk $(srcdir)/$$dir/$(texiDIR)/gcal.texi > $(srcdir)/$$dir/gcal.texi; \
+	          else \
+	            echo "Accent characters not converted, missing \`perl' / \`awk'"; \
+	            cp -p $(srcdir)/$$dir/$(texiDIR)/gcal.texi $(srcdir)/$$dir/gcal.texi; \
+	          fi; \
+	        fi; \
+	        $(MAKEINFO) $(MAKEINFOFLAGS2) gcal.txt $(srcdir)/$$dir/gcal.texi; \
+	        rm -f $(srcdir)/$$dir/gcal.texi; \
+	        case $$dir in \
+	          $(de)) \
+	            cat gcal.txt | \
+	            sed -e 's/* Menu:/(entfernt)/g' \
+	                -e 's/*Note/*Siehe/g' \
+	                -e 's/*note/*siehe/g' \
+	                -e 's/Footnotes/Fussnoten/g' \
+	                -e '/^* /d' \
+	                -e '/-DIR-/d' > $(srcdir)/$$dir/gcal.txt;; \
+	          $(en)) \
+	            cat gcal.txt | \
+	            sed -e 's/* Menu:/(removed)/g' \
+	                -e '/^* /d' \
+	                -e '/-DIR-/d' > $(srcdir)/$$dir/gcal.txt;; \
+	        esac; \
+	        rm -f gcal.txt; \
+	        echo "\`$(srcdir)/$$dir/gcal.txt' created"; \
+	      else \
+	        if test -z "$(MAKEINFO)"; \
+	        then \
+	          echo "Unable to create distribution text documentation file \`$(srcdir)/$$dir/gcal.txt', missing \`makeinfo'"; \
+	        else \
+	          echo "Unable to create distribution text documentation file \`$(srcdir)/$$dir/gcal.txt', \`makeinfo' out of date"; \
+	        fi; \
+	      fi; \
+	    else \
+	      : ; \
+	    fi; \
+	  done; \
+	  rm -f $(lockfile); \
+	fi
+
+txt gcal.txt: $(txtFILES)
+
+#
+# If not exists, try to create the native language specific info documentation
+# files for distribution (dist, dist-gcal, distzip, distzoo, distlha and
+# distshar) from the native language specific `gcal.texi' file.
+#
+# Parallel processing of this target is *NOT* permitted!
+#
+# # Converts all `gcal.texi' files by means of `perl' (preferred) or `awk'
+# # in order to put real ISO-8859-1 characters into the resulting file
+# # (actually unsupported because the GNU `info' browser is currently
+# # UNABLE to process 8-bit character codes in a proper way!).
+# #
+# # Exchange the `cp ...' by the preceding text in case GNU `info'
+# # is able to represent 8-bit characters.
+# #
+# # ...
+# #	        cp -p $(srcdir)/$$dir/$(texiDIR)/gcal.texi $(srcdir)/$$dir/gcal.texi; \
+# # ... 
+# #	        if test -n "$(PERL)"; \
+# #	        then \
+# #	          echo "$(PERL) converts all accent characters of \`$(srcdir)/$$dir/$(texiDIR)/gcal.texi' ..."; \
+# #	          $(PERL) $(srcdir)/2accent.pl $(srcdir)/$$dir/$(texiDIR)/gcal.texi > $(srcdir)/$$dir/gcal.texi; \
+# #	        else \
+# #	          if test -n "$(AWK)"; \
+# #	          then \
+# #	            echo "$(AWK) converts all accent characters of \`$(srcdir)/$$dir/$(texiDIR)/gcal.texi' ..."; \
+# #	            $(AWK) -f $(srcdir)/2accent.awk $(srcdir)/$$dir/$(texiDIR)/gcal.texi > $(srcdir)/$$dir/gcal.texi; \
+# #	          else \
+# #	            echo "Accent characters not converted, missing \`perl' / \`awk'"; \
+# #	            cp -p $(srcdir)/$$dir/$(texiDIR)/gcal.texi $(srcdir)/$$dir/gcal.texi; \
+# #	          fi; \
+# #	        fi; \
+# # ...
+#
+$(infoFILES): $(texiFILES)
+	if test -f "$(lockfile)"; \
+	then \
+	  echo "Parallel processing of \`$@' target not permitted, $(lockfile) exists"; \
+	else \
+	  echo "Processing \`$@' ..." > $(lockfile); \
+	  for dir in $(ALLDOCS); \
+	  do \
+	    if test ! -f "$(srcdir)/$$dir/gcal.info"; \
+	    then \
+	      if test -n "$(MAKEINFO)" && test -n "$(MAKEINFOVERSION)"; \
+	      then \
+	        echo "Creating distribution info files \`$(srcdir)/$$dir/gcal.info*'"; \
+	        echo "Please wait..."; \
+	        case $$dir in \
+	          $(de)) \
+	            ;; \
+	          $(en)) \
+	            ;; \
+	          *) \
+	            echo "Error, LANG=$$dir is unsupported"; \
+	            rm -f $(lockfile); \
+	            exit 1;; \
+	        esac; \
+	        cp -p $(srcdir)/$$dir/$(texiDIR)/gcal.texi $(srcdir)/$$dir/gcal.texi; \
+	        $(MAKEINFO) $(MAKEINFOFLAGS) $(srcdir)/$$dir/gcal.info $(srcdir)/$$dir/gcal.texi; \
+	        rm -f $(srcdir)/$$dir/gcal.texi; \
+	        echo "\`$(srcdir)/$$dir/gcal.info*' created"; \
+	      else \
+	        if test -z "$(MAKEINFO)"; \
+	        then \
+	          echo "Unable to create distribution text documentation file \`$(srcdir)/$$dir/gcal.txt', missing \`makeinfo'"; \
+	        else \
+	          echo "Unable to create distribution text documentation file \`$(srcdir)/$$dir/gcal.txt', \`makeinfo' out of date"; \
+	        fi; \
+	      fi; \
+	    else \
+	      : ; \
+	    fi; \
+	  done; \
+	  rm -f $(lockfile); \
+	fi
+
+info gcal.info: $(infoFILES)
+
+#
+# Try to create dvi documentation file according to selected native language.
+#
+# If a NON-ENGLISH native language is selected, convert the `texinfo.tex'
+# file of the package in order to replace some English words found there.
+#
+# Parallel processing of this target is *NOT* permitted!
+#
+gcal.dvi: $(texiFILES) $(docTEXINFO)
+	if test -f "$(lockfile)"; \
+	then \
+	  echo "Parallel processing of \`$@' target not permitted, $(lockfile) exists"; \
+	else \
+	  echo "Processing \`$@' ..." > $(lockfile); \
+	  if test ! -f "$(doclang)/$@"; \
+	  then \
+	    if test -n "$(TEXI2DVI)"; \
+	    then \
+	      echo "Creating \`$(doclang)/$@' file for LANG=$(doclang) users"; \
+	      echo "Please wait..."; \
+	      case $(doclang) in \
+	        $(de)) \
+	          if test ! -d "$(doclang)"; \
+		  then \
+		    mkdir $(doclang) > /dev/null 2>&1; \
+	          else \
+	            : ; \
+	          fi; \
+	          cat $(srcdir)/$(docTEXINFO) | \
+	          sed -e 's/{Chapter}}/{Kapitel}}/' \
+	              -e 's/{See}}/{Siehe}}/' \
+	              -e 's/{see}}/{siehe}}/' \
+	              -e 's/{file}}/{Datei}}/' \
+	              -e 's/{page}}/{Seite}}/' \
+	              -e 's/{Section}}/{Abschnitt}}/' \
+	              -e 's/{section}}/{Abschnitt}}/' \
+	              -e 's/{Table of Contents}}/{Inhaltsverzeichnis}}/' \
+	              -e 's/{Short Contents}}/{Kurzinhalt}}/' \
+	              -e 's/{Appendix}}/{Anhang}}/' > $(doclang)/$(docTEXINFO);; \
+	        $(en)) \
+	          if test ! -d "$(doclang)"; \
+		  then \
+		    mkdir $(doclang) > /dev/null 2>&1; \
+	          else \
+	            : ; \
+	          fi; \
+	          cp -p $(srcdir)/$(docTEXINFO) $(doclang)/$(docTEXINFO);; \
+	        *) \
+	          echo "Error, LANG=$(doclang) is unsupported"; \
+	          rm -f $(lockfile); \
+	          exit 1;; \
+	      esac; \
+	      cd $(doclang); \
+	      $(TEXI2DVI) $(texiDIR)/gcal.texi; \
+	      echo "\`$@' file created in $(subdir)/$(doclang) directory"; \
+	      rm -f ../$(lockfile); \
+	      rm -f $(docTEXINFO); \
+	    else \
+	      echo "Unable to create \`$(doclang)/$@' file, missing \`texi2dvi'"; \
+	    fi; \
+	  else \
+	    echo "Creation of \`$(doclang)/$@' file unnecessary,"; \
+	    echo "already existent. You have to erase this file first"; \
+	  fi; \
+	  rm -f $(lockfile); \
+	fi
+
+dvi: gcal.dvi
+
+#### End of actual build-related targets section. ####
+
+
+
+#### Start of install section. ####
+
+install: installdirs installman installinfo
+	@echo "All installs in $(subdir) done"
+
+installdirs: $(top_srcdir)/mkinstalldirs
+	$(NORMAL_INSTALL)
+	$(SHELL) $(top_srcdir)/mkinstalldirs $(ALLDIRS)
+
+#
+# Converts all `*.1' files by means of `perl' (preferred) or `awk'
+# in order to put real ISO-8859-1 characters into the resulting file.
+#
+installman: installdirs $(man1FILES)
+	$(PRE_INSTALL)
+	for file in $(manFILES); \
+	do \
+	  rm -f $(mandir)/$$file.$(manext); \
+	done
+	$(NORMAL_INSTALL)
+	case $(doclang) in \
+	  $(de)) \
+	    ;; \
+	  $(en)) \
+	    ;; \
+	  *) \
+	    echo "Error, LANG=$(doclang) is unsupported"; \
+	    exit 1;; \
+	esac; \
+	for file in $(manFILES); \
+	do \
+	  if test -n "$(PERL)"; \
+	  then \
+	    echo "$(PERL) converts all accent characters of \`$(srcdir)/$(doclang)/$(manDIR)/$$file.1' ..."; \
+	    $(PERL) $(srcdir)/2accent.pl $(srcdir)/$(doclang)/$(manDIR)/$$file.1 > $$file.1; \
+	  else \
+	    if test -n "$(AWK)"; \
+	    then \
+	      echo "$(AWK) converts all accent characters of \`$(srcdir)/$(doclang)/$(manDIR)/$$file.1' ..."; \
+	      $(AWK) -f $(srcdir)/2accent.awk $(srcdir)/$(doclang)/$(manDIR)/$$file.1 > $$file.1; \
+	    else \
+	      echo "Accent characters not converted, missing \`perl' / \`awk'"; \
+	      cp -p $(srcdir)/$(doclang)/$(manDIR)/$$file.1 $$file.1; \
+	    fi; \
+	  fi; \
+	  echo "Installing \`$$file.1' for LANG=$(doclang) users as \`$(mandir)/$$file.$(manext)'"; \
+	  $(INSTALL_DATA) $$file.1 $(mandir)/$$file.$(manext); \
+	  rm -f $$file.1; \
+	done
+	@echo "LANG=$(doclang) manual pages installed"
+
+#
+# If the `makeinfo' program exists, try to create the native language
+# specific `gcal.info*' files and install them into the infodir.
+#
+installinfo: installdirs $(infoFILES)
+	$(PRE_INSTALL)
+	rm -f $(infodir)/gcal.info*
+	$(NORMAL_INSTALL)
+	case $(doclang) in \
+	  $(de)) \
+	    ;; \
+	  $(en)) \
+	    ;; \
+	  *) \
+	    echo "Error, LANG=$(doclang) is unsupported"; \
+	    exit 1;; \
+	esac
+	cd $(srcdir)/$(doclang); \
+	instfiles=`echo gcal.info*`; \
+	cd ..; \
+	for file in $$instfiles; \
+	do \
+	  echo "Installing \`$(srcdir)/$(doclang)/$$file' for LANG=$(doclang) users as \`$(infodir)/$$file'"; \
+	  $(INSTALL_DATA) $(srcdir)/$(doclang)/$$file $(infodir)/$$file; \
+	done
+	$(POST_INSTALL)
+	-if $(SHELL) -c 'install-info --version' > /dev/null 2>&1; \
+	then \
+	  install-info --info-dir=$(infodir) $(srcdir)/$(doclang)/gcal.info; \
+	else \
+	  if $(SHELL) -c '$(top_srcdir)/install-info --version' > /dev/null 2>&1; \
+	  then \
+	    $(top_srcdir)/install-info --info-dir=$(infodir) $(srcdir)/$(doclang)/gcal.info; \
+	  else \
+	    : ; \
+	  fi; \
+	fi
+	@echo "LANG=$(doclang) info files installed"
+
+uninstall:
+	$(PRE_UNINSTALL)
+	for file in $(manFILES); \
+	do \
+	  rm -f $(mandir)/$$file.$(manext); \
+	done
+	rm -f $(infodir)/gcal.info*
+	@echo "Documentation files of distribution uninstalled"
+
+#### End of install section. ####
+
+
+
+#### Start of clean section. ####
+
+clean:
+	rm -f $(lockfile) core *~ *.tmp
+	rm -f gcal.txt gcal.1 tcal.1 txt2gcal.1 gcal2txt.1
+	for dir in $(ALLDOCS); \
+	do \
+	  rm -f $$dir/$(docTEXINFO) $$dir/gcal.dvi $$dir/gcal.texi; \
+	done
+
+texclean:
+	rm -f $(lockfile)
+	for dir in $(ALLDOCS); \
+	do \
+	  rm -f $$dir/*.ar  $$dir/*.ars $$dir/*.aux $$dir/*.bak $$dir/*.cp \
+	        $$dir/*.cps $$dir/*.dvi $$dir/*.fn  $$dir/*.fns $$dir/*.ky \
+	        $$dir/*.kys $$dir/*.log $$dir/*.pg  $$dir/*.pgs $$dir/*.toc \
+	        $$dir/*.tp  $$dir/*.tps $$dir/*.vr  $$dir/*.vrs $$dir/*.ps; \
+	done
+
+distclean: clean texclean
+	rm -f Makefile
+
+mostlyclean: distclean
+
+realclean: distclean
+	rm -f ID id TAGS tags
+
+maintainer-clean: realclean
+	@echo "This command is intended only for maintainers to use;"
+	@echo "rebuilding the deleted files may require special tools."
+	if test -n "$(MAKEINFO)" && test -n "$(MAKEINFOVERSION)"; \
+	then \
+	  for dir in $(ALLDOCS); \
+	  do \
+	    rm -f $$dir/gcal.txt $$dir/gcal.info*; \
+	  done; \
+	else \
+	  : ; \
+	fi
+
+#### End of clean section. ####
+
+
+
+dist dist-gcal distzip distzoo distlha distshar: Makefile $(DISTFILES) $(txtFILES) $(infoFILES)
+
+Makefile: $(srcdir)/Makefile.in ../config.status
+	cd .. \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	       $(SHELL) ./config.status
+
+
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
+
+# End of file

@@ -1,0 +1,74 @@
+TODO file for `gcal'.
+
+Planned features:
+
+   * Support more country specific holidays (high priority).
+
+     Well, if you think that I forgot to provide `gcal' with the
+     specific holidays of your country, please feel free to send me a
+     complete list of all the holidays which are celebrated there, so
+     I'm able to include them in a next release.
+
+     Such a list should ideally include the following informations:
+
+        - The English name of the holiday.
+
+        - The rule how it is built (like 10th October each year, or 47
+          days after Easter Sunday's date, or three Fridays before the
+          last Saturday in June...).  If there are any exceptions from
+          such a general rule, please state them in a detailed manner.
+
+        - Whether it's a "legal holiday" in all parts of your country.
+          (Use a '+' character for marking this case.) In this sense, a
+          legal holiday means a day people don't have to work -- as in
+          most companies and businesses are closed, like
+          `New Year's Day' on January 1st.  `Boxing Day' on December
+          26th and `Easter Sunday' (I guess) and other important
+          Christian holidays are likewise legal holidays.
+
+        - Whether it's a legal holiday in some parts of your country
+          only.  Please tell me whether such a holiday is valid in
+          major parts of your country or not, try to express that using
+          percent points.  (If such a holiday is celebrated in more
+          than 70% of your country, use a '#' character for marking
+          this case, otherwise use a '*' character.)
+
+        - Whether it's a day only used for memorial or remembering
+          purposes.  (Use a '-' character for marking this case.) Like
+          `All Fool's Day' on April 1st is not a holiday in the sense
+          that anyone has a day off from school or work -- just a *play
+          jokes* day -- pretty ordinary.  Other holidays may be
+          celebrated with cards etc. -- but they are still work days
+          such as:
+
+               Valentine's day, Father's day, Mother's day.
+
+   * Support more country specific date formats which are burned-in
+     into the program itself and are selectable during program start-up
+     (medium priority).  I would like to hear your suggestions!
+
+   * Support more Gregorian Reformation periods which are burned-in
+     into the program itself and are selectable during program start-up
+     (medium priority).  I would like to hear your suggestions!
+
+   * Create more wrapper scripts which produce diverse sheets using
+     Postscript/[La]TeX for adding to a personal *agenda* (medium
+     priority).  I'm waiting for your solutions!
+
+   * Support systems with Terminfo and without Termcap (low priority).
+
+Nothing else to do actually, do *you* see anything missing?
+
+Send comments to Thomas Esken <esken@uni-muenster.de>.
+
+By the way...
+
+     I'm looking for volunteers who create a graphical front end to the
+     `gcal' back end.  If you are interested in working out such a
+     front end (native X11 and/or Tcl/Tk, Motif, DOZE-Win [NT], OS/2 PM,
+     Apple...), please contact me!
+
+     Some extended ideas could be part of such a user surface, like
+     formatting of output for different printers, output converted to
+     Postscript/[La]TeX, time management of fixed dates...
+

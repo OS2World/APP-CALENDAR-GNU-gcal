@@ -1,0 +1,62 @@
+#!/bin/sh
+# gcalltx -- (C) Claus-Peter R"uckemann, 1996
+#
+# version 1.1
+#
+# This file may be distributed with gcal under the terms
+# of the GNU public license.
+#
+# This script calls gcalltx.sed to convert 'gcal -n -u %0001 year' output to
+# LaTeX tabular output.
+# 
+# UN*X solution.
+#
+TMP_GCAL=$GCAL
+GCAL=""
+case $# in
+     1) gcal -n -u %0001 --christian-holidays $* >gcaltmp
+        ;;
+     2) gcal -n -u %0001 --cc-holidays=$* >gcaltmp
+        ;;
+     3) gcal -n -u %0001 --christian-holidays --cc-holidays=$* >gcaltmp
+        ;;
+     *) echo "usage: $0 year";
+        echo "       $0 country_code year";
+        echo "       $0 country_code year --christian-holidays";
+        echo "";
+        echo "(1st usage provides only Christian and standard holidays)";
+        echo "(2nd usage provides standard holidays and those for country_code)";
+        echo "(3rd usage provides Christian, standard and country_code holidays)";
+        echo "";
+        echo "country_codes is a country code or a list of country codes";
+        echo "supported by gcal.";
+        echo "";
+        echo "Country codes are for example: DE US GB";
+        echo "";
+        echo "A list of country codes can be created this way: DE+US";
+        echo "(s. gcal documentation)";
+        exit 2;;
+esac
+GCAL=$TMP_GCAL
+
+#
+# v--- breakpoint part
+sed "s/^/XYZ/g" gcaltmp >gcaltmp.tm1
+sed "=" gcaltmp.tm1 >gcaltmp.tm2
+echo "s/^\([5][0]\)/BREAKPOINT \1/g">gcaltmp.tm3
+echo "s/^\([0-9][50][0]\)/BREAKPOINT \1/g">>gcaltmp.tm3
+echo "/^[0-9]/d">>gcaltmp.tm3
+echo "/^[0-9][0-9]/d">>gcaltmp.tm3
+echo "/^[0-9][0-9][0-9]/d">>gcaltmp.tm3
+echo "s/^XYZ//">>gcaltmp.tm3
+sed -f gcaltmp.tm3 gcaltmp.tm2 >gcaltmp
+# ^--- breakpoint part
+#
+
+
+       sed -f gcalltx.sed gcaltmp >gcalltx.tex
+
+       rm gcaltmp*
+
+echo Eternal holiday list written to file gcalltx.tex
+##EOF:

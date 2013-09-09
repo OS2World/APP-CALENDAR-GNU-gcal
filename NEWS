@@ -1,0 +1,451 @@
+NEWS file for `gcal'.
+
+
+Current Version: 2.40
+See the HISTORY file for the details of all changes.
+
+
+Major changes in release 2.40
+* Polish translation by Wojciech Marek Galazka.
+* Added six new `%?' "special texts without any argument" for
+    conditionally highlighting of text (%5 , %6 ... %9 and %0).
+* Fixed date modifier [U] (== `--suppress-date-part') added.
+* Removed the `-m ADDRESS' short-style option for sending eMails.
+* The `--biorhythm-axis=NUMBER' option can be used now for setting the
+    width of a `%;[DATE]' biorhythm text graphics (NUMBER within the
+    range of 1...100, the default width of a single axis is 20 characters).
+* Added two new `%?[DATE]' "special texts with date argument"
+    for displaying the biorhythm cycle (%, and %;).
+* The `--moonimage-lines=NUMBER' option can be used now for setting the
+    number of lines of a `%:[DATE]' moonphase text graphics (NUMBER within
+    the range of 6...30, the default height of the image are 12 lines).
+* Updated to GNU `gettext' version 0.10.27.
+* Swedish translation by Johan Linde.
+* Improved signal handling.
+* The `--here=LINE' option (== `-# LINE') can be used now for defining
+    resource file lines, which are additionally processed at last
+    in each resource file processing cycle.
+* Added three new `%?[DATE]' "special texts with date argument"
+    for displaying the moonphase approximately (%- , %_ and %:).
+
+Major changes in release 2.30 (inofficial beta testing release)
+* The `--orthodox-calendar' option (== `-O') can be used now for
+    calculating the leap years as done by the Eastern orthodox churches.
+* Corrected the fixed date feature for that year
+    in which the Gregorian Reformation have occured.
+* The burned-in Gregorian Reformation period 18-28 Feb 1753
+    (`--gregorian-reform=1753') is new.
+* The burned-in Gregorian Reformation period 19-28 Feb 1700
+    (`--gregorian-reform=1700') is new.
+
+Major changes in release 2.20 (inofficial beta testing release)
+* Dutch translation by Erick Branderhorst.
+* French translation by Michel Robitaille.
+* The MAILPROG environment variable can be used now for specifying
+    the program which is used as the mailer.
+* The new `--cc-holidays=CC[+CC+...]' option now allows to select
+    the country specific holidays which are part of the eternal holiday
+    list.  Already supported country specific holidays are:
+    CC   Country
+    --   -------
+    at   Austrian holidays
+    au   Australian holidays
+    be   Belgian holidays
+    ca   Canadian holidays
+    ch   Swiss holidays
+    cz   Czech holidays
+    de   German holidays
+    dk   Danish holidays
+    es   Spanish holidays
+    fi   Finnish holidays
+    fr   French holidays
+    gb   British holidays
+    gr   Greek holidays
+    hu   Hungarian holidays
+    it   Italian holidays
+    mx   Mexican holidays
+    nl   Dutch holidays
+    no   Norwegian holidays
+    pl   Polish holidays
+    pt   Portuguese holidays
+    se   Swedish holidays
+    si   Slovenian holidays
+    th   Thai holidays
+    us   U.S. American holidays
+* Removed the `--de-holidays' and `--us-holidays' options.
+* The `--without-standard-holidays' option disables all "standard" holidays.
+* Fixed date modifier [Z] (== `--zero-dates-only') added.
+* The `--filter-period=ARG' option (== `-P ARG') can be used now for
+    displaying only those fixed dates which are matched by the ARG.
+    ARG is one or more of the `%?[DATE]' "special texts with date argument"
+    (without a leading '%' character and connected by a `,' character)
+    used for date exclusion, means "inclusive/exclusive date period".
+* The `--filter-day=ARG' option (== `-D ARG') can be used now for
+    displaying only those fixed dates which are matched by the ARG.
+    ARG is one or more of the `%?' "special texts without argument"
+    (without a leading '%' character) used for date exclusion,
+    means "inclusive/exclusive day period".
+* Fixed date modifier [B] (== `--bypass-shell-command') added.
+* The `gcal2txt.c' file, which creates a verbatim text file
+    from a Gcal resource file is part of distribution now.
+* The `--filter-text=PATTERN' option (== `-I PATTERN') can be used now for
+    displaying only those fixed dates which are matched by the regular
+    expression search pattern.
+* A `^' character given in the "text"-part of a resource file line creates
+    a real `\n' newline character (similar `~' character), except the fact
+    that text breaked up by it isn't provided implicitly with leading blanks.
+* Implemented a bunch of new special texts (the `%?'... things),
+    which can be used in the text part of a resource file line.
+
+Major changes in release 2.11 (inofficial beta testing release)
+* Option `-K' respectively `--with-week-number' now
+    provides the calendar sheets with ISO week numbers.
+* The date variable `t' (yyyy@e|t|dvar[+|-]N[`www']) references
+    the actual date now and has a special meaning therefore (likewise `e').
+* Supports `libncurses.a' now.
+
+Major changes in release 2.10
+* Rewrote the `tcal-sh' shell script as a C program.
+* Several long-style options implemented like --today, --tomorrow, --week,
+    --end-of-week, start-of-week, --month, --end-of-month, --start-of-month,
+    --year, --end-of-year and --start-of-year, which are ALIAS names of the
+    according modifiers of the -c|C[] short-style option.
+* The German `.info' and `.txt' files likewise the German
+    message catalog `de.po' are conforming the ISO-8859-1
+    character set now.
+* The new %z and %Z directive of --date-format=PRESET_VALUE|ARG
+    option now allows to display the last two digits of a year.
+* Updated to GNU `gettext' version 0.10.23.
+
+Major changes in release 2.01 (inofficial beta testing release)
+* Added %k[yyyy[mm[dd|`www'[<n>]]]] macro, which is replaced by the
+    ISO-week number of the current/specified date in the text part
+    of a resource file line.
+* Added %o[yyyy[mm[dd|`www'[<n>]]]] macro, which is replaced by the
+    complete textual weekday name of the current/specified date in
+    the text part of a resource file line.
+* Updated to GNU `gettext' version 0.10.14.
+* Some bugfixes in the C sources and
+    a few changes in the Texinfo documentation (corrected xref's).
+* A "text-part" of a resource file line may be provided now
+    with leading whitespace characters if the first of these
+    leading whitespace characters is quoted.
+
+Major changes in release 2.00
+* Renamed --export-local-date-variables long-style option to
+    --export-date-variables.
+* The new --export-text-variables option now allows to export
+    local text variables from file to file.
+* The new --text-variable=ARG option (resp., -r ARG) now allows
+    the definition of global text variables.
+* Implemented the use of global and local text variables (`tvar'->$a...$z),
+    which can be set to ordinary text, %... macros and references to other
+    text variables and are expanded resp., respected everywhere in a
+    resource file line if referenced there.
+* Removed the --assign=ARG long-style option.
+* New command implemented:  mm/jjjj-jjjj  or  mm jjjj-jjjj
+    which displays a range of a selected month of specified years.
+* Gcal package internationalized by means of the GNU gettext package
+    (German message catalogs).
+* Reorganized package structure.
+* Changed symbol/environment variable GCAL_USR_LIBDIR to
+    GCAL_USR_DATADIR and GCAL_SYS_LIBDIR to GCAL_SYS_DATADIR.
+* Some new date variable assignments/operations implemented:
+    dvar=dvar[+|-]N      --> Assignment of a date variable `dvar',
+                               advanced by plus/minus N days.
+    dvar=dvar[+|-]N`www' --> Assignment of a date variable `dvar',
+                               advanced by plus/minus N weekdays `www'.
+    dvar+=N`www'         --> Addition of N weekdays `www'.
+    dvar-=N`www'         --> Subtraction of N weekdays `www'.
+* An underscore ('_') character which is used in option arguments is
+    converted to a real blank/space (' ') character now unless it's
+    quoted like '\_'.
+* The (pre)selected/defined "date format" is used now to set the attributes
+    in calendar sheets.
+* The new GCAL_DATE_FORMAT environment variable can be used to preset the
+    date format, which is used to order a displayed date.
+* The new --date-format=PRESET_VALUE|ARG option now allows flexible
+    ordering of a displayed date.
+* The contents of the GCALPATH environment variable will be used now on
+    all systems for searching resource and response files.
+* New GNU long-style option mode implemented, which either allows the
+    selection of a SPECIAL option argument or of a GIVEN option argument
+    (see --gregorian-reform=YEAR|ARG, where ARG is a user defined Gregrorian
+    Reformation date yyyy,mm,dd,dd).
+* The `txt2gcal.c' file, which creates a verbatim Gcal resource from a
+    a text file is part of distribution now.
+* The contents of the TZ (timezone) environment variable is displayed now
+    in the header part of created response files, shell script files and
+    outgoing Emails.
+* Changed the file searching mechanism with the effect, that files
+    are no longer searched in the actual directory (sure, this can be
+    forced by e.g.:  `-f foo+./bar+./baz').
+* Revised "eternal holiday" list.
+* Implemented the new run-time option --de-holidays, which
+    provides the eternal holiday list with additional German holidays.
+* The C preprocessor symbols USE_CATH, USE_USHDY, EXIT_STAT_HLP,
+    GREG_1582 and GREG_1752, which were selectable during the
+    (Auto)configuration step, are made to run-time options of
+    Gcal now (--christian-holidays, --us-holidays, --exit-status-help-127
+    and --gregorian-reform=YEAR).
+
+Major changes in release 1.01
+* My private `install-info' shell script is part of the distribution now.
+* Rejected my specific copyright conditions, because these contradict
+    the terms of the GPL.
+* Some small bugfixes.
+
+Major changes in release 1.00
+* Specific copyright conditions are part of Gcal now,
+    see the file COPYING2 for more information.
+* The option `--starting-day=0' can now be specified as
+    `--starting-day=today' respectively `-s today', too.
+* The German program version now accepts the English day and
+    month names if no appropriate German names are given.
+* Added %1, %2, %3 and %4 macros for user defined
+    text highlighting in the text part of a resource file.
+* Unlimited nesting level of include files realized.
+* Implemented the use of an optional "repetition" factor and an optional
+    "appearance" factor, which can be added to the end of a date part of fixed
+    dates, which are given in a resource file (`:' leads a repetition factor,
+    `.' leads an appearance factor):
+      yyyymmdd:N
+      yyyymmdd:N.N
+      yyyymmdd:N,[mm]dd:N.N ...
+      yyyymmdd#[mm]dd.N
+      yyyymmdd#[mm]`www'N.N
+      yyyymm`www'N:N
+      yyyymm`www'N:N.N
+      yyyymm`www'N:N,[mm]`www'N:N.N ...
+      yyyymm`www'N#[mm]`www'N.N
+      yyyymm`www'N#[mm]dd.N
+      yyyymm`www'#`www'.N
+    [ All the above codings are allowed with the yyyy@e|dvar[+|-]N[`www']
+      and the yyyy*d|wN[`www'] date formats, too! ]
+* Implemented optional lists and ranges of days, which can be added to the
+    date part of fixed dates, which are given in a resource file (`,' is the
+    list separator character, `#' the range separator character):
+      yyyymmdd|`www'|`www'N,[mm]dd|[mm]`www'|[mm]`www'N ...
+      yyyymm`www'#`www'
+      yyyymm`www'N#[mm]`www'N
+      yyyymmdd#[mm]`www'N
+      yyyymm`www'N#[mm]dd
+      yyyy*d|wN|N`www',N|N`www' ...
+      yyyy*d|wN#N`www'
+      yyyy*d|wN`www'#N
+      yyyy*d|wN`www'#N`www'
+      yyyy@e|dvar,|[+|-]N[`www'],[+|-]N[`www'],[+|-]N[`www'],[+|-]N[`www'] ...
+      yyyy@e|dvar[+|-]N[`www']#[+|-]N[`www']
+* Gcal now checks for the existence of an external `pg' pager.
+* The subject for an outgoing Email is now created
+    via the `-s' option of the `mail' program.
+* Added %j[[-]N] macro (real Julian day number).
+* Changed the week number of year text.
+* A fixed date warning which results to a leap day (i.e. the
+    29'th February), is displayed at the 28'th February in
+    non-leap years if the option `--leap-day=february' is given
+    resp., at the 1'st March if the option `--leap-day=march'
+    is given.
+* The `--long-help=?' resp., `--usage=?' option now
+    prints a list of all valid long-style options.
+* Renamed `--hidden' option to `--export-local-date-variables'.
+* Alternative format of fixed date list (--alternative-format
+    resp., fixed date modifier [A]) implemented.
+* Increased the version number to 1.00.
+
+Major changes in release 0.39
+* Fixed some bugs in the C sources.
+* A positive displacement value for a date variable may
+    either be given `@dvar+N' or `@dvarN' now.
+
+Major changes in release 0.38
+* Added environment variable GCALANSI, which must be defined
+    (not necessarily set) if ANSI escape highlighting sequences
+    should be substituted respectively emitted by default.
+* Redefined the "starting_day_of_week_option", which requires
+    an argument now (--starting-day=ARG respectively -s ARG,
+    and new ARG is 0 | 1|Mon|2|Tue|...|7|Sun).
+* Short-style options which require an argument can be given
+    now either in the `-Xfoo' or in the `-X foo' notation.
+* --exclude-holiday-list-title resp., -X option excludes
+    the title text of an eternal holiday list now.
+* Independant use of standard dates, Julian dates and both
+    standard- and Julian dates in calendar sheet (-j -jb),
+    eternal holiday list (-jn -jnb) and fixed date warning
+    list (-jc -jcb).
+* -c|C<n> option eliminated.
+* -c|C[0]... for indicating a list eliminated, used
+    further modifier [l] --list-mode instead.
+* -c|Cmmwww<n>n is now -c|Cmmwww<n> without mode character 'n'.
+* Further fixed date modifiers *d<n>, 0*d<n>,*d<n>www, 0*d<n>www,
+    *w<n>, 0*w<n>,*w<n>www, 0*w<n>www added.
+* Date variables are able to manage the new date format now
+   (e.g. dvar=*d<n>[www]).
+* The %s..., %e..., %b... and %y... macros are able to
+    manage the new date format now (e.g. %syyyy*d<n>[www]).
+* Actual date modifier manages the new date formats now
+    (%yyyy*d<n>[www] resp., %yyyy*w<n>[www]).
+* Included new date formats yyyy*d<n>[www] and yyyy*w<n>[www]
+    for encoding fixed dates in a resource file.
+* Changed description text of `wn' to `www' (means short
+    weekday name consisting of two or three characters).
+* The number 99 encodes the last month mm of a year now.
+* The number 99 encodes the last day dd of a month now.
+* The number 999  encodes the last day of a year now.
+* Changed default behaviour of fixed date warning period
+    modifiers t, w+, m+ and y+ (the produced list doesn't
+    start today now).
+* Option --include-today resp., fixed date modifier
+    [d] is new.
+* Option --shell-script=ARG resp., -S<NAME> creates a shell
+    script for calling gcal with all given arguments of the
+    command line and GCAL environment variable (similar the
+    --response-file=ARG resp., -R<NAME> response file option).
+* Option `-H yes' added, which forces the output of
+    highlighting sequences if output is redirected/piped.
+* Option --highlighting=yes is the equivalence of -H yes.
+* Option --highlighting=no is the equivalence of -H no.
+* -q[1..4] short style option doesn't exist anymore
+    (changed to  --debug[=list_of_arguments]).
+* Revised several long and short style options and
+    changed their option character resp., mnemonic name.
+* Revised documentation and help screens again.
+
+Major changes in release 0.37
+* More long options implemented.
+* Revised documentation.
+
+Major changes in release 0.36
+* Bugfix for OS/2 systems.
+* Several typos in man-pages and Texinfo files corrected.
+* The German "Umlaute" are supported now in dvi
+    file of German Texinfo documentation.
+
+Major changes in release 0.35
+* Official distributed version.
+* First version of Texinfo documentation created.
+
+Major changes in release 0.34
+* External pager is respected now.
+* Another fiscal year command `:yyyy' added.
+* Two further special 3 month modes added:
+    command `.+':  actual and next two month of current year.
+    command `.-':  actual and previous two month of current year.
+* Email option -m|M<Email address> included,
+    which sends gcal's output by mail(1) program to user.
+* Extension of actual date modifier:
+    %month name[dd], %weekday name[n], %dd.
+* Global suppress calendar sheet option -u added.
+* Renamed options: -f|F is -n|N now and vice versa.
+* Added further "eternal holiday list" option -F for
+    displaying legal days only.
+* Further actual date modifier %yyyy@<e|dvar>[[-]<n>[wn]] added.
+* Further fixed date modifiers @dvar[[-]<n>], 0@dvar[[-]<n>],
+   @<e|dvar>[[-]<n>[wn]] and 0@<e|dvar>[[-]<n>[wn]] added.
+* Some long options (--help --help-long --license
+    --version) added.
+* Added further command line option for setting global
+    date variables (-v<dvar=mmdd:dvar=dvar2...>).
+* Implementation of simple global and local date variables
+    and some basic operations on them (dvar=mmdd, dvar=mmwn<n>,
+    dvar=dvar, dvar++, dvar--, dvar+=<n> and dvar-=<n>).
+* Calculation of eternal holidays from A.D.464..YEAR_MAX.
+* Further fixed date modifiers <n>d, 0<n>d,
+    @e[[-]<n>] and 0@e[[-]<n>] added.
+* Further fixed date modifier [E] added which enables inclusion
+    of those eternal holiday dates, which are legal days only.
+* Added further command line option
+    -d<seq1_start:seq1_end:seq2_start:seq2_end>
+    for setting user defined highlighting sequence / marking
+    character pairs.
+* Response file write option -l<NAME> implemented.
+* Actual date modifier %yyyy[mm[dd|wn[n]]] resp.,
+    %yyyy@e[[-]<n>] added.
+* Standard date part of resource file line more flexible now
+    -> yyyy[mm[dd[n]]]<space>`text'
+* @... holiday coding of date part of resource file line added,
+    e.g.: yyyy@e-20 = date at Easter-20 days in year yyyy
+          0000@e20  = date at Easter+20 days every year
+* Further fixed date modifiers <n>w, 0<n>w, `mmdd'<n>n
+    and 0`mmdd'<n>n added.
+* Fixed date modifiers [k] (display ISO week numbers)
+    and [u] (suppress output of calendar sheet) added.
+* Two special 3 month modes added:
+    command `.':  previous, actual and next month of current year.
+    command `..':  actual quarter of current year.
+* Extended %b..., %y..., %s... and %e... macros by the
+    "n'th weekday of month" field and the [yyyy] is
+    optional now (explicit year or 0000),
+    e.g.: %s[yyyy[mm[dd|wn[n]]]].
+* Extension of RC-file's date part by a "n'th weekday of month"
+    field.
+* Increased the number of managed resource file entries
+    to 10000.
+* Further command line option for setting the warning level
+    (-q[1..4]) added.
+* #include statements in resource files are respected now.
+* Resource files are searched in `gcal's user library
+    directory GCAL_USR_LIBDIR and `gcal's system library
+    directory GCAL_SYS_LIBDIR, too.
+* Extended %syyyy[mm[dd]] and %eyyyy[mm[dd]] macros.
+* Added simple %d macro (day difference),
+        simple %w macro (week difference),
+        simple %m macro (month difference),
+        simple %y macro (year difference)
+        and the %n[[-]<n>] macro (effective date text).
+* Extended time macro %t[12|24] (12 / 24 hour display) added.
+* RC-file %... items may be quoted by \%... now.
+* Further fixed date modifier [z] added for showing
+    the consecutive number of a fixed date warning message.
+* A line of the resource file can be continued at next
+    line by a BACKSLASH-NEWLINE character sequence now.
+* Response file (@file) handling added.
+* Further fixed date modifier `simple' <n> added.
+* Extended help screen (-hh|-??) added.
+* Further fixed date modifiers `mmdd', 0`mmdd', <n><+|->
+    and 0<n><+|-> added.
+* Renamed environment variable `CAL' to `GCAL'.
+* Renamed `cal' to `gcal'!
+
+Major changes in release 0.33
+* Alternative resource file (-n|N<NAME[+...]>) feature added.
+* Management of %t, %syyyy and %eyyyy items in RC-file.
+* Fixed date modifiers [a] (show RC-file name in warning)
+    and [x] (exclude title of fixed date list) added.
+* Starting day of week option [-s[]] without trailing
+    modifier sets starting day of week to actual weekday.
+* Display all dates of fixed date warning period feature
+    added (-C[] or -C[][T|W|M|Y] or -c[][T|W|M|Y] or -N<>)
+    (thanks to Stephan Forth).
+* Fixed date modifier for grouping [g[`txt']] added
+    (thanks to Stephan Forth).
+* Fixed date modifier added for omitting the date part of a
+    warning [o] in case more than one warning refers to that date.
+* Added quoting of `~'-TILDE character by `\~' resp., `\\~'.
+
+Major changes in release 0.32
+* German "Tag der Deutschen Einheit" holiday respected
+    after 1953 and 1989 now.
+* Fiscal year mode ([mm:]yyyy) implemented.
+* Added highlighting of eternal holiday list.
+* Very poor and simple internal pager (-p) implemented.
+* CAL environment variable for options is respected now.
+* (-i) international calendar format (similar BSD-cal) added.
+
+Major changes in release 0.31
+* Changed my signature.
+* Print year using %04d format always.
+
+Major changes in release 0.30
+* Respected Julian flag for RC fixed dates/holiday list.
+* Julian option modifiers [bfc].
+* `~'-char in RC-file line is replaced by a "real" `\n'-NEWLINE char.
+
+Major changes in release 0.29
+* Included copyright notice (gpl) and version.
+* U.S. holidays (US_HDAY).
+* Respected eternal holidays in fixed dates list.
+* Ascending/descending sort of holiday list/RC fixed dates.
+
+Major changes in release 0.28
+* Management of %byyyy and %yyyyy items in RC-file.

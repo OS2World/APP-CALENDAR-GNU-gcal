@@ -1,0 +1,398 @@
+This is README for the `gcal' distribution, version 2.40.
+
+The Name of the Game
+====================
+
+This file informs about the features of Gcal, a program for printing
+calendars, in an abridged draft.  Gcal displays a calendar for a month
+or a year, eternal holiday lists and fixed date lists, in many ways.
+The program correctly omits the dates that were skipped when the
+current Gregorian calendar replaced the earlier Julian calendar.
+
+The Advantages of `gcal'
+========================
+
+Its main advantages over BSD-`cal' and `calendar' are:
+
+   * Some special calendar sheet formats.
+
+   * Calendar sheets can be provided with ISO week numbers.
+
+   * Variable number of year calendar sheet blocks.
+
+   * Adjustable ordering of displayed dates.
+
+   * Adjustable period of Gregorian Reformation.
+
+   * Adjustable highlighting of holidays and actual day.
+
+   * Variable starting day of week.
+
+   * Output of current days of year, concatenated current days of month
+     and year.
+
+   * Output of fiscal years.
+
+   * Output of lists or ranges of months or years.
+
+   * Sorted output of selectable, country specific eternal holiday
+     lists, which are generated automatically.
+
+   * Sorted output of fixed date lists in *many* ways.
+
+   * Allows the use of date and text variables.
+
+   * Displays moonphases and biorhythm's.
+
+   * Fixed dates can be stored in several files.
+
+   * Nearly unlimited nesting level of include files.
+
+   * Nearly unlimited internal text and table lengths.
+
+   * Default options can be stored in environment variable `GCAL'.
+
+   * Options and commands stored in response files can be preloaded.
+
+   * Uses either an external pager or a simple built-in pager.
+
+   * Detailed Texinfo reference manual.
+
+   * German, English and American program version by default.
+
+   * Supports various computer platforms.
+
+   * GNU `gettext' internationalization technology, which allows the
+     use of message catalogs for most native languages.
+
+   * GNU `autoconf'(igure) installation technology.
+
+   * Supports both UN*X short-style options and GNU long-style options.
+
+System Requirements
+===================
+
+Computer:
+     MS-DOS PC, OS/2 PC, Linux PC, Acorn, Atari ST, Amiga, Vax, most
+     UN*X Workstations, perhaps some Mainframes
+
+Compiler:
+     Any? [ANSI] C compiler (GCC, TCC, BCC, MSC, ZTC, WCC, XLC, []CC...)
+
+RAM:
+     Below 400 KByte (UN*X/OS2/MS-DOS) load size
+
+Hard disk:
+     None
+
+Graphics adapter:
+     None
+
+Device driver:
+     [n]`ansi.sys'/ansi-terminal recommended, but not essential
+
+Limitations
+===========
+
+The date must be after 0 and before 10000 (means year in range
+1...9999).  The current Gregorian calendar year is actually about 26.3
+seconds longer than the solar year, which means that by 4316 the
+calendar will be one day ahead of the sun.  Some sort of correction
+obviously *must* be made.  I know that there will be an adjustment of
+some kind in 4316, but I am not sure what it is to be.  So I don't
+respect this correction in Gcal yet !
+
+Files you might look into
+=========================
+
+   * Some planned features which are not supported yet (see `TODO').
+
+   * See `NEWS' for a summary of changes since version 0.28.
+
+   * See `HISTORY' for a complete summary of changes.
+
+   * See `INSTALL' and `SYMBOLS' for compilation and installation
+     instructions.  Some answers to frequently asked questions are
+     given in the file `INSTALL', please read it.
+
+   * And see the file `systems/README' for some hints how to compile
+     Gcal on some special machines and operating systems.
+
+   * A list of all known bugs can be found in the `BUGS' file.
+
+   * And a list of internal limitations can be found in the
+     `LIMITATIONS' file.
+
+   * See the file `data/README' for some details to the enclosed
+     reminder respectively appointment files and how to install them.
+     Read the `ATTENTION' file, too.  It informs about all changed
+     `%?'... special texts processed by Gcal in the text part of a Gcal
+     resource file line.
+
+   * Inspect `MANIFEST' for a list of all files which are part of this
+     distribution.
+
+   * Many thanks to those who provided me with bug reports and feedback.
+     See the `THANKS' and `HISTORY' files for more details.
+
+   * See `ABOUT-NLS' for notes on the GNU Translation Project.  Some
+     parts of this file which are important for a proper installation
+     of Gcal are cited in one of the next sections.
+
+   * You can find some useful wrapper scripts in the `misc/' directory,
+     see `misc/README' for more details.
+
+   * The ISO 3166 country code table and the ISO 639 language code table
+     can be found in the `doc/' directory.  And see the
+     `doc/GREG-REFORM' file, which shows a chronology of introduction
+     of the Gregorian calendar (some selected countries and minor
+     states only).  I also recommend to have a look into the
+     `doc/calendar.faq' text worked out by Claus Tondering
+     <c-t@pip.dknet.dk>, which is a very good summary of the most
+     common calendar algorithms and principles.
+
+Please read the Texinfo reference manual first for getting a deeper
+impression of the defaults and modes of operation of Gcal before you
+bomb me with questions which I have already answered there!  Your
+native language Texinfo documentation (if already worked out) can be
+found in the `doc/LL' directory, where LL is the ISO 639 two-letter
+code of your native language.  Thank you!
+
+How to get Termcap or Ncurses
+=============================
+
+This program does not require Termcap or Ncurses, but takes advantage
+of it when it is available.  You may want to get and install GNU
+`termcap' (`termcap-1.2.tar.gz') first from
+`ftp://prep.ai.mit.edu:/pub/gnu', or better -- respectively `ncurses'.
+
+Configuration Options
+=====================
+
+If you use the GNU `autoconf' technology, you can enable/disable some
+Gcal specific package options.  Simply run the configure script with
+one or more of these arguments:
+
+    `--enable-easc'
+          Use extended ASCII character set.
+
+    `--disable-hls'
+          Do not use highlighting sequences respectively marking
+          characters.
+
+    `--disable-pager'
+          Do not use external or simple, internal pager feature.
+
+    `--disable-rc'
+          Do not use fixed date feature.
+
+    `--disable-term'
+          Do not use `libncurses.a', `libtermcap.a' respectively
+          `libtermlib.a'.
+
+    `--with-included-regexps'
+          Use the V8 regular expression functions included here.
+
+     IMPORTANT:
+
+    `--enable-de'
+          Generates and installs the German documentation files instead
+          of their English equivalents.
+
+Native Language Support
+=======================
+
+The `configure' script provides three more non-standard options.  These
+will also be available in other packages if they use the functionality
+of GNU `gettext'.  Use
+
+     `--disable-nls'
+
+if you absolutely don't want to have messages handling code.  You will
+always get the original messages (mostly English).  You could consider
+using NLS support even when you do not need other tongues.  If you do
+not install any messages catalogs or do not specify to use another but
+the C locale you will not get translations.
+
+The set of languages for which catalogs should be installed can also be
+specified while configuring.  Of course they must be available but the
+intersection of these two sets are computed automatically.  You could
+once and for all define in your `profile'/`cshrc' the variable
+`LINGUAS':
+
+     (Bourne Shell)          LINGUAS="de fr nl"; export LINGUAS
+     
+     (C Shell)               setenv LINGUAS "de fr nl"
+
+or specify it directly while configuring
+
+     env LINGUAS="de fr nl" ./configure
+
+Consult the manual for more information on language names.
+
+The second configure option is
+
+     `--with-included-gettext'
+
+This forces to use the GNU implementing the message handling library
+regardless what the local C library provides.  This possibility is much
+less error prone because possible unreliable effects of the local
+message handling system are avoided.  And perhaps more important: many
+useful features can only be exploited with this library.  The reason is
+obvious: we cannot dig in the internals of other implementations.  It
+is likely that the discrepancy between the GNU implementation and
+others will get bigger in the time coming.  So better change now!
+
+The third option is:
+
+     `--with-catgets'
+
+The X/Open catgets functions which might be found in the local C
+library are not used by default.  The reason is already described
+above: the GNU `gettext' library provides many useful extension which
+cannot be emulated with `catgets()'.  Beside this the utility programs
+for generating the catalog used by `catgets()' vary heavily between
+different systems.  You should select this feature only if you really
+don't want to use the GNU `gettext' library and do not want to extended
+functionality (but I do not see any good reason for such a choice).
+
+As a user, if your language has been installed for this package, you
+only have to set the `LANG' environment variable to the appropriate ISO
+639 LL two-letter code prior to using the programs in the package.  For
+example, let's suppose that you speak German.  At the shell prompt,
+merely execute `setenv LANG de' (in `csh'), `export LANG; LANG=de' (in
+`sh') or `export LANG=de' (in `bash').  This can be done from your
+`.login' or `.profile' file, once and for all.
+
+An operating system might already offer message localization for many of
+its programs, while other programs have been installed locally with the
+full capabilities of GNU `gettext'.  Just using `gettext' extended
+syntax for `LANG' would break proper localization of already available
+operating system programs.  In this case, users should set both
+`LANGUAGE' and `LANG' variables in their environment, as programs using
+GNU `gettext' give preference to `LANGUAGE'.  For example, some Swedish
+users would rather read translations in German than English for when
+Swedish is not available.  This is easily accomplished by setting
+`LANGUAGE' to `sv:de' while leaving `LANG' to `sv'.
+
+By the way, if you want to support the author and the rest of the world
+with translations of Gcal message catalogs into your native language,
+please read, fill, print and sign the enclosed disclaimer file
+`DISCLAIM' and snail-mail it to the Free Software Foundation.  Please
+write to <translation@iro.umontreal.ca> to reach the coordinator for all
+translator teams.  See `ABOUT-NLS' and/or the manual of GNU `gettext'
+for more details.
+
+Some Installation Hints
+=======================
+
+Some points you might be interested in before installing the package:
+
+  1. If you run `make' with a distribution target, the Makefile rules
+     will schedule a recompution of the `gcal.pot' file.  But this is
+     not possible without the GNU `gettext' package already installed.
+     If you don't have this package already installed and modified any
+     of the files build the package first with
+
+          `--disable-nls'
+
+     When this is done you will get a runnable `xgettext' program which
+     can be used to recompute `gcal.pot'.
+
+  2. The package contains a file `misc/magic.add'.  This is intended to
+     be added to your `/etc/magic' file.  After adding this the `file'
+     command will recognize GNU message catalog files (`.mo' files).
+
+  3. The locale name alias scheme implemented here is in a similar form
+     implemented in the X Windows Systems.  Especially the alias data
+     base file can be shared.  Normally this file is found at something
+     like `/usr/lib/X11/locale/locale.alias'.
+
+     If you have the X Windows System installed try to find this file
+     and specify the path at the make run:
+
+          make aliaspath='/usr/lib/X11/locale/locale.alias:/usr/local/lib/locale'
+
+     (or whatever is appropriate for you).
+     In the `misc/' subdirectory you find an example for a alias
+     database file.
+
+  4. On some systems it will not be possible to compile this package.
+     It is not only this package but any other GNU package, too.  These
+     systems do not provide the simplest functionality to run configure.
+     Today are known the following systems:
+
+                  configure name          description
+                  --------------          -----------
+                  mips-mips-riscos        2.1.1AC RISCos
+
+Reporting Bugs
+==============
+
+Please send all comments and bug reports via electronic mail to:
+
+     Thomas Esken <esken@uni-muenster.de>
+
+or, if this fails, to <bug-gnu-utils@prep.ai.mit.edu>.
+
+Bug reports should ideally include (if necessary):
+
+  1. A detailed description of the bug behavior, not just
+     interpretations
+
+  2. The complete output of `gcal --version' (or the contents of
+     `defines.h' and the `src/Makefile' if you can't get `gcal' to
+     compile)
+
+  3. The hardware and operating system (try `uname -a')
+
+  4. The compiler used to compile (if it is `gcc', use `gcc -v')
+
+  5. All the system specific files which are automatically created
+     during the configuration phase (`config.h', `config.cache',
+     `config.log', `config.status') and if necessary also the
+     temporarily created files used for building them (`confdefs.h',
+     `confcache', `conftest.vals', `conftest.h'...)
+
+  6. The shell environment (try `set')
+
+  7. The complete `termcap' entry for your terminal if the bug occurs
+     while highlighting of text
+
+  8. The command line given to `gcal', that triggered the bug
+
+Copyright
+=========
+
+Gcal Copyright (C) 1994-1997 by Thomas Esken is free software.  You can
+redistribute it and/or modify it under the terms of the `GNU General
+Public License' as published by the `Free Software Foundation'; either
+version 2, or (at your option) any later version.  A copy of this
+license is provided under the name `COPYING', see it for more details.
+
+How to get `gcal'
+=================
+
+The latest official version of Gcal is always available by anonymous
+ftp from `ftp://ftp.gnu.ai.mit.edu', or from any of the `prep' mirror
+sites:
+
+   * pub/gnu/gcal-*[.tar or .tar.Z or .tar.gz or .zip or .shar].
+
+The latest MS-DOS sources and executables are always available from
+SimTel, the Coast to Coast Software Repository (tm), (available by
+anonymous ftp from the primary mirror site `ftp://ftp.coast.net' and
+its mirrors):
+
+   * SimTel/msdos/deskaccs/gcal*.zip
+
+The latest OS/2 sources and executables are always available by
+anonymous ftp from `ftp://ftp.leo.org', or from any of the `leo' mirror
+sites:
+
+   * pub/comp/os/os2/gnu/misc/gcal*.zip
+
+Some ftp servers can automatically make a `tar.Z' from a `tar' file.
+If you are getting Gcal for the first time, you can ask for a `tar.Z'
+file instead of the much larger tar file.
+

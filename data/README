@@ -1,0 +1,79 @@
+README file for enclosed data files.
+
+The Gcal package encloses a collection of reminder/appointment files of
+other packages, namely the BSD-`calendar' reminder files and the
+[X]`Calentool-2.3' appointment files.  These original and untouched
+files (except `dates/events5', in which I've quoted one `%)' text) are
+stored in the `calendars/' and `dates/' subdirectories, and are
+automatically converted during the installation process of `gcal' by
+means of `awk' or `perl'.  The AWK and Perl scripts (stored in the
+`scripts/' subdirectory) which I've worked out are not perfect but do
+their job well for the enclosed reminder/appointment files.
+
+These scripts don't break up the text part at any margin by default.
+If you want to have text parts break up at a special margin, define
+this in the variable `linebreak' (near the top of each script)
+explicitly before you use the `install' target of the Makefile.  I
+recommend to use a margin value of 40...50.  This is only an
+experimental feature.  It does not guarantee any *nicer* representation
+of texts, but I've implemented it because some people might find it
+useful.
+
+Some examples of ANSI-colored texts can be found in the file
+`ansipic.rc', and some examples of *large* text graphics are stored in
+the `textpic.rc' file.  I don't know whether there are any Copyright
+conditions on the texts stored in both files, but I guess there are
+none (hopefully).  By the way, if you have more of this stuff or if you
+have other reminder/appointment files as distributed in the
+`calendars/' and `dates/' subdirectories, I'd appreciate if you send
+them to my eMail address (uuencoded `.tar.gz' preferred), so I'm able
+to add them to the next release of Gcal.
+
+Already received reminder/appointment files (thanks to the authors):
+
+`meteoric.rc'
+    Date:
+          18-Sep-1996
+
+    Author:
+          Claus-Peter R"uckemann <ruckema@uni-muenster.de>
+
+    Description:
+          Meteoric showers - interval / maximum / number / radiant /
+          velocity / comet
+
+Because the collection of reminder/appointment files is enclosed
+original and untouched AS IS, there is no warranty of any kind, either
+expressed or implied!  The entire risk as to the quality and fitness
+for a particular purpose is with you.
+
+If conversion from other calendar management tools is required, some
+converters can be found in the [X]`Calentool-2.3' package (written by
+Bill Randle):
+
+`cm2calentool.e'
+     Converts *sun calendar manager* files to `Calentool' appointment
+     files
+
+`cal2ct.c'
+     Converts `calendar' files to `Calentool' appointment files
+
+`month2ct.c'
+     Converts `month' files to `Calentool' appointment files
+
+`mt2ct.c'
+     Converts `monthtool' files to `Calentool' appointment files
+
+Once you have converted a reminder/appointment file into the
+[X]`Calentool-2.3' appointment file format, you can convert this file to
+the Gcal format using `awk' or `perl' and the according script file
+`ct2gcal.awk' respectively `ct2gcal.pl'.
+
+Because the `%s[DATE]' ("starting date" of event) and `%e[DATE]'
+("ending date" of event) special texts respected by former versions of
+the Gcal program in the text part of a resource file line do not exist
+in this style anymore in Gcal-2.20 or newer, there is a `old2v220' AWK
+respectively Perl script in the `data/scripts' directory which converts
+old-style resource files into the style used by Gcal-2.20 or newer.
+See the top-level `ATTENTION' file for more details.
+

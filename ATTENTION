@@ -1,0 +1,25 @@
+ATTENTION file for `gcal'.
+
+The `%s[DATE]' ("starting date" of event) and `%e[DATE]' ("ending date"
+of event) special texts respected by former versions of the Gcal
+program in the text part of a resource file line do not exist in this
+style anymore in Gcal-2.20 or newer.  Using above mentioned old-style
+special texts will not produce the wanted results if you use this
+version of the Gcal program.
+
+Use `%i[STARTING_DATE][#[ENDING_DATE]]' instead!
+
+You can find an `old2v220' AWK respectively Perl script in the
+`data/scripts' directory which converts old-style resource files into
+the style used by Gcal-2.20 or newer.  This script will be used
+automatically while running the `install' target of the `data/Makefile'
+in case the enclosed appointment respecitively reminder files (likewise
+the `~/.gcalrc' file) of the distribution are already installed.  In
+case the `~/.gcalrc' file is processed in this above mentioned way, a
+copy of its old contents by the name `~/.gcalrc~' will be created, too.
+
+**** WARNING ****
+The `old2v220' script is unable to manage `%s[DATE]' and `%e[DATE]'
+special texts correctly if all or parts of the DATE component is/are
+assembled by using Gcal's text variable mechanism!
+

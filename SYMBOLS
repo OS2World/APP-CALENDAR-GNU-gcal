@@ -1,0 +1,104 @@
+SYMBOLS file for `gcal'.
+
+Most important predefined preprocessor symbols and their meaning:
+
+   * Machine / operating system dependent symbols
+
+         __STDC__
+               Machine comes with an ANSI C compiler
+
+         MSDOS
+               MS-DOS machine
+
+              __TURBOC__
+                    Turbo-C
+
+              __ZTC__
+                    Zortech-C
+
+              M_I86
+                    Microsoft-C
+
+              DJG
+              __GO32__
+              __GNUC__
+                    DJ GNU-C
+
+         OS2
+               OS/2 machine
+
+              __GNUC__
+                    EMX GNU-C
+
+              __BORLANDC__
+                    Borland-C
+
+         WIN32
+               Windows NT machine
+
+         ACORN
+               Acorn archimedes machine
+
+              __GNUC__
+                    GNU-C
+
+         ATARI
+               Atari machine
+
+              __GNUC__
+                    GNU-C
+
+         AMIGA
+               Commodore Amiga machine
+
+              __GNUC__
+                    GNU-C
+
+         VMS
+               DEC Vax/VMS machine using GNU's GCC
+
+         VAXC
+               DEC Vax/VMS machine using VAX CC
+
+         __50SERIES
+               Prime/PRIMOS machine
+
+         UNIX
+               UN*X machine in general
+
+              SCO
+                    SCO UN*X
+
+              LINUX
+                    ix86 Linux
+
+   * (Auto)configure detects symbols
+
+         V A R I O U S
+               See the `config.hin' file for more details!
+
+   * Gcal's internal symbols setting its main behaviour
+
+         USE_DE
+               Enable German texts, holidays and calendar style for
+               *NON*-(auto)configured systems only!
+
+         USE_EASC
+               Enable displaying using the extended ASCII character set.
+
+         USE_HLS
+               Enable highlighting sequences/marking characters.
+
+         USE_PAGER
+               Enable simple, internal pager feature.
+
+         USE_RC
+               Enable fixed date feature.
+
+   * Further internal symbols
+
+         CUT_LONGNAMES
+               Cuts respectively replaces some long variable or
+               function names to 6 significant places so *any* linker
+               should be able to bind an executable file.
+

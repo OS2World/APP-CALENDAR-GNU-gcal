@@ -1,0 +1,69 @@
+LIMITATIONS file for `gcal'.
+
+Here are all internal limitations of `gcal':
+
+   * Number of command line arguments
+        == INT_MAX / sizeof(char *)
+
+   * Number of month/year list elements given in the command line
+        == INT_MAX / sizeof(Ml_struct *)
+
+   * Number of response/resource/include files
+        == unlimited
+
+   * Number of response/resource/include file lines
+        == unlimited
+
+   * Number of nested include files (but operating system/compiler
+     limits this)
+        == INT_MAX / sizeof(File_struct *)
+
+   * Length of file names (inclusive `\0')
+        == INT_MAX
+
+   * Length of contents of environment variables (inclusive `\0')
+        == INT_MAX
+
+   * Length of a single highlighting sequence (inclusive `\0')
+        == INT_MAX
+
+   * Number of managed highlighting sequence pairs
+        == 2
+
+   * Number of characters in a string (inclusive `\0')
+        == INT_MAX
+
+   * Line length of response/resource/include files (inclusive `\0')
+        == INT_MAX
+
+   * Number of fixed dates
+        == INT_MAX / sizeof(char *)
+
+   * Number of `%?'... special texts in a resource file line
+        == unlimited
+
+   * Range of computations in `%?'... special texts of a resource file
+     line
+        == LONG_MIN...LONG_MAX
+
+   * Number of assignable date variables DVAR in each file nesting level
+        == 24
+
+   * Number of assignable text variables TVAR in each file nesting level
+        == 26
+
+   * Year range for computing calendar sheets
+        == 1...9999
+
+   * Year range for computing the Easter Sunday's date
+        == 30...9999
+
+   * Range of months given in the command line
+        == 1/1...12/9999  (== 9999*12 => 119,988 program cycles maximum)
+
+   * Maximum number of managed *external pager* programs
+        == 3
+
+   * Maximum number of burned-in *eternal holiday* dates
+        == 512
+

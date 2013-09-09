@@ -1,0 +1,806 @@
+#  $Id: Makefile.in 0.39 1997/06/25 00:03:09 tom Exp $
+###############################################################################
+#
+#  Generic Makefile to manage all Gcal targets.
+#
+#  Copyright (C) 1994-1997      Thomas Esken            <esken@uni-muenster.de>
+#                               Im Hagenfeld 84
+#                               D-48147 M"unster
+#                               GERMANY
+#
+###############################################################################
+#
+#
+#
+#### Start of system configuration section. ####
+
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+
+@SET_MAKE@
+
+SHAR = @SHAR@
+ZIP = @ZIP@
+ZOO = @ZOO@
+LHA = @LHA@
+TAR = @TAR@
+GZIP = @GZIP@
+COMPRESS = @COMPRESS@
+
+X=
+# For OS/2 or MSDOS, use: X=.exe
+
+O=.o
+# For OS/2 or MSDOS, use: O=.obj
+
+#### End of system configuration section. ####
+
+
+
+#### Start of package specific make variable definition section. ####
+
+SHELL = /bin/sh
+
+#
+# Compressor/archiver flags.
+#
+SHARFLAGS = -MF
+ZIPFLAGS = -ur9
+ZOOFLAGS = ahI
+LHAFLAGS = u
+TARFLAGS = -cvf
+GZIPFLAGS = -c9
+COMPRESSFLAGS = -c
+
+#
+# File owner permissions used for all distribution targets.
+#
+DISTBINPERMS = 0777
+DISTSRCPERMS = 0666
+#
+# File owner permissions used for installdates targets and
+# for resetting the permissions after running a distribution target.
+#
+BINPERMS = `echo $(INSTALL_PROGRAM) | sed -e 's/[^0-9]//g'`
+SRCPERMS = `echo $(INSTALL_DATA) | sed -e 's/[^0-9]//g'`
+#
+# File owner permissions used for installdates targets and
+# for resetting the permissions after running a distribution target
+# if the configure script doesn't set $(BINPERMS) or $(SRCPERMS).
+#
+BINPERMS2 = 0755
+SRCPERMS2 = 0644
+
+#
+# Standard names.
+#
+
+srcDIR = src#
+SRCS = $(srcDIR)/gcal.c $(srcDIR)/file-io.c $(srcDIR)/hd-data.c \
+  $(srcDIR)/hd-use.c $(srcDIR)/help.c $(srcDIR)/print.c \
+  $(srcDIR)/rc-check.c $(srcDIR)/rc-insert.c $(srcDIR)/rc-use.c \
+  $(srcDIR)/rc-utils.c $(srcDIR)/regexp.c $(srcDIR)/tty.c \
+  $(srcDIR)/utils.c \
+  $(srcDIR)/tcal.c $(srcDIR)/txt2gcal.c $(srcDIR)/gcal2txt.c
+
+HDRS = $(srcDIR)/gcal.h $(srcDIR)/defines.h $(srcDIR)/tailor.h \
+  $(srcDIR)/regexp.h
+
+genFILES = ABOUT-NLS ATTENTION BUGS COPYING DISCLAIM HISTORY \
+  INSTALL LIMITATIONS NEWS README SYMBOLS THANKS TODO MANIFEST \
+  Makefile.in configure.in stamp-h.in acconfig.h config.hin \
+  aclocal.m4 $(srcDIR)/Makefile.in $(SRCS) $(HDRS)
+
+shellscriptFILES = configure install-inf.in install-sh mkinstalldirs
+
+dataDIR = data#
+dataREADMEFILE = $(dataDIR)/README
+dataGCALRCFILE = $(dataDIR)/gcalrc
+dataEXAMPLEFILES = $(dataDIR)/ansipic.rc $(dataDIR)/textpic.rc \
+  $(dataDIR)/meteoric.rc
+dataMISCFILES = $(dataDIR)/Makefile.in \
+  $(dataREADMEFILE) $(dataGCALRCFILE) $(dataEXAMPLEFILES)
+
+datascriptDIR = $(dataDIR)/scripts#
+datascriptFILES = $(datascriptDIR)/cal2gcal.awk $(datascriptDIR)/cal2gcal.pl \
+  $(datascriptDIR)/ct2gcal.awk $(datascriptDIR)/ct2gcal.pl \
+  $(datascriptDIR)/old2v220.awk $(datascriptDIR)/old2v220.pl
+
+calendarsDIR = $(dataDIR)/calendars#
+calendarsFILES = $(calendarsDIR)/calendar.birth $(calendarsDIR)/calendar.chris \
+  $(calendarsDIR)/calendar.compu $(calendarsDIR)/calendar.histo \
+  $(calendarsDIR)/calendar.holid $(calendarsDIR)/calendar.judai \
+  $(calendarsDIR)/calendar.music $(calendarsDIR)/calendar.ushol
+
+datesDIR = $(dataDIR)/dates#
+datesFILES = $(datesDIR)/ancient $(datesDIR)/can_holiday $(datesDIR)/celtic \
+  $(datesDIR)/computing $(datesDIR)/events $(datesDIR)/events1 \
+  $(datesDIR)/events2 $(datesDIR)/events3 $(datesDIR)/events4 \
+  $(datesDIR)/events5 $(datesDIR)/events6 $(datesDIR)/gdead \
+  $(datesDIR)/hawaii $(datesDIR)/literature $(datesDIR)/lives \
+  $(datesDIR)/lives1 $(datesDIR)/lives2 $(datesDIR)/lives3 \
+  $(datesDIR)/lives4 $(datesDIR)/lives5 $(datesDIR)/lives6 $(datesDIR)/lotr \
+  $(datesDIR)/movies $(datesDIR)/music $(datesDIR)/radio $(datesDIR)/sfo \
+  $(datesDIR)/space $(datesDIR)/sports $(datesDIR)/television \
+  $(datesDIR)/usa_holiday $(datesDIR)/usa_other $(datesDIR)/usa_states \
+  $(datesDIR)/witchcraft $(datesDIR)/world
+datesMISCFILES = $(datesDIR)/CREDITS $(datesDIR)/README
+
+docDIR = doc#
+
+manDIR = man#
+texiDIR = texi#
+
+docMISCFILES = $(docDIR)/2accent.awk $(docDIR)/2accent.pl \
+  $(docDIR)/GREG-REFORM $(docDIR)/calendar.faq \
+  $(docDIR)/ISO_3166 $(docDIR)/ISO_639 \
+  $(docDIR)/Makefile.in $(docDIR)/texinfo.tex
+
+# German language (de)
+de = de#
+
+$(de)-infoFILES = $(docDIR)/$(de)/gcal.info \
+  $(docDIR)/$(de)/gcal.info-1 $(docDIR)/$(de)/gcal.info-2 \
+  $(docDIR)/$(de)/gcal.info-3 $(docDIR)/$(de)/gcal.info-4 \
+  $(docDIR)/$(de)/gcal.info-5 $(docDIR)/$(de)/gcal.info-6 \
+  $(docDIR)/$(de)/gcal.info-7 $(docDIR)/$(de)/gcal.info-8 \
+  $(docDIR)/$(de)/gcal.info-9
+
+$(de)-manFILES = $(docDIR)/$(de)/$(manDIR)/gcal.1 \
+  $(docDIR)/$(de)/$(manDIR)/tcal.1 $(docDIR)/$(de)/$(manDIR)/txt2gcal.1 \
+  $(docDIR)/$(de)/$(manDIR)/gcal2txt.1 
+
+$(de)-texiFILES = $(docDIR)/$(de)/$(texiDIR)/gcal.texi
+
+$(de)-txtFILES = $(docDIR)/$(de)/gcal.txt
+
+# English language (en)
+en = en#
+
+$(en)-infoFILES = $(docDIR)/$(en)/gcal.info \
+  $(docDIR)/$(en)/gcal.info-1 $(docDIR)/$(en)/gcal.info-2 \
+  $(docDIR)/$(en)/gcal.info-3 $(docDIR)/$(en)/gcal.info-4 \
+  $(docDIR)/$(en)/gcal.info-5 $(docDIR)/$(en)/gcal.info-6 \
+  $(docDIR)/$(en)/gcal.info-7 $(docDIR)/$(en)/gcal.info-8
+
+$(en)-manFILES = $(docDIR)/$(en)/$(manDIR)/gcal.1 \
+  $(docDIR)/$(en)/$(manDIR)/tcal.1 $(docDIR)/$(en)/$(manDIR)/txt2gcal.1 \
+  $(docDIR)/$(en)/$(manDIR)/gcal2txt.1
+
+$(en)-texiFILES = $(docDIR)/$(en)/$(texiDIR)/gcal.texi
+
+$(en)-txtFILES = $(docDIR)/$(en)/gcal.txt
+
+# French language (fr)
+fr = fr#
+
+# Dutch language (nl)
+nl = nl#
+
+# Polish language (pl)
+pl = pl#
+
+# Swedish language (sv)
+sv = sv#
+
+infoFILES = $($(de)-infoFILES) $($(en)-infoFILES)
+
+manFILES = $($(de)-manFILES) $($(en)-manFILES)
+
+texiFILES = $($(de)-texiFILES) $($(en)-texiFILES)
+
+txtFILES = $($(de)-txtFILES) $($(en)-txtFILES)
+
+
+miscDIR = misc#
+miscFILES = $(miscDIR)/gcalltx $(miscDIR)/gcalltx.bat $(miscDIR)/gcalltx.sed \
+  $(miscDIR)/wdays $(miscDIR)/wdays.bat $(miscDIR)/wdays.sed \
+  $(miscDIR)/locale.alias $(miscDIR)/magic.add \
+  $(miscDIR)/Makefile.in $(miscDIR)/README
+
+poDIR = po#
+poFILES = $(poDIR)/ChangeLog $(poDIR)/Makefile.in.in $(poDIR)/POTFILES.in \
+  $(poDIR)/$(de).po $(poDIR)/$(fr).po $(poDIR)/$(nl).po $(poDIR)/$(pl).po \
+  $(poDIR)/$(sv).po
+
+poCREATFILES= $(poDIR)/gcal.pot $(poDIR)/cat-id-tbl.c $(poDIR)/stamp-cat-id \
+  $(poDIR)/$(de).gmo $(poDIR)/$(fr).gmo $(poDIR)/$(nl).gmo $(poDIR)/$(pl).gmo \
+  $(poDIR)/$(sv).gmo
+
+intlDIR = intl#
+intlFILES = $(intlDIR)/ChangeLog $(intlDIR)/Makefile.in $(intlDIR)/VERSION \
+  $(intlDIR)/bindtextdom.c $(intlDIR)/cat-compat.c $(intlDIR)/dcgettext.c \
+  $(intlDIR)/dgettext.c $(intlDIR)/explodename.c $(intlDIR)/finddomain.c \
+  $(intlDIR)/gettext.c $(intlDIR)/gettext.h $(intlDIR)/gettextP.h \
+  $(intlDIR)/hash-string.h $(intlDIR)/intl-compat.c $(intlDIR)/l10nflist.c \
+  $(intlDIR)/libgettext.h $(intlDIR)/linux-msg.sed $(intlDIR)/loadinfo.h \
+  $(intlDIR)/loadmsgcat.c $(intlDIR)/localealias.c $(intlDIR)/po2tbl.sed.in \
+  $(intlDIR)/textdomain.c $(intlDIR)/xopen-msg.sed
+
+#
+#  Machine specific names.
+#
+
+systemsDIR = systems#
+
+systemsMISCFILES = $(systemsDIR)/README
+
+acornDIR = $(systemsDIR)/acorn#
+acornFILES = $(acornDIR)/readme.arm $(acornDIR)/makefile.gcc
+
+amigaDIR = $(systemsDIR)/amiga#
+amigaFILES = $(amigaDIR)/makefile.sas $(amigaDIR)/makefile.gcc
+
+atariDIR = $(systemsDIR)/atari#
+atariFILES = $(atariDIR)/makefile.st
+
+ntDIR = $(systemsDIR)/nt#
+ntFILES = $(ntDIR)/makefile.nt
+
+msdosDIR = $(systemsDIR)/msdos#
+msdosFILES = $(msdosDIR)/gcal_tc2.prj $(msdosDIR)/makefile.bcc \
+  $(msdosDIR)/makefile.djg $(msdosDIR)/makefile.msc $(msdosDIR)/makefile.tc2 \
+  $(msdosDIR)/makefile.tcc $(msdosDIR)/makefile.wcc $(msdosDIR)/makefile.ztc
+
+os2DIR = $(systemsDIR)/os2#
+os2INTLDIR = $(os2DIR)/intl#
+os2FILES = $(os2DIR)/readme.os2 $(os2DIR)/makefile.os2 $(os2DIR)/config.h \
+  $(os2INTLDIR)/makefile.os2 $(os2INTLDIR)/gnuintl.def $(os2INTLDIR)/patches.os2
+
+primosDIR = $(systemsDIR)/primos#
+primosINCDIR = $(primosDIR)/include#
+primosFILES = $(primosDIR)/readme.pri $(primosDIR)/ci.opts \
+  $(primosDIR)/build.cpl $(primosDIR)/getenv.c $(primosINCDIR)/stdlib.h
+
+vmsDIR = $(systemsDIR)/vms#
+vmsFILES = $(vmsDIR)/readme.vms $(vmsDIR)/makegcal.com $(vmsDIR)/makefile.gcc \
+  $(vmsDIR)/makefile.mms $(vmsDIR)/makefile.vms
+
+#
+# Combined names.
+#
+
+SUBDIRS = $(intlDIR) @POSUB@ $(srcDIR) $(miscDIR) $(docDIR) $(dataDIR)
+
+DISTDIRS = $(dataDIR) $(calendarsDIR) $(datesDIR) $(datascriptDIR) \
+  $(docDIR) \
+  $(docDIR)/$(de) \
+  $(docDIR)/$(de)/$(manDIR) $(docDIR)/$(de)/$(texiDIR) \
+  $(docDIR)/$(en) \
+  $(docDIR)/$(en)/$(manDIR) $(docDIR)/$(en)/$(texiDIR) \
+  $(intlDIR) $(miscDIR) $(poDIR) $(srcDIR) \
+  $(systemsDIR) $(acornDIR) $(amigaDIR) $(atariDIR) $(msdosDIR) \
+  $(ntDIR) $(os2DIR) $(os2INTLDIR) $(primosDIR) $(primosINCDIR) \
+  $(vmsDIR)
+
+DISTFILES = $(genFILES) $(shellscriptFILES) $(docMISCFILES) $(manFILES) \
+  $(texiFILES) $(dataMISCFILES) $(calendarsFILES) $(datesMISCFILES) \
+  $(datesFILES) $(datascriptFILES) $(intlFILES) $(miscFILES) \
+  $(poFILES) $(systemsMISCFILES) $(acornFILES) $(amigaFILES) \
+  $(atariFILES) $(msdosFILES) $(ntFILES) $(os2FILES) $(primosFILES) \
+  $(vmsFILES)
+
+CREATFILES = $(txtFILES) $(infoFILES) $(poCREATFILES)
+
+#### End of package specific make variable definition section. ####
+
+
+
+#### Start of default targets section. ####
+
+default: all-recursive
+
+all: default
+
+#
+# My private maintainer target.
+#
+overall: install-recursive dist distzip
+	@echo "All targets created"
+
+help:
+	@echo
+	@echo "Most important Makefile targets:"
+	@echo
+	@echo "Standard:       default  all  overall  check  TAGS  help"
+	@echo
+	@echo "Machine:        next  next-fat  os2_gcc  xenix_286  coherent"
+	@echo
+	@echo "Configuration:  Makefile  config.status  $(srcdir)/configure"
+	@echo
+	@echo "Binary:         gcal$X  tcal$X  txt2gcal$X  gcal2txt$X"
+	@echo
+	@echo "Documentation:  gcal.txt  txt  gcal.info  info  gcal.dvi  dvi"
+	@echo
+	@echo "Installation:   install      installdirs  installbin   install-strip"
+	@echo "                installdata  installman   installinfo  installdates"
+	@echo
+	@echo "NLS specific:   POTFILES  update-po  $(PACKAGE).pot  cat-id-tbl.c"
+	@echo
+	@echo "Cleaning up:    clean        texclean   distclean  archiveclean"
+	@echo "                mostlyclean  realclean  uninstall  maintainer-clean"
+	@echo
+	@echo "Distribution:   dist  dist-gcal  distzip  distzoo  distlha  distshar"
+	@echo
+	@exit 0
+
+#### End of default targets section. ####
+
+
+
+#### Start of (auto)configure specific section. ####
+
+$(srcdir)/configure: configure.in aclocal.m4
+	@echo "Warning: $(srcdir)/configure is out of date"
+	cd $(srcdir) && rm -f configure && autoconf
+
+# autoheader might not change config.hin, so touch a stamp file.
+$(srcdir)/config.hin: stamp-h.in
+
+$(srcdir)/stamp-h.in: $(top_srcdir)/configure.in aclocal.m4 acconfig.h
+	cd $(top_srcdir) && autoheader
+	echo timestamp > $(srcdir)/stamp-h.in
+
+config.h: stamp-h
+
+stamp-h: config.hin config.status
+	CONFIG_FILES= CONFIG_HEADERS="config.h:config.hin" $(SHELL) ./config.status
+	echo timestamp > stamp-h
+
+Makefile: $(srcdir)/Makefile.in config.status
+	CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+config.status: configure
+	$(SHELL) ./config.status --recheck
+
+#### End of (auto)configure specific section. ####
+
+
+
+#### Start of clean section. ####
+
+archiveclean:
+	rm -f *.gz *.z *.Z *.zip *.zoo *.lzh *.shar*
+
+distclean-local: archiveclean
+	rm -f Makefile config.status config.cache config.log config.h stamp-h install-info
+
+realclean-local: distclean-local
+	rm -f ID id TAGS tags
+
+maintainer-clean-local: realclean-local
+	@echo "This command is intended only for maintainers to use;"
+	@echo "rebuilding the deleted files may require special tools."
+
+distclean: distclean-recursive distclean-local
+
+realclean: realclean-recursive distclean-local
+
+maintainer-clean: maintainer-clean-recursive maintainer-clean-local
+
+#### End of clean section. ####
+
+
+
+#### Start of install section. ####
+
+install: install-recursive
+	@echo "All installs done"
+
+#### End of install section. ####
+
+
+
+#### Start of recursive targets section. ####
+
+clean mostlyclean uninstall installdirs installbin install-strip \
+id ID tags TAGS all-recursive install-recursive distclean-recursive \
+realclean-recursive maintainer-clean-recursive dist-recursive \
+dist-gcal-recursive distzip-recursive distzoo-recursive \
+distlha-recursive distshar-recursive: Makefile config.h
+	for subdir in $(SUBDIRS); \
+	do \
+	  target=`echo $@ | sed -e 's/-recursive//'`; \
+	  echo "Making $$target in $$subdir"; \
+	  (cd $$subdir && $(MAKE) $$target) \
+	   || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+next next-fat os2_gcc xenix_286 coherent check \
+gcal$X tcal$X txt2gcal$X gcal2txt$X: Makefile config.h
+	echo "Making all in $(intlDIR)"; \
+	(cd $(intlDIR) && $(MAKE) all) \
+	 || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	if test -n "@POSUB@"; \
+	then \
+	  echo "Making all in @POSUB@"; \
+	  (cd @POSUB@ && $(MAKE) all) \
+	   || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	else \
+	  : ; \
+	fi; \
+	echo "Making $@ in $(srcDIR)"; \
+	cd $(srcDIR) && $(MAKE) $@
+
+gcal.txt txt gcal.info info gcal.dvi dvi texclean installman installinfo: Makefile
+	@echo "Making $@ in $(docDIR)"
+	cd $(docDIR) && $(MAKE) $@
+
+installdates installdata: Makefile
+	@echo "Making $@ in $(dataDIR)"
+	cd $(dataDIR) && $(MAKE) $@
+
+POTFILES update-po $(PACKAGE).pot cat-id-tbl.c: Makefile config.h
+	@echo "Making $@ in $(poDIR)"
+	cd $(poDIR) && $(MAKE) $@
+
+#### End of recursive targets section. ####
+
+
+
+#### Start of distribution section. ####
+
+#
+# Prefering gzip!
+#
+dist dist-gcal: Makefile dist-recursive $(DISTFILES)
+	distname=$(PACKAGE)-$(VERSION); \
+	if (test -n "$(GZIP)" && test ! -f "$$distname.tar.gz") || \
+	(test -n "$(COMPRESS)" && test ! -f "$$distname.tar.Z"); \
+	then \
+	  if test -n "$(TAR)" && (test -n "$(GZIP)" || test -n "$(COMPRESS)"); \
+	  then \
+	    if test -n "$(GZIP)"; \
+	    then \
+	      echo "Creating $$distname.tar.gz"; \
+	    else \
+	      echo "Creating $$distname.tar.Z"; \
+	    fi; \
+	    echo "Please wait..."; \
+	    rm -rf $$distname; \
+	    mkdir $$distname; \
+	    chmod $(DISTBINPERMS) $$distname; \
+	    for dir in $(DISTDIRS); \
+	    do \
+	      mkdir $$distname/$$dir; \
+	      chmod $(DISTBINPERMS) $$distname/$$dir; \
+	    done; \
+	    for file in $(DISTFILES) $(CREATFILES); \
+	    do \
+	      ln $(srcdir)/$$file $$distname/$$file 2>/dev/null || \
+	      { \
+	        echo "Cannot link, copying \`$(srcdir)/$$file'"; \
+	        cp -p $(srcdir)/$$file $$distname/$$file; \
+	      }; \
+	      chmod $(DISTSRCPERMS) $$distname/$$file; \
+	    done; \
+	    for file in $(shellscriptFILES); \
+	    do \
+	      chmod $(DISTBINPERMS) $$distname/$$file; \
+	    done; \
+	    if test -n "$(GZIP)"; \
+	    then \
+	      $(TAR) $(TARFLAGS) - $$distname | $(GZIP) $(GZIPFLAGS) > $$distname.tar.gz; \
+	      echo "$$distname.tar.gz created"; \
+	    else \
+	      $(TAR) $(TARFLAGS) - $$distname | $(COMPRESS) $(COMPRESSFLAGS) > $$distname.tar.Z; \
+	      echo "$$distname.tar.Z created"; \
+	    fi; \
+	    rm -rf $$distname; \
+	    if test -n "$(SRCPERMS)"; \
+	    then \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	    if test -n "$(BINPERMS)"; \
+	    then \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	  else \
+	    if test -z "$(TAR)"; \
+	    then \
+	      echo "Unable to create $$distname.tar, missing \`tar'"; \
+	    else \
+	      if test -z "$(GZIP)"; \
+	      then \
+	        echo "Unable to create $$distname.tar.gz, missing \`gzip'"; \
+	      else \
+	        echo "Unable to create $$distname.tar.Z, missing \`compress'"; \
+	      fi; \
+	    fi; \
+	  fi; \
+	else \
+	  if test -f "$$distname.tar.gz"; \
+	  then \
+	    echo "Creation of $$distname.tar.gz unnecessary,"; \
+	    echo "already existent. You have to erase this file first"; \
+	  else \
+	    echo "Creation of $$distname.tar.Z unnecessary,"; \
+	    echo "already existent. You have to erase this file first"; \
+	  fi; \
+	fi
+
+distzip: Makefile distzip-recursive $(DISTFILES)
+	distname=$(PACKAGE)-`echo $(VERSION) | sed -e 's/[.]//g'`; \
+	if test ! -f "$$distname.zip"; \
+	then \
+	  if test -n "$(ZIP)"; \
+	  then \
+	    echo "Creating $$distname.zip"; \
+	    echo "Please wait..."; \
+	    rm -rf $$distname; \
+	    mkdir $$distname; \
+	    chmod $(DISTBINPERMS) $$distname; \
+	    for dir in $(DISTDIRS); \
+	    do \
+	      mkdir $$distname/$$dir; \
+	      chmod $(DISTBINPERMS) $$distname/$$dir; \
+	    done; \
+	    for file in $(DISTFILES) $(CREATFILES); \
+	    do \
+	      ln $(srcdir)/$$file $$distname/$$file 2>/dev/null || \
+	      { \
+	        echo "Cannot link, copying \`$(srcdir)/$$file'"; \
+	        cp -p $(srcdir)/$$file $$distname/$$file; \
+	      }; \
+	      chmod $(DISTSRCPERMS) $$distname/$$file; \
+	    done; \
+	    for file in $(shellscriptFILES); \
+	    do \
+	      chmod $(DISTBINPERMS) $$distname/$$file; \
+	    done; \
+	    $(ZIP) $(ZIPFLAGS) $$distname $$distname; \
+	    echo "$$distname.zip created"; \
+	    rm -rf $$distname; \
+	    if test -n "$(SRCPERMS)"; \
+	    then \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	    if test -n "$(BINPERMS)"; \
+	    then \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	  else \
+	    echo "Unable to create $$distname.zip, missing \`zip'"; \
+	  fi; \
+	else \
+	  echo "Creation of $$distname.zip unnecessary,"; \
+	  echo "already existent. You have to erase this file first"; \
+	fi
+
+distzoo: Makefile distzoo-recursive $(DISTFILES)
+	distname=$(PACKAGE)-`echo $(VERSION) | sed -e 's/[.]//g'`; \
+	if test ! -f "$$distname.zoo"; \
+	then \
+	  if test -n "$(ZOO)"; \
+	  then \
+	    echo "Creating $$distname.zoo"; \
+	    echo "Please wait..."; \
+	    rm -rf $$distname; \
+	    mkdir $$distname; \
+	    chmod $(DISTBINPERMS) $$distname; \
+	    for dir in $(DISTDIRS); \
+	    do \
+	      mkdir $$distname/$$dir; \
+	      chmod $(DISTBINPERMS) $$distname/$$dir; \
+	    done; \
+	    for file in $(DISTFILES) $(CREATFILES); \
+	    do \
+	      ln $(srcdir)/$$file $$distname/$$file 2>/dev/null || \
+	      { \
+	        echo "Cannot link, copying \`$(srcdir)/$$file'"; \
+	        cp -p $(srcdir)/$$file $$distname/$$file; \
+	      }; \
+	      chmod $(DISTSRCPERMS) $$distname/$$file; \
+	    done; \
+	    for file in $(shellscriptFILES); \
+	    do \
+	      chmod $(DISTBINPERMS) $$distname/$$file; \
+	    done; \
+	    cat MANIFEST | sed -e "s/.\//$$distname\//" | $(ZOO) $(ZOOFLAGS) $$distname; \
+	    echo "$$distname.zoo created"; \
+	    rm -rf $$distname; \
+	    if test -n "$(SRCPERMS)"; \
+	    then \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	    if test -n "$(BINPERMS)"; \
+	    then \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	  else \
+	    echo "Unable to create $$distname.zoo, missing \`zoo'"; \
+	  fi; \
+	else \
+	  echo "Creation of $$distname.zoo unnecessary,"; \
+	  echo "already existent. You have to erase this file first"; \
+	fi
+
+distlha: Makefile distlha-recursive $(DISTFILES) 
+	distname=$(PACKAGE)-`echo $(VERSION) | sed -e 's/[.]//g'`; \
+	if test ! -f "$$distname.lzh"; \
+	then \
+	  if test -n "$(LHA)"; \
+	  then \
+	    echo "Creating $$distname.lzh"; \
+	    echo "Please wait..."; \
+	    rm -rf $$distname; \
+	    mkdir $$distname; \
+	    chmod $(DISTBINPERMS) $$distname; \
+	    for dir in $(DISTDIRS); \
+	    do \
+	      mkdir $$distname/$$dir; \
+	      chmod $(DISTBINPERMS) $$distname/$$dir; \
+	    done; \
+	    for file in $(DISTFILES) $(CREATFILES); \
+	    do \
+	      ln $(srcdir)/$$file $$distname/$$file 2>/dev/null || \
+	      { \
+	        echo "Cannot link, copying \`$(srcdir)/$$file'"; \
+	        cp -p $(srcdir)/$$file $$distname/$$file; \
+	      }; \
+	      chmod $(DISTSRCPERMS) $$distname/$$file; \
+	    done; \
+	    for file in $(shellscriptFILES); \
+	    do \
+	      chmod $(DISTBINPERMS) $$distname/$$file; \
+	    done; \
+	    $(LHA) $(LHAFLAGS) $$distname.lzh $$distname; \
+	    echo "$$distname.lzh created"; \
+	    rm -rf $$distname; \
+	    if test -n "$(SRCPERMS)"; \
+	    then \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	    if test -n "$(BINPERMS)"; \
+	    then \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	  else \
+	    echo "Unable to create $$distname.lzh, missing \`lha' or \`lharc'"; \
+	  fi; \
+	else \
+	  echo "Creation of $$distname.lzh unnecessary,"; \
+	  echo "already existent. You have to erase this file first"; \
+	fi
+
+distshar: Makefile distshar-recursive $(DISTFILES)
+	distname=$(PACKAGE)-$(VERSION); \
+	if test ! -f "$$distname.shar*"; \
+	then \
+	  if test -n "$(SHAR)"; \
+	  then \
+	    echo "Creating $$distname.shar"; \
+	    echo "Please wait..."; \
+	    rm -rf $$distname; \
+	    mkdir $$distname; \
+	    chmod $(DISTBINPERMS) $$distname; \
+	    for dir in $(DISTDIRS); \
+	    do \
+	      mkdir $$distname/$$dir; \
+	      chmod $(DISTBINPERMS) $$distname/$$dir; \
+	    done; \
+	    for file in $(DISTFILES) $(CREATFILES); \
+	    do \
+	      ln $(srcdir)/$$file $$distname/$$file 2>/dev/null || \
+	      { \
+	        echo "Cannot link, copying \`$(srcdir)/$$file'"; \
+	        cp -p $(srcdir)/$$file $$distname/$$file; \
+	      }; \
+	      chmod $(DISTSRCPERMS) $$distname/$$file; \
+	    done; \
+	    for file in $(shellscriptFILES); \
+	    do \
+	      chmod $(DISTBINPERMS) $$distname/$$file; \
+	    done; \
+	    $(SHAR) $(SHARFLAGS) -o$$distname.shar $$distname; \
+	    echo "$$distname.shar created"; \
+	    rm -rf $$distname; \
+	    if test -n "$(SRCPERMS)"; \
+	    then \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(DISTFILES) $(CREATFILES); \
+	      do \
+	        chmod $(SRCPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	    if test -n "$(BINPERMS)"; \
+	    then \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS) $(srcdir)/$$file; \
+	      done; \
+	    else \
+	      for file in $(shellscriptFILES); \
+	      do \
+	        chmod $(BINPERMS2) $(srcdir)/$$file; \
+	      done; \
+	    fi; \
+	  else \
+	    echo "Unable to create $$distname.shar, missing \`shar'"; \
+	  fi; \
+	else \
+	  echo "Creation of $$distname.shar unnecessary,"; \
+	  echo "already existent. You have to erase this file first"; \
+	fi
+
+#### End of distribution section. ####
+
+
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
+
+# End of file

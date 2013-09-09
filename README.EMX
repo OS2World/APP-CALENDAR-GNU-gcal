@@ -1,0 +1,28 @@
+This copy of the GNU calendar has been compiled with emx+gcc
+using the emx 0.9c development tools. It can be used under
+OS/2, DOS and Win32.
+
+An up to date copy should always be available as
+
+  ftp://ftp.leo.org/pub/comp/os/os2/leo/gnu/other
+
+To install the GNU calendar:
+
+This version supports internationalization. To use it, set the
+LANGUAGE environment variable (for german messages, set it to "de").
+
+For that to work, you must set the LOCALEDIR environment variable to
+point to the base locale directory (default is /lib/locale). Into this
+directory, you must copy po/de.gmo (german message catalog, for
+example) from the distribution as de/LC_MESSAGES/gcal.mo and so
+on for other languages.
+
+Kai Uwe Rommel
+
+--
+/* Kai Uwe Rommel      ARS Computer & Consulting GmbH, Muenchen, Germany *
+ * rommel@ars.de             CompuServe 100265,2651, Fax +49 89 324 4524 *
+ * rommel@leo.org (ftp://ftp.leo.org/pub/comp/os/os2 maintenance)        */
+
+DOS ... is still a real mode only non-reentrant interrupt
+handler, and always will be.                -Russell Williams

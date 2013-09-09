@@ -1,0 +1,129 @@
+#  $Id: Makefile.in 0.29 1997/04/23 00:02:09 tom Exp $
+###############################################################################
+#
+#  Generic Makefile to create the Gcal miscellaneous files.
+#
+#  Copyright (C) 1994-1997      Thomas Esken            <esken@uni-muenster.de>
+#                               Im Hagenfeld 84
+#                               D-48147 M"unster
+#                               GERMANY
+#
+###############################################################################
+#
+#
+#
+#### Start of system configuration section. ####
+
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+
+subdir = misc
+
+@SET_MAKE@
+
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+
+prefix = @prefix@
+# Where to install the `locale.alias' file.
+localedir = $(prefix)/@DATADIRNAME@/locale
+
+#### End of system configuration section. ####
+
+
+
+#### Start of package specific make variable definition section. ####
+
+SHELL = /bin/sh
+
+#
+# Standard names.
+#
+
+DISTFILES = gcalltx gcalltx.bat gcalltx.sed \
+  wdays wdays.bat wdays.sed \
+  locale.alias magic.add \
+  Makefile.in README
+
+ALLDIRS-yes = $(ALLDIRS-no) $(localedir)
+
+ALLDIRS-no = $(bindir)
+
+#### End of package specific make variable definition section. ####
+
+
+
+#### Start of default targets section. ####
+
+all: default
+
+default installalias-no uninstall clean id ID tags TAGS:
+	@echo "Nothing to be done for \`$@'"
+
+#### End of default targets section. ####
+
+
+
+#### Start of install section. ####
+
+install: installdirs installalias
+	@echo "All installs in $(subdir) done"
+
+installdirs: $(top_srcdir)/mkinstalldirs
+	$(NORMAL_INSTALL)
+	$(SHELL) $(top_srcdir)/mkinstalldirs $(ALLDIRS-@USE_NLS@)
+
+installalias: installalias-@USE_NLS@
+installalias-yes: $(srcdir)/locale.alias installdirs
+	$(NORMAL_INSTALL)
+	if test ! -f "$(localedir)/locale.alias"; \
+	then \
+	  echo "Installing \`$(srcdir)/locale.alias' as \`$(localedir)/locale.alias'"; \
+	  $(INSTALL_DATA) $(srcdir)/locale.alias $(localedir)/locale.alias; \
+	  echo "Alias file \`locale.alias' installed"; \
+	else \
+	  : ; \
+	fi
+installbin install-strip: installalias
+	$(NORMAL_INSTALL)
+
+#### End of install section. ####
+
+
+
+#### Start of clean section. ####
+
+distclean:
+	rm -f Makefile
+
+mostlyclean: distclean
+
+realclean: distclean
+	rm -f id ID tags TAGS
+
+maintainer-clean: realclean
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+#### End of clean section. ####
+
+
+
+dist dist-gcal distzip distzoo distlha distshar: Makefile $(DISTFILES)
+
+Makefile: $(srcdir)/Makefile.in ../config.status
+	cd .. \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	       $(SHELL) ./config.status
+
+
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
+
+# End of file
