@@ -1,0 +1,275 @@
+Only in new/intl: patches.os2
+Only in new/intl: Makefile.os2
+Only in new/intl: gnuintl.def
+diff -cbr orig/intl/bindtextdom.c new/intl/bindtextdom.c
+*** orig/intl/bindtextdom.c	Sat Jul 06 03:52:36 1996
+--- new/intl/bindtextdom.c	Sun Jul 28 12:46:06 1996
+***************
+*** 46,52 ****
+  /* @@ end of prolog @@ */
+  
+  /* Contains the default location of the message catalogs.  */
+! extern const char _nl_default_dirname[];
+  
+  /* List with bindings of specific domains.  */
+  extern struct binding *_nl_domain_bindings;
+--- 46,52 ----
+  /* @@ end of prolog @@ */
+  
+  /* Contains the default location of the message catalogs.  */
+! extern const char *_nl_default_dirname;
+  
+  /* List with bindings of specific domains.  */
+  extern struct binding *_nl_domain_bindings;
+***************
+*** 70,75 ****
+--- 70,78 ----
+       const char *dirname;
+  {
+    struct binding *binding;
++ 
++   if (_nl_default_dirname == NULL)
++     _nl_default_dirname = GNULOCALEDIR;
+  
+    /* Some sanity checks.  */
+    if (domainname == NULL || domainname[0] == '\0')
+diff -cbr orig/intl/dcgettext.c new/intl/dcgettext.c
+*** orig/intl/dcgettext.c	Sat Jul 06 03:52:36 1996
+--- new/intl/dcgettext.c	Wed Aug 07 17:47:18 1996
+***************
+*** 151,157 ****
+  const char *_nl_current_default_domain = _nl_default_default_domain;
+  
+  /* Contains the default location of the message catalogs.  */
+! const char _nl_default_dirname[] = GNULOCALEDIR;
+  
+  /* List with bindings of specific domains created by bindtextdomain()
+     calls.  */
+--- 151,157 ----
+  const char *_nl_current_default_domain = _nl_default_default_domain;
+  
+  /* Contains the default location of the message catalogs.  */
+! const char *_nl_default_dirname = NULL;
+  
+  /* List with bindings of specific domains created by bindtextdomain()
+     calls.  */
+***************
+*** 235,240 ****
+--- 234,242 ----
+    if (msgid == NULL)
+      return NULL;
+  
++   if (_nl_default_dirname == NULL)
++     _nl_default_dirname = GNULOCALEDIR;
++ 
+    /* If DOMAINNAME is NULL, we are interested in the default domain.  If
+       CATEGORY is not LC_MESSAGES this might not make much sense but the
+       defintion left this undefined.  */
+***************
+*** 258,264 ****
+--- 260,273 ----
+  
+    if (binding == NULL)
+      dirname = (char *) _nl_default_dirname;
++ #ifdef OS2
++ #define getcwd _getcwd2
++   /* we have to deal with drive letters here and with getcwd below */
++   else if (binding->dirname[0] == '/' || 
++ 	   isalpha(binding->dirname[0]) && binding->dirname[1] == ':')
++ #else
+    else if (binding->dirname[0] == '/')
++ #endif
+      dirname = binding->dirname;
+    else
+      {
+diff -cbr orig/intl/gettext.h new/intl/gettext.h
+*** orig/intl/gettext.h	Sat Jul 06 03:52:38 1996
+--- new/intl/gettext.h	Wed Aug 07 15:34:46 1996
+***************
+*** 25,30 ****
+--- 25,36 ----
+  # include <limits.h>
+  #endif
+  
++ #ifdef OS2
++ #define PATH_SEPARATOR ';'
++ #else
++ #define PATH_SEPARATOR ':'
++ #endif
++ 
+  /* @@ end of prolog @@ */
+  
+  /* The magic number of the GNU message catalog format.  */
+diff -cbr orig/intl/libgettext.h new/intl/libgettext.h
+*** orig/intl/libgettext.h	Sat Jul 06 03:52:38 1996
+--- new/intl/libgettext.h	Wed Aug 07 17:41:38 1996
+***************
+*** 36,41 ****
+--- 36,49 ----
+  # include <locale.h>
+  #endif
+  
++ #ifdef OS2
++ #define CheckEnv(e, d) ({char *v = getenv(e); v ? v : (d);})
++ #define StrCat(s1, s2) ({int l = strlen(s1) + strlen(s2);  \
++   char *r = malloc(l); strcpy(r, s1); strcat(r, s2); r;})
++ #define GNULOCALEDIR CheckEnv("GNULOCALEDIR","/lib/glocale")
++ #define LOCALE_ALIAS_PATH StrCat(GNULOCALEDIR, ";.")
++ #define LOCALEDIR CheckEnv("LOCALEDIR","/lib/locale")
++ #endif
+  
+  #ifdef __cplusplus
+  extern "C" {
+diff -cbr orig/intl/loadmsgcat.c new/intl/loadmsgcat.c
+*** orig/intl/loadmsgcat.c	Sat Jul 06 03:52:40 1996
+--- new/intl/loadmsgcat.c	Wed Aug 07 17:49:48 1996
+***************
+*** 38,43 ****
+--- 38,47 ----
+  #include "gettext.h"
+  #include "gettextP.h"
+  
++ #ifndef O_BINARY
++ #define O_BINARY 0
++ #endif
++ 
+  /* @@ end of prolog @@ */
+  
+  #ifdef _LIBC
+***************
+*** 58,63 ****
+--- 62,92 ----
+  int _nl_msg_cat_cntr;
+  
+  
++ #ifdef OS2
++ 
++ #include <string.h>
++ 
++ /* quick hack to at least translate german umlauts from Latin-1 to
++    Codepage 850/437 - needs to be extended to other NLS characters */
++ 
++ static char *cp850  = "\x84\x94\x81\x8E\x99\x9A\xE1";
++ static char *latin1 = "\xE4\xF6\xFC\xC4\xD6\xDC\xDF";
++ 
++ static void recode_msg (char *msg)
++ {
++   char *ptr = msg;
++   int len = strlen (msg), pos;
++ 
++   while ((pos = strcspn(ptr, latin1)) < len)
++   {
++     ptr[pos] = cp850[strchr(latin1, ptr[pos]) - latin1];
++     ptr += pos + 1;
++     len -= pos + 1;
++   }
++ }
++ 
++ #endif
++ 
+  /* Load the message catalogs specified by FILENAME.  If it is no valid
+     message catalog do nothing.  */
+  void
+***************
+*** 84,90 ****
+      return;
+  
+    /* Try to open the addressed file.  */
+!   fd = open (domain_file->filename, O_RDONLY);
+    if (fd == -1)
+      return;
+  
+--- 113,119 ----
+      return;
+  
+    /* Try to open the addressed file.  */
+!   fd = open (domain_file->filename, O_RDONLY | O_BINARY);
+    if (fd == -1)
+      return;
+  
+***************
+*** 192,197 ****
+--- 221,235 ----
+        domain_file->data = NULL;
+        return;
+      }
++ 
++ #ifdef OS2
++   {
++     int i;
++     for (i = 0; i < domain->nstrings; i++)
++       recode_msg ((char *) domain->data + W (domain->must_swap,
++ 					     domain->trans_tab[i].offset));
++   }
++ #endif
+  
+    /* Show that one domain is changed.  This might make some cached
+       translations invalid.  */
+diff -cbr orig/intl/localealias.c new/intl/localealias.c
+*** orig/intl/localealias.c	Sat Jul 06 03:52:40 1996
+--- new/intl/localealias.c	Wed Aug 07 15:54:34 1996
+***************
+*** 65,70 ****
+--- 65,75 ----
+  # endif
+  #endif
+  
++ #ifdef _LIBC
++ # include <libintl.h>
++ #else
++ # include "libgettext.h"
++ #endif
+  #include "gettext.h"
+  #include "gettextP.h"
+  
+***************
+*** 137,146 ****
+  _nl_expand_alias (name)
+      const char *name;
+  {
+!   static const char *locale_alias_path = LOCALE_ALIAS_PATH;
+    struct alias_map *retval;
+    size_t added;
+  
+    do
+      {
+        struct alias_map item;
+--- 142,154 ----
+  _nl_expand_alias (name)
+      const char *name;
+  {
+!   static const char *locale_alias_path = NULL;
+    struct alias_map *retval;
+    size_t added;
+  
++   if (locale_alias_path == NULL)
++     locale_alias_path = LOCALE_ALIAS_PATH;
++ 
+    do
+      {
+        struct alias_map item;
+***************
+*** 166,176 ****
+  	{
+  	  const char *start;
+  
+! 	  while (locale_alias_path[0] == ':')
+  	    ++locale_alias_path;
+  	  start = locale_alias_path;
+  
+! 	  while (locale_alias_path[0] != '\0' && locale_alias_path[0] != ':')
+  	    ++locale_alias_path;
+  
+  	  if (start < locale_alias_path)
+--- 174,184 ----
+  	{
+  	  const char *start;
+  
+! 	  while (locale_alias_path[0] == PATH_SEPARATOR)
+  	    ++locale_alias_path;
+  	  start = locale_alias_path;
+  
+! 	  while (locale_alias_path[0] != '\0' && locale_alias_path[0] != PATH_SEPARATOR)
+  	    ++locale_alias_path;
+  
+  	  if (start < locale_alias_path)

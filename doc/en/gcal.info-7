@@ -1,0 +1,628 @@
+This is Info file ./en/gcal.info, produced by Makeinfo version 1.67
+from the input file ./en/gcal.texi.
+
+INFO-DIR-SECTION GNU packages
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                       The GNU calendar program.
+* tcal: (gcal)Invoking tcal.          Run Gcal with tomorrow's date.
+* txt2gcal: (gcal)Invoking txt2gcal.  Convert text file to resource file.
+* gcal2txt: (gcal)Invoking gcal2txt.  Convert resource file to text file.
+END-INFO-DIR-ENTRY
+
+  This file documents Gcal, a program for printing calendars.  Gcal
+displays a calendar for a month or a year, eternal holiday lists and
+fixed date lists, in many ways.  The program correctly omits the dates
+that were skipped when the current Gregorian calendar replaced the
+earlier Julian calendar.
+
+  Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+  This is the second edition of the Gcal documentation.
+
+  Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+  Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+  Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Free Software Foundation.
+
+  Any suggestions, improvements, extensions, bug reports, donations,
+proposals for contract work, and so forth are welcome!  Please send
+them directly to my eMail address.  If you like my work, I'd appreciate
+a postcard from you!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+
+File: gcal.info,  Node: Environment Variables,  Next: Error Codes,  Prev: Coding Scheme,  Up: Top
+
+Environment Variables
+*********************
+
+  Here is a table of all environment variables which are used by Gcal:
+
+`COLUMNS'
+`CO'
+     Sets the number of columns on the screen.  Takes precedence over
+     the number of columns specified by the `TERM' environment variable
+     or the system itself.
+
+`GCAL'
+     Flags which are passed to Gcal automatically.
+
+`GCALANSI'
+     If defined or set, ANSI escape highlighting sequences are used
+     respectively substituted by default if no other highlighting
+     sequences are defined by command line option or found in the
+     Termcap library.
+
+`GCAL_DATE_FORMAT'
+     Contains the date format text which defines the ordering of a
+     displayed date.  Takes precedence over the default date format
+     text.
+
+`GCALPATH'
+     (`:') colon-separated list of directories which are searched to
+     find the `.gcalrc' file.  Takes precedence over `GCAL_USR_DATADIR'
+     and `GCAL_SYS_DATADIR'.
+
+`GCALPROG'
+     Contains the file name of the executable Gcal program that is used
+     by the `tcal' program to call Gcal.  Takes precedence over the
+     file name `gcal' which is burned-in during the compilation step of
+     `tcal'.
+
+`GCAL_USR_DATADIR'
+     Name of a directory relative to `HOME' directory, where the user
+     stores personal, respectively *private access* resource files
+     (dates files).  Takes precedence over `GCAL_SYS_DATADIR'.
+
+`GCAL_SYS_DATADIR'
+     Name of a directory absolute *root*/*$(prefix)* directory, where
+     the system-administrator stores common, *public access* resource
+     files (dates files).
+
+`HOME'
+     Name of the users home directory.  This is used to find the
+     `.gcalrc' file.  Takes precedence over `GCALPATH',
+     `GCAL_USR_DATADIR' and `GCAL_SYS_DATADIR'.
+
+`LANGUAGE'
+     The national language and other cultural-specific conventions used
+     by Gcal at run-time.  Takes precedence over `LC_ALL', `LC_MESSAGES'
+     and `LANG'.
+
+`LC_ALL'
+     The national language and other cultural-specific conventions used
+     by Gcal at run-time.  Takes precedence over `LC_MESSAGES' and
+     `LANG'.
+
+`LC_MESSAGES'
+     The national language and other cultural-specific conventions used
+     by Gcal at run-time.  Takes precedence over `LANG'.
+
+`LANG'
+     The national language and other cultural-specific conventions used
+     by Gcal at run-time.
+
+`LINES'
+`LI'
+     Sets the number of lines on the screen.  Takes precedence over the
+     number of lines specified by the `TERM' environment variable or
+     the system itself.
+
+`MAILPROG'
+     Name of the mailer program which is used if the mailing option is
+     wanted.  *Note `--mail=ADDRESS': Global options, for more details.
+
+`PAGER'
+     Name of the *external* pager program which is used if the paging
+     option is wanted.  *Note `--pager': Global options, for more
+     details.
+
+`PATH'
+     (`:') colon-separated list of directories which are searched to
+     find the *external pager* program.  *Note `--pager': Global
+     options, for more details.
+
+`TERM'
+     The type of terminal on which Gcal is being run.
+
+`TZ'
+     The time zone information which is added to the date text of send
+     eMails, created response files and created shell script files.
+
+
+File: gcal.info,  Node: Error Codes,  Next: Argument Index,  Prev: Environment Variables,  Up: Top
+
+Error Codes
+***********
+
+  Gcal produces the following *exit* codes:
+
+`127'
+     Request for help screen, software license or program version
+     (adjustable).
+
+`126'
+     Invalid command line argument / option.
+
+`125'
+     Year out of range for computing the Easter Sunday's date.
+
+`124'
+     Virtual memory exhausted.
+
+`123'
+     Invalid date part in resource file or in include file.
+
+`122'
+     Invalid month field entry in resource file or in include file.
+
+`121'
+     Invalid day field entry in resource file or in include file.
+
+`120'
+     Malformed *#include* statement in resource file or in include file.
+
+`119'
+     Illegal recursive/cyclic *#include* statement in resource file or
+     in include file.
+
+`118'
+     Resource file or include file not found.
+
+`117'
+     Invalid N'th weekday field (only 1...5 or 9 valid).
+
+`116'
+     Missing *whitespace* separator character between *date part* and
+     *text part*.
+
+`115'
+     Response file respectively shell script can't be written.
+
+`114'
+     Invalid date variable operation.
+
+`113'
+     Referenced date variable undefined.
+
+`112'
+     Invalid date value assigned to date variable.
+
+`111'
+     Sending output to eMail address have failed.
+
+`110'
+     Internal error, C function pipe(), fork(), execlp() or unlink()
+     have failed.
+
+`109'
+     Error reading resource, include respectively response file.
+
+`108'
+     Illegal character found in response file.
+
+`107'
+     Internal error, invalid value for the size of an internal table
+     occurred.
+
+`106'
+     Invalid date format text specified.
+
+`105'
+     Invalid text variable definition.
+
+`104'
+     Invalid regular expression search pattern specified.
+
+`3'
+     Program aborted by signal.
+
+`2'
+     *Exit* code not equal zero returned by external command.
+
+`1'
+     Activated `-c|C[]', `-f|F NAME[+...]' or `-# LINE' option caused
+     no output of resource file entries.
+
+`0'
+     Normal program termination.
+
+
+File: gcal.info,  Node: Argument Index,  Next: Variable Index,  Prev: Error Codes,  Up: Top
+
+Command Line Argument Index
+***************************
+
+  Here is an alphabetical list of the command line arguments processed
+by Gcal:
+
+* Menu:
+
+* %DATE:                                 Actual date modifier.
+* -# LINE:                               Fixed date options.
+* -*dN:                                  Fixed date options.
+* -*dNWWW:                               Fixed date options.
+* -*wN[WWW]:                             Fixed date options.
+* --alternative-format:                  Fixed date options.
+* --biorhythm-axis=NUMBER:               Fixed date options.
+* --blocks=1:                            Calendar options.
+* --blocks=12:                           Calendar options.
+* --blocks=2:                            Calendar options.
+* --blocks=3:                            Calendar options.
+* --blocks=4:                            Calendar options.
+* --blocks=6:                            Calendar options.
+* --blocks=NUMBER:                       Calendar options.
+* --bypass-shell-command:                Fixed date options.
+* --calendar-dates=both:                 Calendar options.
+* --calendar-dates=special:              Calendar options.
+* --calendar-dates=special|both:         Calendar options.
+* --cc-holidays=CC[+...]:                Calendar options.
+* --christian-holidays:                  Calendar options.
+* --copyleft:                            Common options.
+* --copyright:                           Common options.
+* --date-format=de|us|gb|TEXT:           Calendar options.
+* --date-variable=ARGUMENT:              Fixed date options.
+* --debug=abort:                         Global options.
+* --debug=all:                           Global options.
+* --debug=handled:                       Global options.
+* --debug=internal:                      Global options.
+* --debug=unhandled:                     Global options.
+* --debug[=internal|handled|unhandled|all|abort]: Global options.
+* --descending-fixed-dates=long:         Fixed date options.
+* --descending-fixed-dates=short:        Fixed date options.
+* --descending-fixed-dates[=short|long]: Fixed date options.
+* --descending-holiday-list=long:        Calendar options.
+* --descending-holiday-list=short:       Calendar options.
+* --descending-holiday-list[=long|short]: Calendar options.
+* --disable-highlighting:                Global options.
+* --end-of-month:                        Fixed date options.
+* --end-of-week:                         Fixed date options.
+* --end-of-year:                         Fixed date options.
+* --exclude-fixed-dates-list-title:      Fixed date options.
+* --exclude-holiday-list-title:          Calendar options.
+* --exit-status-help-127:                Common options.
+* --export-date-variables <1>:           Date variables.
+* --export-date-variables:               Fixed date options.
+* --export-text-variables <1>:           Text variables.
+* --export-text-variables:               Fixed date options.
+* --filter-day=ARGUMENT:                 Fixed date options.
+* --filter-period=ARGUMENT:              Fixed date options.
+* --filter-text=PATTERN:                 Fixed date options.
+* --fixed-dates=both:                    Calendar options.
+* --fixed-dates=special:                 Calendar options.
+* --fixed-dates=special|both:            Calendar options.
+* --force-highlighting:                  Global options.
+* --gregorian-reform=1582|1700|1752|1753|ARGUMENT: Calendar options.
+* --grouping-text[=TEXT]:                Fixed date options.
+* --help <1>:                            Invoking tcal.
+* --help <2>:                            Invoking txt2gcal.
+* --help <3>:                            Invoking gcal2txt.
+* --help:                                Common options.
+* --here=LINE:                           Fixed date options.
+* --highlighting=no:                     Global options.
+* --highlighting=TEXT:                   Global options.
+* --highlighting=yes:                    Global options.
+* --holiday-dates=both:                  Calendar options.
+* --holiday-dates=special:               Calendar options.
+* --holiday-dates=special|both:          Calendar options.
+* --holiday-list=long:                   Calendar options.
+* --holiday-list=short:                  Calendar options.
+* --holiday-list[=long|short]:           Calendar options.
+* --include-consecutive-number:          Fixed date options.
+* --include-holidays=long:               Fixed date options.
+* --include-holidays=short:              Fixed date options.
+* --include-resource-file-name:          Fixed date options.
+* --include-today:                       Fixed date options.
+* --include-week-number:                 Fixed date options.
+* --leap-day=february:                   Fixed date options.
+* --leap-day=february|march:             Fixed date options.
+* --leap-day=march:                      Fixed date options.
+* --license:                             Common options.
+* --list-mode:                           Fixed date options.
+* --list-of-fixed-dates=long:            Fixed date options.
+* --list-of-fixed-dates=short:           Fixed date options.
+* --list-of-fixed-dates[=short|long]:    Fixed date options.
+* --long-help=?:                         Common options.
+* --long-help[=ARGUMENT]:                Common options.
+* --mail=ADDRESS:                        Global options.
+* --month:                               Fixed date options.
+* --moonimage-lines=NUMBER:              Fixed date options.
+* --omit-multiple-date-part:             Fixed date options.
+* --orthodox-calendar:                   Calendar options.
+* --pager:                               Global options.
+* --period-of-fixed-dates=ARGUMENT:      Fixed date options.
+* --resource-file=NAME[+...]:            Fixed date options.
+* --response-file=NAME:                  Global options.
+* --shell-script=NAME:                   Global options.
+* --shift=[+|-]NUMBER:                   Invoking tcal.
+* --start-of-month:                      Fixed date options.
+* --start-of-week:                       Fixed date options.
+* --start-of-year:                       Fixed date options.
+* --starting-day=ARGUMENT:               Calendar options.
+* --suppress-calendar:                   Calendar options.
+* --suppress-date-part:                  Fixed date options.
+* --text-variable=ARGUMENT:              Fixed date options.
+* --today:                               Fixed date options.
+* --tomorrow:                            Fixed date options.
+* --type=special|standard:               Calendar options.
+* --usage=?:                             Common options.
+* --usage[=ARGUMENT]:                    Common options.
+* --version <1>:                         Invoking tcal.
+* --version <2>:                         Invoking gcal2txt.
+* --version <3>:                         Invoking txt2gcal.
+* --version:                             Common options.
+* --week:                                Fixed date options.
+* --with-week-number:                    Calendar options.
+* --without-standard-holidays:           Calendar options.
+* --year:                                Fixed date options.
+* --zero-dates-only:                     Fixed date options.
+* -?:                                    Common options.
+* -??:                                   Common options.
+* -@DVAR[+|-]NWWW:                       Fixed date options.
+* -@DVAR[[+|-]N]:                        Fixed date options.
+* -@e[+|-]NWWW:                          Fixed date options.
+* -@e[[+|-]N]:                           Fixed date options.
+* -@t[+|-]NWWW:                          Fixed date options.
+* -@t[[+|-]N]:                           Fixed date options.
+* -a:                                    Fixed date options.
+* -A:                                    Fixed date options.
+* -B:                                    Fixed date options.
+* -b 1:                                  Calendar options.
+* -b 12:                                 Calendar options.
+* -b 2:                                  Calendar options.
+* -b 3:                                  Calendar options.
+* -b 4:                                  Calendar options.
+* -b 6:                                  Calendar options.
+* -b NUMBER:                             Calendar options.
+* -c:                                    Fixed date options.
+* -C:                                    Fixed date options.
+* -c*dN:                                 Fixed date options.
+* -c*dNWWW:                              Fixed date options.
+* -c*wN[WWW]:                            Fixed date options.
+* -c-:                                   Fixed date options.
+* -C-:                                   Fixed date options.
+* -c@DVAR[+|-]NWWW:                      Fixed date options.
+* -c@DVAR[[+|-]N]:                       Fixed date options.
+* -c@e[+|-]NWWW:                         Fixed date options.
+* -c@e[[+|-]N]:                          Fixed date options.
+* -c@t[+|-]NWWW:                         Fixed date options.
+* -c@t[[+|-]N]:                          Fixed date options.
+* -c[m|M[+|-]]:                          Fixed date options.
+* -c[t|T]:                               Fixed date options.
+* -c[w|W[+|-]]:                          Fixed date options.
+* -c[y|Y[+|-]]:                          Fixed date options.
+* -cA:                                   Fixed date options.
+* -ca:                                   Fixed date options.
+* -cB:                                   Fixed date options.
+* -cd:                                   Fixed date options.
+* -cE:                                   Fixed date options.
+* -ce:                                   Fixed date options.
+* -cg[TEXT]:                             Fixed date options.
+* -ck:                                   Fixed date options.
+* -cl:                                   Fixed date options.
+* -cl*dN:                                Fixed date options.
+* -cl*dNWWW:                             Fixed date options.
+* -cl*wN[WWW]:                           Fixed date options.
+* -cl@DVAR[+|-]NWWW:                     Fixed date options.
+* -cl@DVAR[[+|-]N]:                      Fixed date options.
+* -cl@e[+|-]NWWW:                        Fixed date options.
+* -cl@e[[+|-]N]:                         Fixed date options.
+* -cl@t[+|-]NWWW:                        Fixed date options.
+* -cl@t[[+|-]N]:                         Fixed date options.
+* -clMMDD:                               Fixed date options.
+* -clMMWWWN:                             Fixed date options.
+* -clN+|-:                               Fixed date options.
+* -clNd:                                 Fixed date options.
+* -clNw:                                 Fixed date options.
+* -cm:                                   Fixed date options.
+* -cm+:                                  Fixed date options.
+* -cm-:                                  Fixed date options.
+* -cMMDD:                                Fixed date options.
+* -cMMWWWN:                              Fixed date options.
+* -cN+|-:                                Fixed date options.
+* -cNd:                                  Fixed date options.
+* -cNw:                                  Fixed date options.
+* -co:                                   Fixed date options.
+* -cT:                                   Fixed date options.
+* -ct:                                   Fixed date options.
+* -cU:                                   Fixed date options.
+* -cw:                                   Fixed date options.
+* -cw+:                                  Fixed date options.
+* -cw-:                                  Fixed date options.
+* -cx:                                   Fixed date options.
+* -cy:                                   Fixed date options.
+* -cy+:                                  Fixed date options.
+* -cy-:                                  Fixed date options.
+* -cz:                                   Fixed date options.
+* -cZ:                                   Fixed date options.
+* -c|C[-]:                               Fixed date options.
+* -d:                                    Fixed date options.
+* -D ARGUMENT:                           Fixed date options.
+* -E:                                    Fixed date options.
+* -e:                                    Fixed date options.
+* -f|F NAME[+...]:                       Fixed date options.
+* -g[TEXT]:                              Fixed date options.
+* -h:                                    Common options.
+* -H no:                                 Global options.
+* -H TEXT:                               Global options.
+* -H yes:                                Global options.
+* -hh:                                   Common options.
+* -i:                                    Calendar options.
+* -I PATTERN:                            Fixed date options.
+* -i[-]:                                 Calendar options.
+* -j:                                    Calendar options.
+* -j[b]:                                 Calendar options.
+* -jb:                                   Calendar options.
+* -jc:                                   Calendar options.
+* -jc[b]:                                Calendar options.
+* -jcb:                                  Calendar options.
+* -jn:                                   Calendar options.
+* -jn[b]:                                Calendar options.
+* -jnb:                                  Calendar options.
+* -K:                                    Calendar options.
+* -k:                                    Fixed date options.
+* -L:                                    Common options.
+* -l:                                    Fixed date options.
+* -l*dN:                                 Fixed date options.
+* -l*dNWWW:                              Fixed date options.
+* -l*wN[WWW]:                            Fixed date options.
+* -l@DVAR[+|-]NWWW:                      Fixed date options.
+* -l@DVAR[[+|-]N]:                       Fixed date options.
+* -l@e[+|-]NWWW:                         Fixed date options.
+* -l@e[[+|-]N]:                          Fixed date options.
+* -l@t[+|-]NWWW:                         Fixed date options.
+* -l@t[[+|-]N]:                          Fixed date options.
+* -lMMDD:                                Fixed date options.
+* -lMMWWWN:                              Fixed date options.
+* -lN+|-:                                Fixed date options.
+* -lNd:                                  Fixed date options.
+* -lNw:                                  Fixed date options.
+* -M:                                    Fixed date options.
+* -m:                                    Fixed date options.
+* -m+:                                   Fixed date options.
+* -m-:                                   Fixed date options.
+* -m[+|-]]:                              Fixed date options.
+* -M[+|-]]:                              Fixed date options.
+* -m|M[+|-]]:                            Fixed date options.
+* -N:                                    Calendar options.
+* -n:                                    Calendar options.
+* -n-:                                   Calendar options.
+* -N-:                                   Calendar options.
+* -n|N[-]:                               Calendar options.
+* -o:                                    Fixed date options.
+* -O:                                    Calendar options.
+* -p:                                    Global options.
+* -P ARGUMENT:                           Fixed date options.
+* -q CC[+...]:                           Calendar options.
+* -r ARGUMENT:                           Fixed date options.
+* -R NAME:                               Global options.
+* -s ARGUMENT:                           Calendar options.
+* -S NAME:                               Global options.
+* -t:                                    Fixed date options.
+* -T:                                    Fixed date options.
+* -u:                                    Calendar options.
+* -U:                                    Fixed date options.
+* -V:                                    Common options.
+* -v ARGUMENT:                           Fixed date options.
+* -W:                                    Fixed date options.
+* -w:                                    Fixed date options.
+* -w+:                                   Fixed date options.
+* -w-:                                   Fixed date options.
+* -w[+|-]]:                              Fixed date options.
+* -W[+|-]]:                              Fixed date options.
+* -w|W[+|-]]:                            Fixed date options.
+* -X:                                    Calendar options.
+* -Y:                                    Fixed date options.
+* -y:                                    Fixed date options.
+* -y+:                                   Fixed date options.
+* -y-:                                   Fixed date options.
+* -Y[+|-]]:                              Fixed date options.
+* -y[+|-]]:                              Fixed date options.
+* -y|Y[+|-]]:                            Fixed date options.
+* -Z:                                    Fixed date options.
+* -z:                                    Fixed date options.
+* @FILE:                                 Response file.
+* Command, .:                            3-Month mode commands.
+* Command, . YYYY:                       3-Month mode commands.
+* Command, .+:                           3-Month mode commands.
+* Command, .+ YYYY:                      3-Month mode commands.
+* Command, .-:                           3-Month mode commands.
+* Command, .- YYYY:                      3-Month mode commands.
+* Command, ..:                           3-Month mode commands.
+* Command, .. YYYY:                      3-Month mode commands.
+* Command, ::                            Single commands.
+* Command, :YYYY:                        Single commands.
+* Command, MM YYYY:                      Single commands.
+* Command, MM YYYY-YYYY:                 Ranges of commands.
+* Command, MM,...,MM:                    Lists of commands.
+* Command, MM,...,MM YYYY:               Lists of commands.
+* Command, MM,MM/YYYY,...:               Lists of commands.
+* Command, MM-MM:                        Ranges of commands.
+* Command, MM-MM YYYY:                   Ranges of commands.
+* Command, MM/YYYY:                      Single commands.
+* Command, MM/YYYY,...,MM/YYYY:          Lists of commands.
+* Command, MM/YYYY-MM/YYYY:              Ranges of commands.
+* Command, MM/YYYY-YYYY:                 Ranges of commands.
+* Command, MM::                          Single commands.
+* Command, MM:;MM:;...:                  Lists of commands.
+* Command, MM:;MM:YYYY;...:              Lists of commands.
+* Command, MM:YYYY:                      Single commands.
+* Command, MM:YYYY+MM:YYYY:              Ranges of commands.
+* Command, MM:YYYY;...;MM:YYYY:          Lists of commands.
+* Command, MONTH NAME:                   Single commands.
+* Command, NOTHING:                      Single commands.
+* Command, YYYY:                         Single commands.
+* Command, YYYY+YYYY:                    Ranges of commands.
+* Command, YYYY;...;YYYY:                Lists of commands.
+
+
+File: gcal.info,  Node: Variable Index,  Next: Concept Index,  Prev: Argument Index,  Up: Top
+
+Environment Variable Index
+**************************
+
+  Here is an alphabetical list of the environment variables checked by
+Gcal:
+
+* Menu:
+
+* CO <1>:                                Environment Variables.
+* CO:                                    Global options.
+* COLUMNS <1>:                           Global options.
+* COLUMNS:                               Environment Variables.
+* GCAL <1>:                              Environment Variables.
+* GCAL <2>:                              Global options.
+* GCAL <3>:                              The GCAL environment variable.
+* GCAL:                                  Global options.
+* GCAL_DATE_FORMAT <1>:                  Environment Variables.
+* GCAL_DATE_FORMAT:                      Calendar options.
+* GCAL_OPT:                              The GCAL environment variable.
+* GCAL_SYS_DATADIR <1>:                  Resource file.
+* GCAL_SYS_DATADIR:                      Environment Variables.
+* GCAL_USR_DATADIR <1>:                  Resource file.
+* GCAL_USR_DATADIR:                      Environment Variables.
+* GCALANSI <1>:                          Global options.
+* GCALANSI:                              Environment Variables.
+* GCALPATH <1>:                          Environment Variables.
+* GCALPATH:                              Resource file.
+* GCALPROG <1>:                          Invoking tcal.
+* GCALPROG:                              Environment Variables.
+* HOME <1>:                              Environment Variables.
+* HOME <2>:                              Fixed date options.
+* HOME:                                  Resource file.
+* LANG <1>:                              Internationalization.
+* LANG:                                  Environment Variables.
+* LANGUAGE <1>:                          Environment Variables.
+* LANGUAGE:                              Internationalization.
+* LC_ALL <1>:                            Internationalization.
+* LC_ALL:                                Environment Variables.
+* LC_MESSAGES <1>:                       Internationalization.
+* LC_MESSAGES:                           Environment Variables.
+* LI <1>:                                Environment Variables.
+* LI:                                    Global options.
+* LINES <1>:                             Global options.
+* LINES:                                 Environment Variables.
+* MAILPROG <1>:                          Environment Variables.
+* MAILPROG:                              Global options.
+* PAGER <1>:                             Global options.
+* PAGER:                                 Environment Variables.
+* PATH <1>:                              Global options.
+* PATH:                                  Environment Variables.
+* TERM <1>:                              Global options.
+* TERM:                                  Environment Variables.
+* TZ:                                    Environment Variables.
+

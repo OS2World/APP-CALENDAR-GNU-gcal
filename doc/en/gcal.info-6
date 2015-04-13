@@ -1,0 +1,1262 @@
+This is Info file ./en/gcal.info, produced by Makeinfo version 1.67
+from the input file ./en/gcal.texi.
+
+INFO-DIR-SECTION GNU packages
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                       The GNU calendar program.
+* tcal: (gcal)Invoking tcal.          Run Gcal with tomorrow's date.
+* txt2gcal: (gcal)Invoking txt2gcal.  Convert text file to resource file.
+* gcal2txt: (gcal)Invoking gcal2txt.  Convert resource file to text file.
+END-INFO-DIR-ENTRY
+
+  This file documents Gcal, a program for printing calendars.  Gcal
+displays a calendar for a month or a year, eternal holiday lists and
+fixed date lists, in many ways.  The program correctly omits the dates
+that were skipped when the current Gregorian calendar replaced the
+earlier Julian calendar.
+
+  Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+  This is the second edition of the Gcal documentation.
+
+  Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+  Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+  Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Free Software Foundation.
+
+  Any suggestions, improvements, extensions, bug reports, donations,
+proposals for contract work, and so forth are welcome!  Please send
+them directly to my eMail address.  If you like my work, I'd appreciate
+a postcard from you!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Weekday,  Next: Day number,  Prev: Weekday name,  Up: Replacements with date argument
+
+Weekday `%?[DATE]' special texts
+................................
+
+  The following weekday number `%?[DATE]' special texts are respected:
+
+`%S[DATE]'
+     Is replaced by the *weekday number* of the current day, and which
+     is determined by the `Monday==1...Sunday==7' counting method, e.g.:
+
+          The text `Today is weekday %S , the %n' will be expanded to
+          ==> `Today is weekday 1, the 10-Jun-1996', in case the actual
+          system date is the 10th June 1996.
+
+`%I[DATE]'
+     Is replaced by the *weekday number* with trailing Ordinal Number
+     suffix of the current day, and which is determined by the
+     `Monday==1...Sunday==7' counting method, e.g.:
+
+          The text `Today is weekday %I0@t+1 , the %n+1' will be
+          expanded to
+          ==> `Today is weekday 2nd, the 11-Jun-1996', in case the
+          actual system date is the 10th June 1996.
+
+`%E[DATE]'
+     Is replaced by the *weekday number* of the current day, and which
+     is determined by the `Monday==0...Sunday==6' counting method, e.g.:
+
+          The text `Today is weekday %E , the %n' will be expanded to
+          ==> `Today is weekday 0, the 10-Jun-1996', in case the actual
+          system date is the 10th June 1996.
+
+`%J[DATE]'
+     Is replaced by the *weekday number* with trailing Ordinal Number
+     suffix of the current day, and which is determined by the
+     `Monday==0...Sunday==6' counting method, e.g.:
+
+          The text `Today is weekday %J , the %n' will be expanded to
+          ==> `Today is weekday 0th, the 10-Jun-1996', in case the
+          actual system date is the 10th June 1996.
+
+`%([DATE]'
+     Is replaced by the *weekday number* of the current day, and which
+     is determined by the `Sunday==1...Saturday==7' counting method,
+     e.g.:
+
+          The text `Today is weekday %( , the %n' will be expanded to
+          ==> `Today is weekday 2, the 10-Jun-1996', in case the actual
+          system date is the 10th June 1996.
+
+`%<[DATE]'
+     Is replaced by the *weekday number* with trailing Ordinal Number
+     suffix of the current day, and which is determined by the
+     `Sunday==1...Saturday==7' counting method, e.g.:
+
+          The text `Today is weekday %< , the %n' will be expanded to
+          ==> `Today is weekday 2nd, the 10-Jun-1996', in case the
+          actual system date is the 10th June 1996.
+
+`%)[DATE]'
+     Is replaced by the *weekday number* of the current day, and which
+     is determined by the `Sunday==0...Saturday==6' counting method,
+     e.g.:
+
+          The text `Today is weekday %) , the %n' will be expanded to
+          ==> `Today is weekday 1, the 10-Jun-1996', in case the actual
+          system date is the 10th June 1996.
+
+`%>[DATE]'
+     Is replaced by the *weekday number* with trailing Ordinal Number
+     suffix of the current day, and which is determined by the
+     `Sunday==0...Saturday==6' counting method, e.g.:
+
+          The text `Today is weekday %> , the %n' will be expanded to
+          ==> `Today is weekday 1st, the 10-Jun-1996', in case the
+          actual system date is the 10th June 1996.
+
+`%[[DATE]'
+     Is replaced by the *weekday number* of the current day, and which
+     is determined by the `STARTING DAY OF WEEK==1...ENDING DAY OF
+     WEEK==7' counting method (*note `--starting-day=ARGUMENT':
+     Calendar options.), e.g.:
+
+          The text `Today is weekday %[ , the %n' will be expanded to
+          ==> `Today is weekday 4, the 10-Jun-1996', in case the actual
+          system date is the 10th June 1996 and Friday (==5) is the
+          starting day of week.
+
+`%{[DATE]'
+     Is replaced by the *weekday number* with trailing Ordinal Number
+     suffix of the current day, and which is determined by the
+     `STARTING DAY OF WEEK==1...ENDING DAY OF WEEK==7' counting method
+     (*note `--starting-day=ARGUMENT': Calendar options.), e.g.:
+
+          The text `Today is weekday %{ , the %n' will be expanded to
+          ==> `Today is weekday 4th, the 10-Jun-1996', in case the
+          actual system date is the 10th June 1996 and Friday (==5) is
+          the starting day of week.
+
+`%][DATE]'
+     Is replaced by the *weekday number* of the current day, and which
+     is determined by the `STARTING DAY OF WEEK==0...ENDING DAY OF
+     WEEK==6' counting method (*note `--starting-day=ARGUMENT':
+     Calendar options.), e.g.:
+
+          The text `Today is weekday %] , the %n' will be expanded to
+          ==> `Today is weekday 3, the 10-Jun-1996', in case the actual
+          system date is the 10th June 1996 and Friday (==5) is the
+          starting day of week.
+
+`%}[DATE]'
+     Is replaced by the *weekday number* with trailing Ordinal Number
+     suffix of the current day, and which is determined by the
+     `STARTING DAY OF WEEK==0...ENDING DAY OF WEEK==6' counting method
+     (*note `--starting-day=ARGUMENT': Calendar options.), e.g.:
+
+          The text `Today is weekday %} , the %n' will be expanded to
+          ==> `Today is weekday 3rd, the 10-Jun-1996', in case the
+          actual system date is the 10th June 1996 and Friday (==5) is
+          the starting day of week.
+
+
+File: gcal.info,  Node: Day number,  Next: Day,  Prev: Weekday,  Up: Replacements with date argument
+
+Day number `%?[DATE]' special texts
+...................................
+
+  The following day number `%?[DATE]' special texts are respected:
+
+`%+[DATE]'
+     Is replaced by the *day number* of the current day of year, e.g.:
+
+          The text `Day %+  of year, the %n' will be expanded to
+          ==> `Day 53 of year, the 22-Feb-1996', in case the actual
+          system date is the 22nd February 1996.
+
+`%*[DATE]'
+     Is replaced by the 3-digit *day number* with leading zeroes of the
+     current day of year, e.g.:
+
+          The text `Day %*0@t-1  of year, the %n-1' will be expanded to
+          ==> `Day 052 of year, the 21-Feb-1996', in case the actual
+          system date is the 22nd February 1996.
+
+`%&[DATE]'
+     Is replaced by the *day number* with trailing Ordinal Number suffix
+     of the current day of year, e.g.:
+
+          The text `Day %&  of year, the %n' will be expanded to
+          ==> `Day 53rd of year, the 22-Feb-1996', in case the actual
+          system date is the 22nd February 1996.
+
+`%#[DATE]'
+     Is replaced by the 3-digit *day number* with leading zeroes and
+     trailing Ordinal Number suffix of the current day of year, e.g.:
+
+          The text `Day %#  of year, the %n' will be expanded to
+          ==> `Day 053rd of year, the 22-Feb-1996', in case the actual
+          system date is the 22nd February 1996.
+
+
+File: gcal.info,  Node: Day,  Next: Week,  Prev: Day number,  Up: Replacements with date argument
+
+Day `%?[DATE]' special texts
+............................
+
+  The following day `%?[DATE]' special texts are respected:
+
+`%D[DATE]'
+     Is replaced by the *day number* of the current day of month, e.g.:
+
+          The text `Day %D , %n' will be expanded to
+          ==> `Day 2, 02-Feb-1996', in case the actual system date is
+          the 2nd February 1996.
+
+`%N[DATE]'
+     Is replaced by the 2-digit *day number* with leading zero of the
+     current day of month, e.g.:
+
+          The text `Day %N0@t-1 , %n-1' will be expanded to
+          ==> `Day 01, 01-Feb-1996', in case the actual system date is
+          the 2nd February 1996.
+
+`%s[DATE]'
+     Is replaced by the *day number* with trailing Ordinal Number suffix
+     of the current day of month, e.g.:
+
+          The text `Day %s , %n' will be expanded to
+          ==> `Day 2nd, 02-Feb-1996', in case the actual system date is
+          the 2nd February 1996.
+
+`%u[DATE]'
+     Is replaced by the 2-digit *day number* with leading zero and
+     trailing Ordinal Number suffix of the current day of month, e.g.:
+
+          The text `Day %u , %n' will be expanded to
+          ==> `Day 02nd, 02-Feb-1996', in case the actual system date
+          is the 2nd February 1996.
+
+
+File: gcal.info,  Node: Week,  Next: Month name,  Prev: Day,  Up: Replacements with date argument
+
+Week `%?[DATE]' special text
+............................
+
+  The following week `%?[DATE]' special text are respected:
+
+`%k[DATE]'
+     Is replaced by the *ISO-week number* of the current week of year,
+     e.g.:
+
+          The text `Today is %o  of week %k' will be expanded to
+          ==> `Today is Monday of week 24', in case the actual system
+          date is the 10th June 1996.
+
+
+File: gcal.info,  Node: Month name,  Next: Month,  Prev: Week,  Up: Replacements with date argument
+
+Month name `%?[DATE]' special texts
+...................................
+
+  The following month name `%?[DATE]' special texts are respected:
+
+`%M[DATE]'
+     Is replaced by the complete *month name* of the current month of
+     year, e.g.:
+
+          The text `Today is %M , %n' will be expanded to
+          ==> `Today is June, 10-Jun-1996', in case the actual system
+          date is the 10th June 1996.
+
+`%T[DATE]'
+     Is replaced by the 3-letter *month name* of the current month of
+     year, e.g.:
+
+          The text `Today is %T19961010 , %n' will be expanded to
+          ==> `Today is Oct, 10-Jun-1996', in case the actual system
+          date is the 10th June 1996.
+
+
+File: gcal.info,  Node: Month,  Next: Year,  Prev: Month name,  Up: Replacements with date argument
+
+Month `%?[DATE]' special texts
+..............................
+
+  The following month `%?[DATE]' special texts are respected:
+
+`%U[DATE]'
+     Is replaced by the *month number* of the current month of year,
+     e.g.:
+
+          The text `Month %U , %n' will be expanded to
+          ==> `Month 2, 22-Feb-1996', in case the actual system date is
+          the 22nd February 1996.
+
+`%W[DATE]'
+     Is replaced by the 2-digit *month number* with leading zero of the
+     current month of year, e.g.:
+
+          The text `Month %W000001 , %n' will be expanded to
+          ==> `Month 01, 22-Feb-1996', in case the actual system date
+          is the 22nd February 1996.
+
+`%z[DATE]'
+     Is replaced by the *month number* with trailing Ordinal Number
+     suffix of the current month of year, e.g.:
+
+          The text `Month %z , %n' will be expanded to
+          ==> `Month 2nd, 22-Feb-1996', in case the actual system date
+          is the 22nd February 1996.
+
+`%Z[DATE]'
+     Is replaced by the 2-digit *month number* with leading zero and
+     trailing Ordinal Number suffix of the current month of year, e.g.:
+
+          The text `Month %Z , %n' will be expanded to
+          ==> `Month 02nd, 22-Feb-1996', in case the actual system date
+          is the 22nd February 1996.
+
+
+File: gcal.info,  Node: Year,  Next: Moonphase,  Prev: Month,  Up: Replacements with date argument
+
+Year `%?[DATE]' special texts
+.............................
+
+  The following year `%?[DATE]' special texts are respected:
+
+`%Y[DATE]'
+     Is replaced by the *year number* of the current year, e.g.:
+
+          The text `Year %Y , %n' will be expanded to
+          ==> `Year 933, 22-Feb-0933', in case the actual system date
+          is the 22nd February 933.
+
+`%=[DATE]'
+     Is replaced by the 4-digit *year number* with leading zeroes of
+     the current year, e.g.:
+
+          The text `Year %=0015 , %n' will be expanded to
+          ==> `Year 0015, 22-Feb-0933', in case the actual system date
+          is the 22nd February 933.
+
+
+File: gcal.info,  Node: Moonphase,  Next: Biorhythm,  Prev: Year,  Up: Replacements with date argument
+
+Moonphase `%?[DATE]' special texts
+..................................
+
+  Gcal uses a very simple algorithm for detecting the moonphase, which
+computes approximate values only.  The moonphase is always calculated
+at 0 o'clock universal time.  The following moonphase `%?[DATE]'
+special texts are respected:
+
+`%-[DATE]'
+     Is replaced by the *moonphase text* of the current day of year,
+     e.g.:
+
+          The text `Moonphase %- , %n' will be expanded to
+          ==> `Moonphase 94%+, 22-Dec-1996', in case the actual system
+          date is the 22nd December 1996.
+
+     The constructed moonphase text consists of a percent value, which
+     informs about the illuminated fraction of the Moon's disc, and a
+     trailing sign that tells something about the state of the Moon.  A
+     trailing `+' sign indicates a waxing Moon, a `-' sign a waning
+     moon, a `@' sign indicates the Full Moon phase, and a `!' sign the
+     New Moon phase.
+
+`%_[DATE]'
+     Is replaced by the 3-digit *moonphase text* with leading zeroes of
+     the current day of year, e.g.:
+
+          The text `Moonphase %_0@t+1 , %n+1' will be expanded to
+          ==> `Moonphase 098%+, 23-Dec-1996', in case the actual system
+          date is the 22nd December 1996.
+
+     The constructed moonphase text consists of a percent value, which
+     informs about the illuminated fraction of the Moon's disc, and a
+     trailing sign that tells something about the state of the Moon.  A
+     trailing `+' sign indicates a waxing Moon, a `-' sign a waning
+     moon, a `@' sign indicates the Full Moon phase, and a `!' sign the
+     New Moon phase.
+
+`%:[DATE]'
+     Is replaced by the *moonphase text graphics* of the current day of
+     year, e.g.:
+
+          The text `Date %n %:  --- Moonphase %_ ~Text' will be
+          expanded to
+          ==> `Date 08-Mar-1995 '
+          ==> `           (       @@@@@@'
+          ==> `      (              @@@@@@@@@'
+          ==> `    (                @@@@@@@@@@@'
+          ==> `  (                   @@@@@@@@@@@@'
+          ==> ` (                    @@@@@@@@@@@@@'
+          ==> `(                      @@@@@@@@@@@@@'
+          ==> `(                      @@@@@@@@@@@@@'
+          ==> ` (                    @@@@@@@@@@@@@'
+          ==> `  (                   @@@@@@@@@@@@'
+          ==> `   (                  @@@@@@@@@@@'
+          ==> `      (             @@@@@@@@@'
+          ==> `           (        @@@@@@@ --- Moonphase 041%+'
+          ==> `Text', in case the actual system date is the 8th March
+          1995.
+
+     *Note `--moonimage-lines=NUMBER': Fixed date options, for how to
+     change the size of a moonphase text graphics.
+
+
+File: gcal.info,  Node: Biorhythm,  Next: Difference value,  Prev: Moonphase,  Up: Replacements with date argument
+
+Biorhythm `%?[DATE]' special texts
+..................................
+
+  Gcal is able to create a "biorhythm" for any specified date of birth.
+The created text shows the three standard biorhythm cycles, and that
+are the 28 day emotional cycle, the 33 day intellectual cycle, and the
+23 day physical cycle.  The emotional cycle governs sensibility,
+nerves, moodiness, and creative ability.  The intellectual cycle
+reflects intelligence, memory, mental alertness, and reasoning power.
+The physical cycle represents physical strength, endurance, energy and
+resistance.  All cycles start in the zero point at the date of birth
+and swing like sine curves between their positive and negative maximum
+values.  The periods above the zero point show the days of full
+vitality and efficiency while the periods below the zero point indicate
+days of reduced efficiency.  The biorhythm is implemented for
+entertaining purposes only!  It is up to the user to interpret the
+biorhythm texts.
+
+  Gcal counts "critical" days, "positive" likewise "negative" days.
+Critical days are those days in which one or more of the biological
+cycles crosses the zero point.  At that time, one's system is said to
+be in a state of flux and it may be desirable to exhibit caution.
+Positive days are those days in which one or more of the biological
+cycles have a positive maximum value.  At that time, one's system is
+said to be in a raised state.  Negative days are those days in which
+one or more of the biological cycles have a negative maximum value.  At
+that time, one's system is said to be in a lessen state.
+
+  The following biorhythm `%?[DATE]' special texts are respected:
+
+`%,[DATE]'
+     Is replaced by the *biorhythm text* of the current day of year,
+     e.g.:
+
+          The text `%,19620921' will be expanded to
+          ==> `1! 0+ 0- , Emo=+022%- Int=-091%+ Phy=-014%-', in case
+          the actual system date is the 12th December 1996.
+
+     The preceding example shows the calculated biorhythm expressed as
+     a series of values for a person born in 1962, September 21st.  The
+     constructed text consists of two parts, and that is on the one
+     hand a triplet of total values which indicate the critical,
+     positive and negative day.  And on the other hand a triplet of
+     values, which indicate the emotional, intellectual and physical
+     cycle.
+
+     In the first triplet of total values, a `!' suffix means a
+     critical day, a `+' indicates a positive day, and a `-' suffix
+     marks a negative day.
+
+     In the second triplet of values, each single cycle percent value
+     consists of a leading positive or negative sign, that tells
+     something about the distance of this value to the zero point, and
+     a trailing character, that tells something about the state of each
+     cycle.  A trailing `+' character marks a waxing phase, a `-'
+     suffix means a waning phase, and a `@' indicates the maximum value
+     of a phase.
+
+`%;[DATE]'
+     Is replaced by the *biorhythm text graphics* of the current day of
+     year, e.g.:
+
+          The text `%;19620921' will be expanded to
+          ==> `0-  I               P 1   E                +0', in case
+          the actual system date is the 12th December 1996.
+
+     The preceding example shows the calculated biorhythm expressed as
+     a text graphics line for a person born in 1962, September 21st.
+     The constructed line is a bar with a negative and positive axis of
+     adjustable length (*note `--biorhythm-axis=NUMBER': Fixed date
+     options.), which left margin is represented by the total value of
+     the negative days (the `0-' in this case), and which right margin
+     is represented by the total value of the positive days (the `+0'
+     in this case).  The zero point of the co-ordinate is represented
+     by the total value of the critical days, which is the `1' in this
+     case.  The emotional, intellectual and the physical phase value is
+     accordingly placed in scaled manner on this bar, and that by using
+     the initial letter of the cycle in each case (`E', `I' and `P').
+     Collapsing phase values are marked by a `@' character.
+
+
+File: gcal.info,  Node: Difference value,  Prev: Biorhythm,  Up: Replacements with date argument
+
+Difference value `%?[DATE]' special texts
+.........................................
+
+  The following difference value `%?[DATE]' special texts are respected:
+
+`%yDATE'
+     Is replaced by a *year difference value*, e.g.:
+
+          The text `Sylvester 1912 is %y1912  years ago' will be
+          expanded to
+          ==> `Sylvester 1912 is -82 years ago', in case the the year
+          of the actual system date is 1994.
+
+`%b[DATE]'
+     Is replaced by an *age value*, e.g.:
+
+          The text `My %b1962  birthday%i1952#2062' will be expanded to
+          ==> `My 32 birthday', in case the year of the actual system
+          date is 1994.
+
+     Those age values are only displayed, if the computation of an age
+     value is greater zero.  The fixed date warning in preceding example
+     is displayed only in case the current year is greater than 1952
+     and less than 2062.
+
+`%B[DATE]'
+     Is replaced by an *age value* with trailing Ordinal Number suffix,
+     e.g.:
+
+          The text `My %B1962  birthday%i1952#2062' will be expanded to
+          ==> `My 32nd birthday', in case the year of the actual system
+          date is 1994.
+
+     Those age values are only displayed, if the computation of an age
+     value is greater zero.  The fixed date warning in preceding example
+     is displayed only in case the current year is greater than 1952
+     and less than 2062.
+
+
+File: gcal.info,  Node: Replacements with other argument,  Next: Replacements without any argument,  Prev: Replacements with date argument,  Up: Replacements
+
+Replacements with other argument `%?[ARGUMENT]' special texts
+-------------------------------------------------------------
+
+* Menu:
+
+* Actual time::
+* Textual date::
+* Julian day number::
+
+  Apart from different representations of the actual system time, a
+fixed format date text can be created.  Moreover, it is possible to
+produce a day number, which bears the Julian date as base date and
+which can be deferred if needed.
+
+  For the ARGUMENT these `%?[ARGUMENT]' special text may have, no
+special rules concerning definite omission values are valid.
+
+
+File: gcal.info,  Node: Actual time,  Next: Textual date,  Prev: Replacements with other argument,  Up: Replacements with other argument
+
+Actual time `%t[ARGUMENT]' special text
+.......................................
+
+  `%t[12|24]' references the *actual system time*, e.g.:
+
+     The text `Time: %t --> Dentist at 10:00' will be expanded to
+     ==> `Time: 07:32 --> Dentist at 10:00', in case the actual system
+     time value is 07:32 o'clock (hh:mm).
+
+  If only `%t' is specified, the system time value will implicitly be
+displayed using the *24-hour* format (==`%t24').  For displaying using
+the *12-hour* format, add `12' directly behind `%t', e.g. `%t12'.
+
+
+File: gcal.info,  Node: Textual date,  Next: Julian day number,  Prev: Actual time,  Up: Replacements with other argument
+
+Textual date `%n[ARGUMENT]' special text
+........................................
+
+  `%n[[+|-]N]' references the current respectively queried "day number"
+relative to the current date `+/-' N days and is replaced by a *date
+text* in the fixed `DD-MMM-YYYY' format, e.g.:
+
+     The resource file line `1962Sep21 10000 days old: %n+10000' will
+     be expanded to
+     ==> `10000 days old: 06-Feb-1990', in case you call Gcal with the
+     simple `-c' option and the command `sep 1962' (*note Single
+     commands: `MM YYYY': Single commands.).
+
+
+File: gcal.info,  Node: Julian day number,  Prev: Textual date,  Up: Replacements with other argument
+
+Julian day number `%j[ARGUMENT]' special text
+.............................................
+
+  `%j[[-]N]' references the current respectively queried "Julian day
+number" relative to the actual system date (==today).  This day number
+is tied with the date 1st January 4713 BCE -- which is the starting day
+zero of a consecutive day counting used in astronomical computations --
+and is known as the Julian Date (J.D.).  The real zero of this date is
+at 12 o'clock universal time; the day doesn't change at midnight, but
+at noon universal time.  Currently, Gcal does not evaluate the time
+zone returned by the systems date function.  For that reason, this day
+number is represented without a time fraction on the supposition that
+the day has already changed at noon.  If you don't like the feature
+that the day has already changed at noon, you can decrease the resulting
+Julian day number of that special text always by one, e.g. `%j-1'.
+
+For example:
+
+     The resource file line `0 Julian day %j since 01-Jan-4713 BCE'
+     will be expanded to
+     ==> `Julian day 2437929 since 01-Jan-4713 BCE', in case you call
+     Gcal with the `-c %19620921' option and no command.
+
+  If the `%j' text is directly trailed by a number, this number is
+always subtracted from the real Julian day number (1), so you are able
+to work with any reference values, e.g.:
+
+     The resource file line `0 Julian day %j-2415021 since 01-Jan-1900'
+     will be expanded to
+     ==> `Julian day 4 since 01-Jan-1900', in case you call Gcal with
+     the `-c %19000105' option and no command.
+
+  ---------- Footnotes ----------
+
+  (1)  A negative sign can be given to increase the readability of this
+expression.
+
+
+File: gcal.info,  Node: Replacements without any argument,  Prev: Replacements with other argument,  Up: Replacements
+
+Replacements without any argument `%?' special texts
+----------------------------------------------------
+
+* Menu:
+
+* Other difference values::
+* Highlighting::
+
+  Apart from further useful difference values, the text of a fixed date
+can be provided with different texts used for highlighting.
+
+
+File: gcal.info,  Node: Other difference values,  Next: Highlighting,  Prev: Replacements without any argument,  Up: Replacements without any argument
+
+Difference value `%?' special texts
+...................................
+
+  The following other difference values `%?' special texts are
+respected:
+
+`%d'
+     Specifies the current respectively queried *day* relative to the
+     actual system date (==today), e.g.:
+
+          The resource file line `0 %d days gone' will be expanded to
+          ==> `-10 days gone', in case you call Gcal with the `-c10-'
+          option and no command.
+
+`%w'
+     Specifies the current respectively queried *week* relative to the
+     actual system date (==today).
+
+`%m'
+     Specifies the current respectively queried *month* relative to the
+     actual system date (==today).
+
+`%y'
+     Specifies the current respectively queried *year* relative to the
+     actual system date (==today).
+
+
+File: gcal.info,  Node: Highlighting,  Prev: Other difference values,  Up: Replacements without any argument
+
+Highlighting `%?' special texts
+...............................
+
+  The following highlighting `%?' special texts are respected:
+
+`%1'
+     `%1' is replaced by the starting highlighting sequence respectively
+     the starting marking character that is used for highlighting the
+     actual day (*note `--highlighting=TEXT': Global options.).  This
+     attains, that all succeeding text of the line after this special
+     text is displayed in the same way as the highlighted respectively
+     marked actual day.  `%1' is used together with the `%2' special
+     text -- which turns off this enabled highlighting sequence
+     respectively produces the ending marking character.  If a `%1'
+     text is not succeeded by a `%2' text on the line, Gcal
+     automatically inserts such a `%2' text at the end of the line.
+
+     For example:
+
+          Only %1THIS%2 word is highlighted in this line.
+          %1This text is highlighted up to%2 here.
+          All from %1here up to the end of the line is highlighted.
+
+`%2'
+     `%2' is replaced by the ending highlighting sequence respectively
+     the ending marking character that is used for highlighting the
+     actual day.  This attains, that a possibly active highlighting
+     according to the actual day is turned off respectively an ending
+     marking character is produced.  `%2' is used together with the
+     `%1' special text.  The `%2' text has no effect if no preceding
+     `%1' text was found on the line.
+
+`%3'
+     `%3' is replaced by the starting highlighting sequence respectively
+     the starting marking character that is used for highlighting a
+     holiday, (*note `--highlighting=TEXT': Global options.).  This
+     attains, that all succeeding text of the line after this special
+     text is displayed in the same way as the highlighted respectively
+     marked holiday.  `%3' is used together with the `%4' special text
+     -- which turns off this enabled highlighting sequence respectively
+     produces the ending marking character.  If a `%3' text is not
+     succeeded by a `%4' text on the line, Gcal automatically inserts
+     such a `%4' text at the end of the line.
+
+     For example:
+
+          Only %3THIS%4 word is highlighted in this line.
+          %3This text is highlighted up to%4 here.
+          All from %3here up to the end of the line is highlighted.
+
+`%4'
+     `%4' is replaced by the ending highlighting sequence respectively
+     the ending marking character that is used for highlighting a
+     holiday.  This attains, that a possibly active highlighting
+     according to a holiday is turned off respectively an ending
+     marking character is produced.  `%4' is used together with the
+     `%3' special text.  The `%4' text has no effect if no preceding
+     `%3' text was found on the line.
+
+`%5'
+     `%5' is replaced by the starting highlighting sequence respectively
+     the starting marking character that is used for highlighting the
+     actual day if a fixed date is on today's date, (*note
+     `--highlighting=TEXT': Global options.).  This attains, that all
+     succeeding text of the line after this special text is displayed
+     in the same way as the highlighted respectively marked actual day.
+     `%5' is used together with the `%6' special text -- which turns
+     off this enabled highlighting sequence respectively produces the
+     ending marking character.  If a `%5' text is not succeeded by a
+     `%6' text on the line, Gcal automatically inserts such a `%6' text
+     at the end of the line.
+
+`%6'
+     `%6' is replaced by the ending highlighting sequence respectively
+     the ending marking character that is used for highlighting the
+     actual day if a fixed date is on today's date.  This attains, that
+     a possibly active highlighting according to the actual day is
+     turned off respectively an ending marking character is produced.
+     `%6' is used together with the `%5' special text.  The `%6' text
+     has no effect if no preceding `%5' text was found on the line.
+
+`%7'
+     `%7' is replaced by the starting highlighting sequence respectively
+     the starting marking character that is used for highlighting a
+     holiday if a fixed date is on a legal holiday date, (*note
+     `--highlighting=TEXT': Global options.).  This attains, that all
+     succeeding text of the line after this special text is displayed
+     in the same way as the highlighted respectively marked holiday.
+     `%7' is used together with the `%8' special text -- which turns
+     off this enabled highlighting sequence respectively produces the
+     ending marking character.  If a `%7' text is not succeeded by a
+     `%8' text on the line, Gcal automatically inserts such a `%8' text
+     at the end of the line.
+
+`%8'
+     `%8' is replaced by the ending highlighting sequence respectively
+     the ending marking character that is used for highlighting a
+     holiday if a fixed date is on a legal holiday date.  This attains,
+     that a possibly active highlighting according to a holiday is
+     turned off respectively an ending marking character is produced.
+     `%8' is used together with the `%7' special text.  The `%8' text
+     has no effect if no preceding `%7' text was found on the line.
+
+`%9'
+     `%9' is replaced by the starting highlighting sequence
+     respectively the starting marking character that is used for
+     highlighting the actual day if a fixed date is on today's date;
+     otherwise `%9' is replaced by the starting highlighting sequence
+     respectively the starting marking character that is used for
+     highlighting a holiday if a fixed date is on a legal holiday date,
+     (*note `--highlighting=TEXT': Global options.).  This attains,
+     that all succeeding text of the line after this special text is
+     displayed in the same way as the highlighted respectively marked
+     actual day or holiday.  `%9' is used together with the `%0'
+     special text -- which turns off this enabled highlighting sequence
+     respectively produces the ending marking character.  If a `%9'
+     text is not succeeded by a `%0' text on the line, Gcal
+     automatically inserts such a `%0' text at the end of the line.
+
+`%0'
+     `%0' is replaced by the ending highlighting sequence respectively
+     the ending marking character that is used for highlighting the
+     actual day if a fixed date is on today's date; otherwise `%0' is
+     replaced by the ending highlighting sequence respectively the
+     ending marking character that is used for highlighting a holiday
+     if a fixed date is on a legal holiday date.  This attains, that a
+     possibly active highlighting according to today's date or a
+     holiday is turned off respectively an ending marking character is
+     produced.  `%0' is used together with the `%9' special text.  The
+     `%0' text has no effect if no preceding `%9' text was found on the
+     line.
+
+
+File: gcal.info,  Node: Shell Command,  Prev: Replacements,  Up: Special Texts
+
+Shell command `%![ARGUMENT]' special text
+=========================================
+
+  The ARGUMENT which trails `%!' until the end of the line, is passed
+to the shell as a command for further processing.  But before, all
+`%?'... special texts for replacing particular texts which are given in
+ARGUMENT are interpreted by Gcal.  *Note Replacements with date
+argument `%?[DATE]' special texts: Replacements with date argument.
+All leading text before the `%!' special text is processed by Gcal as
+usual.  If the simple `--debug' respectively `--debug=internal' option
+is given at program start-up, informational messages about the executed
+command and its *exit* code will be shown on the *standard error
+channel* (*note `--debug=internal': Global options.).
+
+  If the `--debug=abort' option is given, the Gcal program will be
+aborted with an error code in case an *exit* code not equal zero have
+occurred during the execution of the command.  *Note 2: Error Codes, and
+*Note `--debug=abort': Global options, for more information.
+
+  Use the `--bypass-shell-command' option if you want to see all
+`%![ARGUMENT]' special texts textually and non-executed by the shell.
+*Note `--bypass-shell-command': Fixed date options, for more details.
+
+
+File: gcal.info,  Node: Special Texts Summary,  Next: Coding Scheme,  Prev: Special Texts,  Up: Top
+
+Summary of all `%?'... Special Texts
+************************************
+
+  Here is a short-list of all `%?'... special texts which can be used
+in the text part of Gcal resource file line:
+
+`%i[DATE][#[DATE]]'
+     Exclusion of all non-inclusive date periods
+
+`%e[DATE][#[DATE]]'
+     Exclusion of all exclusive date periods
+
+`%?' Inclusive day period
+    `%v'
+          Exclusion of all non-legal holidays
+
+    `%x'
+          Exclusion of all non-holidays
+
+    `%a'
+          Exclusion of all non-Mondays
+
+    `%c'
+          Exclusion of all non-Tuesdays
+
+    `%f'
+          Exclusion of all non-Wednesdays
+
+    `%g'
+          Exclusion of all non-Thursdays
+
+    `%h'
+          Exclusion of all non-Fridays
+
+    `%l'
+          Exclusion of all non-Saturdays
+
+    `%p'
+          Exclusion of all non-Sundays
+
+    `%q'
+          Exclusion of all non-Mondays...Thursdays
+
+    `%r'
+          Exclusion of all non-Mondays...Fridays
+
+`%?' Exclusive day period
+    `%V'
+          Exclusion of all legal holidays
+
+    `%X'
+          Exclusion of all holidays
+
+    `%A'
+          Exclusion of all Mondays
+
+    `%C'
+          Exclusion of all Tuesdays
+
+    `%F'
+          Exclusion of all Wednesdays
+
+    `%G'
+          Exclusion of all Thursdays
+
+    `%H'
+          Exclusion of all Fridays
+
+    `%L'
+          Exclusion of all Saturdays
+
+    `%P'
+          Exclusion of all Sundays
+
+    `%Q'
+          Exclusion of all Mondays...Thursdays
+
+    `%R'
+          Exclusion of all Mondays...Fridays
+
+`%?[DATE]' weekday name
+    `%o[DATE]'
+          Complete weekday name
+
+    `%O[DATE]'
+          3-letter weekday name
+
+    `%K[DATE]'
+          2-letter weekday name
+
+`%?[DATE]' weekday
+    `%S[DATE]'
+          Weekday number, Mon==1...Sun==7
+
+    `%I[DATE]'
+          Weekday number, Mon==1...Sun==7, Ordinal Number suffix
+
+    `%E[DATE]'
+          Weekday number, Mon==0...Sun==6
+
+    `%J[DATE]'
+          Weekday number, Mon==0...Sun==6, Ordinal Number suffix
+
+    `%([DATE]'
+          Weekday number, Sun==1...Sat==7
+
+    `%<[DATE]'
+          Weekday number, Sun==1...Sat==7, Ordinal Number suffix
+
+    `%)[DATE]'
+          Weekday number, Sun==0...Sat==6, Ordinal Number suffix
+
+    `%>[DATE]'
+          Weekday number, Sun==0...Sat==6, Ordinal Number suffix
+
+    `%[[DATE]'
+          Weekday number, STARTING DAY OF WEEK==1
+
+    `%{[DATE]'
+          Weekday number, STARTING DAY OF WEEK==1, Ordinal Number suffix
+
+    `%][DATE]'
+          Weekday number, STARTING DAY OF WEEK==0
+
+    `%}[DATE]'
+          Weekday number, STARTING DAY OF WEEK==0, Ordinal Number suffix
+
+`%?[DATE]' day number
+    `%+[DATE]'
+          Day number
+
+    `%*[DATE]'
+          Day number, 2-digits with leading zero
+
+    `%&[DATE]'
+          Day number, Ordinal Number suffix
+
+    `%#[DATE]'
+          Day number, 2-digits with leading zero, Ordinal Number suffix
+
+`%?[DATE]' day
+    `%D[DATE]'
+          Day
+
+    `%N[DATE]'
+          Day, 2-digits with leading zero
+
+    `%s[DATE]'
+          Day, Ordinal Number suffix
+
+    `%u[DATE]'
+          Day, 2-digits with leading zero, Ordinal Number suffix
+
+`%k[DATE]'
+     ISO-week number
+
+`%?[DATE]' month name
+    `%M[DATE]'
+          Complete month name
+
+    `%T[DATE]'
+          3-letter month name
+
+`%?[DATE]' month
+    `%U[DATE]'
+          Month
+
+    `%W[DATE]'
+          Month, 2-digits with leading zero
+
+    `%z[DATE]'
+          Month, Ordinal Number suffix
+
+    `%Z[DATE]'
+          Month, 2-digits with leading zero, Ordinal Number suffix
+
+`%?[DATE]' year
+    `%Y[DATE]'
+          Year
+
+    `%=[DATE]'
+          Year, 4-digits with leading zeroes
+
+`%?[DATE]' moonphase
+    `%-[DATE]'
+          Moonphase text
+
+    `%_[DATE]'
+          Moonphase text, 3-digits with leading zeroes
+
+    `%:[DATE]'
+          Moonphase text graphics
+
+`%?[DATE]' biorhythm
+    `%,[DATE]'
+          Biorhythm text (series of values)
+
+    `%;[DATE]'
+          Biorhythm text graphics (bar)
+
+`%?[DATE]' difference value
+    `%yDATE'
+          Relative year number
+
+    `%b[DATE]'
+          Birthday (age value)
+
+    `%B[DATE]'
+          Birthday (age value), Ordinal Number suffix
+
+`%t[12|24]'
+     Actual time
+
+`%n[[+|-]N]'
+     Textual date in fixed `DD-MMM-YYYY' format
+
+`%j[[-]N]'
+     Julian day number
+
+`%?' difference value
+    `%d'
+          Relative day number
+
+    `%w'
+          Relative week number
+
+    `%m'
+          Relative month number
+
+    `%y'
+          Relative year number
+
+`%?' highlighting
+    `%1'
+          Start of highlighting sequence 1
+
+    `%2'
+          End of highlighting sequence 1
+
+    `%3'
+          Start of highlighting sequence 2
+
+    `%4'
+          End of highlighting sequence 2
+
+    `%5'
+          Start of highlighting sequence 1 if a fixed date is on
+          today's date
+
+    `%6'
+          End of highlighting sequence 1 if a fixed date is on today's
+          date
+
+    `%7'
+          Start of highlighting sequence 2 if a fixed date is on a
+          legal holiday date
+
+    `%8'
+          End of highlighting sequence 2 if a fixed date is on a legal
+          holiday date
+
+    `%9'
+          Start of highlighting sequence 1 if a fixed date is on
+          today's date, otherwise start of highlighting sequence 2 if a
+          fixed date is on a legal holiday date
+
+    `%0'
+          End of highlighting sequence 1 if a fixed date is on today's
+          date, otherwise end of highlighting sequence 2 if a fixed
+          date is on a legal holiday date
+
+`%![ARGUMENT]'
+     Shell executes ARGUMENT as a command
+
+
+File: gcal.info,  Node: Coding Scheme,  Next: Environment Variables,  Prev: Special Texts Summary,  Up: Top
+
+Coding Scheme
+*************
+
+* Menu:
+
+* Coding Scheme Table 1::
+* Coding Scheme Table 2::
+
+  The following coding scheme tables explain the relations between the
+*date part* (YYYY...) of a resource file line and the modifiers, the
+short-style option `-c|C[]' -- which is used for enabling the fixed
+date feature -- respectively the `--period-of-fixed-dates=ARGUMENT'
+long-style option may have, i.e. they point out all possible
+correspondences.  This is necessary because Gcal does not respect all
+entries found in a resource file if a *fixed date* argument is given,
+it respects only those entries which have a definite relation to the
+*fixed date* argument to avoid the output of redundant information!
+
+In the *date part* `YYYY...':
+
+YYYY
+     represents any year number (0001...9999).
+
+MM
+     represents any month number (01...12 or 99) respectively any
+     textual short month name with length of 3 characters (Jan, Feb...).
+
+DD
+     represents any day number (1...28, 29, 30, 31 or 99).
+
+WWW
+     represents any textual short weekday name with length of 2...3
+     characters (Mon...Sun).
+
+?
+     represents any case-insensitive single letter.
+
+N
+     represents any positive integer number (one or more digits).
+
+
+File: gcal.info,  Node: Coding Scheme Table 1,  Next: Coding Scheme Table 2,  Prev: Coding Scheme,  Up: Coding Scheme
+
+Coding Scheme Table 1
+=====================
+
+  This table opposes all possible encode variations of a date given in
+the *date part* of resource file with all fitting modifiers of the
+short-style option `-c|C[]'.
+
+*Please note:*
+The `-c', `-ct', `-cNd', `-c*d|wN[WWW]', `-c@?[[+|-]N[WWW]]', `-cMMDD'
+and `-cMMWWWN' options respect *all* encode variations of the *date
+part*!
+
+*Date part*               *Short-style option `-c|C[]'*                   
+`00000000'                `-cN+|-'                                        
+`000000DD'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`0000MM00'                `-cN+|-'                                        
+`0000MMDD'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`YYYY0000'                `-cN+|-'                                        
+`YYYY00DD'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`YYYYMM00'                `-cN+|-'                                        
+`YYYYMMDD'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`000000WWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`0000MMWWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`YYYY00WWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`YYYYMMWWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`0000*dN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`YYYY*dN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`0000*wN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`YYYY*wN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`0000@?[+|-]N[WWW]'       `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+`YYYY@?[+|-]N[WWW]'       `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMDD', `-clMMWWWN'    
+
+
+File: gcal.info,  Node: Coding Scheme Table 2,  Prev: Coding Scheme Table 1,  Up: Coding Scheme
+
+Coding Scheme Table 2
+=====================
+
+  This table opposes all fitting modifiers of the short-style option
+`-c|C[]' with all possible encode variations of a date given in the
+*date part* of resource file.
+
+*Short-style option       *Date part*                                     
+`-c|C[]'*                                                                 
+`-c'                                                                      
+`-ct'                                                                     
+`-cNd|+|-'                                                                
+`-cMMDD'                                                                  
+`-cMMWWWN'                                                                
+`-c*d|wN[WWW]'                                                            
+`-c@?[[+|-]N[WWW]]'       `00000000', `0000MM00', `YYYY0000', `YYYYMM00', 
+                          `000000DD', `0000MMDD', `YYYY00DD', `YYYYMMDD', 
+                          `000000WWWN', `0000MMWWWN', `YYYY00WWWN',       
+                          `YYYYMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `YYYY*dN', `YYYY*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `YYYY*wN', `YYYY*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `YYYY@?[+|-]N', `YYYY@?[+|-]NWWW'               
+`-cNw'                                                                    
+`-cw[+|-]'                `000000DD', `0000MMDD', `YYYY00DD', `YYYYMMDD', 
+                          `000000WWWN', `0000MMWWWN', `YYYY00WWWN',       
+                          `YYYYMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `YYYY*dN', `YYYY*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `YYYY*wN', `YYYY*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `YYYY@?[+|-]N', `YYYY@?[+|-]NWWW'               
+`-cm[+|-]'                `000000DD', `0000MMDD', `YYYY00DD', `YYYYMMDD', 
+                          `000000WWWN', `0000MMWWWN', `YYYY00WWWN',       
+                          `YYYYMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `YYYY*dN', `YYYY*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `YYYY*wN', `YYYY*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `YYYY@?[+|-]N', `YYYY@?[+|-]NWWW'               
+`-cy[+|-]'                                                                
+`-clNd|w|+|-'                                                             
+`-clMMDD'                                                                 
+`-clMMWWWN'                                                               
+`-cl*d|wN[WWW]'                                                           
+`-cl@?[[+|-]N[WWW]]'      `0000MMDD', `YYYYMMDD', `0000MMWWWN',           
+                          `YYYYMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `YYYY*dN', `YYYY*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `YYYY*wN', `YYYY*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `YYYY@?[+|-]N', `YYYY@?[+|-]NWWW'               

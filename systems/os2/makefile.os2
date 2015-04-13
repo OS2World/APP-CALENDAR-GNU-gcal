@@ -1,0 +1,44 @@
+# $Id: makefile.os2 0.18 1997/01/26 00:01:08 tom Exp $
+
+# Maintained by Kai Uwe Rommel <rommel@ars.de>
+
+# for OS/2 and emx+gcc
+
+release:
+	$(MAKE) -f makefile.os2 all \
+	CC="gcc -Zomf -O" \
+	LDFLAGS="-s -Zcrtdll -Zstack 512" O=".obj" A=".lib"
+debug:
+	$(MAKE) -f makefile.os2 all \
+	CC="gcc -g" LDFLAGS="" O=".o" A=".a"
+
+CFLAGS = -Wall -I.. -I../intl -DHAVE_CONFIG_H
+LIBS = -lm -ltermcap ../intl/intl$A
+
+OBJ1 = gcal$O file-io$O hd-data$O hd-use$O help$O print$O rc-check$O \
+  rc-insert$O rc-use$O rc-utils$O regexp$O tty$O utils$O
+OBJ2 = tcal$O
+OBJ3 = txt2gcal$O
+OBJ4 = gcal2txt$O
+
+.SUFFIXES: .c $O
+
+.c$O:
+	$(CC) $(CFLAGS) -c $<
+
+all : gcal.exe tcal.exe txt2gcal.exe gcal2txt.exe
+
+gcal.exe : $(OBJ1)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ1) $(LIBS)
+
+tcal.exe : $(OBJ2)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ2) $(LIBS)
+
+txt2gcal.exe : $(OBJ3)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ3) $(LIBS)
+
+gcal2txt.exe : $(OBJ4)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ4) $(LIBS)
+
+clean:
+	rm -f *.o *.obj

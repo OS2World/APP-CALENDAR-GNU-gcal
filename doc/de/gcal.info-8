@@ -1,0 +1,109 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Variablenindex,  Next: Begriffsindex,  Prev: Argumentenindex,  Up: Top
+
+Index von Umgebungsvariablen
+****************************
+
+Hier ist eine alphabetische Liste der Umgebungsvariablen, die von Gcal
+ber"ucksichtigt werden:
+
+* Menu:
+
+* CO <1>:                                Umgebungsvariablen.
+* CO:                                    Globale Optionen.
+* COLUMNS <1>:                           Globale Optionen.
+* COLUMNS:                               Umgebungsvariablen.
+* GCAL <1>:                              Umgebungsvariablen.
+* GCAL <2>:                              Globale Optionen.
+* GCAL <3>:                              Die GCAL Umgebungsvariable.
+* GCAL:                                  Globale Optionen.
+* GCAL_DATE_FORMAT <1>:                  Umgebungsvariablen.
+* GCAL_DATE_FORMAT:                      Kalender Optionen.
+* GCAL_OPT:                              Die GCAL Umgebungsvariable.
+* GCAL_SYS_DATADIR <1>:                  Ressourcendatei.
+* GCAL_SYS_DATADIR:                      Umgebungsvariablen.
+* GCAL_USR_DATADIR <1>:                  Ressourcendatei.
+* GCAL_USR_DATADIR:                      Umgebungsvariablen.
+* GCALANSI <1>:                          Globale Optionen.
+* GCALANSI:                              Umgebungsvariablen.
+* GCALPATH <1>:                          Umgebungsvariablen.
+* GCALPATH:                              Ressourcendatei.
+* GCALPROG <1>:                          Aufruf von tcal.
+* GCALPROG:                              Umgebungsvariablen.
+* HOME <1>:                              Umgebungsvariablen.
+* HOME <2>:                              Termin Optionen.
+* HOME:                                  Ressourcendatei.
+* LANG <1>:                              Internationalisierung.
+* LANG:                                  Umgebungsvariablen.
+* LANGUAGE <1>:                          Umgebungsvariablen.
+* LANGUAGE:                              Internationalisierung.
+* LC_ALL <1>:                            Internationalisierung.
+* LC_ALL:                                Umgebungsvariablen.
+* LC_MESSAGES <1>:                       Internationalisierung.
+* LC_MESSAGES:                           Umgebungsvariablen.
+* LI <1>:                                Umgebungsvariablen.
+* LI:                                    Globale Optionen.
+* LINES <1>:                             Globale Optionen.
+* LINES:                                 Umgebungsvariablen.
+* MAILPROG <1>:                          Umgebungsvariablen.
+* MAILPROG:                              Globale Optionen.
+* PAGER <1>:                             Globale Optionen.
+* PAGER:                                 Umgebungsvariablen.
+* PATH <1>:                              Globale Optionen.
+* PATH:                                  Umgebungsvariablen.
+* TERM <1>:                              Globale Optionen.
+* TERM:                                  Umgebungsvariablen.
+* TZ:                                    Umgebungsvariablen.
+

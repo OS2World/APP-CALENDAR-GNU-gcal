@@ -1,0 +1,191 @@
+#  $Id: makefile.tcc 0.14 1997/01/26 00:01:04 tom Exp $
+###############################################################################
+#
+#  Turbo-C (v1.0++)
+#  Makefile to create the extended `gcal' program.
+#
+#  Copyright (C) 1994-1997      Thomas Esken            <esken@uni-muenster.de>
+#                               Im Hagenfeld 84
+#                               D-48147 M"unster
+#                               GERMANY
+#
+###############################################################################
+#
+#
+#
+DEF = -D#
+#
+#  BEGIN: General program modification symbols,
+#           which may be changed by the user !!
+#
+
+
+
+#  Write the line `USE_EASC = $(DEF)USE_EASC=1'
+#    in case you want to use the 8-bit extended IBM-ASCII character set
+#    (IBM PC or ISO 8859-1 = ISO Latin-1 or Nextstep character sets).
+#
+#  Write the line `USE_EASC = $(DEF)USE_EASC=0'
+#    in case you want to use the 7-bit ISO-ASCII/EBCDIC character set.
+#
+#USE_EASC = $(DEF)USE_EASC=1#
+
+
+
+#  Write the line `USE_DE = $(DEF)USE_DE=1'
+#    in case you want to use German message texts, holidays
+#    and calendar layout.
+#
+#  Write the line `USE_DE = $(DEF)USE_DE=0'
+#    in case you want to use English message texts, holidays
+#    and calendar layout.
+#
+#USE_DE = $(DEF)USE_DE=1#
+
+
+
+#  Write the line `USE_HLS = $(DEF)USE_HLS=1'
+#    to run this program using control sequences for highlighting the current
+#    day/holidays/text (MS/PC-DOS will use the [n]ansi.sys driver for emitting
+#    ANSI escape highlighting sequences; OS2/Linux/UN*X-like systems will use
+#    Termcap for emitting the terminal specific highlighting sequences.
+#    If this fails, default (generic) ANSI highlighting sequences will be used).
+#
+#  Write the line `USE_HLS = $(DEF)USE_HLS=0'
+#    to run this program without highlighting...
+#
+USE_HLS = $(DEF)USE_HLS=1#
+
+
+
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=1'
+#    in case you want to use a simple, built-in pager.
+#
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=0'
+#    in case you don't like this feature...
+#
+USE_PAGER = $(DEF)USE_PAGER=1#
+
+
+
+#  Write the line `USE_RC = $(DEF)USE_RC=1'
+#    for using the special month dates functions (print daily / weekly
+#    monthly / yearly / eternal / special fixed dates as stated in
+#    resource files).
+#
+#  Write the line `USE_RC = $(DEF)USE_RC=0'
+#    if you don't like this feature...
+#
+USE_RC = $(DEF)USE_RC=1#
+
+
+
+#  Specify, which directories shall be used for the resource files:
+#
+#  (Define the empty string "" if you don't need data directories,
+#  so data files are searched in the actual and $HOME directory only)
+#
+#
+#  Name of user (private access) specific data directory
+#    (relative to $HOME directory)
+#
+GCAL_USR_DATADIR = "share/gcal"
+#
+#  Name of system (common access) specific data directory
+#    (static to root directory)
+#
+GCAL_SYS_DATADIR = "/usr/local/share/gcal"
+
+
+
+#
+#
+#
+DEFINES = $(USE_EASC) $(USE_DE) $(USE_HLS) $(USE_PAGER) $(USE_RC)
+DEFINES2 = $(DEF)GCAL_USR_DATADIR=$(GCAL_USR_DATADIR) \
+  $(DEF)GCAL_SYS_DATADIR=$(GCAL_SYS_DATADIR)
+DEFINES3 = $(DEF)HAVE_MATH_H=1 $(DEF)HAVE_LIBM=1
+
+
+
+#
+#  END: general program modification symbols,
+#         which may be changed by the user !!
+#
+
+
+
+# [-m]h=huge memory model required !!
+MODEL = -mh
+#
+INCLUDE = c:\turbo\tc\include
+LIB = c:\turbo\tc\lib
+#
+CC = tcc $(MODEL)
+CFLAGS = -G -M -N -O -Z -a -d -k- -v- -y- -w+
+#
+LD = $(CC)
+LDFLAGS =
+#
+X = .exe
+O = .obj
+C = .c
+H = .h
+#
+OBJA = gcal$(O) file-io$(O) hd-data$(O) hd-use$(O) help$(O) print$(O) rc-check$(O)
+OBJB = rc-insert$(O) rc-use$(O) rc-utils$(O) regexp$(O) tty$(O) utils$(O)
+OBJ2 = tcal$(O)
+OBJ3 = txt2gcal$(O)
+OBJ4 = gcal2txt$(O)
+
+
+
+$(C)$(O):
+	$(CC) -c $<
+
+
+
+all : gcal$(X) tcal$(X) txt2gcal$(X) gcal2txt$(X)
+
+gcal$(X) : m_cfg $(OBJA) $(OBJB) m_gcal_lnk
+	$(LD) $(LDFLAGS) @gcal.lnk
+	del gcal.lnk
+
+tcal$(X) : m_cfg $(OBJ2) m_tcal_lnk
+	$(LD) $(LDFLAGS) @tcal.lnk
+	del tcal.lnk
+
+txt2gcal$(X) : m_cfg $(OBJ3) m_txt2gcal_lnk
+	$(LD) $(LDFLAGS) @txt2gcal.lnk
+	del txt2gcal.lnk
+
+gcal2txt$(X) : m_cfg $(OBJ4) m_gcal2txt_lnk
+	$(LD) $(LDFLAGS) @gcal2txt.lnk
+	del gcal2txt.lnk
+
+m_cfg :
+	echo -I$(INCLUDE) > turboc.cfg
+	echo -L$(LIB) >> turboc.cfg
+	echo $(DEFINES) >> turboc.cfg
+	echo $(DEFINES2) >> turboc.cfg
+	echo $(DEFINES3) >> turboc.cfg
+	echo $(CFLAGS) >> turboc.cfg
+
+m_gcal_lnk :
+	echo $(OBJA) > gcal.lnk
+	echo $(OBJB) >> gcal.lnk
+
+m_tcal_lnk :
+	echo $(OBJ2) > tcal.lnk
+
+m_txt2gcal_lnk :
+	echo $(OBJ3) > txt2gcal.lnk
+
+m_gcal2txt_lnk :
+	echo $(OBJ4) > gcal2txt.lnk
+
+clean :
+	del turboc.cfg
+	del *$(O)
+	del *.map
+	del *$(X)

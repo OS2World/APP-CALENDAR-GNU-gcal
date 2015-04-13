@@ -1,0 +1,151 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+Indirect:
+gcal.info-1: 2491
+gcal.info-2: 48793
+gcal.info-3: 97548
+gcal.info-4: 145777
+gcal.info-5: 194682
+gcal.info-6: 242557
+gcal.info-7: 289977
+gcal.info-8: 338629
+gcal.info-9: 341624
+
+Tag Table:
+(Indirect)
+Node: Top2491
+Node: Einleitung8279
+Node: Aufruf von Gcal12253
+Node: Kommandozeilenargumente14056
+Node: Optionen16070
+Node: Allgemeine Optionen19978
+Node: Globale Optionen21404
+Node: Kalender Optionen32363
+Node: Termin Optionen48793
+Node: Antwortdatei97548
+Node: Datummodifizierer99912
+Node: Kommandos109977
+Node: Einfache Kommandos112432
+Node: 3-Monatsmodus Kommandos114668
+Node: Listen von Kommandos115676
+Node: Bereiche von Kommandos116928
+Node: Die GCAL Umgebungsvariable117963
+Node: Ewige Feiertage118989
+Node: Termine124032
+Node: Ressourcendatei130009
+Node: Struktur einer Ressourcendatei135363
+Node: Datumteil einer Zeile138540
+Node: Weitere Datumteil-Attribute144279
+Node: Listen von Tagen145777
+Node: Bereiche von Tagen149048
+Node: Wiederholungsfaktor von Tagen153899
+Node: Auftretensfaktor von Tagen158458
+Node: Textteil einer Zeile165826
+Node: Zeile kommentieren172081
+Node: Include Anweisungen174676
+Node: Spezialtexte178297
+Node: Datumvariablen180263
+Node: Textvariablen188128
+Node: Ressourcendateibeispiele194682
+Node: Heutiger Kalender203380
+Node: Gcal Hilfsprogramme209162
+Node: Aufruf von tcal209867
+Node: Aufruf von txt2gcal211742
+Node: Aufruf von gcal2txt214333
+Node: Internationalisierung216537
+Node: Metasymbole223976
+Node: Regulaere Ausdruecke225579
+Node: Benutzung von Regexp227471
+Node: Regexp Operatoren228261
+Node: Regexps (kurz)242557
+Node: Spezialtexte (lang)245103
+Node: Ausschliessen246746
+Node: Ausschliessen mit Datumargument247308
+Node: Inklusive Datum Zeitraum248459
+Node: Exklusive Datum Zeitraum251895
+Node: Ausschliessen ohne Argument255317
+Node: Inklusive Tag Zeitraum256366
+Node: Exklusive Tag Zeitraum258022
+Node: Ersetzen259631
+Node: Ersetzen mit Datumargument260533
+Node: Wochentagsname262198
+Node: Wochentag263344
+Node: Tageszahl268731
+Node: Tag270273
+Node: Woche271665
+Node: Monatsname272196
+Node: Monat273013
+Node: Jahr274440
+Node: Mondphase275195
+Node: Biorhythmus278172
+Node: Differenzwert283104
+Node: Ersetzen mit anderem Argument284596
+Node: Aktuelle Uhrzeit285317
+Node: Textliches Datum286034
+Node: Julianische Tageszahl286747
+Node: Ersetzen ohne Argument288701
+Node: Andere Differenzwerte289063
+Node: Hervorhebung289977
+Node: Shell Kommando298089
+Node: Spezialtexte (kurz)299470
+Node: Kodierschema305205
+Node: Kodierschema Tabelle 1306715
+Node: Kodierschema Tabelle 2310188
+Node: Umgebungsvariablen313617
+Node: Fehlerkodes317297
+Node: Argumentenindex319432
+Node: Variablenindex338629
+Node: Begriffsindex341624
+
+End Tag Table

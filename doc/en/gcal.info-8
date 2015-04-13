@@ -1,0 +1,1318 @@
+This is Info file ./en/gcal.info, produced by Makeinfo version 1.67
+from the input file ./en/gcal.texi.
+
+INFO-DIR-SECTION GNU packages
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                       The GNU calendar program.
+* tcal: (gcal)Invoking tcal.          Run Gcal with tomorrow's date.
+* txt2gcal: (gcal)Invoking txt2gcal.  Convert text file to resource file.
+* gcal2txt: (gcal)Invoking gcal2txt.  Convert resource file to text file.
+END-INFO-DIR-ENTRY
+
+  This file documents Gcal, a program for printing calendars.  Gcal
+displays a calendar for a month or a year, eternal holiday lists and
+fixed date lists, in many ways.  The program correctly omits the dates
+that were skipped when the current Gregorian calendar replaced the
+earlier Julian calendar.
+
+  Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+  This is the second edition of the Gcal documentation.
+
+  Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+  Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+  Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Free Software Foundation.
+
+  Any suggestions, improvements, extensions, bug reports, donations,
+proposals for contract work, and so forth are welcome!  Please send
+them directly to my eMail address.  If you like my work, I'd appreciate
+a postcard from you!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Concept Index,  Prev: Variable Index,  Up: Top
+
+Concept Index
+*************
+
+* Menu:
+
+* # separator character of ranges of days: Ranges of days.
+* % special text starting character:     Special texts processed.
+* %![ARGUMENT] special text, shell Kommando: Shell Command.
+* %#[DATE] special text, day number <1>: Special Texts Summary.
+* %#[DATE] special text, day number:     Day number.
+* %&[DATE] special text, day number:     Special Texts Summary.
+* %&[DATE] special text, Day number:     Day number.
+* %([DATE] special text, weekday number <1>: Special Texts Summary.
+* %([DATE] special text, weekday number: Weekday.
+* %)[DATE] special text, weekday number <1>: Weekday.
+* %)[DATE] special text, weekday number: Special Texts Summary.
+* %*[DATE] special text, day number <1>: Special Texts Summary.
+* %*[DATE] special text, day number:     Day number.
+* %+[DATE] special text, day number <1>: Special Texts Summary.
+* %+[DATE] special text, day number:     Day number.
+* %,[DATE] special text, biorhythm <1>:  Biorhythm.
+* %,[DATE] special text, biorhythm:      Special Texts Summary.
+* %-[DATE] special text, moonphase <1>:  Special Texts Summary.
+* %-[DATE] special text, moonphase:      Moonphase.
+* %0 special text, end of highlighting sequence 1 or 2 <1>: Highlighting.
+* %0 special text, end of highlighting sequence 1 or 2: Special Texts Summary.
+* %1 special text, start of highlighting sequence 1 <1>: Highlighting.
+* %1 special text, start of highlighting sequence 1: Special Texts Summary.
+* %2 special text, end of highlighting sequence 1 <1>: Special Texts Summary.
+* %2 special text, end of highlighting sequence 1: Highlighting.
+* %3 special text, start of highlighting sequence 2 <1>: Highlighting.
+* %3 special text, start of highlighting sequence 2: Special Texts Summary.
+* %4 special text, end of highlighting sequence 2 <1>: Highlighting.
+* %4 special text, end of highlighting sequence 2: Special Texts Summary.
+* %5 special text, start of highlighting sequence 1 <1>: Highlighting.
+* %5 special text, start of highlighting sequence 1: Special Texts Summary.
+* %6 special text, end of highlighting sequence 1 <1>: Highlighting.
+* %6 special text, end of highlighting sequence 1: Special Texts Summary.
+* %7 special text, start of highlighting sequence 2 <1>: Special Texts Summary.
+* %7 special text, start of highlighting sequence 2: Highlighting.
+* %8 special text, end of highlighting sequence 2 <1>: Highlighting.
+* %8 special text, end of highlighting sequence 2: Special Texts Summary.
+* %9 special text, start of highlighting sequence 1 or 2 <1>: Highlighting.
+* %9 special text, start of highlighting sequence 1 or 2: Special Texts Summary.
+* %:[DATE] special text, moonphase text graphics <1>: Special Texts Summary.
+* %:[DATE] special text, moonphase text graphics: Moonphase.
+* %;[DATE] special text, biorhythm text graphics <1>: Biorhythm.
+* %;[DATE] special text, biorhythm text graphics: Special Texts Summary.
+* %<[DATE] special text, weekday number <1>: Special Texts Summary.
+* %<[DATE] special text, weekday number: Weekday.
+* %=[DATE] special text, year <1>:       Year.
+* %=[DATE] special text, year:           Special Texts Summary.
+* %>[DATE] special text, weekday number <1>: Special Texts Summary.
+* %>[DATE] special text, weekday number: Weekday.
+* %?... special texts for date exclusion: Exclusions.
+* %?... special texts for text replacement: Replacements.
+* %?... special texts, description of all: Special Texts.
+* %?... special texts, short-list of all: Special Texts Summary.
+* %?... special texts, summary of all:   Special Texts Summary.
+* %?... spezial texts:                   Special texts processed.
+* %[[DATE] special text, weekday number <1>: Weekday.
+* %[[DATE] special text, weekday number: Special Texts Summary.
+* %][DATE] special text, weekday number <1>: Special Texts Summary.
+* %][DATE] special text, weekday number: Weekday.
+* %_[DATE] special text, moonphase <1>:  Special Texts Summary.
+* %_[DATE] special text, moonphase:      Moonphase.
+* %A special text, exclusive Monday <1>: Special Texts Summary.
+* %A special text, exclusive Monday:     Exclusive day period.
+* %a special text, inclusive Monday <1>: Inclusive day period.
+* %a special text, inclusive Monday:     Special Texts Summary.
+* %B[DATE] special text, birthday:       Difference value.
+* %b[DATE] special text, birthday:       Difference value.
+* %B[DATE] special text, birthday:       Special Texts Summary.
+* %b[DATE] special text, birthday:       Special Texts Summary.
+* %C special text, exclusive Tuesday <1>: Special Texts Summary.
+* %C special text, exclusive Tuesday:    Exclusive day period.
+* %c special text, inclusive Tuesday <1>: Special Texts Summary.
+* %c special text, inclusive Tuesday:    Inclusive day period.
+* %d special text, relative day number <1>: Special Texts Summary.
+* %d special text, relative day number:  Other difference values.
+* %D[DATE] special text, day <1>:        Special Texts Summary.
+* %D[DATE] special text, day:            Day.
+* %DATE actual date modifier:            Actual date modifier.
+* %DATE, option:                         Command line arguments.
+* %DATE, Option:                         Actual date modifier.
+* %E[DATE] special text, weekday number <1>: Weekday.
+* %E[DATE] special text, weekday number: Special Texts Summary.
+* %e[DATE][#[DATE]] special text, exclusive date period: Exclusive date period.
+* %F special text, exclusive Wednesday <1>: Special Texts Summary.
+* %F special text, exclusive Wednesday:  Exclusive day period.
+* %f special text, inclusive Wednesday <1>: Special Texts Summary.
+* %f special text, inclusive Wednesday:  Inclusive day period.
+* %G special text, exclusive Thursday <1>: Special Texts Summary.
+* %G special text, exclusive Thursday:   Exclusive day period.
+* %g special text, inclusive Thursday <1>: Special Texts Summary.
+* %g special text, inclusive Thursday:   Inclusive day period.
+* %H special text, exclusive Friday <1>: Exclusive day period.
+* %H special text, exclusive Friday:     Special Texts Summary.
+* %h special text, inclusive Friday <1>: Special Texts Summary.
+* %h special text, inclusive Friday:     Inclusive day period.
+* %I[DATE] special text, weekday number <1>: Special Texts Summary.
+* %I[DATE] special text, weekday number: Weekday.
+* %i[DATE][#[DATE]] special text, inclusive date period: Inclusive date period.
+* %j[ARGUMENT] special text, Julian day number: Julian day number.
+* %J[DATE] special text, weekday number <1>: Special Texts Summary.
+* %J[DATE] special text, weekday number: Weekday.
+* %K[DATE] special text, 2-letter weekday name <1>: Special Texts Summary.
+* %K[DATE] special text, 2-letter weekday name: Weekday name.
+* %k[DATE] special text, week:           Week.
+* %L special text, exclusive Saturday <1>: Exclusive day period.
+* %L special text, exclusive Saturday:   Special Texts Summary.
+* %l special text, inclusive Saturday <1>: Special Texts Summary.
+* %l special text, inclusive Saturday:   Inclusive day period.
+* %m special text, relative month number <1>: Other difference values.
+* %m special text, relative month number: Special Texts Summary.
+* %M[DATE] special text, complete month name <1>: Month name.
+* %M[DATE] special text, complete month name: Special Texts Summary.
+* %n[ARGUMENT] special text, textual date: Textual date.
+* %N[DATE] special text, day <1>:        Special Texts Summary.
+* %N[DATE] special text, day:            Day.
+* %O[DATE] special text, 3-letter weekday name <1>: Weekday name.
+* %O[DATE] special text, 3-letter weekday name: Special Texts Summary.
+* %o[DATE] special text, complete weekday name <1>: Weekday name.
+* %o[DATE] special text, complete weekday name: Special Texts Summary.
+* %P special text, exclusive Sunday <1>: Special Texts Summary.
+* %P special text, exclusive Sunday:     Exclusive day period.
+* %p special text, inclusive Sunday <1>: Inclusive day period.
+* %p special text, inclusive Sunday:     Special Texts Summary.
+* %Q special text, exclusive Monday...Thursday <1>: Exclusive day period.
+* %Q special text, exclusive Monday...Thursday: Special Texts Summary.
+* %q special text, inclusive Monday...Thursday <1>: Special Texts Summary.
+* %q special text, inclusive Monday...Thursday: Inclusive day period.
+* %R special text, exclusive Monday...Friday <1>: Special Texts Summary.
+* %R special text, exclusive Monday...Friday: Exclusive day period.
+* %r special text, inclusive Monday...Friday <1>: Inclusive day period.
+* %r special text, inclusive Monday...Friday: Special Texts Summary.
+* %s[DATE] special text, day <1>:        Special Texts Summary.
+* %s[DATE] special text, day:            Day.
+* %S[DATE] special text, weekday number <1>: Weekday.
+* %S[DATE] special text, weekday number: Special Texts Summary.
+* %t12 special text:                     Actual time.
+* %t24 special text:                     Actual time.
+* %t[ARGUMENT] special text, actual time: Actual time.
+* %T[DATE] special text, 3-letter month name <1>: Special Texts Summary.
+* %T[DATE] special text, 3-letter month name: Month name.
+* %u[DATE] special text, day <1>:        Special Texts Summary.
+* %u[DATE] special text, day:            Day.
+* %U[DATE] special text, month <1>:      Special Texts Summary.
+* %U[DATE] special text, month:          Month.
+* %V special text, exclusive legal holidays <1>: Special Texts Summary.
+* %V special text, exclusive legal holidays: Exclusive day period.
+* %v special text, inclusive legal holidays <1>: Inclusive day period.
+* %v special text, inclusive legal holidays: Special Texts Summary.
+* %w special text, relative week number <1>: Special Texts Summary.
+* %w special text, relative week number: Other difference values.
+* %W[DATE] special text, Month:          Month.
+* %W[DATE] special text, month:          Special Texts Summary.
+* %X special text, exclusive all holidays <1>: Special Texts Summary.
+* %X special text, exclusive all holidays: Exclusive day period.
+* %x special text, inclusive all holidays <1>: Inclusive day period.
+* %x special text, inclusive all holidays: Special Texts Summary.
+* %y special text, relative year number <1>: Special Texts Summary.
+* %y special text, relative year number: Other difference values.
+* %Y[DATE] special text, year <1>:       Year.
+* %Y[DATE] special text, year:           Special Texts Summary.
+* %yDATE special text, relative year number <1>: Difference value.
+* %yDATE special text, relative year number: Special Texts Summary.
+* %z[DATE] special text, Month:          Month.
+* %Z[DATE] special text, Month:          Month.
+* %Z[DATE] special text, month:          Special Texts Summary.
+* %z[DATE] special text, month:          Special Texts Summary.
+* %{[DATE] special text, weekday number <1>: Special Texts Summary.
+* %{[DATE] special text, weekday number: Weekday.
+* %}[DATE] special text, weekday number <1>: Weekday.
+* %}[DATE] special text, weekday number: Special Texts Summary.
+* + separator character <1>:             Calendar options.
+* + separator character:                 Fixed date options.
+* , separator character of lists of days: Lists of days.
+* - switch character:                    Command line arguments.
+* -- switch character:                   Command line arguments.
+* .gcalrc resource file:                 Resource file.
+* .N appearance factor of days:          Appearance factor of days.
+* / switch character:                    Command line arguments.
+* 2-letter weekday name, %K[DATE] special text: Weekday name.
+* 3-letter month name, %T[DATE] special text: Month name.
+* 3-letter weekday name, %O[DATE] special text: Weekday name.
+* 3-Month mode command . YYYY, special:  3-Month mode commands.
+* 3-Month mode command .+ YYYY, special: 3-Month mode commands.
+* 3-Month mode command .+, special:      3-Month mode commands.
+* 3-Month mode command ., special:       3-Month mode commands.
+* 3-Month mode command .- YYYY, special: 3-Month mode commands.
+* 3-Month mode command .-, special:      3-Month mode commands.
+* 3-Month mode command .. YYYY, special: 3-Month mode commands.
+* 3-Month mode command .., special:      3-Month mode commands.
+* 3-Month mode commands <1>:             Commands.
+* 3-Month mode commands:                 3-Month mode commands.
+* 3-Month mode, limitations <1>:         Further date part attributes.
+* 3-Month mode, limitations:             Date variables.
+* : separator character <1>:             Fixed date options.
+* : separator character <2>:             Global options.
+* : separator character:                 Fixed date options.
+* :N repetition factor of days:          Repetition factor of days.
+* ; comment character <1>:               Response file.
+* ; comment character:                   Comment line.
+* ; remark character:                    Comment line.
+* @FILE response file:                   Response file.
+* @FILE, option:                         Command line arguments.
+* @FILE, Option:                         Response file.
+* \ depreciation character <1>:          Fixed date options.
+* \ depreciation character <2>:          Text variables.
+* \ depreciation character <3>:          Fixed date options.
+* \ depreciation character <4>:          Text part of a line.
+* \ depreciation character <5>:          Fixed date options.
+* \ depreciation character <6>:          Special texts processed.
+* \ depreciation character:              Fixed date options.
+* \ line continuation character:         Text part of a line.
+* \ protection character <1>:            Fixed date options.
+* \ protection character <2>:            Text part of a line.
+* \ protection character <3>:            Fixed date options.
+* \ protection character <4>:            Special texts processed.
+* \ protection character <5>:            Text variables.
+* \ protection character <6>:            Fixed date options.
+* \ protection character:                Text part of a line.
+* \' regexp operator:                    Regexp Operators.
+* \< regexp operator:                    Regexp Operators.
+* \> regexp operator:                    Regexp Operators.
+* \` regexp operator:                    Regexp Operators.
+* \B regexp operator:                    Regexp Operators.
+* \b regexp operator:                    Regexp Operators.
+* \W regexp operator:                    Regexp Operators.
+* \w regexp operator:                    Regexp Operators.
+* ^ line break up character <1>:         Fixed date options.
+* ^ line break up character:             Text part of a line.
+* _ pseudo space character:              Fixed date options.
+* Activate fixed date function:          Fixed date options.
+* Actual date modifier, %DATE:           Actual date modifier.
+* Actual directory:                      Resource file.
+* Actual system time, display the:       Actual time.
+* Actual time %t[ARGUMENT] special text <1>: Special Texts Summary.
+* Actual time %t[ARGUMENT] special text: Actual time.
+* Addition by days, date variables:      Date variables.
+* Addition by weekdays, date variables:  Date variables.
+* Additional resource file:              Fixed date options.
+* Additional resource file line:         Fixed date options.
+* Age value:                             Difference value.
+* Alternative date format in calendar sheet: Calendar options.
+* Alternative date format in eternal holiday list: Calendar options.
+* Alternative date format in fixed date list: Calendar options.
+* Anchors in regexps:                    Regexp Operators.
+* Appearance factor of days, .N:         Appearance factor of days.
+* Appearance factors of days, examples to: Appearance factor of days.
+* Appearance factors of days, valid date parts of: Appearance factor of days.
+* Arguments of command line:             Command line arguments.
+* Aspects in Internationalization:       Internationalization.
+* Assignments to date variables <1>:     Fixed date options.
+* Assignments to date variables:         Date variables.
+* Assignments to text variables <1>:     Text variables.
+* Assignments to text variables:         Fixed date options.
+* Biorhythm %?[DATE] special texts <1>:  Biorhythm.
+* Biorhythm %?[DATE] special texts:      Special Texts Summary.
+* Biorhythm text graphics, %;[DATE] special text: Biorhythm.
+* Biorhythm, %,[DATE] special text:      Biorhythm.
+* Biorhythm, critical day:               Biorhythm.
+* Biorhythm, negative day:               Biorhythm.
+* Biorhythm, positive day:               Biorhythm.
+* Birthday, %b[DATE] special text:       Difference value.
+* Birthday, %B[DATE] special text:       Difference value.
+* Buffer matching operators, regexp:     Regexp Operators.
+* C Preprocessor symbol USE_PAGER:       Global options.
+* Calendar format, special:              Calendar options.
+* Calendar format, standard:             Calendar options.
+* Calendar options:                      Calendar options.
+* Calendar sheet, alternative date format in: Calendar options.
+* Calendar sheet, force output of:       Calendar options.
+* Calendar sheet, provide with week numbers: Calendar options.
+* Calendar sheet, special date format in: Calendar options.
+* Calendar sheet, standard and special date format in: Calendar options.
+* Calendar sheet, suppress:              Calendar options.
+* Calendar, Gregorian:                   Todays Calendar.
+* Calendar, Julian:                      Todays Calendar.
+* Calendar, leap year rule as used by Eastern churches: Calendar options.
+* Case sensitivity in matching, regexp:  Regexp Operators.
+* Character classes, regexp:             Regexp Operators.
+* Character list in regexp, complemented: Regexp Operators.
+* Character list in regexp, negated:     Regexp Operators.
+* Character list, regexp:                Regexp Operators.
+* Christian holidays in eternal holiday list: Calendar options.
+* CO environment variable:               Environment Variables.
+* Coding Scheme of resource file:        Coding Scheme.
+* Coding Scheme Table 1:                 Coding Scheme Table 1.
+* Coding Scheme Table 2:                 Coding Scheme Table 2.
+* Collating elements, regexp:            Regexp Operators.
+* Collating symbols, regexp:             Regexp Operators.
+* COLUMNS environment variable:          Environment Variables.
+* Command line arguments:                Command line arguments.
+* Command line interpreter:              Invoking Gcal.
+* Command line options, gcal:            Options.
+* Command line word, single:             Fixed date options.
+* Command separator characters, list of: Commands.
+* Command, .:                            3-Month mode commands.
+* Command, . YYYY:                       3-Month mode commands.
+* Command, .+:                           3-Month mode commands.
+* Command, .+ YYYY:                      3-Month mode commands.
+* Command, .-:                           3-Month mode commands.
+* Command, .- YYYY:                      3-Month mode commands.
+* Command, ..:                           3-Month mode commands.
+* Command, .. YYYY:                      3-Month mode commands.
+* Command, ::                            Single commands.
+* Command, :YYYY:                        Single commands.
+* Command, lists of:                     Commands.
+* Command, MM YYYY:                      Single commands.
+* Command, MM YYYY-YYYY:                 Ranges of commands.
+* Command, MM,...,MM:                    Lists of commands.
+* Command, MM,...,MM YYYY:               Lists of commands.
+* Command, MM,MM/YYYY,...:               Lists of commands.
+* Command, MM-MM:                        Ranges of commands.
+* Command, MM-MM YYYY:                   Ranges of commands.
+* Command, MM/YYYY:                      Single commands.
+* Command, MM/YYYY,...,MM/YYYY:          Lists of commands.
+* Command, MM/YYYY-MM/YYYY:              Ranges of commands.
+* Command, MM/YYYY-YYYY:                 Ranges of commands.
+* Command, MM::                          Single commands.
+* Command, MM:;MM:;...:                  Lists of commands.
+* Command, MM:;MM:YYYY;...:              Lists of commands.
+* Command, MM:YYYY:                      Single commands.
+* Command, MM:YYYY+MM:YYYY:              Ranges of commands.
+* Command, MM:YYYY;...;MM:YYYY:          Lists of commands.
+* Command, MONTH NAME:                   Single commands.
+* Command, NOTHING:                      Single commands.
+* Command, ranges of:                    Commands.
+* Command, YYYY:                         Single commands.
+* Command, YYYY+YYYY:                    Ranges of commands.
+* Command, YYYY;...;YYYY:                Lists of commands.
+* Commands:                              Command line arguments.
+* Commands, lists of:                    Lists of commands.
+* Commands, overview of:                 Commands.
+* Commands, ranges of:                   Ranges of commands.
+* Commands, single <1>:                  Single commands.
+* Commands, single:                      Commands.
+* Comment character, ; <1>:              Comment line.
+* Comment character, ;:                  Response file.
+* Comment line:                          Comment line.
+* Common options:                        Common options.
+* Complemented character list, regexp:   Regexp Operators.
+* Complete month name, %M[DATE] special text: Month name.
+* Complete weekday name, %o[DATE] special text: Weekday name.
+* Continue line in resource file:        Text part of a line.
+* Control character sequence:            Global options.
+* Copyleft:                              Common options.
+* Copyright:                             Common options.
+* Country code <1>:                      Internationalization.
+* Country code:                          Calendar options.
+* Country specific holidays in eternal holiday list: Calendar options.
+* Critical day, biorhythm:               Biorhythm.
+* Current month of current year:         Single commands.
+* Current months, range of:              Ranges of commands.
+* Date part of a line:                   Date part of a line.
+* Date part, appearance factor of days:  Appearance factor of days.
+* Date part, further attributes:         Further date part attributes.
+* Date part, lists of days:              Lists of days.
+* Date part, ranges of days:             Ranges of days.
+* Date part, repetition factor of days:  Repetition factor of days.
+* Date variables:                        Date variables.
+* Date variables, addition by days:      Date variables.
+* Date variables, addition by weekdays:  Date variables.
+* Date variables, assignments to <1>:    Fixed date options.
+* Date variables, assignments to:        Date variables.
+* Date variables, definition of <1>:     Fixed date options.
+* Date variables, definition of:         Date variables.
+* Date variables, export of local <1>:   Date variables.
+* Date variables, export of local:       Fixed date options.
+* Date variables, global <1>:            Date variables.
+* Date variables, global:                Fixed date options.
+* Date variables, local:                 Date variables.
+* Date variables, management of <1>:     Fixed date options.
+* Date variables, management of:         Date variables.
+* Date variables, name space of <1>:     Fixed date options.
+* Date variables, name space of:         Date variables.
+* Date variables, operations on <1>:     Fixed date options.
+* Date variables, operations on:         Date variables.
+* Date variables, scope of <1>:          Fixed date options.
+* Date variables, scope of:              Date variables.
+* Date variables, simple decrementing:   Date variables.
+* Date variables, simple incrementing:   Date variables.
+* Date variables, subtraction by days:   Date variables.
+* Date variables, subtraction by weekdays: Date variables.
+* Date variables, total number of:       Date variables.
+* Date variables, visibility of:         Date variables.
+* Date variables, visibility of local <1>: Fixed date options.
+* Date variables, visibility of local:   Date variables.
+* Day %?[DATE] special texts <1>:        Day.
+* Day %?[DATE] special texts:            Special Texts Summary.
+* Day number %?[DATE] special texts <1>: Special Texts Summary.
+* Day number %?[DATE] special texts:     Day number.
+* Day number, %#[DATE] special text:     Day number.
+* Day number, %&[DATE] special text:     Day number.
+* Day number, %*[DATE] special text:     Day number.
+* Day number, %+[DATE] special text:     Day number.
+* Day, %D[DATE] special text:            Day.
+* Day, %N[DATE] special text:            Day.
+* Day, %s[DATE] special text:            Day.
+* Day, %u[DATE] special text:            Day.
+* Defaults of native language:           Internationalization.
+* Definition of date variables <1>:      Fixed date options.
+* Definition of date variables:          Date variables.
+* Definition of global date variables:   Fixed date options.
+* Definition of global text variables:   Fixed date options.
+* Definition of local date variables:    Date variables.
+* Definition of local text variables:    Text variables.
+* Definition of text variables <1>:      Fixed date options.
+* Definition of text variables:          Text variables.
+* Deletion of local date variables:      Date variables.
+* Depreciation character, \ <1>:         Fixed date options.
+* Depreciation character, \ <2>:         Special texts processed.
+* Depreciation character, \ <3>:         Fixed date options.
+* Depreciation character, \ <4>:         Text part of a line.
+* Depreciation character, \:             Text variables.
+* Depreciation of special characters <1>: Fixed date options.
+* Depreciation of special characters <2>: Text variables.
+* Depreciation of special characters <3>: Fixed date options.
+* Depreciation of special characters <4>: Text part of a line.
+* Depreciation of special characters <5>: Fixed date options.
+* Depreciation of special characters <6>: Response file.
+* Depreciation of special characters <7>: Text part of a line.
+* Depreciation of special characters <8>: Command line arguments.
+* Depreciation of special characters <9>: Fixed date options.
+* Depreciation of special characters:    Special texts processed.
+* Description of all %?... special texts: Special Texts.
+* Difference value %? special texts <1>: Special Texts Summary.
+* Difference value %? special texts:     Other difference values.
+* Difference value %?[DATE] special texts <1>: Special Texts Summary.
+* Difference value %?[DATE] special texts: Difference value.
+* Directory, actual:                     Resource file.
+* Disable highlighting sequences:        Global options.
+* Disable marking characters:            Global options.
+* Eastern churches' leap year rule, using: Calendar options.
+* Electronic Mail:                       Global options.
+* EMail, error code:                     Error Codes.
+* EMail, option:                         Global options.
+* End of highlighting sequence 1 or 2, %0 special text: Highlighting.
+* End of highlighting sequence 1, %2 special text: Highlighting.
+* End of highlighting sequence 1, %6 special text: Highlighting.
+* End of highlighting sequence 2, %4 special text: Highlighting.
+* End of highlighting sequence 2, %8 special text: Highlighting.
+* Ending date of fixed date <1>:         Inclusive date period.
+* Ending date of fixed date:             Exclusive date period.
+* Environment variable, CO:              Environment Variables.
+* Environment variable, COLUMNS:         Environment Variables.
+* Environment variable, GCAL <1>:        The GCAL environment variable.
+* Environment variable, GCAL <2>:        Environment Variables.
+* Environment variable, GCAL:            Global options.
+* Environment variable, GCAL_DATE_FORMAT: Environment Variables.
+* Environment variable, GCAL_SYS_DATADIR <1>: Environment Variables.
+* Environment variable, GCAL_SYS_DATADIR: Resource file.
+* Environment variable, GCAL_USR_DATADIR <1>: Environment Variables.
+* Environment variable, GCAL_USR_DATADIR: Resource file.
+* Environment variable, GCALANSI <1>:    Environment Variables.
+* Environment variable, GCALANSI:        Global options.
+* Environment variable, GCALPATH <1>:    Environment Variables.
+* Environment variable, GCALPATH:        Resource file.
+* Environment variable, GCALPROG <1>:    Environment Variables.
+* Environment variable, GCALPROG:        Invoking tcal.
+* Environment variable, HOME <1>:        Resource file.
+* Environment variable, HOME:            Environment Variables.
+* Environment variable, LANG <1>:        Environment Variables.
+* Environment variable, LANG:            Internationalization.
+* Environment variable, LANGUAGE <1>:    Internationalization.
+* Environment variable, LANGUAGE:        Environment Variables.
+* Environment variable, LC_ALL <1>:      Internationalization.
+* Environment variable, LC_ALL:          Environment Variables.
+* Environment variable, LC_MESSAGES <1>: Environment Variables.
+* Environment variable, LC_MESSAGES:     Internationalization.
+* Environment variable, LI:              Environment Variables.
+* Environment variable, LINES:           Environment Variables.
+* Environment variable, MAILPROG <1>:    Global options.
+* Environment variable, MAILPROG:        Environment Variables.
+* Environment variable, PAGER <1>:       Global options.
+* Environment variable, PAGER:           Environment Variables.
+* Environment variable, PATH <1>:        Environment Variables.
+* Environment variable, PATH:            Global options.
+* Environment variable, TERM:            Environment Variables.
+* Environment variable, TZ:              Environment Variables.
+* Environment Variables, table of all:   Environment Variables.
+* Environment variables, table of all respected: Environment Variables.
+* Equivalence classes, regexp:           Regexp Operators.
+* Eror code 127:                         Common options.
+* Error code 1:                          Fixed date options.
+* Error code 113:                        Date variables.
+* Error code 118:                        Resource file.
+* Error code 119:                        Include directives.
+* Error code 126:                        Fixed date options.
+* Error code 2:                          Shell Command.
+* Error Codes, table of all:             Error Codes.
+* Escape sequence:                       Global options.
+* Eternal holiday list, alternative date format in: Calendar options.
+* Eternal holiday list, Christian holidays in: Calendar options.
+* Eternal holiday list, country specific holidays in: Calendar options.
+* Eternal holiday list, option:          Calendar options.
+* Eternal holiday list, special date format in: Calendar options.
+* Eternal holiday list, standard and special date format in: Calendar options.
+* Eternal holiday list, suppress standard holidays in: Calendar options.
+* Eternal holiday list, suppression of title text: Calendar options.
+* Eternal holiday list, without standard holidays in: Calendar options.
+* Eternal Holidays:                      Eternal Holidays.
+* Examples of resource files:            Resource file examples.
+* Examples to appearance factors of days: Appearance factor of days.
+* Examples to lists of days:             Lists of days.
+* Examples to ranges of days:            Ranges of days.
+* Examples to repetition factors of days: Repetition factor of days.
+* Exclusions with date argument %?[DATE] special texts: Exclusions with date argument.
+* Exclusions without any argument %? special texts: Exclusions without any argument.
+* Exclusive all holidays, %X special text: Exclusive day period.
+* Exclusive date period, %e[DATE][#[DATE]] special text <1>: Exclusive date period.
+* Exclusive date period, %e[DATE][#[DATE]] special text: Special Texts Summary.
+* Exclusive day period %? special texts <1>: Special Texts Summary.
+* Exclusive day period %? special texts: Exclusive day period.
+* Exclusive Friday, %H special text:     Exclusive day period.
+* Exclusive legal holidays, %V special text: Exclusive day period.
+* Exclusive Monday, %A special text:     Exclusive day period.
+* Exclusive Monday...Friday, %R special text: Exclusive day period.
+* Exclusive Monday...Thursday, %Q special text: Exclusive day period.
+* Exclusive Saturday, %L special text:   Exclusive day period.
+* Exclusive Sunday, %P special text:     Exclusive day period.
+* Exclusive Thursday, %G special text:   Exclusive day period.
+* Exclusive Tuesday, %C special text:    Exclusive day period.
+* Exclusive Wednesday, %F special text:  Exclusive day period.
+* Exit code 1:                           Fixed date options.
+* Exit code 113:                         Date variables.
+* Exit code 118:                         Resource file.
+* Exit code 119:                         Include directives.
+* Exit code 126:                         Fixed date options.
+* Exit code 127:                         Common options.
+* Exit code 2:                           Shell Command.
+* Exit Codes, table of all:              Error Codes.
+* Explicit fiscal year:                  Single commands.
+* Export of local date variables <1>:    Fixed date options.
+* Export of local date variables:        Date variables.
+* Export of local text variables <1>:    Text variables.
+* Export of local text variables:        Fixed date options.
+* Extended file name:                    Resource file.
+* Extended help text:                    Common options.
+* Extended language code information:    Internationalization.
+* External pager program:                Global options.
+* File name, extended:                   Resource file.
+* File name, simple:                     Resource file.
+* File searching mechanism:              Resource file.
+* Filtration, days of fixed dates:       Fixed date options.
+* Filtration, fixed date texts:          Fixed date options.
+* Filtration, periods of fixed dates:    Fixed date options.
+* Fiscal year, explicit:                 Single commands.
+* Fiscal year, implicit:                 Single commands.
+* Fiscal year, limitations <1>:          Date variables.
+* Fiscal year, limitations:              Further date part attributes.
+* Fiscal year, single:                   Single commands.
+* Fiscal years of the actual year, list of: Lists of commands.
+* Fiscal years, list of:                 Lists of commands.
+* Fiscal years, mixed list of:           Lists of commands.
+* Fiscal years, range of:                Ranges of commands.
+* Fixed date function, activate:         Fixed date options.
+* Fixed date list, alternative date format in: Calendar options.
+* Fixed date list, special date format in: Calendar options.
+* Fixed date list, standard and special date format in: Calendar options.
+* Fixed date list, suppression of title text: Fixed date options.
+* Fixed date options:                    Fixed date options.
+* Fixed date period long-style option, --end-of-month: Fixed date options.
+* Fixed date period long-style option, --end-of-week: Fixed date options.
+* Fixed date period long-style option, --end-of-year: Fixed date options.
+* Fixed date period long-style option, --month: Fixed date options.
+* Fixed date period long-style option, --start-of-month: Fixed date options.
+* Fixed date period long-style option, --start-of-week: Fixed date options.
+* Fixed date period long-style option, --start-of-year: Fixed date options.
+* Fixed date period long-style option, --today: Fixed date options.
+* Fixed date period long-style option, --tomorrow: Fixed date options.
+* Fixed date period long-style option, --week: Fixed date options.
+* Fixed date period long-style option, --year: Fixed date options.
+* Fixed date period modifier, *dN:       Fixed date options.
+* Fixed date period modifier, *dNWWW:    Fixed date options.
+* Fixed date period modifier, *wN[WWW]:  Fixed date options.
+* Fixed date period modifier, 0MMDD:     Fixed date options.
+* Fixed date period modifier, @DVAR[+|-]NWWW: Fixed date options.
+* Fixed date period modifier, @DVAR[[+|-]N]: Fixed date options.
+* Fixed date period modifier, @e[+|-]NWWW: Fixed date options.
+* Fixed date period modifier, @e[[+|-]N]: Fixed date options.
+* Fixed date period modifier, @t[+|-]NWWW: Fixed date options.
+* Fixed date period modifier, @t[[+|-]N]: Fixed date options.
+* Fixed date period modifier, d:         Fixed date options.
+* Fixed date period modifier, l:         Fixed date options.
+* Fixed date period modifier, l*dN:      Fixed date options.
+* Fixed date period modifier, l*dNWWW:   Fixed date options.
+* Fixed date period modifier, l*wN[WWW]: Fixed date options.
+* Fixed date period modifier, l@DVAR[+|-]NWWW: Fixed date options.
+* Fixed date period modifier, l@DVAR[[+|-]N]: Fixed date options.
+* Fixed date period modifier, l@e[+|-]NWWW: Fixed date options.
+* Fixed date period modifier, l@e[[+|-]N]: Fixed date options.
+* Fixed date period modifier, l@t[+|-]NWWW: Fixed date options.
+* Fixed date period modifier, l@t[[+|-]N]: Fixed date options.
+* Fixed date period modifier, lMMWWWN:   Fixed date options.
+* Fixed date period modifier, lN+|-:     Fixed date options.
+* Fixed date period modifier, lNd:       Fixed date options.
+* Fixed date period modifier, lNw:       Fixed date options.
+* Fixed date period modifier, MMDD:      Fixed date options.
+* Fixed date period modifier, MMWWWN:    Fixed date options.
+* Fixed date period modifier, m|M[+|-]:  Fixed date options.
+* Fixed date period modifier, N+|-:      Fixed date options.
+* Fixed date period modifier, Nd:        Fixed date options.
+* Fixed date period modifier, Nw:        Fixed date options.
+* Fixed date period modifier, t|T:       Fixed date options.
+* Fixed date period modifier, w|W[+|-]:  Fixed date options.
+* Fixed date period modifier, y|Y[+|-]:  Fixed date options.
+* Fixed date period modifiers and options: Fixed date options.
+* Fixed date period option, --leap-day=february: Fixed date options.
+* Fixed date period option, --leap-day=february|march: Fixed date options.
+* Fixed date period option, --leap-day=march: Fixed date options.
+* Fixed date text modifier, a:           Fixed date options.
+* Fixed date text modifier, A:           Fixed date options.
+* Fixed date text modifier, B:           Fixed date options.
+* Fixed date text modifier, E:           Fixed date options.
+* Fixed date text modifier, e:           Fixed date options.
+* Fixed date text modifier, g[TEXT]:     Fixed date options.
+* Fixed date text modifier, k:           Fixed date options.
+* Fixed date text modifier, o:           Fixed date options.
+* Fixed date text modifier, U:           Fixed date options.
+* Fixed date text modifier, x:           Fixed date options.
+* Fixed date text modifier, z:           Fixed date options.
+* Fixed date text modifier, Z:           Fixed date options.
+* Fixed date text modifiers:             Fixed date options.
+* Fixed date text option, --biorhythm-axis=NUMBER: Fixed date options.
+* Fixed date text option, --moonimage-lines=NUMBER: Fixed date options.
+* Fixed date texts, filtration of:       Fixed date options.
+* Fixed date, ending date of <1>:        Exclusive date period.
+* Fixed date, ending date of:            Inclusive date period.
+* Fixed date, option:                    Fixed date options.
+* Fixed date, starting date of <1>:      Inclusive date period.
+* Fixed date, starting date of:          Exclusive date period.
+* Fixed Dates:                           Fixed Dates.
+* Fixed dates:                           Fixed date options.
+* Fixed dates for *today*:               Fixed date options.
+* Fixed dates for *tomorrow*:            Fixed date options.
+* Fixed dates for the *month*:           Fixed date options.
+* Fixed dates for the *week*:            Fixed date options.
+* Fixed dates for the *year*:            Fixed date options.
+* Fixed dates, filtration of days:       Fixed date options.
+* Fixed dates, filtration of periods:    Fixed date options.
+* Fixed format date text:                Textual date.
+* Force line break up:                   Fixed date options.
+* Force line break up in resource file:  Text part of a line.
+* Force output of month calendar sheet:  Calendar options.
+* Force year calendar sheet:             Calendar options.
+* Forcing highlighting sequences:        Global options.
+* Further date part attributes:          Further date part attributes.
+* Further resource file line:            Fixed date options.
+* GCAL environment variable <1>:         Global options.
+* GCAL environment variable <2>:         Environment Variables.
+* GCAL environment variable <3>:         The GCAL environment variable.
+* GCAL environment variable:             Global options.
+* Gcal Introduction:                     Gcal Introduction.
+* gcal options:                          Options.
+* Gcal Utilities:                        Gcal Utilities.
+* gcal, options of:                      Command line arguments.
+* gcal2txt, options of:                  Invoking gcal2txt.
+* gcal2txt, utility:                     Invoking gcal2txt.
+* GCAL_DATE_FORMAT environment variable: Environment Variables.
+* GCAL_SYS_DATADIR environment variable <1>: Environment Variables.
+* GCAL_SYS_DATADIR environment variable: Resource file.
+* GCAL_USR_DATADIR environment variable <1>: Environment Variables.
+* GCAL_USR_DATADIR environment variable: Resource file.
+* GCALANSI environment variable <1>:     Environment Variables.
+* GCALANSI environment variable:         Global options.
+* GCALPATH environment variable <1>:     Resource file.
+* GCALPATH environment variable:         Environment Variables.
+* GCALPROG environment variable <1>:     Environment Variables.
+* GCALPROG environment variable:         Invoking tcal.
+* Global date variables, definition of:  Fixed date options.
+* Global options:                        Global options.
+* Global text variables, definition of:  Fixed date options.
+* GNU specific regexp operators:         Regexp Operators.
+* GNU style options:                     Options.
+* Gregorian calendar, Genesis of:        Todays Calendar.
+* Gregorian Reformation, set period of:  Calendar options.
+* Handling of non-printable characters in the text part: Text part of a line.
+* Handling of NUL characters in the text part: Text part of a line.
+* Handling of special character sequences in the text part: Text part of a line.
+* Help text, extended:                   Common options.
+* Help text, long:                       Common options.
+* Help text, short:                      Common options.
+* Help, on-line:                         Common options.
+* Highlighting %? special texts <1>:     Special Texts Summary.
+* Highlighting %? special texts:         Highlighting.
+* Highlighting sequences, disabling:     Global options.
+* Highlighting sequences, forcing:       Global options.
+* Highlighting sequences, setting:       Global options.
+* Holiday list, eternal:                 Eternal Holidays.
+* HOME environment variable <1>:         Environment Variables.
+* HOME environment variable:             Resource file.
+* How to use regular expressions:        Regexp Usage.
+* Ignoring case, regexp:                 Regexp Operators.
+* Implicit fiscal year:                  Single commands.
+* Include directives:                    Include directives.
+* Inclusive all holidays, %x special text: Inclusive day period.
+* Inclusive date period, %i[DATE][#[DATE]] special text <1>: Inclusive date period.
+* Inclusive date period, %i[DATE][#[DATE]] special text: Special Texts Summary.
+* Inclusive day period %? special texts <1>: Inclusive day period.
+* Inclusive day period %? special texts: Special Texts Summary.
+* Inclusive Friday, %h special text:     Inclusive day period.
+* Inclusive legal holidays, %v special text: Inclusive day period.
+* Inclusive Monday, %a special text:     Inclusive day period.
+* Inclusive Monday...Friday, %r special text: Inclusive day period.
+* Inclusive Monday...Thursday, %q special text: Inclusive day period.
+* Inclusive Saturday, %l special text:   Inclusive day period.
+* Inclusive Sunday, %p special text:     Inclusive day period.
+* Inclusive Thursday, %g special text:   Inclusive day period.
+* Inclusive Tuesday, %c special text:    Inclusive day period.
+* Inclusive Wednesday, %f special text:  Inclusive day period.
+* Internal pager, simple:                Global options.
+* Internationalization aspects:          Internationalization.
+* Interval expressions, regexp:          Regexp Operators.
+* Invoking gcal:                         Invoking Gcal.
+* Invoking gcal2txt:                     Invoking gcal2txt.
+* Invoking tcal:                         Invoking tcal.
+* Invoking txt2gcal:                     Invoking txt2gcal.
+* ISO-3166 <1>:                          Calendar options.
+* ISO-3166:                              Internationalization.
+* ISO-639:1988:                          Internationalization.
+* ISO-8601:1988 <1>:                     Week.
+* ISO-8601:1988 <2>:                     Calendar options.
+* ISO-8601:1988 <3>:                     Fixed date options.
+* ISO-8601:1988:                         Date part of a line.
+* Julian calendar:                       Todays Calendar.
+* Julian day number %j[ARGUMENT] special text <1>: Special Texts Summary.
+* Julian day number %j[ARGUMENT] special text: Julian day number.
+* LANG environment variable <1>:         Environment Variables.
+* LANG environment variable:             Internationalization.
+* Language code information, extended:   Internationalization.
+* Language code information, simple:     Internationalization.
+* Language codes:                        Internationalization.
+* LANGUAGE environment variable <1>:     Environment Variables.
+* LANGUAGE environment variable:         Internationalization.
+* LC_ALL environment variable <1>:       Internationalization.
+* LC_ALL environment variable:           Environment Variables.
+* LC_MESSAGES environment variable <1>:  Environment Variables.
+* LC_MESSAGES environment variable:      Internationalization.
+* Leap day:                              Fixed date options.
+* Leap year rule as used by Eastern orthodox churches: Calendar options.
+* LI environment variable:               Environment Variables.
+* Limitations in a resource file <1>:    Structure of resource file.
+* Limitations in a resource file <2>:    Text part of a line.
+* Limitations in a resource file:        Date variables.
+* Limitations in the text part of a line: Text part of a line.
+* Limitations of use of 3-Month modes <1>: Further date part attributes.
+* Limitations of use of 3-Month modes:   Date variables.
+* Limitations of use of fiscal years <1>: Further date part attributes.
+* Limitations of use of fiscal years:    Date variables.
+* Line break up character, ^ <1>:        Text part of a line.
+* Line break up character, ^:            Fixed date options.
+* Line break up character, ~ <1>:        Fixed date options.
+* Line break up character, ~ <2>:        Text part of a line.
+* Line break up character, ~:            Fixed date options.
+* Line continuation character, \:        Text part of a line.
+* Line, date part of:                    Date part of a line.
+* LINES environment variable:            Environment Variables.
+* List of all long-style option names:   Common options.
+* List of all Metasymbols within the document: Metasymbols.
+* List of command separator characters:  Commands.
+* List of fiscal years:                  Lists of commands.
+* List of fiscal years of the actual year: Lists of commands.
+* List of months in specified year:      Lists of commands.
+* List of specified fiscal years:        Lists of commands.
+* List of specified months of selected year: Lists of commands.
+* List of specified months of the current year: Lists of commands.
+* List of specified years:               Lists of commands.
+* List of whitespace character:          Structure of resource file.
+* Lists of commands <1>:                 Lists of commands.
+* Lists of commands:                     Commands.
+* Lists of days:                         Lists of days.
+* Lists of days, examples to:            Lists of days.
+* Lists of days, valid date parts of:    Lists of days.
+* Local date variables:                  Date variables.
+* Local date variables, definition of:   Date variables.
+* Local date variables, deletion of:     Date variables.
+* Local text variables:                  Text variables.
+* Local text variables, definition of:   Text variables.
+* Long help text:                        Common options.
+* Long-style option names, list of:      Common options.
+* Long-style options:                    Options.
+* Mail, sending:                         Global options.
+* MAILPROG environment variable <1>:     Global options.
+* MAILPROG environment variable:         Environment Variables.
+* Management of date variables <1>:      Date variables.
+* Management of date variables:          Fixed date options.
+* Management of text variables <1>:      Fixed date options.
+* Management of text variables:          Text variables.
+* Marking characters, disabling:         Global options.
+* Marking characters, setting:           Global options.
+* Message catalog:                       Internationalization.
+* Metacharacters, regexp:                Regexp Operators.
+* Metasymbols within this document, list of all: Metasymbols.
+* Mixed list of fiscal years:            Lists of commands.
+* Mixed list of months:                  Lists of commands.
+* Modifiers, fixed date period:          Fixed date options.
+* Modifiers, fixed date text:            Fixed date options.
+* Month %?[DATE] special texts <1>:      Month.
+* Month %?[DATE] special texts:          Special Texts Summary.
+* Month mode, selected:                  Single commands.
+* Month mode, single:                    Single commands.
+* Month name %?[DATE] special texts <1>: Special Texts Summary.
+* Month name %?[DATE] special texts:     Month name.
+* Month's fixed dates:                   Fixed date options.
+* Month, %U[DATE] special text:          Month.
+* Month, %W[DATE] special text:          Month.
+* Month, %z[DATE] special text:          Month.
+* Month, %Z[DATE] special text:          Month.
+* Months in specified year, list of:     Lists of commands.
+* Months of year, range of:              Ranges of commands.
+* Months, mixed list of:                 Lists of commands.
+* Moonphase %?[DATE] special texts <1>:  Moonphase.
+* Moonphase %?[DATE] special texts:      Special Texts Summary.
+* Moonphase text graphics, %:[DATE] special text: Moonphase.
+* Moonphase, %-[DATE] special text:      Moonphase.
+* Moonphase, %_[DATE] special text:      Moonphase.
+* Move leap day to 1st March:            Fixed date options.
+* Move leap day to 28th February:        Fixed date options.
+* Name space of date variables <1>:      Fixed date options.
+* Name space of date variables:          Date variables.
+* Name space of text variables <1>:      Text variables.
+* Name space of text variables:          Fixed date options.
+* Native language defaults:              Internationalization.
+* Native language, selection of:         Internationalization.
+* Native language, used:                 Internationalization.
+* Negated character list, regexp:        Regexp Operators.
+* Negative day, biorhythm:               Biorhythm.
+* Non-printable characters in the text part, handling: Text part of a line.
+* NUL characters in the text part, handling: Text part of a line.
+* Number of year calendar sheet blocks:  Calendar options.
+* Operations on date variables <1>:      Fixed date options.
+* Operations on date variables:          Date variables.
+* Operators, regexp:                     Regexp Operators.
+* Option %DATE <1>:                      Actual date modifier.
+* Option %DATE:                          Command line arguments.
+* Option @FILE <1>:                      Response file.
+* Option @FILE:                          Command line arguments.
+* Options <1>:                           Command line arguments.
+* Options:                               Options.
+* Options of gcal:                       Command line arguments.
+* Options of gcal2txt:                   Invoking gcal2txt.
+* Options of tcal:                       Invoking tcal.
+* Options of txt2gcal:                   Invoking txt2gcal.
+* Options, fixed date period:            Fixed date options.
+* Options, fixed date text:              Fixed date options.
+* Options, long-style:                   Options.
+* Options, short-style:                  Options.
+* Options, single character:             Fixed date options.
+* Other resource file:                   Fixed date options.
+* Output, pipeing of:                    Global options.
+* Output, redirection of:                Global options.
+* PAGER environment variable <1>:        Environment Variables.
+* PAGER environment variable:            Global options.
+* Pager program:                         Global options.
+* Pager, external:                       Global options.
+* Pager, internal:                       Global options.
+* Pager, using:                          Global options.
+* PATH environment variable <1>:         Environment Variables.
+* PATH environment variable:             Global options.
+* Pattern, regular expressions:          Regular Expressions.
+* Period of Gregorian Reformation, set:  Calendar options.
+* Period-of-fixed-dates-modifier:        Fixed date options.
+* Pipeing of output:                     Global options.
+* Positive day, biorhythm:               Biorhythm.
+* POSIX regexp:                          Regexp Operators.
+* Precedence, regexp operators:          Regexp Operators.
+* Private access resource files:         Environment Variables.
+* Program exit state 127:                Common options.
+* Program exit states, table of:         Error Codes.
+* Protection character, \ <1>:           Fixed date options.
+* Protection character, \ <2>:           Text variables.
+* Protection character, \ <3>:           Special texts processed.
+* Protection character, \ <4>:           Text part of a line.
+* Protection character, \:               Fixed date options.
+* Protection of special characters <1>:  Text part of a line.
+* Protection of special characters <2>:  Special texts processed.
+* Protection of special characters <3>:  Text variables.
+* Protection of special characters <4>:  Fixed date options.
+* Protection of special characters <5>:  Response file.
+* Protection of special characters <6>:  Fixed date options.
+* Protection of special characters <7>:  Text part of a line.
+* Protection of special characters <8>:  Fixed date options.
+* Protection of special characters <9>:  Command line arguments.
+* Protection of special characters:      Fixed date options.
+* Provide calendar sheet with week numbers: Calendar options.
+* Pseudo space character, _:             Fixed date options.
+* Public access resource files:          Environment Variables.
+* Quotation of special characters <1>:   Command line arguments.
+* Quotation of special characters:       Response file.
+* Range of current months:               Ranges of commands.
+* Range of fiscal years:                 Ranges of commands.
+* Range of months of year:               Ranges of commands.
+* Range of specified fiscal years:       Ranges of commands.
+* Range of specified month of selected years: Ranges of commands.
+* Range of specified months of selected year: Ranges of commands.
+* Range of specified years:              Ranges of commands.
+* Ranges of commands <1>:                Commands.
+* Ranges of commands:                    Ranges of commands.
+* Ranges of days:                        Ranges of days.
+* Ranges of days, examples to:           Ranges of days.
+* Ranges of days, valid date parts of:   Ranges of days.
+* Redirection of output:                 Global options.
+* Redirection of standard output:        Structure of resource file.
+* Redirection of standard output, appending to file: Structure of resource file.
+* Regexp:                                Regular Expressions.
+* Regexp metacharacters:                 Regexp Operators.
+* Regexp operator, \':                   Regexp Operators.
+* Regexp operator, \<:                   Regexp Operators.
+* Regexp operator, \>:                   Regexp Operators.
+* Regexp operator, \`:                   Regexp Operators.
+* Regexp operator, \b:                   Regexp Operators.
+* Regexp operator, \B:                   Regexp Operators.
+* Regexp operator, \W:                   Regexp Operators.
+* Regexp operator, \w:                   Regexp Operators.
+* Regexp operators:                      Regexp Operators.
+* Regexp operators, GNU specific:        Regexp Operators.
+* Regexp operators, precedence of:       Regexp Operators.
+* Regexp, anchors in:                    Regexp Operators.
+* Regexp, buffer matching operators:     Regexp Operators.
+* Regexp, case sensitivity in matching:  Regexp Operators.
+* Regexp, character classes in:          Regexp Operators.
+* Regexp, character list in:             Regexp Operators.
+* Regexp, collating elements in:         Regexp Operators.
+* Regexp, collating symbols in:          Regexp Operators.
+* Regexp, complemented character list in: Regexp Operators.
+* Regexp, definition of a word:          Regexp Operators.
+* Regexp, equivalence classes in:        Regexp Operators.
+* Regexp, ignoring case in:              Regexp Operators.
+* Regexp, interval expressions:          Regexp Operators.
+* Regexp, matching word boundaries:      Regexp Operators.
+* Regexp, negated character list in:     Regexp Operators.
+* Regexp, POSIX:                         Regexp Operators.
+* Regular expression:                    Regular Expressions.
+* Regular Expression:                    Fixed date options.
+* Regular expression metacharacters:     Regexp Operators.
+* Regular expression operators:          Regexp Operators.
+* Regular expressions as patterns:       Regular Expressions.
+* Regular expressions, how to use:       Regexp Usage.
+* Regular expressions, short-list of all: Regexp Summary.
+* Regular expressions, summary of all:   Regexp Summary.
+* Relative day number, %d special text:  Other difference values.
+* Relative month number, %m special text: Other difference values.
+* Relative week number, %w special text: Other difference values.
+* Relative year number, %y special text: Other difference values.
+* Relative year number, %yDATE special text: Difference value.
+* Remark character, ;:                   Comment line.
+* Repetition factor of days, :N:         Repetition factor of days.
+* Repetition factors of days, examples to: Repetition factor of days.
+* Repetition factors of days, valid date parts of: Repetition factor of days.
+* Replacements with date argument %?[DATE] special texts: Replacements with date argument.
+* Replacements with other argument %?[ARGUMENT] special texts: Replacements with other argument.
+* Replacements without any argument %? special texts: Replacements without any argument.
+* Representation-of-text-modifier:       Fixed date options.
+* Resource file examples:                Resource file examples.
+* Resource file line, additional:        Fixed date options.
+* Resource file line, further:           Fixed date options.
+* Resource file, .gcalrc:                Resource file.
+* Resource file, additional <1>:         Resource file.
+* Resource file, additional:             Fixed date options.
+* Resource file, coding scheme:          Coding Scheme.
+* Resource file, date part:              Coding Scheme.
+* Resource file, date part of:           Date part of a line.
+* Resource file, force line break up:    Text part of a line.
+* Resource file, include directives:     Include directives.
+* Resource file, limitations <1>:        Structure of resource file.
+* Resource file, limitations:            Date variables.
+* Resource file, limitations of:         Text part of a line.
+* Resource file, line comment:           Comment line.
+* Resource file, line contination:       Text part of a line.
+* Resource file, loading:                Resource file.
+* Resource file, name of:                Resource file.
+* Resource file, other:                  Fixed date options.
+* Resource file, remarking of text part: Text part of a line.
+* Resource file, searching mechanism:    Resource file.
+* Resource file, standard:               Resource file.
+* Resource file, structure:              Structure of resource file.
+* Resource file, text part of:           Text part of a line.
+* Resource file, two parts of a line:    Structure of resource file.
+* Resource file, using:                  Resource file.
+* Respected environment variables, table of all: Environment Variables.
+* Response file, @FILE:                  Response file.
+* Response file, creation of:            Global options.
+* Run-time error codes, table of:        Error Codes.
+* Scope of date variables <1>:           Fixed date options.
+* Scope of date variables:               Date variables.
+* Scope of text variables <1>:           Fixed date options.
+* Scope of text variables:               Text variables.
+* Searching resource file:               Resource file.
+* Selected month mode:                   Single commands.
+* Selected month of current year:        Single commands.
+* Selected year:                         Single commands.
+* Selection of native language:          Internationalization.
+* Sending eMail:                         Global options.
+* Separator character of lists of days, ,: Lists of days.
+* Separator character of ranges of days, #: Ranges of days.
+* Separator character, + <1>:            Fixed date options.
+* Separator character, +:                Calendar options.
+* Separator character, : <1>:            Fixed date options.
+* Separator character, : <2>:            Global options.
+* Separator character, ::                Fixed date options.
+* Separator character, whitespace <1>:   Structure of resource file.
+* Separator character, whitespace <2>:   Include directives.
+* Separator character, whitespace:       Options.
+* Sequence of control characters:        Global options.
+* Set highlighing sequences:             Global options.
+* Set marking characters:                Global options.
+* Set starting day of week:              Calendar options.
+* Shell <1>:                             Invoking Gcal.
+* Shell <2>:                             Fixed date options.
+* Shell:                                 Command line arguments.
+* Shell command %![ARGUMENT] special text <1>: Shell Command.
+* Shell command %![ARGUMENT] special text: Special Texts Summary.
+* Shell command, execution of:           Shell Command.
+* Shell script, creation of:             Global options.
+* Short help text:                       Common options.
+* Short-list of all %?... special texts: Special Texts Summary.
+* Short-list of all regular expressions: Regexp Summary.
+* Short-style options:                   Options.
+* Simple decrementing date variables:    Date variables.
+* Simple file name:                      Resource file.
+* Simple incrementing date variables:    Date variables.
+* Simple language code information:      Internationalization.
+* Single character options <1>:          Fixed date options.
+* Single character options <2>:          Options.
+* Single character options:              Fixed date options.
+* Single command line word <1>:          Options.
+* Single command line word:              Fixed date options.
+* Single Commands <1>:                   Commands.
+* Single Commands:                       Single commands.
+* Single fiscal year:                    Single commands.
+* Single month mode:                     Single commands.
+* Single month of selected year:         Single commands.
+* Single year mode:                      Single commands.
+* Software license, finding:             Common options.
+* Special 3-Month mode commands <1>:     Commands.
+* Special 3-Month mode commands:         3-Month mode commands.
+* Special 3-Month mode, .:               3-Month mode commands.
+* Special 3-Month mode, . YYYY:          3-Month mode commands.
+* Special 3-Month mode, .+:              3-Month mode commands.
+* Special 3-Month mode, .+ YYYY:         3-Month mode commands.
+* Special 3-Month mode, .-:              3-Month mode commands.
+* Special 3-Month mode, .- YYYY:         3-Month mode commands.
+* Special 3-Month mode, ..:              3-Month mode commands.
+* Special 3-Month mode, .. YYYY:         3-Month mode commands.
+* Special calendar format:               Calendar options.
+* Special character sequences in the text part, handling: Text part of a line.
+* Special date format in calendar sheet: Calendar options.
+* Special date format in eternal holiday list: Calendar options.
+* Special date format in fixed date list: Calendar options.
+* Special text %![ARGUMENT]:             Shell Command.
+* Special text %#[DATE]:                 Day number.
+* Special text %&[DATE]:                 Day number.
+* Special text %([DATE]:                 Weekday.
+* Special text %)[DATE]:                 Weekday.
+* Special text %*[DATE]:                 Day number.
+* Special text %+[DATE]:                 Day number.
+* Special text %,[DATE]:                 Biorhythm.
+* Special text %-[DATE]:                 Moonphase.
+* Special text %0:                       Highlighting.
+* Special text %1:                       Highlighting.
+* Special text %2:                       Highlighting.
+* Special text %3:                       Highlighting.
+* Special text %4:                       Highlighting.
+* Special text %5:                       Highlighting.
+* Special text %6:                       Highlighting.
+* Special text %7:                       Highlighting.
+* Special text %8:                       Highlighting.
+* Special text %9:                       Highlighting.
+* Special text %:[DATE]:                 Moonphase.
+* Special text %;[DATE]:                 Biorhythm.
+* Special text %<[DATE]:                 Weekday.
+* Special text %=[DATE]:                 Year.
+* Special text %>[DATE]:                 Weekday.
+* Special text %[[DATE]:                 Weekday.
+* Special text %][DATE]:                 Weekday.
+* Special text %_[DATE]:                 Moonphase.
+* Special text %a:                       Inclusive day period.
+* Special text %A:                       Exclusive day period.
+* Special text %b[DATE]:                 Difference value.
+* Special text %B[DATE]:                 Difference value.
+* Special text %C:                       Exclusive day period.
+* Special text %c:                       Inclusive day period.
+* Special text %d:                       Other difference values.
+* Special text %D[DATE]:                 Day.
+* Special text %E[DATE]:                 Weekday.
+* Special text %e[DATE][#[DATE]]:        Exclusive date period.
+* Special text %f:                       Inclusive day period.
+* Special text %F:                       Exclusive day period.
+* Special text %G:                       Exclusive day period.
+* Special text %g:                       Inclusive day period.
+* Special text %H:                       Exclusive day period.
+* Special text %h:                       Inclusive day period.
+* Special text %I[DATE]:                 Weekday.
+* Special text %i[DATE][#[DATE]]:        Inclusive date period.
+* Special text %j[ARGUMENT]:             Julian day number.
+* Special text %J[DATE]:                 Weekday.
+* Special text %K[DATE]:                 Weekday name.
+* Special text %k[DATE]:                 Week.
+* Special text %L:                       Exclusive day period.
+* Special text %l:                       Inclusive day period.
+* Special text %m,:                      Other difference values.
+* Special text %M[DATE]:                 Month name.
+* Special text %n[ARGUMENT]:             Textual date.
+* Special text %N[DATE]:                 Day.
+* Special text %o[DATE]:                 Weekday name.
+* Special text %O[DATE]:                 Weekday name.
+* Special text %P:                       Exclusive day period.
+* Special text %p:                       Inclusive day period.
+* Special text %q:                       Inclusive day period.
+* Special text %Q:                       Exclusive day period.
+* Special text %R:                       Exclusive day period.
+* Special text %r:                       Inclusive day period.
+* Special text %s[DATE]:                 Day.
+* Special text %S[DATE]:                 Weekday.
+* Special text %t[ARGUMENT]:             Actual time.
+* Special text %T[DATE]:                 Month name.
+* Special text %u[DATE]:                 Day.
+* Special text %U[DATE]:                 Month.
+* Special text %V:                       Exclusive day period.
+* Special text %v:                       Inclusive day period.
+* Special text %w:                       Other difference values.
+* Special text %W[DATE]:                 Month.
+* Special text %X:                       Exclusive day period.
+* Special text %x:                       Inclusive day period.
+* Special text %y:                       Other difference values.
+* Special text %Y[DATE]:                 Year.
+* Special text %yDATE:                   Difference value.
+* Special text %z[DATE]:                 Month.
+* Special text %Z[DATE]:                 Month.
+* Special text %{[DATE]:                 Weekday.
+* Special text %}[DATE]:                 Weekday.
+* Special text starting character, %:    Special texts processed.
+* Specified fiscal years, list of:       Lists of commands.
+* Specified fiscal years, range of:      Ranges of commands.
+* Specified month of selected years, range of: Ranges of commands.
+* Specified months of selected year, list of: Lists of commands.
+* Specified months of selected year, range of: Ranges of commands.
+* Specified months of the current year, list of: Lists of commands.
+* Specified years, list of:              Lists of commands.
+* Specified years, range of:             Ranges of commands.
+* Standard and special date format in calendar sheet: Calendar options.
+* Standard and special date format in eternal holiday list: Calendar options.
+* Standard and special date format in fixed date list: Calendar options.
+* Standard calendar format:              Calendar options.
+* Start of highlighting sequence 1 or 2, %9 special text: Highlighting.
+* Start of highlighting sequence 1, %1 special text: Highlighting.
+* Start of highlighting sequence 1, %5 special text: Highlighting.
+* Start of highlighting sequence 2, %3 special text: Highlighting.
+* Start of highlighting sequence 2, %7 special text: Highlighting.
+* Starting date of fixed date <1>:       Exclusive date period.
+* Starting date of fixed date:           Inclusive date period.
+* Starting day of week, setting:         Calendar options.
+* Structure of resource file:            Structure of resource file.
+* Subtraction by days, date variables:   Date variables.
+* Subtraction by weekdays, date variables: Date variables.
+* Summary of all %?... special texts:    Special Texts Summary.
+* Summary of all regular expressions:    Regexp Summary.
+* Suppress calendar sheet:               Calendar options.
+* Suppress title text of eternal holiday list: Calendar options.
+* Suppress title text of fixed date list: Fixed date options.
+* Suppression of standard holidays in eternal holiday list: Calendar options.
+* Switch character, -:                   Command line arguments.
+* Switch character, --:                  Command line arguments.
+* Switch character, /:                   Command line arguments.
+* Table of all environment variables:    Environment Variables.
+* Table of all error codes:              Error Codes.
+* Table of all exit codes:               Error Codes.
+* tcal, options of:                      Invoking tcal.
+* tcal, utility:                         Invoking tcal.
+* TERM environment variable:             Environment Variables.
+* Territory code <1>:                    Calendar options.
+* Territory code:                        Internationalization.
+* Text part of a line:                   Text part of a line.
+* Text part of a line, limitations:      Text part of a line.
+* Text part of a resource file line:     Text part of a line.
+* Text variables:                        Text variables.
+* Text variables, assignments to <1>:    Text variables.
+* Text variables, assignments to:        Fixed date options.
+* Text variables, definition of <1>:     Fixed date options.
+* Text variables, definition of:         Text variables.
+* Text variables, export of local <1>:   Text variables.
+* Text variables, export of local:       Fixed date options.
+* Text variables, global <1>:            Text variables.
+* Text variables, global:                Fixed date options.
+* Text variables, local:                 Text variables.
+* Text variables, management of <1>:     Fixed date options.
+* Text variables, management of:         Text variables.
+* Text variables, name space of <1>:     Fixed date options.
+* Text variables, name space of:         Text variables.
+* Text variables, scope of <1>:          Fixed date options.
+* Text variables, scope of:              Text variables.
+* Text variables, total number of:       Text variables.
+* Text variables, visibility of:         Text variables.
+* Text variables, visibility of local <1>: Text variables.
+* Text variables, visibility of local:   Fixed date options.
+* Textual date %n[ARGUMENT] special text <1>: Textual date.
+* Textual date %n[ARGUMENT] special text: Special Texts Summary.
+* The gcal2txt utility:                  Invoking gcal2txt.
+* The tcal utility:                      Invoking tcal.
+* The txt2gcal utility:                  Invoking txt2gcal.
+* Today's fixed dates:                   Fixed date options.
+* Tomorrow's fixed dates:                Fixed date options.
+* Total number of date variables:        Date variables.
+* Total number of text variables:        Text variables.
+* txt2gcal, options of:                  Invoking txt2gcal.
+* txt2gcal, utility:                     Invoking txt2gcal.
+* TZ environment variable:               Environment Variables.
+* Use Eastern orthodox churches' leap year rule: Calendar options.
+* Utilities for Gcal:                    Gcal Utilities.
+* Utility gcal2txt:                      Invoking gcal2txt.
+* Utility tcal:                          Invoking tcal.
+* Utility txt2gcal:                      Invoking txt2gcal.
+* Valid date parts of appearance factors of days: Appearance factor of days.
+* Valid date parts of lists of days:     Lists of days.
+* Valid date parts of ranges of days:    Ranges of days.
+* Valid date parts of repetition factors of days: Repetition factor of days.
+* Version number, finding:               Common options.
+* Visibility of date variables:          Date variables.
+* Visibility of local date variables <1>: Date variables.
+* Visibility of local date variables:    Fixed date options.
+* Visibility of local text variables <1>: Fixed date options.
+* Visibility of local text variables:    Text variables.
+* Visibility of text variables:          Text variables.
+* Week %?[DATE] special text <1>:        Week.
+* Week %?[DATE] special text:            Special Texts Summary.
+* Week numbers in calendar sheet:        Calendar options.
+* Week's fixed dates:                    Fixed date options.
+* Week, %k[DATE] special text:           Week.
+* Weekday %?[DATE] special texts <1>:    Weekday.
+* Weekday %?[DATE] special texts:        Special Texts Summary.
+* Weekday name %?[DATE] special texts <1>: Weekday name.
+* Weekday name %?[DATE] special texts:   Special Texts Summary.
+* Weekday number, %([DATE] special text: Weekday.
+* Weekday number, %)[DATE] special text: Weekday.
+* Weekday number, %<[DATE] special text: Weekday.
+* Weekday number, %>[DATE] special text: Weekday.
+* Weekday number, %[[DATE] special text: Weekday.
+* Weekday number, %][DATE] special text: Weekday.
+* Weekday number, %E[DATE] special text: Weekday.
+* Weekday number, %I[DATE] special text: Weekday.
+* Weekday number, %J[DATE] special text: Weekday.
+* Weekday number, %S[DATE] special text: Weekday.
+* Weekday number, %{[DATE] special text: Weekday.
+* Weekday number, %}[DATE] special text: Weekday.
+* Whitespace character <1>:              Text part of a line.
+* Whitespace character <2>:              Comment line.
+* Whitespace character:                  Error Codes.
+* Whitespace separator character <1>:    Options.
+* Whitespace separator character <2>:    Include directives.
+* Whitespace separator character <3>:    Options.
+* Whitespace separator character:        Structure of resource file.
+* Without standard holidays in eternal holiday list: Calendar options.
+* Word boundaries, matching in regexp:   Regexp Operators.
+* Word, regexp definition of:            Regexp Operators.
+* Year %?[DATE] special texts <1>:       Special Texts Summary.
+* Year %?[DATE] special texts:           Year.
+* Year calendar sheet blocks, number of: Calendar options.
+* Year calendar sheet, force output of:  Calendar options.
+* Year difference value:                 Difference value.
+* Year mode, single:                     Single commands.
+* Year's fixed dates:                    Fixed date options.
+* Year, %=[DATE] special text:           Year.
+* Year, %Y[DATE] special text:           Year.
+* ~ line break up character <1>:         Text part of a line.
+* ~ line break up character:             Fixed date options.
+
+

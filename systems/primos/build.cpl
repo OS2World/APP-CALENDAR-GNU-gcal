@@ -1,0 +1,124 @@
+/* > Original:
+/* > Gzip build file for Primos.
+/* > Author: Peter Eriksson, pen@lysator.liu.se
+/*
+/* Gcal build file for Primos.
+/* Modified by: Thomas Esken  <esken@uni-muenster.de>
+/*
+type
+type 'Building GCAL etc. for PRIMOS - Please wait...'
+type
+&if ^ [exists *>PRIMOS>OBJ -dir] &then &do
+      type 'Creating *>PRIMOS>OBJ directory...'
+      type
+      create *>PRIMOS>OBJ
+   &end
+
+type 'Compiling...'
+
+&set_var unit := 0
+
+/*
+/* &set_var cdefines  :=  -debug
+
+como *>primos>compile.como
+&do file &items [wild *>@@.c -single unit]
+  &set_var filebase := [before %file% .]
+  &if ^  [exists *>primos>obj>%filebase%.bin] &then &do
+  type 'Compiling "'%file%'"...'
+  ci *>%file% -binary *>primos>obj>=.bin %cdefines% -optionsfile *>primos>ci.opts
+  &end
+&end
+close -unit %unit%
+&set_var unit := 0
+
+&do file &items [wild *>primos>@@.c -single unit]
+  &set_var filebase := [before %file% .]
+  &if ^  [exists *>primos>obj>%filebase%.bin] &then &do
+  type 'Compiling "'%file%'"...'
+  ci *>primos>%file% -binary *>primos>obj>=.bin %cdefines% -optionsfile *>primos>ci.opts
+  &end
+&end
+como -end
+
+type
+type
+type 'Binding...'
+
+&set_var unit := 0
+&data bind
+  li ccmain
+  load *>primos>obj>gcal
+  load *>primos>obj>file-io
+  load *>primos>obj>hd-data
+  load *>primos>obj>hd-use
+  load *>primos>obj>help
+  load *>primos>obj>print
+  load *>primos>obj>rc-check
+  load *>primos>obj>rc-insert
+  load *>primos>obj>rc-use
+  load *>primos>obj>rc-utils
+  load *>primos>obj>regexp
+  load *>primos>obj>tty
+  load *>primos>obj>utils
+  load *>primos>obj>getenv
+  li c_lib
+  li
+  dynt -all
+  nwc
+  nitr
+  ntw
+  compress
+  file *>primos>gcal.run
+&end
+
+&set_var unit := 0
+&data bind
+  li ccmain
+  load *>primos>obj>tcal
+  li c_lib
+  li
+  dynt -all
+  nwc
+  nitr
+  ntw
+  compress
+  file *>primos>tcal.run
+&end
+
+&set_var unit := 0
+&data bind
+  li ccmain
+  load *>primos>obj>txt2gcal
+  li c_lib
+  li
+  dynt -all
+  nwc
+  nitr
+  ntw
+  compress
+  file *>primos>txt2gcal.run
+&end
+
+&set_var unit := 0
+&data bind
+  li ccmain
+  load *>primos>obj>gcal2txt
+  li c_lib
+  li
+  dynt -all
+  nwc
+  nitr
+  ntw
+  compress
+  file *>primos>gcal2txt.run
+&end
+
+type
+type
+type 'All done. (Hopefully).'
+type 'The GCAL     executable should be in *>PRIMOS>GCAL.RUN'
+type 'The TCAL     executable should be in *>PRIMOS>TCAL.RUN'
+type 'The TXT2GCAL executable should be in *>PRIMOS>TXT2GCAL.RUN'
+type 'The GCAL2TXT executable should be in *>PRIMOS>GCAL2TXT.RUN'
+&return

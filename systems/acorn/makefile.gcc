@@ -1,0 +1,149 @@
+#  $Id: makefile.gcc 0.14 1996/10/17 00:01:04 tom Exp $
+###############################################################################
+#
+#  Acorn GNU-C
+#  Makefile to create the extended `gcal' program.
+#
+#  Copyright (C) 1994-1996      Thomas Esken            <esken@uni-muenster.de>
+#                               Im Hagenfeld 84
+#                               D-48147 M"unster
+#                               GERMANY
+#
+###############################################################################
+#
+#
+#
+DEF = -D#
+#
+#  BEGIN: General program modification symbols,
+#           which may be changed by the user !!
+#
+
+
+
+#  Write the line `USE_EASC = $(DEF)USE_EASC=1'
+#    in case you want to use the 8-bit extended IBM-ASCII character set
+#    (IBM PC or ISO 8859-1 = ISO Latin-1 or Nextstep character sets).
+#
+#  Write the line `USE_EASC = $(DEF)USE_EASC=0'
+#    in case you want to use the 7-bit ISO-ASCII/EBCDIC character set.
+#
+#USE_EASC = $(DEF)USE_EASC=1#
+
+
+
+#  Write the line `USE_DE = $(DEF)USE_DE=1'
+#    in case you want to use German message texts, holidays
+#    and calendar layout.
+#
+#  Write the line `USE_DE = $(DEF)USE_DE=0'
+#    in case you want to use English message texts, holidays
+#    and calendar layout.
+#
+#USE_DE = $(DEF)USE_DE=1#
+
+
+
+#  Write the line `USE_HLS = $(DEF)USE_HLS=1'
+#    to run this program using control sequences for highlighting the current
+#    day/holidays/text (MS/PC-DOS will use the [n]ansi.sys driver for emitting
+#    ANSI escape highlighting sequences; OS2/Linux/UN*X-like systems will use
+#    Termcap for emitting the terminal specific highlighting sequences.
+#    If this fails, default (generic) ANSI highlighting sequences will be used).
+#
+#  Write the line `USE_HLS = $(DEF)USE_HLS=0'
+#    to run this program without highlighting...
+#
+USE_HLS = $(DEF)USE_HLS=1#
+
+
+
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=1'
+#    in case you want to use a simple, built-in pager.
+#
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=0'
+#    in case you don't like this feature...
+#
+USE_PAGER = $(DEF)USE_PAGER=1#
+
+
+
+#  Write the line `USE_RC = $(DEF)USE_RC=1'
+#    for using the special month dates functions (print daily / weekly
+#    monthly / yearly / eternal / special fixed dates as stated in
+#    resource files).
+#
+#  Write the line `USE_RC = $(DEF)USE_RC=0'
+#    if you don't like this feature...
+#
+USE_RC = $(DEF)USE_RC=1#
+
+
+
+#  Specify, which directories shall be used for the resource files:
+#
+#  (Define the empty string \"\" if you don't need data directories,
+#  so data files are searched in the actual and $HOME directory only)
+#
+#
+#  Name of user (private access) specific data directory
+#    (relative to $HOME directory)
+#
+GCAL_USR_DATADIR = \"share.gcal\"
+#
+#  Name of system (common access) specific data directory
+#    (static to $(prefix) directory)
+#
+GCAL_SYS_DATADIR = \"$.usr.local.share.gcal\"
+
+
+
+#
+#
+#
+DEFINES = $(USE_EASC) $(USE_DE) $(USE_HLS) $(USE_PAGER) $(USE_RC)
+DEFINES2 = $(DEF)GCAL_USR_DATADIR=$(GCAL_USR_DATADIR) \
+  $(DEF)GCAL_SYS_DATADIR=$(GCAL_SYS_DATADIR)
+
+
+#
+#  END: general program modification symbols,
+#         which may be changed by the user !!
+#
+
+
+
+#
+CC = gcc $(DEF)ACORN
+CFLAGS = -O -Wall# -g
+#
+LD =
+LDFLAGS = -s
+#
+X =
+O =
+C = _c
+H = _h
+
+SRC1 = gcal$(C) file-io$(C) hd-data$(C) hd-use$(C) help$(C) print$(C) \
+  rc-check$(C) rc-insert$(C) rc-use$(C) rc-utils$(C) regexp$(C) tty$(C) \
+  utils$(C)
+SRC2 = tcal$(C)
+SRC3 = txt2gcal$(C)
+SRC4 = gcal2txt$(C)
+
+
+
+all : gcal$(X) tcal$(X) txt2gcal$(X) gcal2txt$(X)
+
+gcal$(X) :
+	$(CC) $(DEFINES) $(DEFINES2) $(CFLAGS) $(LDFLAGS) -o gcal$(X) $(SRC1)
+
+tcal$(X) :
+	$(CC) $(CFLAGS) $(LDFLAGS) -o tcal$(X) $(SRC2)
+
+txt2gcal$(X) :
+	$(CC) $(CFLAGS) $(LDFLAGS) -o txt2gcal$(X) $(SRC3)
+
+gcal2txt$(X) :
+	$(CC) $(CFLAGS) $(LDFLAGS) -o gcal2txt$(X) $(SRC4)

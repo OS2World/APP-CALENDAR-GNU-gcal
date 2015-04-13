@@ -1,0 +1,121 @@
+.\" $Id: gcal2txt.1 v0.02 1997/01/02 00:00:02 tom Exp $
+.\"
+.\" gcal2txt.1:  German [n]roff source of GCAL2TXT manual page
+.\"
+.\" Copyright (C) 1996, 1997 Thomas Esken
+.\"
+.\"
+.\" Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+.\" zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+.\" Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+.\" vorgenannte Vermerke erhalten bleiben.
+.\"
+.\" Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+.\" wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+.\" vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und Gesamtheit
+.\" innerhalb der Bestimmungen eines Genehmigungvermerks liegen und zudem mit
+.\" diesem ausgestattet sind, welcher mit diesem hier identisch ist.
+.\"
+.\" Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten Bedingungen
+.\" f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs in eine andere
+.\" Sprache zu erstellen und zu vertreiben, mit der Ausnahme, da"s dieser
+.\" Genehmigungsvermerk in einer "Ubersetzung angegeben sein darf, welche
+.\" von der Free Software Foundation gebilligt wird.
+.\"
+.\"
+.\" ------------------------oOO      \\\_''/      OOo---------------------------
+.\" Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+.\" Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+.\" D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+.\"
+.\"
+.de EX \"Begin example
+.ne 5
+.if n .sp 1
+.if t .sp .5
+.nf
+.in +5n
+..
+.de EE \"End example
+.fi
+.in -5n
+.if n .sp 1
+.if t .sp .5
+..
+.\" Page parameters
+.ll 6.5i
+.pl 11i
+.po 0
+.\"
+.TH GCAL2TXT 1 "02 Januar 1997"
+.SH NAME
+gcal2txt \- erzeugt aus einer Gcal Ressourcendatei eine wortgetreue Textdatei.
+.SH AUFRUF
+.B gcal2txt
+[
+.I \-\-help
+|
+.I \-\-version
+] | [
+.B Ressourcendatei
+|
+.I \-
+]
+.SH BESCHREIBUNG
+.B Gcal2txt
+ist ein Programm, welches aus einer Gcal Ressourcendatei
+eine wortgetreue Textdatei erzeugt.  Wird keine
+.B Ressourcendatei
+oder aber
+.B \-
+als Argument angegeben, so liest und verarbeitet das Programm alle
+Eingaben, die vom Standardeingabekanal kommen.  Alle Ergebnisse werden
+stets auf dem Standardausgabekanal ausgegeben.  Ein Programmendestatus
+0 bedeutet, da"s die Verarbeitung erfolgreich war, ein anderer Endestatus
+verweist auf einen Fehler w"ahrend der Verarbeitung.
+.SH OPTIONEN
+.TP
+.I \-\-help
+Ausgabe eines Hilfetextes, der alle verf"ugbaren Optionen aufzeigt,
+sodann erfolgreiches Programmende.
+.TP
+.I \-\-version
+Ausgabe der Versionsnummer, sodann erfolgreiches Programmende.
+.bp
+.SH COPYRIGHT
+.in 0
+.sp
+.B Gcal2txt
+Copyright (C) 1996, 1997 Thomas Esken
+.LP
+Diese Software erhebt keinen Anspruch auf Vollst"andigkeit,
+Verwendungsf"ahigkeit oder Korrektheit. F"ur Sch"aden (implizit
+oder explizit), die aus Nutzung oder Handhabung meiner Software
+hervorgehen, wird grunds"atzlich keine Haftung "ubernommen.
+Bei Nutzung dieser Software erkl"art sich der Benutzer mit
+dieser Vereinbarung in vollem Umfang einverstanden.
+.sp
+.B Gcal2txt
+ist freie Software und wird unter den Bedingungen der `GNU General Public
+License'; herausgegeben von der `Free Software Foundation'; Version 2 oder
+jeder sp"ateren Version vertrieben.
+.sp
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte, Geld\- und
+Sachspenden, Programmierauftr"age usw. sind stets willkommen.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine
+.I Postkarte
+von Ihnen freuen!
+.sp
+Viel Spa"s mit diesem Programm   =8^)
+.SH AUTOR
+.in 2
+.nf
+------------------------oOO      \e\e\e_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\e)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \e____) ~ (____/    MotD : 2old2live, 2young2die
+.fi
+.SH QUERVERWEIS
+gcal(1),
+tcal(1),
+txt2gcal(1)

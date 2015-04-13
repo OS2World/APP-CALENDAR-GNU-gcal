@@ -1,0 +1,1350 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Begriffsindex,  Prev: Variablenindex,  Up: Top
+
+Stichwortverzeichnis
+********************
+
+* Menu:
+
+* "Ostliche orthodoxe Kirchen, Benutzen der Schaltjahrregel: Kalender Optionen.
+* "Uberschrift unterdr"ucken in ewiger Feiertagsliste: Kalender Optionen.
+* "Uberschrift unterdr"ucken in Terminliste: Termin Optionen.
+* # Trennzeichen von Bereichen von Tagen: Bereiche von Tagen.
+* % Spezialtext-Startzeichen:            Spezialtexte.
+* %![ARGUMENT] Spezialtext, shell Kommando: Shell Kommando.
+* %#[DATUM] Spezialtext, Tageszahl <1>:  Spezialtexte (kurz).
+* %#[DATUM] Spezialtext, Tageszahl:      Tageszahl.
+* %&[DATUM] Spezialtext, Tageszahl <1>:  Tageszahl.
+* %&[DATUM] Spezialtext, Tageszahl:      Spezialtexte (kurz).
+* %([DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %([DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %)[DATUM] Spezialtext, Wochentagsnummer <1>: Wochentag.
+* %)[DATUM] Spezialtext, Wochentagsnummer: Spezialtexte (kurz).
+* %*[DATUM] Spezialtext, Tageszahl <1>:  Spezialtexte (kurz).
+* %*[DATUM] Spezialtext, Tageszahl:      Tageszahl.
+* %+[DATUM] Spezialtext, Tageszahl <1>:  Tageszahl.
+* %+[DATUM] Spezialtext, Tageszahl:      Spezialtexte (kurz).
+* %,[DATUM] Spezialtext, Biorhythmus <1>: Biorhythmus.
+* %,[DATUM] Spezialtext, Biorhythmus:    Spezialtexte (kurz).
+* %-[DATUM] Spezialtext, Mondphasentext <1>: Mondphase.
+* %-[DATUM] Spezialtext, Mondphasentext: Spezialtexte (kurz).
+* %0 Spezialtext, Ende-Hervorhebung 1 oder 2 <1>: Spezialtexte (kurz).
+* %0 Spezialtext, Ende-Hervorhebung 1 oder 2: Hervorhebung.
+* %1 Spezialtext, Start-Hervorhebung 1 <1>: Hervorhebung.
+* %1 Spezialtext, Start-Hervorhebung 1:  Spezialtexte (kurz).
+* %2 Spezialtext, Ende-Hervorhebung 1 <1>: Hervorhebung.
+* %2 Spezialtext, Ende-Hervorhebung 1:   Spezialtexte (kurz).
+* %3 Spezialtext, Start-Hervorhebung 2 <1>: Hervorhebung.
+* %3 Spezialtext, Start-Hervorhebung 2:  Spezialtexte (kurz).
+* %4 Spezialtext, Ende-Hervorhebung 2 <1>: Hervorhebung.
+* %4 Spezialtext, Ende-Hervorhebung 2:   Spezialtexte (kurz).
+* %5 Spezialtext, Start-Hervorhebung 1 <1>: Hervorhebung.
+* %5 Spezialtext, Start-Hervorhebung 1:  Spezialtexte (kurz).
+* %6 Spezialtext, Ende-Hervorhebung 1 <1>: Spezialtexte (kurz).
+* %6 Spezialtext, Ende-Hervorhebung 1:   Hervorhebung.
+* %7 Spezialtext, Start-Hervorhebung 2 <1>: Spezialtexte (kurz).
+* %7 Spezialtext, Start-Hervorhebung 2:  Hervorhebung.
+* %8 Spezialtext, Ende-Hervorhebung 2 <1>: Hervorhebung.
+* %8 Spezialtext, Ende-Hervorhebung 2:   Spezialtexte (kurz).
+* %9 Spezialtext, Start-Hervorhebung 1 oder 2 <1>: Hervorhebung.
+* %9 Spezialtext, Start-Hervorhebung 1 oder 2: Spezialtexte (kurz).
+* %:[DATUM] Spezialtext, Mondphasen-Textgrafik <1>: Mondphase.
+* %:[DATUM] Spezialtext, Mondphasen-Textgrafik: Spezialtexte (kurz).
+* %;[DATUM] Spezialtext, Biorhythmus-Textgrafik <1>: Spezialtexte (kurz).
+* %;[DATUM] Spezialtext, Biorhythmus-Textgrafik: Biorhythmus.
+* %<[DATUM] Spezialtext, Wochentagsnummer <1>: Wochentag.
+* %<[DATUM] Spezialtext, Wochentagsnummer: Spezialtexte (kurz).
+* %=[DATUM] Spezialtext, Jahr <1>:       Spezialtexte (kurz).
+* %=[DATUM] Spezialtext, Jahr:           Jahr.
+* %>[DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %>[DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %?... Spezialtexte:                    Spezialtexte.
+* %?... Spezialtexte um Datum auszuschliessen: Ausschliessen.
+* %?... Spezialtexte zum Textersatz:     Ersetzen.
+* %?... Spezialtexte, Beschreibung aller: Spezialtexte (lang).
+* %?... Spezialtexte, Kurzliste aller:   Spezialtexte (kurz).
+* %?... Spezialtexte, Zusammenfassung aller: Spezialtexte (kurz).
+* %[[DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %[[DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %][DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %][DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %_[DATUM] Spezialtext, Mondphasentext <1>: Spezialtexte (kurz).
+* %_[DATUM] Spezialtext, Mondphasentext: Mondphase.
+* %A Spezialtext, exklusive Montag <1>:  Spezialtexte (kurz).
+* %A Spezialtext, exklusive Montag:      Exklusive Tag Zeitraum.
+* %a Spezialtext, inklusive Montag <1>:  Inklusive Tag Zeitraum.
+* %a Spezialtext, inklusive Montag:      Spezialtexte (kurz).
+* %b[DATUM] Spezialtext, Geburtstag:     Differenzwert.
+* %B[DATUM] Spezialtext, Geburtstag:     Differenzwert.
+* %b[DATUM] Spezialtext, Geburtstag:     Spezialtexte (kurz).
+* %B[DATUM] Spezialtext, Geburtstag:     Spezialtexte (kurz).
+* %C Spezialtext, exklusive Dienstag <1>: Exklusive Tag Zeitraum.
+* %C Spezialtext, exklusive Dienstag:    Spezialtexte (kurz).
+* %c Spezialtext, inklusive Dienstag <1>: Inklusive Tag Zeitraum.
+* %c Spezialtext, inklusive Dienstag:    Spezialtexte (kurz).
+* %d Spezialtext, relative Tageszahl <1>: Andere Differenzwerte.
+* %d Spezialtext, relative Tageszahl:    Spezialtexte (kurz).
+* %D[DATUM] Spezialtext, Tag <1>:        Tag.
+* %D[DATUM] Spezialtext, Tag:            Spezialtexte (kurz).
+* %DATUM:                                Datummodifizierer.
+* %DATUM, Option <1>:                    Datummodifizierer.
+* %DATUM, Option:                        Kommandozeilenargumente.
+* %E[DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %E[DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %e[DATUM][#[DATUM]] Spezialtext, exklusive Datum Zeitraum: Exklusive Datum Zeitraum.
+* %F Spezialtext, exklusive Mittwoch <1>: Spezialtexte (kurz).
+* %F Spezialtext, exklusive Mittwoch:    Exklusive Tag Zeitraum.
+* %f Spezialtext, inklusive Mittwoch <1>: Inklusive Tag Zeitraum.
+* %f Spezialtext, inklusive Mittwoch:    Spezialtexte (kurz).
+* %G Spezialtext, exklusive Donnerstag <1>: Exklusive Tag Zeitraum.
+* %G Spezialtext, exklusive Donnerstag:  Spezialtexte (kurz).
+* %g Spezialtext, inklusive Donnerstag <1>: Inklusive Tag Zeitraum.
+* %g Spezialtext, inklusive Donnerstag:  Spezialtexte (kurz).
+* %H Spezialtext, exklusive Freitag <1>: Spezialtexte (kurz).
+* %H Spezialtext, exklusive Freitag:     Exklusive Tag Zeitraum.
+* %h Spezialtext, inklusive Freitag <1>: Inklusive Tag Zeitraum.
+* %h Spezialtext, inklusive Freitag:     Spezialtexte (kurz).
+* %I[DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %I[DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %i[DATUM][#[DATUM]] Spezialtext, inklusive Datum Zeitraum: Inklusive Datum Zeitraum.
+* %j[ARGUMENT] Spezialtext, Julianische Tageszahl: Julianische Tageszahl.
+* %J[DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %J[DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %K[DATUM] Spezialtext, 2-Buchstaben Wochentagsname <1>: Wochentagsname.
+* %K[DATUM] Spezialtext, 2-Buchstaben Wochentagsname: Spezialtexte (kurz).
+* %k[DATUM] Spezialtext, Woche:          Woche.
+* %L Spezialtext, exklusive Samstag <1>: Exklusive Tag Zeitraum.
+* %L Spezialtext, exklusive Samstag:     Spezialtexte (kurz).
+* %l Spezialtext, inklusive Samstag <1>: Spezialtexte (kurz).
+* %l Spezialtext, inklusive Samstag:     Inklusive Tag Zeitraum.
+* %m Spezialtext, relative Monatszahl <1>: Spezialtexte (kurz).
+* %m Spezialtext, relative Monatszahl:   Andere Differenzwerte.
+* %M[DATUM] Spezialtext, vollst"andiger Monatsname <1>: Spezialtexte (kurz).
+* %M[DATUM] Spezialtext, vollst"andiger Monatsname: Monatsname.
+* %n[ARGUMENT] Spezialtext, Textliches Datum: Textliches Datum.
+* %N[DATUM] Spezialtext, Tag <1>:        Tag.
+* %N[DATUM] Spezialtext, Tag:            Spezialtexte (kurz).
+* %O[DATUM] Spezialtext, 3-Buchstaben Wochentagsname <1>: Spezialtexte (kurz).
+* %O[DATUM] Spezialtext, 3-Buchstaben Wochentagsname: Wochentagsname.
+* %o[DATUM] Spezialtext, vollst"andiger Wochentagsname <1>: Spezialtexte (kurz).
+* %o[DATUM] Spezialtext, vollst"andiger Wochentagsname: Wochentagsname.
+* %P Spezialtext, exklusive Sonntag <1>: Exklusive Tag Zeitraum.
+* %P Spezialtext, exklusive Sonntag:     Spezialtexte (kurz).
+* %p Spezialtext, inklusive Sonntag <1>: Inklusive Tag Zeitraum.
+* %p Spezialtext, inklusive Sonntag:     Spezialtexte (kurz).
+* %Q Spezialtext, exklusive Montag...Donnerstag <1>: Exklusive Tag Zeitraum.
+* %Q Spezialtext, exklusive Montag...Donnerstag: Spezialtexte (kurz).
+* %q Spezialtext, inklusive Montag...Donnerstag <1>: Spezialtexte (kurz).
+* %q Spezialtext, inklusive Montag...Donnerstag: Inklusive Tag Zeitraum.
+* %R Spezialtext, exklusive Montag...Freitag <1>: Spezialtexte (kurz).
+* %R Spezialtext, exklusive Montag...Freitag: Exklusive Tag Zeitraum.
+* %r Spezialtext, inklusive Montag...Freitag: Spezialtexte (kurz).
+* %r Spezialtext, inklusive Zeitraum:    Inklusive Tag Zeitraum.
+* %s[DATUM] Spezialtext, Tag <1>:        Tag.
+* %s[DATUM] Spezialtext, Tag:            Spezialtexte (kurz).
+* %S[DATUM] Spezialtext, Wochentagsnummer <1>: Spezialtexte (kurz).
+* %S[DATUM] Spezialtext, Wochentagsnummer: Wochentag.
+* %t12 Spezialtext:                      Aktuelle Uhrzeit.
+* %t24 Spezialtext:                      Aktuelle Uhrzeit.
+* %t[ARGUMENT] Spezialtext, aktuelle Uhrzeit: Aktuelle Uhrzeit.
+* %T[DATUM] Spezialtext, 3-Buchstaben Monatsname <1>: Monatsname.
+* %T[DATUM] Spezialtext, 3-Buchstaben Monatsname: Spezialtexte (kurz).
+* %U[DATUM] Spezialtext, Monat <1>:      Spezialtexte (kurz).
+* %U[DATUM] Spezialtext, Monat:          Monat.
+* %u[DATUM] Spezialtext, Tag <1>:        Spezialtexte (kurz).
+* %u[DATUM] Spezialtext, Tag:            Tag.
+* %V Spezialtext, exklusive gesetzlicher Feiertage <1>: Spezialtexte (kurz).
+* %V Spezialtext, exklusive gesetzlicher Feiertage: Exklusive Tag Zeitraum.
+* %v Spezialtext, inklusive gesetzlicher Feiertage <1>: Inklusive Tag Zeitraum.
+* %v Spezialtext, inklusive gesetzlicher Feiertage: Spezialtexte (kurz).
+* %w Spezialtext, relative Wochenzahl <1>: Spezialtexte (kurz).
+* %w Spezialtext, relative Wochenzahl:   Andere Differenzwerte.
+* %W[DATUM] Spezialtext, Monat <1>:      Spezialtexte (kurz).
+* %W[DATUM] Spezialtext, Monat:          Monat.
+* %X Spezialtext, exklusive aller Feiertage <1>: Spezialtexte (kurz).
+* %X Spezialtext, exklusive aller Feiertage: Exklusive Tag Zeitraum.
+* %x Spezialtext, inklusive aller Feiertage <1>: Inklusive Tag Zeitraum.
+* %x Spezialtext, inklusive aller Feiertage: Spezialtexte (kurz).
+* %y Spezialtext, relative Jahreszahl <1>: Andere Differenzwerte.
+* %y Spezialtext, relative Jahreszahl:   Spezialtexte (kurz).
+* %Y[DATUM] Spezialtext, Jahr <1>:       Jahr.
+* %Y[DATUM] Spezialtext, Jahr:           Spezialtexte (kurz).
+* %yDATUM Spezialtext, relative Jahreszahl <1>: Differenzwert.
+* %yDATUM Spezialtext, relative Jahreszahl: Spezialtexte (kurz).
+* %Z[DATUM] Spezialtext, Monat:          Monat.
+* %z[DATUM] Spezialtext, Monat:          Spezialtexte (kurz).
+* %Z[DATUM] Spezialtext, Monat:          Spezialtexte (kurz).
+* %z[DATUM] Spezialtext, Monat:          Monat.
+* %{[DATUM] Spezialtext, Wochentagsnummer <1>: Wochentag.
+* %{[DATUM] Spezialtext, Wochentagsnummer: Spezialtexte (kurz).
+* %}[DATUM] Spezialtext, Wochentagsnummer <1>: Wochentag.
+* %}[DATUM] Spezialtext, Wochentagsnummer: Spezialtexte (kurz).
+* + Trennzeichen <1>:                    Kalender Optionen.
+* + Trennzeichen:                        Termin Optionen.
+* , Trennzeichen von Listen von Tagen:   Listen von Tagen.
+* - Switch-Zeichen:                      Kommandozeilenargumente.
+* - Umschaltzeichen:                     Kommandozeilenargumente.
+* -- Switch-Zeichen:                     Kommandozeilenargumente.
+* -- Umschaltzeichen:                    Kommandozeilenargumente.
+* .gcalrc Ressourcendatei:               Ressourcendatei.
+* .N Auftretensfaktor von Tagen:         Auftretensfaktor von Tagen.
+* / Switch-Zeichen:                      Kommandozeilenargumente.
+* / Umschaltzeichen:                     Kommandozeilenargumente.
+* 2-Buchstaben Wochentagsname, %K[DATUM] Spezialtext: Wochentagsname.
+* 3-Buchstaben Monatsname, %T[DATUM] Spezialtext: Monatsname.
+* 3-Buchstaben Wochentagsname, %O[DATUM] Spezialtext: Wochentagsname.
+* 3-Monatsmodus . JJJJ, spezieller:      3-Monatsmodus Kommandos.
+* 3-Monatsmodus .+ JJJJ, spezieller:     3-Monatsmodus Kommandos.
+* 3-Monatsmodus .+, spezieller:          3-Monatsmodus Kommandos.
+* 3-Monatsmodus ., spezieller:           3-Monatsmodus Kommandos.
+* 3-Monatsmodus .- JJJJ, spezieller:     3-Monatsmodus Kommandos.
+* 3-Monatsmodus .-, spezieller:          3-Monatsmodus Kommandos.
+* 3-Monatsmodus .. JJJJ, spezieller:     3-Monatsmodus Kommandos.
+* 3-Monatsmodus .., spezieller:          3-Monatsmodus Kommandos.
+* 3-Monatsmodus Kommandos <1>:           3-Monatsmodus Kommandos.
+* 3-Monatsmodus Kommandos:               Kommandos.
+* 3-Monatsmodus, Einschr"ankungen <1>:   Weitere Datumteil-Attribute.
+* 3-Monatsmodus, Einschr"ankungen:       Datumvariablen.
+* : Trennzeichen <1>:                    Termin Optionen.
+* : Trennzeichen <2>:                    Globale Optionen.
+* : Trennzeichen:                        Termin Optionen.
+* :N Wiederholungsfaktor von Tagen:      Wiederholungsfaktor von Tagen.
+* ; Kommentarzeichen <1>:                Zeile kommentieren.
+* ; Kommentarzeichen:                    Antwortdatei.
+* @DATEI:                                Antwortdatei.
+* @DATEI, Option <1>:                    Antwortdatei.
+* @DATEI, Option:                        Kommandozeilenargumente.
+* \ Entwertungszeichen <1>:              Termin Optionen.
+* \ Entwertungszeichen <2>:              Spezialtexte.
+* \ Entwertungszeichen <3>:              Textvariablen.
+* \ Entwertungszeichen <4>:              Textteil einer Zeile.
+* \ Entwertungszeichen:                  Termin Optionen.
+* \ Fortsetzungszeichen einer Zeile:     Textteil einer Zeile.
+* \ Schutzzeichen <1>:                   Textvariablen.
+* \ Schutzzeichen <2>:                   Termin Optionen.
+* \ Schutzzeichen <3>:                   Textteil einer Zeile.
+* \ Schutzzeichen <4>:                   Termin Optionen.
+* \ Schutzzeichen <5>:                   Textteil einer Zeile.
+* \ Schutzzeichen <6>:                   Termin Optionen.
+* \ Schutzzeichen <7>:                   Spezialtexte.
+* \ Schutzzeichen:                       Termin Optionen.
+* \' regexp Operator:                    Regexp Operatoren.
+* \' regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* \< regexp Operator:                    Regexp Operatoren.
+* \< regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* \> regexp Operator:                    Regexp Operatoren.
+* \> regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* \` regexp Operator:                    Regexp Operatoren.
+* \` regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* \b regexp Operator:                    Regexp Operatoren.
+* \B regexp Operator:                    Regexp Operatoren.
+* \B regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* \b regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* \W regexp Operator:                    Regexp Operatoren.
+* \w regexp Operator:                    Regexp Operatoren.
+* \w regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* \W regul"ar-Ausdruck Operator:         Regexp Operatoren.
+* ^ Zeilenumbruchzeichen <1>:            Termin Optionen.
+* ^ Zeilenumbruchzeichen:                Textteil einer Zeile.
+* _ Pseudo-Leerzeichen:                  Termin Optionen.
+* Addition auf Datumvariablen:           Datumvariablen.
+* Aktivierung der Terminfunktion:        Termin Optionen.
+* Aktuelle Uhrzeit %t[ARGUMENT] Spezialtext <1>: Spezialtexte (kurz).
+* Aktuelle Uhrzeit %t[ARGUMENT] Spezialtext: Aktuelle Uhrzeit.
+* Aktueller Monat des aktuellen Jahres:  Einfache Kommandos.
+* Aktuelles Dateiverzeichnis:            Ressourcendatei.
+* Allgemeine Optionen:                   Allgemeine Optionen.
+* Alternatives Datumformat im Kalenderblatt: Kalender Optionen.
+* Alternatives Datumformat in ewiger Feiertagsliste: Kalender Optionen.
+* Alternatives Datumformat in Terminliste: Kalender Optionen.
+* Alterswert:                            Differenzwert.
+* Andere Ressourcendatei:                Termin Optionen.
+* Angegebene Fiskaljahre, Bereich von:   Bereiche von Kommandos.
+* Angegebene Jahre, Bereich von:         Bereiche von Kommandos.
+* Angegebene Jahre, Liste von:           Listen von Kommandos.
+* Angegebene Monate eines angegebenen Jahre, Liste von: Listen von Kommandos.
+* Angegebene Monate eines angegebenen Jahres, Bereich von: Bereiche von Kommandos.
+* Angegebene Monate in angegebenen Jahren, Liste von: Listen von Kommandos.
+* Angegebene Monate von angegebenen Jahren, Bereich von: Bereiche von Kommandos.
+* Angegebene Monate, Bereich von:        Bereiche von Kommandos.
+* Angegebene Monate, Liste von:          Listen von Kommandos.
+* Angegebenen Fiskaljahre, Liste von:    Listen von Kommandos.
+* Angegebener Monat des aktuellen Jahres: Einfache Kommandos.
+* Angegebener Monat eines angegebenen Jahres: Einfache Kommandos.
+* Angegebener Monat von angegebenen Jahren, Bereich von: Bereiche von Kommandos.
+* Angegebener Monatsmodus:               Einfache Kommandos.
+* Angegebenes Jahr:                      Einfache Kommandos.
+* Anker in regexps:                      Regexp Operatoren.
+* Antwortdatei, @DATEI:                  Antwortdatei.
+* Antwortdatei, Erzeugung von:           Globale Optionen.
+* Anzahl der Bl"ocke im Jahreskalender:  Kalender Optionen.
+* Argumente der Kommandozeile:           Kommandozeilenargumente.
+* Auf Puffer wirkende Operatoren in regexps: Regexp Operatoren.
+* Aufruf von gcal:                       Aufruf von Gcal.
+* Aufruf von gcal2txt:                   Aufruf von gcal2txt.
+* Aufruf von tcal:                       Aufruf von tcal.
+* Aufruf von txt2gcal:                   Aufruf von txt2gcal.
+* Auftretensfaktor von Tagen, .N:        Auftretensfaktor von Tagen.
+* Auftretensfaktoren von Tagen, Beispiele zu: Auftretensfaktor von Tagen.
+* Auftretensfaktoren von Tagen, zul"assige Datumteile bei: Auftretensfaktor von Tagen.
+* Ausgef"uhrte Kommandos, Exit-Kode von: Shell Kommando.
+* Ausgef"uhrte Kommandos, Fehlerkode von: Shell Kommando.
+* Ausschliessen mit Datumargument %?[DATUM] Spezialtexte: Ausschliessen mit Datumargument.
+* Ausschliessen ohne Argument %? Spezialtexte: Ausschliessen ohne Argument.
+* Ausstatten des Kalenderblatts mit Wochennummern: Kalender Optionen.
+* Beispiele zu Auftretensfaktoren von Tagen: Auftretensfaktor von Tagen.
+* Beispiele zu Bereiche von Tagen:       Bereiche von Tagen.
+* Beispiele zu Listen von Tagen:         Listen von Tagen.
+* Beispiele zu Wiederholungsfaktoren von Tagen: Wiederholungsfaktor von Tagen.
+* Benutzen der Schaltjahrregel der "ostlichen orthodoxen Kirchen: Kalender Optionen.
+* Benutzte Landessprache:                Internationalisierung.
+* Benutzung von regul"aren Ausdr"ucken:  Benutzung von Regexp.
+* Bereich eines angegebenen Monats von angegebenen Jahren: Bereiche von Kommandos.
+* Bereich von angegebenen Fiskaljahren:  Bereiche von Kommandos.
+* Bereich von angegebenen Jahren:        Bereiche von Kommandos.
+* Bereich von angegebenen Monaten:       Bereiche von Kommandos.
+* Bereich von angegebenen Monaten eines angegebenen Jahres: Bereiche von Kommandos.
+* Bereich von angegebenen Monaten von angegebenen Jahren: Bereiche von Kommandos.
+* Bereich von Fiskaljahren:              Bereiche von Kommandos.
+* Bereiche von Kommandos <1>:            Kommandos.
+* Bereiche von Kommandos:                Bereiche von Kommandos.
+* Bereiche von Tagen:                    Bereiche von Tagen.
+* Bereiche von Tagen, Beispiele zu:      Bereiche von Tagen.
+* Bereichen von Tagen, zul"assige Datumteile bei: Bereiche von Tagen.
+* Beschreibung aller %?... Spezialtexte: Spezialtexte (lang).
+* Besondere Zeichensequenzen im Textteil, Handhabung von: Textteil einer Zeile.
+* Biorhythmus %?[DATUM] Spezialtexte <1>: Biorhythmus.
+* Biorhythmus %?[DATUM] Spezialtexte:    Spezialtexte (kurz).
+* Biorhythmus, %,[DATUM] Spezialtext:    Biorhythmus.
+* Biorhythmus, Kritischer Tag:           Biorhythmus.
+* Biorhythmus, Negativer Tag:            Biorhythmus.
+* Biorhythmus, Positiver Tag:            Biorhythmus.
+* Biorhythmus-Textgrafik, %;[DATUM] Spezialtext: Biorhythmus.
+* Bl"ocke im Jahreskalender, Anzahl der: Kalender Optionen.
+* C Preprocessorsymbol USE_PAGER:        Globale Optionen.
+* Christliche Feiertage in ewiger Feiertagsliste: Kalender Optionen.
+* CO Umgebungsvariable:                  Umgebungsvariablen.
+* COLUMNS Umgebungsvariable:             Umgebungsvariablen.
+* Copyleft:                              Allgemeine Optionen.
+* Copyright:                             Allgemeine Optionen.
+* Das gcal2txt Hilfsprogramm:            Aufruf von gcal2txt.
+* Das tcal Hilfsprogramm:                Aufruf von tcal.
+* Das txt2gcal Hilfsprogramm:            Aufruf von txt2gcal.
+* Datei-Suchmechanismus:                 Ressourcendatei.
+* Dateiname, einfacher:                  Ressourcendatei.
+* Dateiname, erweiterter:                Ressourcendatei.
+* Dateiverzeichnis, aktuelles:           Ressourcendatei.
+* Datummodifizierer, %DATUM:             Datummodifizierer.
+* Datumteil einer Zeile:                 Datumteil einer Zeile.
+* Datumtext:                             Textliches Datum.
+* Datumvariablen:                        Datumvariablen.
+* Datumvariablen, Addition um Tage:      Datumvariablen.
+* Datumvariablen, Addition um Wochentage: Datumvariablen.
+* Datumvariablen, Definition von <1>:    Termin Optionen.
+* Datumvariablen, Definition von:        Datumvariablen.
+* Datumvariablen, einfache Dekrementierung von: Datumvariablen.
+* Datumvariablen, einfache Inkrementierung von: Datumvariablen.
+* Datumvariablen, Export lokaler <1>:    Termin Optionen.
+* Datumvariablen, Export lokaler:        Datumvariablen.
+* Datumvariablen, G"ultigkeitsbereich von <1>: Termin Optionen.
+* Datumvariablen, G"ultigkeitsbereich von: Datumvariablen.
+* Datumvariablen, Gesamtanzahl von:      Datumvariablen.
+* Datumvariablen, globale <1>:           Termin Optionen.
+* Datumvariablen, globale:               Datumvariablen.
+* Datumvariablen, Handhabung von <1>:    Datumvariablen.
+* Datumvariablen, Handhabung von:        Termin Optionen.
+* Datumvariablen, lokale:                Datumvariablen.
+* Datumvariablen, Namensraum von <1>:    Termin Optionen.
+* Datumvariablen, Namensraum von:        Datumvariablen.
+* Datumvariablen, Operationen auf <1>:   Datumvariablen.
+* Datumvariablen, Operationen auf:       Termin Optionen.
+* Datumvariablen, Sichtbarkeit lokaler <1>: Termin Optionen.
+* Datumvariablen, Sichtbarkeit lokaler:  Datumvariablen.
+* Datumvariablen, Sichtbarkeit von:      Datumvariablen.
+* Datumvariablen, Subtraktion um Tage:   Datumvariablen.
+* Datumvariablen, Subtraktion um Wochentage: Datumvariablen.
+* Datumvariablen, Zuweisungen an <1>:    Termin Optionen.
+* Datumvariablen, Zuweisungen an:        Datumvariablen.
+* Definition eines Wortes in regexps:    Regexp Operatoren.
+* Definition globaler Datumvariablen:    Termin Optionen.
+* Definition globaler Textvariablen:     Termin Optionen.
+* Definition lokaler Datumvariablen:     Datumvariablen.
+* Definition lokaler Textvariablen:      Textvariablen.
+* Definition von Datumvariablen <1>:     Datumvariablen.
+* Definition von Datumvariablen:         Termin Optionen.
+* Definition von Textvariablen <1>:      Textvariablen.
+* Definition von Textvariablen:          Termin Optionen.
+* Differenzwert %? Spezialtexte <1>:     Spezialtexte (kurz).
+* Differenzwert %? Spezialtexte:         Andere Differenzwerte.
+* Differenzwert %?[DATUM] Spezialtexte <1>: Spezialtexte (kurz).
+* Differenzwert %?[DATUM] Spezialtexte:  Differenzwert.
+* Einf"uhrung in Gcal:                   Einleitung.
+* Einfache Dekrementierung von Datumvariablen: Datumvariablen.
+* Einfache Inkrementierung von Datumvariablen: Datumvariablen.
+* Einfache Kommandos:                    Einfache Kommandos.
+* Einfache Sprachkode-Information:       Internationalisierung.
+* Einfacher Dateiname:                   Ressourcendatei.
+* Einschr"ankungen bei Verwendung des 3-Monatsmodus <1>: Weitere Datumteil-Attribute.
+* Einschr"ankungen bei Verwendung des 3-Monatsmodus: Datumvariablen.
+* Einschr"ankungen bei Verwendung von Fiskaljahren <1>: Weitere Datumteil-Attribute.
+* Einschr"ankungen bei Verwendung von Fiskaljahren: Datumvariablen.
+* Einschr"ankungen im Textteil einer Zeile: Textteil einer Zeile.
+* Einschr"ankungen in Ressourcendatei <1>: Datumvariablen.
+* Einschr"ankungen in Ressourcendatei <2>: Struktur einer Ressourcendatei.
+* Einschr"ankungen in Ressourcendatei:   Textteil einer Zeile.
+* Einzeljahresmodus:                     Einfache Kommandos.
+* Einzelmonatsmodus:                     Einfache Kommandos.
+* Einzelne Kommandos:                    Kommandos.
+* Einzelnes Fiskaljahr:                  Einfache Kommandos.
+* Einzelzeichenoption <1>:               Termin Optionen.
+* Einzelzeichenoption <2>:               Optionen.
+* Einzelzeichenoption:                   Termin Optionen.
+* Electronic Mail:                       Globale Optionen.
+* Elektronische Post:                    Globale Optionen.
+* EMail, Fehler:                         Fehlerkodes.
+* EMail, Option:                         Globale Optionen.
+* Ende-Hervorhebung 1 oder 2, %0 Spezialtext: Hervorhebung.
+* Ende-Hervorhebung 1, %2 Spezialtext:   Hervorhebung.
+* Ende-Hervorhebung 1, %6 Spezialtext:   Hervorhebung.
+* Ende-Hervorhebung 2, %4 Spezialtext:   Hervorhebung.
+* Ende-Hervorhebung 2, %8 Spezialtext:   Hervorhebung.
+* Endedatum eines Termins <1>:           Inklusive Datum Zeitraum.
+* Endedatum eines Termins:               Exklusive Datum Zeitraum.
+* Endestatus, Programm:                  Fehlerkodes.
+* Entwertung von Spezialzeichen <1>:     Spezialtexte.
+* Entwertung von Spezialzeichen <2>:     Termin Optionen.
+* Entwertung von Spezialzeichen <3>:     Kommandozeilenargumente.
+* Entwertung von Spezialzeichen <4>:     Termin Optionen.
+* Entwertung von Spezialzeichen <5>:     Textteil einer Zeile.
+* Entwertung von Spezialzeichen <6>:     Termin Optionen.
+* Entwertung von Spezialzeichen <7>:     Textvariablen.
+* Entwertung von Spezialzeichen:         Textteil einer Zeile.
+* Entwertungszeichen, \ <1>:             Termin Optionen.
+* Entwertungszeichen, \ <2>:             Textteil einer Zeile.
+* Entwertungszeichen, \ <3>:             Termin Optionen.
+* Entwertungszeichen, \ <4>:             Textvariablen.
+* Entwertungszeichen, \ <5>:             Termin Optionen.
+* Entwertungszeichen, \ <6>:             Spezialtexte.
+* Entwertungszeichen, \ <7>:             Termin Optionen.
+* Entwertungszeichen, \ <8>:             Textteil einer Zeile.
+* Entwertungszeichen, \:                 Termin Optionen.
+* Erkennen von Wortgrenzen in regexps:   Regexp Operatoren.
+* Ersetzen mit anderem Argument %?[ARGUMENT] Spezialtexte: Ersetzen mit anderem Argument.
+* Ersetzen mit Datumargument %?[DATUM] Spezialtexte: Ersetzen mit Datumargument.
+* Ersetzen ohne Argument %? Spezialtexte: Ersetzen ohne Argument.
+* Erweiterte Sprachkode-Information:     Internationalisierung.
+* Erweiterter Dateiname:                 Ressourcendatei.
+* Erweiterter Hilfetext:                 Allgemeine Optionen.
+* Erzeugung von Antwortdateien:          Globale Optionen.
+* Erzeugung von shell scripten:          Globale Optionen.
+* Erzwingen der Ausgabe eines Jahreskalenderblatts: Kalender Optionen.
+* Erzwingen der Ausgabe eines Kalenderblatts: Kalender Optionen.
+* Escape-Sequenzen:                      Globale Optionen.
+* Ewige Feiertage:                       Ewige Feiertage.
+* Ewige Feiertagsliste, "Uberschrift unterdr"ucken: Kalender Optionen.
+* Ewige Feiertagsliste, alternatives Datumformat: Kalender Optionen.
+* Ewige Feiertagsliste, christliche Feiertage in: Kalender Optionen.
+* Ewige Feiertagsliste, keine Standardfeiertage in: Kalender Optionen.
+* Ewige Feiertagsliste, landesspezifische Feiertage in: Kalender Optionen.
+* Ewige Feiertagsliste, ohne Standardfeiertage in: Kalender Optionen.
+* Ewige Feiertagsliste, Option:          Kalender Optionen.
+* Ewige Feiertagsliste, spezielles Datumformat in: Kalender Optionen.
+* Ewige Feiertagsliste, Standard- und spezielles Datumformat in: Kalender Optionen.
+* Ewige Feiertagsliste, Standardfeiertage unterdr"ucken in: Kalender Optionen.
+* Exit-Kode 1:                           Termin Optionen.
+* Exit-Kode 113:                         Datumvariablen.
+* Exit-Kode 118:                         Ressourcendatei.
+* Exit-Kode 119:                         Include Anweisungen.
+* Exit-Kode 126:                         Termin Optionen.
+* Exit-Kode 127:                         Allgemeine Optionen.
+* Exit-Kode 2:                           Shell Kommando.
+* Exit-Kode von ausgef"uhrten Kommandos: Shell Kommando.
+* Exit-Kodes, Tabelle aller:             Fehlerkodes.
+* Exklusive aller Feiertage, %X Spezialtext: Exklusive Tag Zeitraum.
+* Exklusive Datum Zeitraum, %e[DATUM][#[DATUM]] Spezialtext <1>: Exklusive Datum Zeitraum.
+* Exklusive Datum Zeitraum, %e[DATUM][#[DATUM]] Spezialtext: Spezialtexte (kurz).
+* Exklusive Dienstag, %C Spezialtext:    Exklusive Tag Zeitraum.
+* Exklusive Donnerstag, %G Spezialtext:  Exklusive Tag Zeitraum.
+* Exklusive Freitag, %H Spezialtext:     Exklusive Tag Zeitraum.
+* Exklusive gesetzlicher Feiertage, %V Spezialtext: Exklusive Tag Zeitraum.
+* Exklusive Mittwoch, %F Spezialtext:    Exklusive Tag Zeitraum.
+* Exklusive Montag, %A Spezialtext:      Exklusive Tag Zeitraum.
+* Exklusive Montag...Donnerstag, %Q Spezialtext: Exklusive Tag Zeitraum.
+* Exklusive Montag...Freitag, %R Spezialtext: Exklusive Tag Zeitraum.
+* Exklusive Samstag, %L Spezialtext:     Exklusive Tag Zeitraum.
+* Exklusive Sonntag, %P Spezialtext:     Exklusive Tag Zeitraum.
+* Exklusive Tag Zeitraum %? Spezialtexte <1>: Exklusive Tag Zeitraum.
+* Exklusive Tag Zeitraum %? Spezialtexte: Spezialtexte (kurz).
+* Explizites Fiskaljahr:                 Einfache Kommandos.
+* Export lokaler Datumvariablen <1>:     Termin Optionen.
+* Export lokaler Datumvariablen:         Datumvariablen.
+* Export lokaler Textvariablen <1>:      Textvariablen.
+* Export lokaler Textvariablen:          Termin Optionen.
+* Externes Paginiererprogramm:           Globale Optionen.
+* Fehlerkode 1:                          Termin Optionen.
+* Fehlerkode 113:                        Datumvariablen.
+* Fehlerkode 118:                        Ressourcendatei.
+* Fehlerkode 119:                        Include Anweisungen.
+* Fehlerkode 126:                        Termin Optionen.
+* Fehlerkode 127:                        Allgemeine Optionen.
+* Fehlerkode 2:                          Shell Kommando.
+* Fehlerkode von ausgef"uhrten Kommandos: Shell Kommando.
+* Fehlerkodes, Tabelle aller:            Fehlerkodes.
+* Feiertagsliste, ewige:                 Ewige Feiertage.
+* Filtern von Termindatum, Tage:         Termin Optionen.
+* Filtern von Termindatum, Zeitr"aume:   Termin Optionen.
+* Filtern von Termintexten:              Termin Optionen.
+* Fiskaljahr, Einschr"ankungen <1>:      Datumvariablen.
+* Fiskaljahr, Einschr"ankungen:          Weitere Datumteil-Attribute.
+* Fiskaljahr, einzelnes:                 Einfache Kommandos.
+* Fiskaljahr, explizites:                Einfache Kommandos.
+* Fiskaljahr, implizites:                Einfache Kommandos.
+* Fiskaljahre des aktuellen Jahres, Liste von: Listen von Kommandos.
+* Fiskaljahre, Bereich von:              Bereiche von Kommandos.
+* Fiskaljahre, gemischte Liste von:      Listen von Kommandos.
+* Fiskaljahre, Liste von:                Listen von Kommandos.
+* Folge von Steuerzeichen:               Globale Optionen.
+* Fortsetzungszeichen einer Zeile, \:    Textteil einer Zeile.
+* G"ultigkeitsbereich von Datumvariablen <1>: Termin Optionen.
+* G"ultigkeitsbereich von Datumvariablen: Datumvariablen.
+* G"ultigkeitsbereich von Textvariablen <1>: Termin Optionen.
+* G"ultigkeitsbereich von Textvariablen: Textvariablen.
+* Gcal Hilfsprogramme:                   Gcal Hilfsprogramme.
+* GCAL Umgebungsvariable <1>:            Globale Optionen.
+* GCAL Umgebungsvariable <2>:            Die GCAL Umgebungsvariable.
+* GCAL Umgebungsvariable <3>:            Globale Optionen.
+* GCAL Umgebungsvariable:                Umgebungsvariablen.
+* gcal, Optionen von:                    Optionen.
+* gcal2txt, Aufruf von:                  Aufruf von gcal2txt.
+* gcal2txt, Hilfsprogramm:               Aufruf von gcal2txt.
+* gcal2txt, Optionen von:                Aufruf von gcal2txt.
+* GCAL_DATE_FORMAT Umgebungsvariable:    Umgebungsvariablen.
+* GCAL_SYS_DATADIR Umgebungsvariable <1>: Ressourcendatei.
+* GCAL_SYS_DATADIR Umgebungsvariable:    Umgebungsvariablen.
+* GCAL_USR_DATADIR Umgebungsvariable <1>: Ressourcendatei.
+* GCAL_USR_DATADIR Umgebungsvariable:    Umgebungsvariablen.
+* GCALANSI Umgebungsvariable <1>:        Globale Optionen.
+* GCALANSI Umgebungsvariable:            Umgebungsvariablen.
+* GCALPATH Umgebungsvariable <1>:        Umgebungsvariablen.
+* GCALPATH Umgebungsvariable:            Ressourcendatei.
+* GCALPROG Umgebungsvariable <1>:        Umgebungsvariablen.
+* GCALPROG Umgebungsvariable:            Aufruf von tcal.
+* Geburtstag, %b[DATUM] Spezialtext:     Differenzwert.
+* Geburtstag, %B[DATUM] Spezialtext:     Differenzwert.
+* Gemischte Liste von Fiskaljahren:      Listen von Kommandos.
+* Gemischte Monatsliste:                 Listen von Kommandos.
+* Gesamtanzahl von Datumvariablen:       Datumvariablen.
+* Gesamtanzahl von Textvariablen:        Textvariablen.
+* Gesichtspunkte zur Internationalisierung: Internationalisierung.
+* Gleichwertigkeitsklassen in regexps:   Regexp Operatoren.
+* Globale Datumvariablen, Definition von: Termin Optionen.
+* Globale Optionen:                      Globale Optionen.
+* Globale Textvariablen, Definition von: Termin Optionen.
+* GNU Langoptionen:                      Optionen.
+* GNU spezifische regexp Operatoren:     Regexp Operatoren.
+* GNU spezifische regul"ar-Ausdruck Operatoren: Regexp Operatoren.
+* Gregorianische Reformation, Zeitraum setzen: Kalender Optionen.
+* Gregorianischer Kalender, Entstehung des: Heutiger Kalender.
+* Gross-/ Kleinschreibung in regexps:    Regexp Operatoren.
+* Gross-/ Kleinschreibung in regexps ignorieren: Regexp Operatoren.
+* Handhabung von besonderen Zeichensequenzen im Textteil: Textteil einer Zeile.
+* Handhabung von Datumvariablen <1>:     Termin Optionen.
+* Handhabung von Datumvariablen:         Datumvariablen.
+* Handhabung von nicht druckbaren Zeichen im Textteil: Textteil einer Zeile.
+* Handhabung von NUL Zeichen im Textteil: Textteil einer Zeile.
+* Handhabung von Textvariablen <1>:      Termin Optionen.
+* Handhabung von Textvariablen:          Textvariablen.
+* Hervorhebung %? Spezialtexte <1>:      Spezialtexte (kurz).
+* Hervorhebung %? Spezialtexte:          Hervorhebung.
+* Hervorhebungssequenzen, Abschalten der: Globale Optionen.
+* Hervorhebungssequenzen, Erzwingen der: Globale Optionen.
+* Hervorhebungssequenzen, Setzen der:    Globale Optionen.
+* Hilfetext, erweitert:                  Allgemeine Optionen.
+* Hilfetext, Kurzform:                   Allgemeine Optionen.
+* Hilfetext, Langform:                   Allgemeine Optionen.
+* Hilfetext, verdichtet:                 Allgemeine Optionen.
+* Hilfsprogramm gcal2txt:                Aufruf von gcal2txt.
+* Hilfsprogramm tcal:                    Aufruf von tcal.
+* Hilfsprogramm txt2gcal:                Aufruf von txt2gcal.
+* Hilfsprogramme zu Gcal:                Gcal Hilfsprogramme.
+* HOME Umgebungsvariable <1>:            Ressourcendatei.
+* HOME Umgebungsvariable:                Umgebungsvariablen.
+* Implizites Fiskaljahr:                 Einfache Kommandos.
+* Include Anweisungen:                   Include Anweisungen.
+* Inklusive aller Feiertage, %x Spezialtext: Inklusive Tag Zeitraum.
+* Inklusive Datum Zeitraum, %i[DATUM][#[DATUM]] Spezialtext <1>: Spezialtexte (kurz).
+* Inklusive Datum Zeitraum, %i[DATUM][#[DATUM]] Spezialtext: Inklusive Datum Zeitraum.
+* Inklusive Dienstag, %c Spezialtext:    Inklusive Tag Zeitraum.
+* Inklusive Donnerstag, %g Spezialtext:  Inklusive Tag Zeitraum.
+* Inklusive Freitag, %h Spezialtext:     Inklusive Tag Zeitraum.
+* Inklusive gesetzlicher Feiertage, %v Spezialtext: Inklusive Tag Zeitraum.
+* Inklusive Mittwoch, %f Spezialtext:    Inklusive Tag Zeitraum.
+* Inklusive Montag, %a Spezialtext:      Inklusive Tag Zeitraum.
+* Inklusive Montag...Donnerstag, %q Spezialtext: Inklusive Tag Zeitraum.
+* Inklusive Montag...Freitag, %r Spezialtext: Inklusive Tag Zeitraum.
+* Inklusive Samstag, %l Spezialtext:     Inklusive Tag Zeitraum.
+* Inklusive Sonntag, %p Spezialtext:     Inklusive Tag Zeitraum.
+* Inklusive Tag Zeitraum %? Spezialtexte <1>: Spezialtexte (kurz).
+* Inklusive Tag Zeitraum %? Spezialtexte: Inklusive Tag Zeitraum.
+* Internationalisierungsgesichtspunkte:  Internationalisierung.
+* Interner Paginierer, einfacher:        Globale Optionen.
+* Intervall-Ausdr"ucke in regexps:       Regexp Operatoren.
+* ISO-3166 <1>:                          Kalender Optionen.
+* ISO-3166:                              Internationalisierung.
+* ISO-639:1988:                          Internationalisierung.
+* ISO-8601:1988 <1>:                     Datumteil einer Zeile.
+* ISO-8601:1988 <2>:                     Termin Optionen.
+* ISO-8601:1988 <3>:                     Woche.
+* ISO-8601:1988:                         Kalender Optionen.
+* Jahr %?[DATUM] Spezialtexte <1>:       Spezialtexte (kurz).
+* Jahr %?[DATUM] Spezialtexte:           Jahr.
+* Jahr, %=[DATUM] Spezialtext:           Jahr.
+* Jahr, %Y[DATUM] Spezialtext:           Jahr.
+* Jahresdifferenzwert:                   Differenzwert.
+* Jahreskalenderblatt, Erzwingen der Ausgabe: Kalender Optionen.
+* Jahresmodus, einzelner:                Einfache Kommandos.
+* Julianische Tageszahl %j[ARGUMENT] Spezialtext <1>: Julianische Tageszahl.
+* Julianische Tageszahl %j[ARGUMENT] Spezialtext: Spezialtexte (kurz).
+* Julianischer Kalender:                 Heutiger Kalender.
+* Kalender Optionen:                     Kalender Optionen.
+* Kalender, Gregorianischer:             Heutiger Kalender.
+* Kalender, Julianischer:                Heutiger Kalender.
+* Kalender, Schaltjahrregel der "ostlichen Kirchen: Kalender Optionen.
+* Kalenderblatt, alternatives Datumformat: Kalender Optionen.
+* Kalenderblatt, Anzahl der Bl"ocke im:  Kalender Optionen.
+* Kalenderblatt, Ausstatten mit Wochennummern: Kalender Optionen.
+* Kalenderblatt, Erzwingen der Ausgabe:  Kalender Optionen.
+* Kalenderblatt, Jahreskalender:         Kalender Optionen.
+* Kalenderblatt, Monatskalender:         Kalender Optionen.
+* Kalenderblatt, spezielles Datumformat in: Kalender Optionen.
+* Kalenderblatt, Standard- und spezielles Datumformat in: Kalender Optionen.
+* Kalenderblatt, Unterdr"ucken der Ausgabe: Kalender Optionen.
+* Kalenderformat, Speziell:              Kalender Optionen.
+* Kalenderformat, Standard:              Kalender Optionen.
+* Keine Standardfeiertage in ewiger Feiertagsliste: Kalender Optionen.
+* Kodierschema einer Zeile der Ressourcendatei: Kodierschema.
+* Kodierschema Tabelle 1:                Kodierschema Tabelle 1.
+* Kodierschema Tabelle 2:                Kodierschema Tabelle 2.
+* Kommando, .:                           3-Monatsmodus Kommandos.
+* Kommando, . JJJJ:                      3-Monatsmodus Kommandos.
+* Kommando, .+:                          3-Monatsmodus Kommandos.
+* Kommando, .+ JJJJ:                     3-Monatsmodus Kommandos.
+* Kommando, .-:                          3-Monatsmodus Kommandos.
+* Kommando, .- JJJJ:                     3-Monatsmodus Kommandos.
+* Kommando, ..:                          3-Monatsmodus Kommandos.
+* Kommando, .. JJJJ:                     3-Monatsmodus Kommandos.
+* Kommando, ::                           Einfache Kommandos.
+* Kommando, :JJJJ:                       Einfache Kommandos.
+* Kommando, JJJJ:                        Einfache Kommandos.
+* Kommando, JJJJ+JJJJ:                   Bereiche von Kommandos.
+* Kommando, JJJJ;...;JJJJ:               Listen von Kommandos.
+* Kommando, KEINES:                      Einfache Kommandos.
+* Kommando, MM JJJJ:                     Einfache Kommandos.
+* Kommando, MM JJJJ-JJJJ:                Bereiche von Kommandos.
+* Kommando, MM,...,MM:                   Listen von Kommandos.
+* Kommando, MM,...,MM JJJJ:              Listen von Kommandos.
+* Kommando, MM,MM/JJJJ,...:              Listen von Kommandos.
+* Kommando, MM-MM:                       Bereiche von Kommandos.
+* Kommando, MM-MM JJJJ:                  Bereiche von Kommandos.
+* Kommando, MM/JJJJ:                     Einfache Kommandos.
+* Kommando, MM/JJJJ,...,MM/JJJJ:         Listen von Kommandos.
+* Kommando, MM/JJJJ-JJJJ:                Bereiche von Kommandos.
+* Kommando, MM/JJJJ-MM/JJJJ:             Bereiche von Kommandos.
+* Kommando, MM::                         Einfache Kommandos.
+* Kommando, MM:;MM:;...:                 Listen von Kommandos.
+* Kommando, MM:;MM:JJJJ,...:             Listen von Kommandos.
+* Kommando, MM:JJJJ:                     Einfache Kommandos.
+* Kommando, MM:JJJJ+MM:JJJJ:             Bereiche von Kommandos.
+* Kommando, MM:JJJJ;...;MM:JJJJ:         Listen von Kommandos.
+* Kommando, MONATSNAME:                  Einfache Kommandos.
+* Kommandointerpretierer <1>:            Internationalisierung.
+* Kommandointerpretierer <2>:            Kommandozeilenargumente.
+* Kommandointerpretierer <3>:            Internationalisierung.
+* Kommandointerpretierer <4>:            Aufruf von Gcal.
+* Kommandointerpretierer <5>:            Shell Kommando.
+* Kommandointerpretierer:                Termin Optionen.
+* Kommandos:                             Kommandozeilenargumente.
+* Kommandos, "Ubersicht von:             Kommandos.
+* Kommandos, Bereiche von <1>:           Bereiche von Kommandos.
+* Kommandos, Bereiche von:               Kommandos.
+* Kommandos, einfache:                   Einfache Kommandos.
+* Kommandos, einzelne:                   Kommandos.
+* Kommandos, Listen von <1>:             Listen von Kommandos.
+* Kommandos, Listen von:                 Kommandos.
+* Kommandotrennzeichen, Liste aller:     Kommandos.
+* Kommandozeilenargumente:               Kommandozeilenargumente.
+* Kommandozeilenoptionen:                Optionen.
+* Kommandozeilenwort <1>:                Termin Optionen.
+* Kommandozeilenwort:                    Optionen.
+* Kommentarzeichen, ; <1>:               Zeile kommentieren.
+* Kommentarzeichen, ;:                   Antwortdatei.
+* Komplement"are Zeichenliste in regexps: Regexp Operatoren.
+* Kritischer Tag, Biorhythmus:           Biorhythmus.
+* Kurzer Hilfetext:                      Allgemeine Optionen.
+* Kurzliste aller %?... Spezialtexte:    Spezialtexte (kurz).
+* Kurzliste aller regul"aren Ausdr"ucke: Regexps (kurz).
+* Kurzoptionen:                          Optionen.
+* L"oschung lokaler Datumvariablen:      Datumvariablen.
+* Landeskode <1>:                        Kalender Optionen.
+* Landeskode:                            Internationalisierung.
+* Landesspezifische Feiertage in ewiger Feiertagsliste: Kalender Optionen.
+* Landessprache, benutzte:               Internationalisierung.
+* Landessprache, Wahl der:               Internationalisierung.
+* Landessprachliche Grundeinstellungen:  Internationalisierung.
+* LANG Umgebungsvariable <1>:            Umgebungsvariablen.
+* LANG Umgebungsvariable:                Internationalisierung.
+* Langer Hilfetext:                      Allgemeine Optionen.
+* Langoptionen:                          Optionen.
+* Langoptionsnamen, Liste aller:         Allgemeine Optionen.
+* LANGUAGE Umgebungsvariable <1>:        Umgebungsvariablen.
+* LANGUAGE Umgebungsvariable:            Internationalisierung.
+* Laufzeitfehlerkodes:                   Fehlerkodes.
+* LC_ALL Umgebungsvariable <1>:          Umgebungsvariablen.
+* LC_ALL Umgebungsvariable:              Internationalisierung.
+* LC_MESSAGES Umgebungsvariable <1>:     Internationalisierung.
+* LC_MESSAGES Umgebungsvariable:         Umgebungsvariablen.
+* LI Umgebungsvariable:                  Umgebungsvariablen.
+* LINES Umgebungsvariable:               Umgebungsvariablen.
+* Liste aller Kommndotrennzeichen:       Kommandos.
+* Liste aller Langoptionsnamen:          Allgemeine Optionen.
+* Liste aller Metasymole in diesem Dokument: Metasymbole.
+* Liste aller Umgebungsvariablen:        Umgebungsvariablen.
+* Liste von angegebenen Fiskaljahren:    Listen von Kommandos.
+* Liste von angegebenen Jahren:          Listen von Kommandos.
+* Liste von angegebenen Monaten:         Listen von Kommandos.
+* Liste von angegebenen Monaten eines angegebenen Jahres: Listen von Kommandos.
+* Liste von angegebenen Monaten in angegebenen Jahren: Listen von Kommandos.
+* Liste von Fiskaljahren:                Listen von Kommandos.
+* Liste von Fiskaljahren des aktuellen Jahres: Listen von Kommandos.
+* Liste von Whitespace-Zeichen:          Struktur einer Ressourcendatei.
+* Listen von Kommandos <1>:              Listen von Kommandos.
+* Listen von Kommandos:                  Kommandos.
+* Listen von Tagen:                      Listen von Tagen.
+* Listen von Tagen, Beispiele zu:        Listen von Tagen.
+* Listen von Tagen, zul"assige Datumteile bei: Listen von Tagen.
+* Lokale Datumvariablen:                 Datumvariablen.
+* Lokale Datumvariablen, Definition von: Datumvariablen.
+* Lokale Datumvariablen, L"oschen von:   Datumvariablen.
+* Lokale Textvariablen:                  Textvariablen.
+* Lokale Textvariablen, Definition von:  Textvariablen.
+* Mail, Versenden von:                   Globale Optionen.
+* MAILPROG Umgebungsvariable <1>:        Umgebungsvariablen.
+* MAILPROG Umgebungsvariable:            Globale Optionen.
+* Markierungszeichen, Abschalten der:    Globale Optionen.
+* Markierungszeichen, Setzen der:        Globale Optionen.
+* Message catalog:                       Internationalisierung.
+* Metasymbole in diesem Dokument, Liste aller: Metasymbole.
+* Metazeichen:                           Regexp Operatoren.
+* Modifizierer, Termintext:              Termin Optionen.
+* Modifizierer, Terminzeitraum:          Termin Optionen.
+* Monat %?[DATUM] Spezialtexte <1>:      Spezialtexte (kurz).
+* Monat %?[DATUM] Spezialtexte:          Monat.
+* Monat, %U[DATUM] Spezialtext:          Monat.
+* Monat, %W[DATUM] Spezialtext:          Monat.
+* Monat, %z[DATUM] Spezialtext:          Monat.
+* Monat, %Z[DATUM] Spezialtext:          Monat.
+* Monate, gemischte Liste von:           Listen von Kommandos.
+* Monatsmodus, angegebener:              Einfache Kommandos.
+* Monatsmodus, einzelner:                Einfache Kommandos.
+* Monatsname %?[DATUM] Spezialtexte <1>: Spezialtexte (kurz).
+* Monatsname %?[DATUM] Spezialtexte:     Monatsname.
+* Mondphase %?[DATUM] Spezialtexte <1>:  Mondphase.
+* Mondphase %?[DATUM] Spezialtexte:      Spezialtexte (kurz).
+* Mondphase, %-[DATUM] Spezialtext:      Mondphase.
+* Mondphase, %_[DATUM] Spezialtext:      Mondphase.
+* Mondphasen-Textgrafik, %:[DATUM] Spezialtext: Mondphase.
+* Namensraum von Datumvariablen <1>:     Termin Optionen.
+* Namensraum von Datumvariablen:         Datumvariablen.
+* Namensraum von Textvariablen <1>:      Textvariablen.
+* Namensraum von Textvariablen:          Termin Optionen.
+* Negativer Tag, Biorhythmus:            Biorhythmus.
+* Negierte Zeichenliste in regexps:      Regexp Operatoren.
+* Nicht druckbare Zeichen im Textteil, Handhabung von: Textteil einer Zeile.
+* NUL Zeichen im Textteil, Handhabung von: Textteil einer Zeile.
+* Ohne Standardfeiertage in ewiger Feiertagsliste: Kalender Optionen.
+* Operationen auf Datumvariablen <1>:    Datumvariablen.
+* Operationen auf Datumvariablen:        Termin Optionen.
+* Option %DATUM <1>:                     Datummodifizierer.
+* Option %DATUM:                         Kommandozeilenargumente.
+* Option @DATEI <1>:                     Antwortdatei.
+* Option @DATEI:                         Kommandozeilenargumente.
+* Optionen:                              Kommandozeilenargumente.
+* Optionen der Kommandozeile:            Optionen.
+* Optionen von gcal:                     Optionen.
+* Optionen von gcal2txt:                 Aufruf von gcal2txt.
+* Optionen von tcal:                     Aufruf von tcal.
+* Optionen von txt2gcal:                 Aufruf von txt2gcal.
+* Optionen, GNU Stil:                    Optionen.
+* Optionen, Kurzform:                    Optionen.
+* Optionen, Langform:                    Optionen.
+* Optionen, Termintext:                  Termin Optionen.
+* Optionen, Terminzeitraum:              Termin Optionen.
+* PAGER Umgebungsvariable <1>:           Umgebungsvariablen.
+* PAGER Umgebungsvariable:               Globale Optionen.
+* Paginierer, Benutzung des:             Globale Optionen.
+* Paginierer, extern:                    Globale Optionen.
+* Paginierer, intern:                    Globale Optionen.
+* Paginiererprogramm:                    Globale Optionen.
+* PATH Umgebungsvariable <1>:            Globale Optionen.
+* PATH Umgebungsvariable:                Umgebungsvariablen.
+* Pipe, Umlenkung der Ausgabe:           Globale Optionen.
+* Positiver Tag, Biorhythmus:            Biorhythmus.
+* POSIX regexps:                         Regexp Operatoren.
+* Post, elektronische:                   Globale Optionen.
+* Post, Versenden von:                   Globale Optionen.
+* Programmendestatus 127:                Allgemeine Optionen.
+* Programmendestatus, Tabelle aller:     Fehlerkodes.
+* Pseudo-Leerzeichen, _:                 Termin Optionen.
+* Quotierung von Spezialzeichen:         Kommandozeilenargumente.
+* Redirektionieren, Umlenkung der Ausgabe: Globale Optionen.
+* Regexp:                                Regulaere Ausdruecke.
+* Regexp Operator, \':                   Regexp Operatoren.
+* Regexp Operator, \<:                   Regexp Operatoren.
+* Regexp Operator, \>:                   Regexp Operatoren.
+* Regexp Operator, \`:                   Regexp Operatoren.
+* Regexp Operator, \b:                   Regexp Operatoren.
+* Regexp Operator, \B:                   Regexp Operatoren.
+* Regexp Operator, \W:                   Regexp Operatoren.
+* Regexp Operator, \w:                   Regexp Operatoren.
+* Regexp Operatoren, GNU spezifische:    Regexp Operatoren.
+* Regexps, Anker in:                     Regexp Operatoren.
+* Regexps, auf Puffer wirkende Operatoren in: Regexp Operatoren.
+* Regexps, Definition eines Wortes:      Regexp Operatoren.
+* Regexps, Erkennen von Wortgrenzen in:  Regexp Operatoren.
+* Regexps, Gleichwertigkeitsklassen in:  Regexp Operatoren.
+* Regexps, Gross-/ Kleinschreibung ignorieren in: Regexp Operatoren.
+* Regexps, Gross-/ Kleinschreibung in:   Regexp Operatoren.
+* Regexps, Intervall-Ausdr"ucke in:      Regexp Operatoren.
+* Regexps, komplement"are Zeichenliste in: Regexp Operatoren.
+* Regexps, Metazeichen:                  Regexp Operatoren.
+* Regexps, negierte Zeichenliste in:     Regexp Operatoren.
+* Regexps, Operatoren:                   Regexp Operatoren.
+* Regexps, POSIX:                        Regexp Operatoren.
+* Regexps, vergleichende Elemente in:    Regexp Operatoren.
+* Regexps, vergleichende Symbole in:     Regexp Operatoren.
+* Regexps, Vorrang von Operatoren in:    Regexp Operatoren.
+* Regexps, Zeichenklassen in:            Regexp Operatoren.
+* Regexps, Zeichenliste:                 Regexp Operatoren.
+* Regul"ar-Ausdruck Metazeichen:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \':         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \<:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \>:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \`:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \b:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \B:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \W:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operator \w:         Regexp Operatoren.
+* Regul"ar-Ausdruck Operatoren:          Regexp Operatoren.
+* Regul"ar-Ausdruck Operatoren, GNU spezifische: Regexp Operatoren.
+* Regul"are Ausdr"ucke als Suchmuster:   Regulaere Ausdruecke.
+* Regul"are Ausdr"ucke, Benutzen von:    Benutzung von Regexp.
+* Regul"are Ausdr"ucke, Kurzliste aller: Regexps (kurz).
+* Regul"are Ausdr"ucke, Zusammenfassung aller: Regexps (kurz).
+* Regul"arer Ausdruck <1>:               Regulaere Ausdruecke.
+* Regul"arer Ausdruck:                   Termin Optionen.
+* Relative Jahreszahl, %y Spezialtext:   Andere Differenzwerte.
+* Relative Jahreszahl, %yDATUM Spezialtext: Differenzwert.
+* Relative Monatszahl, %m Spezialtext:   Andere Differenzwerte.
+* Relative Tageszahl, %d Spezialtext:    Andere Differenzwerte.
+* Relative Wochenzahl, %w Spezialtext:   Andere Differenzwerte.
+* Repr"asentation-des-Textes:            Termin Optionen.
+* Ressourcendatei, .gcalrc:              Ressourcendatei.
+* Ressourcendatei, andere:               Termin Optionen.
+* Ressourcendatei, Benutzung einer:      Ressourcendatei.
+* Ressourcendatei, Datumteil:            Datumteil einer Zeile.
+* Ressourcendatei, Datumteil einer:      Kodierschema.
+* Ressourcendatei, Einschr"ankungen <1>: Datumvariablen.
+* Ressourcendatei, Einschr"ankungen <2>: Textteil einer Zeile.
+* Ressourcendatei, Einschr"ankungen:     Struktur einer Ressourcendatei.
+* Ressourcendatei, Include Anweisungen:  Include Anweisungen.
+* Ressourcendatei, Kodierschema:         Kodierschema.
+* Ressourcendatei, Laden von:            Ressourcendatei.
+* Ressourcendatei, Name einer:           Ressourcendatei.
+* Ressourcendatei, Standard:             Ressourcendatei.
+* Ressourcendatei, Struktur:             Struktur einer Ressourcendatei.
+* Ressourcendatei, Suchmechanismus:      Ressourcendatei.
+* Ressourcendatei, Textteil:             Textteil einer Zeile.
+* Ressourcendatei, Textteil kommentieren: Textteil einer Zeile.
+* Ressourcendatei, Zeile fortsetzen:     Textteil einer Zeile.
+* Ressourcendatei, Zeile kommentieren:   Zeile kommentieren.
+* Ressourcendatei, Zeilenumbruch erzwingen: Textteil einer Zeile.
+* Ressourcendatei, zus"atzliche <1>:     Ressourcendatei.
+* Ressourcendatei, zus"atzliche:         Termin Optionen.
+* Ressourcendatei, zwei Teile einer Zeile: Struktur einer Ressourcendatei.
+* Ressourcendateibeispiele:              Ressourcendateibeispiele.
+* Ressourcendateizeile, weitere:         Termin Optionen.
+* Ressourcendateizeile, zus"atzliche:    Termin Optionen.
+* Schaltjahrregel der "ostlichen orthodoxen Kirchen, Benutzen der: Kalender Optionen.
+* Schalttag:                             Termin Optionen.
+* Schalttag auf den 1'ten M"arz legen:   Termin Optionen.
+* Schalttag auf den 28'ten Februar legen: Termin Optionen.
+* Schutz von Spezialzeichen <1>:         Termin Optionen.
+* Schutz von Spezialzeichen <2>:         Spezialtexte.
+* Schutz von Spezialzeichen <3>:         Textteil einer Zeile.
+* Schutz von Spezialzeichen <4>:         Termin Optionen.
+* Schutz von Spezialzeichen <5>:         Kommandozeilenargumente.
+* Schutz von Spezialzeichen <6>:         Termin Optionen.
+* Schutz von Spezialzeichen <7>:         Textvariablen.
+* Schutz von Spezialzeichen:             Termin Optionen.
+* Schutzzeichen, \ <1>:                  Termin Optionen.
+* Schutzzeichen, \ <2>:                  Textvariablen.
+* Schutzzeichen, \ <3>:                  Termin Optionen.
+* Schutzzeichen, \ <4>:                  Textteil einer Zeile.
+* Schutzzeichen, \ <5>:                  Spezialtexte.
+* Schutzzeichen, \ <6>:                  Termin Optionen.
+* Schutzzeichen, \ <7>:                  Textteil einer Zeile.
+* Schutzzeichen, \:                      Termin Optionen.
+* Setzung-der-zu-ber"ucksichtigenden-Periode: Termin Optionen.
+* Shell <1>:                             Kommandozeilenargumente.
+* Shell <2>:                             Internationalisierung.
+* Shell <3>:                             Aufruf von Gcal.
+* Shell <4>:                             Termin Optionen.
+* Shell <5>:                             Internationalisierung.
+* Shell:                                 Shell Kommando.
+* Shell Kommando %![ARGUMENT] Spezialtext <1>: Spezialtexte (kurz).
+* Shell Kommando %![ARGUMENT] Spezialtext: Shell Kommando.
+* Shell Kommando, Ausf"uhrung von:       Shell Kommando.
+* Shell script, Erzeugung von:           Globale Optionen.
+* Sichtbarkeit lokaler Datumvariablen <1>: Termin Optionen.
+* Sichtbarkeit lokaler Datumvariablen:   Datumvariablen.
+* Sichtbarkeit lokaler Textvariablen <1>: Termin Optionen.
+* Sichtbarkeit lokaler Textvariablen:    Textvariablen.
+* Sichtbarkeit von Datumvariablen:       Datumvariablen.
+* Sichtbarkeit von Textvariablen:        Textvariablen.
+* Software Lizenz, Auffinden der:        Allgemeine Optionen.
+* Spezialtext %![ARGUMENT]:              Shell Kommando.
+* Spezialtext %#[DATUM]:                 Tageszahl.
+* Spezialtext %&[DATUM]:                 Tageszahl.
+* Spezialtext %([DATUM]:                 Wochentag.
+* Spezialtext %)[DATUM]:                 Wochentag.
+* Spezialtext %*[DATUM]:                 Tageszahl.
+* Spezialtext %+[DATUM]:                 Tageszahl.
+* Spezialtext %,[DATUM]:                 Biorhythmus.
+* Spezialtext %-[DATUM]:                 Mondphase.
+* Spezialtext %0:                        Hervorhebung.
+* Spezialtext %1:                        Hervorhebung.
+* Spezialtext %2:                        Hervorhebung.
+* Spezialtext %3:                        Hervorhebung.
+* Spezialtext %4:                        Hervorhebung.
+* Spezialtext %5:                        Hervorhebung.
+* Spezialtext %6:                        Hervorhebung.
+* Spezialtext %7:                        Hervorhebung.
+* Spezialtext %8:                        Hervorhebung.
+* Spezialtext %9:                        Hervorhebung.
+* Spezialtext %:[DATUM]:                 Mondphase.
+* Spezialtext %;[DATUM]:                 Biorhythmus.
+* Spezialtext %<[DATUM]:                 Wochentag.
+* Spezialtext %=[DATUM]:                 Jahr.
+* Spezialtext %>[DATUM]:                 Wochentag.
+* Spezialtext %[[DATUM]:                 Wochentag.
+* Spezialtext %][DATUM]:                 Wochentag.
+* Spezialtext %_[DATUM]:                 Mondphase.
+* Spezialtext %a:                        Inklusive Tag Zeitraum.
+* Spezialtext %A:                        Exklusive Tag Zeitraum.
+* Spezialtext %B[DATUM]:                 Differenzwert.
+* Spezialtext %b[DATUM]:                 Differenzwert.
+* Spezialtext %c:                        Inklusive Tag Zeitraum.
+* Spezialtext %C:                        Exklusive Tag Zeitraum.
+* Spezialtext %d:                        Andere Differenzwerte.
+* Spezialtext %D[DATUM]:                 Tag.
+* Spezialtext %E[DATUM]:                 Wochentag.
+* Spezialtext %e[DATUM][#[DATUM]]:       Exklusive Datum Zeitraum.
+* Spezialtext %F:                        Exklusive Tag Zeitraum.
+* Spezialtext %f:                        Inklusive Tag Zeitraum.
+* Spezialtext %g:                        Inklusive Tag Zeitraum.
+* Spezialtext %G:                        Exklusive Tag Zeitraum.
+* Spezialtext %h:                        Inklusive Tag Zeitraum.
+* Spezialtext %H:                        Exklusive Tag Zeitraum.
+* Spezialtext %I[DATUM]:                 Wochentag.
+* Spezialtext %i[DATUM][#[DATUM]]:       Inklusive Datum Zeitraum.
+* Spezialtext %j[ARGUMENT]:              Julianische Tageszahl.
+* Spezialtext %J[DATUM]:                 Wochentag.
+* Spezialtext %K[DATUM]:                 Wochentagsname.
+* Spezialtext %k[DATUM]:                 Woche.
+* Spezialtext %l:                        Inklusive Tag Zeitraum.
+* Spezialtext %L:                        Exklusive Tag Zeitraum.
+* Spezialtext %m,:                       Andere Differenzwerte.
+* Spezialtext %M[DATUM]:                 Monatsname.
+* Spezialtext %n[ARGUMENT]:              Textliches Datum.
+* Spezialtext %N[DATUM]:                 Tag.
+* Spezialtext %O[DATUM]:                 Wochentagsname.
+* Spezialtext %o[DATUM]:                 Wochentagsname.
+* Spezialtext %p:                        Inklusive Tag Zeitraum.
+* Spezialtext %P:                        Exklusive Tag Zeitraum.
+* Spezialtext %Q:                        Exklusive Tag Zeitraum.
+* Spezialtext %q:                        Inklusive Tag Zeitraum.
+* Spezialtext %R:                        Exklusive Tag Zeitraum.
+* Spezialtext %r:                        Inklusive Tag Zeitraum.
+* Spezialtext %S[DATUM]:                 Wochentag.
+* Spezialtext %s[DATUM]:                 Tag.
+* Spezialtext %t[ARGUMENT]:              Aktuelle Uhrzeit.
+* Spezialtext %T[DATUM]:                 Monatsname.
+* Spezialtext %u[DATUM]:                 Tag.
+* Spezialtext %U[DATUM]:                 Monat.
+* Spezialtext %v:                        Inklusive Tag Zeitraum.
+* Spezialtext %V:                        Exklusive Tag Zeitraum.
+* Spezialtext %w:                        Andere Differenzwerte.
+* Spezialtext %W[DATUM]:                 Monat.
+* Spezialtext %x:                        Inklusive Tag Zeitraum.
+* Spezialtext %X:                        Exklusive Tag Zeitraum.
+* Spezialtext %y:                        Andere Differenzwerte.
+* Spezialtext %Y[DATUM]:                 Jahr.
+* Spezialtext %yDATUM:                   Differenzwert.
+* Spezialtext %Z[DATUM]:                 Monat.
+* Spezialtext %z[DATUM]:                 Monat.
+* Spezialtext %{[DATUM]:                 Wochentag.
+* Spezialtext %}[DATUM]:                 Wochentag.
+* Spezialtext-Startzeichen, %:           Spezialtexte.
+* Spezielle 3-Monatsmodus Kommandos <1>: 3-Monatsmodus Kommandos.
+* Spezielle 3-Monatsmodus Kommandos:     Kommandos.
+* Spezieller 3-Monatsmodus, .:           3-Monatsmodus Kommandos.
+* Spezieller 3-Monatsmodus, . JJJJ:      3-Monatsmodus Kommandos.
+* Spezieller 3-Monatsmodus, .+:          3-Monatsmodus Kommandos.
+* Spezieller 3-Monatsmodus, .+ JJJJ:     3-Monatsmodus Kommandos.
+* Spezieller 3-Monatsmodus, .-:          3-Monatsmodus Kommandos.
+* Spezieller 3-Monatsmodus, .- JJJJ:     3-Monatsmodus Kommandos.
+* Spezieller 3-Monatsmodus, ..:          3-Monatsmodus Kommandos.
+* Spezieller 3-Monatsmodus, .. JJJJ:     3-Monatsmodus Kommandos.
+* Spezielles Datumformat im Kalenderblatt: Kalender Optionen.
+* Spezielles Datumformat in ewiger Feiertagsliste: Kalender Optionen.
+* Spezielles Datumformat in Terminliste: Kalender Optionen.
+* Spezielles Kalenderformat:             Kalender Optionen.
+* Sprachkode-Information, einfache:      Internationalisierung.
+* Sprachkode-Information, erweiterte:    Internationalisierung.
+* Sprachkodes:                           Internationalisierung.
+* Standard Kalenderformat:               Kalender Optionen.
+* Standard- und spezielles Datumformat im Kalenderblatt: Kalender Optionen.
+* Standard- und spezielles Datumformat in ewiger Feiertagsliste: Kalender Optionen.
+* Standard- und spezielles Datumformat in Terminliste: Kalender Optionen.
+* Standardfeiertage unterdr"ucken in ewiger Feiertagsliste: Kalender Optionen.
+* Start-Hervorhebung 1 oder 2, %9 Spezialtext: Hervorhebung.
+* Start-Hervorhebung 1, %1 Spezialtext:  Hervorhebung.
+* Start-Hervorhebung 1, %5 Spezialtext:  Hervorhebung.
+* Start-Hervorhebung 2, %3 Spezialtext:  Hervorhebung.
+* Start-Hervorhebung 2, %7 Spezialtext:  Hervorhebung.
+* Startdatum eines Termins <1>:          Inklusive Datum Zeitraum.
+* Startdatum eines Termins:              Exklusive Datum Zeitraum.
+* Starttag der Woche, Setzen des:        Kalender Optionen.
+* Steuerzeichenfolgen:                   Globale Optionen.
+* Struktur einer Ressourcendatei:        Struktur einer Ressourcendatei.
+* Subtraktion auf Datumvariablen:        Datumvariablen.
+* Suchen einer Ressourcendatei:          Ressourcendatei.
+* Suchmuster, regul"are Ausdr"ucke:      Regulaere Ausdruecke.
+* Switch-Zeichen, -:                     Kommandozeilenargumente.
+* Switch-Zeichen, --:                    Kommandozeilenargumente.
+* Switch-Zeichen, /:                     Kommandozeilenargumente.
+* Systemuhrzeit, Ausgabe der:            Aktuelle Uhrzeit.
+* Tabelle aller Fehlerkodes:             Fehlerkodes.
+* Tag %?[DATUM] Spezialtexte <1>:        Tag.
+* Tag %?[DATUM] Spezialtexte:            Spezialtexte (kurz).
+* Tag, %D[DATUM] Spezialtext:            Tag.
+* Tag, %N[DATUM] Spezialtext:            Tag.
+* Tag, %s[DATUM] Spezialtext:            Tag.
+* Tag, %u[DATUM] Spezialtext:            Tag.
+* Tageszahl %?[DATUM] Spezialtexte <1>:  Spezialtexte (kurz).
+* Tageszahl %?[DATUM] Spezialtexte:      Tageszahl.
+* Tageszahl, %#[DATUM] Spezialtext:      Tageszahl.
+* Tageszahl, %&[DATUM] Spezialtext:      Tageszahl.
+* Tageszahl, %*[DATUM] Spezialtext:      Tageszahl.
+* Tageszahl, %+[DATUM] Spezialtext:      Tageszahl.
+* tcal, Aufruf von:                      Aufruf von tcal.
+* tcal, Hilfsprogramm:                   Aufruf von tcal.
+* tcal, Optionen von:                    Aufruf von tcal.
+* TERM Umgebungsvariable:                Umgebungsvariablen.
+* Termin Optionen:                       Termin Optionen.
+* Termin, Endedatum eines <1>:           Exklusive Datum Zeitraum.
+* Termin, Endedatum eines:               Inklusive Datum Zeitraum.
+* Termin, Startdatum eines <1>:          Inklusive Datum Zeitraum.
+* Termin, Startdatum eines:              Exklusive Datum Zeitraum.
+* Termindatum, Tage filtern von:         Termin Optionen.
+* Termindatum, Zeitr"aume filtern von:   Termin Optionen.
+* Termine <1>:                           Termin Optionen.
+* Termine <2>:                           Termine.
+* Termine:                               Termin Optionen.
+* Termine bezogen auf *Heute*:           Termin Optionen.
+* Termine bezogen auf *Morgen*:          Termin Optionen.
+* Termine bezogen auf das *Jahr*:        Termin Optionen.
+* Termine bezogen auf den *Monat*:       Termin Optionen.
+* Termine bezogen auf die *Woche*:       Termin Optionen.
+* Termine, Aktivieren der:               Termin Optionen.
+* Terminfunktion, Aktivieren der:        Termin Optionen.
+* Terminliste, "Uberschrift unterdr"ucken: Termin Optionen.
+* Terminliste, alternatives Datumformat in: Kalender Optionen.
+* Terminliste, spezielles Datumformat in: Kalender Optionen.
+* Terminliste, Standard- und spezielles Datumformat in: Kalender Optionen.
+* Termintext-Modifizierer und Optionen:  Termin Optionen.
+* Termintext-Modifizierer, A:            Termin Optionen.
+* Termintext-Modifizierer, a:            Termin Optionen.
+* Termintext-Modifizierer, B:            Termin Optionen.
+* Termintext-Modifizierer, E:            Termin Optionen.
+* Termintext-Modifizierer, e:            Termin Optionen.
+* Termintext-Modifizierer, g[TEXT]:      Termin Optionen.
+* Termintext-Modifizierer, k:            Termin Optionen.
+* Termintext-Modifizierer, o:            Termin Optionen.
+* Termintext-Modifizierer, U:            Termin Optionen.
+* Termintext-Modifizierer, x:            Termin Optionen.
+* Termintext-Modifizierer, Z:            Termin Optionen.
+* Termintext-Modifizierer, z:            Termin Optionen.
+* Termintext-Option, --biorhythm-axis=ANZAHL: Termin Optionen.
+* Termintext-Option, --moonimage-lines=ANZAHL: Termin Optionen.
+* Termintexte, Filtern von:              Termin Optionen.
+* Terminzeitraum-Langoption, --end-of-month: Termin Optionen.
+* Terminzeitraum-Langoption, --end-of-week: Termin Optionen.
+* Terminzeitraum-Langoption, --end-of-year: Termin Optionen.
+* Terminzeitraum-Langoption, --month:    Termin Optionen.
+* Terminzeitraum-Langoption, --start-of-month: Termin Optionen.
+* Terminzeitraum-Langoption, --start-of-week: Termin Optionen.
+* Terminzeitraum-Langoption, --start-of-year: Termin Optionen.
+* Terminzeitraum-Langoption, --today:    Termin Optionen.
+* Terminzeitraum-Langoption, --tomorrow: Termin Optionen.
+* Terminzeitraum-Langoption, --week:     Termin Optionen.
+* Terminzeitraum-Langoption, --year:     Termin Optionen.
+* Terminzeitraum-Modifizierer und Optionen: Termin Optionen.
+* Terminzeitraum-Modifizierer, *dN:      Termin Optionen.
+* Terminzeitraum-Modifizierer, *dNWWW:   Termin Optionen.
+* Terminzeitraum-Modifizierer, *wN[WWW]: Termin Optionen.
+* Terminzeitraum-Modifizierer, @DVAR[+|-]NWWW: Termin Optionen.
+* Terminzeitraum-Modifizierer, @DVAR[[+|-]N]: Termin Optionen.
+* Terminzeitraum-Modifizierer, @e[+|-]NWWW: Termin Optionen.
+* Terminzeitraum-Modifizierer, @e[[+|-]N]: Termin Optionen.
+* Terminzeitraum-Modifizierer, @t[+|-]NWWW: Termin Optionen.
+* Terminzeitraum-Modifizierer, @t[[+|-]N]: Termin Optionen.
+* Terminzeitraum-Modifizierer, d:        Termin Optionen.
+* Terminzeitraum-Modifizierer, l:        Termin Optionen.
+* Terminzeitraum-Modifizierer, l*dN:     Termin Optionen.
+* Terminzeitraum-Modifizierer, l*dNWWW:  Termin Optionen.
+* Terminzeitraum-Modifizierer, l*wN[WWW]: Termin Optionen.
+* Terminzeitraum-Modifizierer, l@DVAR[+|-]NWWW: Termin Optionen.
+* Terminzeitraum-Modifizierer, l@DVAR[[+|-]N]: Termin Optionen.
+* Terminzeitraum-Modifizierer, l@e[+|-]NWWW: Termin Optionen.
+* Terminzeitraum-Modifizierer, l@e[[+|-]N]: Termin Optionen.
+* Terminzeitraum-Modifizierer, l@t[+|-]NWWW: Termin Optionen.
+* Terminzeitraum-Modifizierer, l@t[[+|-]N]: Termin Optionen.
+* Terminzeitraum-Modifizierer, lMMTT:    Termin Optionen.
+* Terminzeitraum-Modifizierer, lMMWWWN:  Termin Optionen.
+* Terminzeitraum-Modifizierer, lN+|-:    Termin Optionen.
+* Terminzeitraum-Modifizierer, lNd:      Termin Optionen.
+* Terminzeitraum-Modifizierer, lNw:      Termin Optionen.
+* Terminzeitraum-Modifizierer, MMTT:     Termin Optionen.
+* Terminzeitraum-Modifizierer, MMWWWN:   Termin Optionen.
+* Terminzeitraum-Modifizierer, m|M[+|-]: Termin Optionen.
+* Terminzeitraum-Modifizierer, N+|-:     Termin Optionen.
+* Terminzeitraum-Modifizierer, Nd:       Termin Optionen.
+* Terminzeitraum-Modifizierer, Nw:       Termin Optionen.
+* Terminzeitraum-Modifizierer, t|T:      Termin Optionen.
+* Terminzeitraum-Modifizierer, w|W[+|-]: Termin Optionen.
+* Terminzeitraum-Modifizierer, y|Y[+|-]: Termin Optionen.
+* Terminzeitraum-Option, --leap-day=february: Termin Optionen.
+* Terminzeitraum-Option, --leap-day=february|march: Termin Optionen.
+* Terminzeitraum-Option, --leap-day=march: Termin Optionen.
+* Territoriumskode:                      Internationalisierung.
+* Territorumskode:                       Kalender Optionen.
+* Textliches Datum %n[ARGUMENT] Spezialtext <1>: Spezialtexte (kurz).
+* Textliches Datum %n[ARGUMENT] Spezialtext: Textliches Datum.
+* Textteil einer Zeile:                  Textteil einer Zeile.
+* Textteil einer Zeile, Einschr"ankungen: Textteil einer Zeile.
+* Textvariablen:                         Textvariablen.
+* Textvariablen, Definition von <1>:     Textvariablen.
+* Textvariablen, Definition von:         Termin Optionen.
+* Textvariablen, Export lokaler <1>:     Termin Optionen.
+* Textvariablen, Export lokaler:         Textvariablen.
+* Textvariablen, G"ultigkeitsbereich von <1>: Textvariablen.
+* Textvariablen, G"ultigkeitsbereich von: Termin Optionen.
+* Textvariablen, Gesamtanzahl von:       Textvariablen.
+* Textvariablen, globale <1>:            Textvariablen.
+* Textvariablen, globale:                Termin Optionen.
+* Textvariablen, Handhabung von <1>:     Termin Optionen.
+* Textvariablen, Handhabung von:         Textvariablen.
+* Textvariablen, lokale:                 Textvariablen.
+* Textvariablen, Namensraum von <1>:     Termin Optionen.
+* Textvariablen, Namensraum von:         Textvariablen.
+* Textvariablen, Sichtbarkeit lokaler <1>: Textvariablen.
+* Textvariablen, Sichtbarkeit lokaler:   Termin Optionen.
+* Textvariablen, Sichtbarkeit von:       Textvariablen.
+* Textvariablen, Zuweisungen an <1>:     Termin Optionen.
+* Textvariablen, Zuweisungen an:         Textvariablen.
+* Trennzeichen von Bereichen von Tagen, #: Bereiche von Tagen.
+* Trennzeichen von Listen von Tagen, ,:  Listen von Tagen.
+* Trennzeichen, + <1>:                   Termin Optionen.
+* Trennzeichen, +:                       Kalender Optionen.
+* Trennzeichen, : <1>:                   Termin Optionen.
+* Trennzeichen, ::                       Globale Optionen.
+* Trennzeichen, whitespace <1>:          Optionen.
+* Trennzeichen, whitespace <2>:          Include Anweisungen.
+* Trennzeichen, whitespace:              Struktur einer Ressourcendatei.
+* txt2gcal, Aufruf von:                  Aufruf von txt2gcal.
+* txt2gcal, Hilfsprogramm:               Aufruf von txt2gcal.
+* txt2gcal, Optionen von:                Aufruf von txt2gcal.
+* TZ Umgebungsvariable:                  Umgebungsvariablen.
+* Umgebungsvariable, CO:                 Umgebungsvariablen.
+* Umgebungsvariable, COLUMNS:            Umgebungsvariablen.
+* Umgebungsvariable, GCAL <1>:           Die GCAL Umgebungsvariable.
+* Umgebungsvariable, GCAL <2>:           Umgebungsvariablen.
+* Umgebungsvariable, GCAL:               Globale Optionen.
+* Umgebungsvariable, GCAL_DATE_FORMAT:   Umgebungsvariablen.
+* Umgebungsvariable, GCAL_SYS_DATADIR <1>: Ressourcendatei.
+* Umgebungsvariable, GCAL_SYS_DATADIR:   Umgebungsvariablen.
+* Umgebungsvariable, GCAL_USR_DATADIR <1>: Umgebungsvariablen.
+* Umgebungsvariable, GCAL_USR_DATADIR:   Ressourcendatei.
+* Umgebungsvariable, GCALANSI <1>:       Globale Optionen.
+* Umgebungsvariable, GCALANSI:           Umgebungsvariablen.
+* Umgebungsvariable, GCALPATH <1>:       Ressourcendatei.
+* Umgebungsvariable, GCALPATH:           Umgebungsvariablen.
+* Umgebungsvariable, GCALPROG <1>:       Umgebungsvariablen.
+* Umgebungsvariable, GCALPROG:           Aufruf von tcal.
+* Umgebungsvariable, HOME <1>:           Ressourcendatei.
+* Umgebungsvariable, HOME:               Umgebungsvariablen.
+* Umgebungsvariable, LANG <1>:           Umgebungsvariablen.
+* Umgebungsvariable, LANG:               Internationalisierung.
+* Umgebungsvariable, LANGUAGE <1>:       Internationalisierung.
+* Umgebungsvariable, LANGUAGE:           Umgebungsvariablen.
+* Umgebungsvariable, LC_ALL <1>:         Internationalisierung.
+* Umgebungsvariable, LC_ALL:             Umgebungsvariablen.
+* Umgebungsvariable, LC_MESSAGES <1>:    Umgebungsvariablen.
+* Umgebungsvariable, LC_MESSAGES:        Internationalisierung.
+* Umgebungsvariable, LI:                 Umgebungsvariablen.
+* Umgebungsvariable, LINES:              Umgebungsvariablen.
+* Umgebungsvariable, MAILPROG <1>:       Globale Optionen.
+* Umgebungsvariable, MAILPROG:           Umgebungsvariablen.
+* Umgebungsvariable, PAGER <1>:          Globale Optionen.
+* Umgebungsvariable, PAGER:              Umgebungsvariablen.
+* Umgebungsvariable, PATH <1>:           Globale Optionen.
+* Umgebungsvariable, PATH:               Umgebungsvariablen.
+* Umgebungsvariable, TERM:               Umgebungsvariablen.
+* Umgebungsvariable, TZ:                 Umgebungsvariablen.
+* Umgebungsvariablen, Liste aller:       Umgebungsvariablen.
+* Umlenkung der Ausgabe, pipe:           Globale Optionen.
+* Umlenkung der Ausgabe, redirektionieren: Globale Optionen.
+* Umlenkung der Standardausgabe:         Struktur einer Ressourcendatei.
+* Umlenkung der Standardausgabe, Anf"ugen an Datei: Struktur einer Ressourcendatei.
+* Umschaltzeichen, -:                    Kommandozeilenargumente.
+* Umschaltzeichen, --:                   Kommandozeilenargumente.
+* Umschaltzeichen, /:                    Kommandozeilenargumente.
+* Unterdr"ucken des Kalenderblatts:      Kalender Optionen.
+* Verdichteter Hilfetext:                Allgemeine Optionen.
+* Vergleichende Elemente in regexps:     Regexp Operatoren.
+* Vergleichende Symbole in regexps:      Regexp Operatoren.
+* Versionsnummer, Auffinden der:         Allgemeine Optionen.
+* Vollst"andiger Monatsname, %M[DATUM] Spezialtext: Monatsname.
+* Vollst"andiger Wochentagsname, %o[DATUM] Spezialtext: Wochentagsname.
+* Vorrang von regexps Operatoren:        Regexp Operatoren.
+* Wahl der Landessprache:                Internationalisierung.
+* Weitere Datumteil-Attribute:           Weitere Datumteil-Attribute.
+* Weitere Ressourcendateizeile:          Termin Optionen.
+* Whitespace Trennzeichen <1>:           Include Anweisungen.
+* Whitespace Trennzeichen <2>:           Optionen.
+* Whitespace Trennzeichen <3>:           Struktur einer Ressourcendatei.
+* Whitespace Trennzeichen:               Optionen.
+* Whitespace-Zeichen <1>:                Fehlerkodes.
+* Whitespace-Zeichen <2>:                Textteil einer Zeile.
+* Whitespace-Zeichen:                    Zeile kommentieren.
+* Wiederholungsfaktor von Tagen, :N:     Wiederholungsfaktor von Tagen.
+* Wiederholungsfaktoren von Tagen, Beispiele zu: Wiederholungsfaktor von Tagen.
+* Wiederholungsfaktoren von Tagen, zul"assige Datumteile bei: Wiederholungsfaktor von Tagen.
+* Woche %?[DATUM] Spezialtext <1>:       Woche.
+* Woche %?[DATUM] Spezialtext:           Spezialtexte (kurz).
+* Woche, %k[DATUM] Spezialtext:          Woche.
+* Wochennummern im Kalenderblatt:        Kalender Optionen.
+* Wochentag %?[DATUM] Spezialtexte <1>:  Wochentag.
+* Wochentag %?[DATUM] Spezialtexte:      Spezialtexte (kurz).
+* Wochentagsname %?[DATUM] Spezialtexte <1>: Wochentagsname.
+* Wochentagsname %?[DATUM] Spezialtexte: Spezialtexte (kurz).
+* Wochentagsnummer, %([DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %)[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %<[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %>[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %[[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %][DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %E[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %I[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %J[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %S[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %{[DATUM] Spezialtext: Wochentag.
+* Wochentagsnummer, %}[DATUM] Spezialtext: Wochentag.
+* Wortgrenzen, Erkennen in regexps:      Regexp Operatoren.
+* Zeichenklassen in regexps:             Regexp Operatoren.
+* Zeichenliste in regexps:               Regexp Operatoren.
+* Zeichenliste, komplement"are in regexps: Regexp Operatoren.
+* Zeichenliste, negierte in regexps:     Regexp Operatoren.
+* Zeile fortsetzen in Ressourcendatei:   Textteil einer Zeile.
+* Zeile kommentieren in Ressourcendatei: Zeile kommentieren.
+* Zeilenumbruch erzwingen:               Termin Optionen.
+* Zeilenumbruch erzwingen in Ressourcendatei: Textteil einer Zeile.
+* Zeilenumbruchzeichen, ^ <1>:           Termin Optionen.
+* Zeilenumbruchzeichen, ^:               Textteil einer Zeile.
+* Zeilenumbruchzeichen, ~ <1>:           Termin Optionen.
+* Zeilenumbruchzeichen, ~ <2>:           Textteil einer Zeile.
+* Zeilenumbruchzeichen, ~ <3>:           Termin Optionen.
+* Zeilenumbruchzeichen, ~:               Textteil einer Zeile.
+* Zeitraum der Gregorianischen Reformation, Setzen des: Kalender Optionen.
+* Zul"assige Datumteile bei Auftretensfaktoren von Tagen: Auftretensfaktor von Tagen.
+* Zul"assige Datumteile bei Bereichen von Tagen: Bereiche von Tagen.
+* Zul"assige Datumteile bei Listen von Tagen: Listen von Tagen.
+* Zul"assige Datumteile bei Wiederholungsfaktoren von Tagen: Wiederholungsfaktor von Tagen.
+* Zus"atzliche Ressourcendatei:          Termin Optionen.
+* Zus"atzliche Ressourcendateizeile:     Termin Optionen.
+* Zusammenfassung aller %?... Spezialtexte: Spezialtexte (kurz).
+* Zusammenfassung aller regul"aren Ausdr"ucke: Regexps (kurz).
+* Zuweisungen an Datumvariablen <1>:     Datumvariablen.
+* Zuweisungen an Datumvariablen:         Termin Optionen.
+* Zuweisungen an Textvariablen <1>:      Textvariablen.
+* Zuweisungen an Textvariablen:          Termin Optionen.
+* ~ Zeilenumbruchzeichen <1>:            Textteil einer Zeile.
+* ~ Zeilenumbruchzeichen <2>:            Termin Optionen.
+* ~ Zeilenumbruchzeichen <3>:            Textteil einer Zeile.
+* ~ Zeilenumbruchzeichen <4>:            Termin Optionen.
+* ~ Zeilenumbruchzeichen:                Textteil einer Zeile.
+
+

@@ -1,0 +1,1214 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Termin Optionen,  Prev: Kalender Optionen,  Up: Optionen
+
+Termin Optionen
+...............
+
+`-v ARGUMENT'
+`--date-variable=ARGUMENT'
+     Definiere "globale" Datumvariable, welche in allen referenzierten
+     Ressourcendateien sichtbar ist (*note Datumvariablen::.).  Das
+     ARGUMENT muss entweder eine einzelne Datumvariablen-Definition
+     oder eine durch `:' Doppelpunkt verbundene Folge von Definitionen
+     sein.
+
+     Der Name einer Datumvariablen DVAR besteht aus einem einzelnen
+     Buchstaben (1), und wird in einer Definition von dem
+     Zuweisungsoperator `=' gefolgt, sowie den Zahlenwerten f"ur Monat
+     MM (oder einem Monatsnamen im 3-Buchstaben Kurzformat, z.B. `Jan',
+     `Feb', ...) und Tag TT, welche diese Variable aufzunehmen hat (2).
+
+     Zum Beispiel:
+
+          `--date-variable=a=1127:c=a' bzw.
+          `-v a=1127:c=a'
+          speichert den 27'ten November in der globalen Datumvariablen A
+          und in der globalen Datumvariablen C.
+
+`--export-date-variables'
+     Bewirkt den Export lokaler Datumvariablen von Ressourcendatei zu
+     Ressourcendatei.  *Note Datumvariablen::, f"ur weitere Details.
+
+`-r ARGUMENT'
+`--text-variable=ARGUMENT'
+     Definiere "globale" Textvariable, welche in allen referenzierten
+     Ressourcendateien sichtbar ist (*note Textvariablen::.).  Das
+     ARGUMENT muss entweder eine einzelne Textvariablen-Definition oder
+     eine durch `:' Doppelpunkt verbundene Folge von Definitionen sein.
+
+     Der Name einer Textvariablen TVAR besteht aus einem `$' Pr"afix
+     und einem einzelnen Buchstaben (3), und wird in einer Definition
+     von dem Zuweisungsoperator `=' gefolgt, sowie dem Text, welchen
+     diese Variable aufzunehmen hat.  Eine globale Textvariable wird
+     mit *leerem* Inhalt definiert, falls kein Text rechts des
+     Zuweisungsoperators angegeben ist.
+
+     Zum Beispiel:
+
+          `--text-variable=$a=foo:$c=$a' bzw.
+          `-r $a=foo:$c=$a'
+          speichert den Text `foo' in der globalen Textvariablen $A und
+          in der globalen Textvariablen $C.
+
+     Falls das `:' Zeichen im Text als Zeichen selbst verwendet werden
+     soll, so muss dieses durch ein f"uhrendes `\' (Backslash) Zeichen
+     hinsichtlich seiner speziellen Bedeutung entwertet werden, z.B.
+     `\:'.  Wenn die Zeichen `\:' im Text selbst als Zeichenfolge
+     verwendet werden sollen, so muss das `\' (Backslash) Zeichen mit
+     sich selbst gesch"utzt werden, z.B. `\\:'.
+
+     Falls das `$' Zeichen im Text als Zeichen selbst verwendet werden
+     soll, so muss dieses durch ein f"uhrendes `\' (Backslash) Zeichen
+     hinsichtlich seiner speziellen Bedeutung entwertet werden, z.B.
+     `\$'.  Wenn die Zeichen `\$' im Text selbst als Zeichenfolge
+     verwendet werden sollen, so muss das `\' (Backslash) Zeichen mit
+     sich selbst gesch"utzt werden, z.B. `\\$'.
+
+     Jedesmal wenn ein `_' (Unterstrich) Zeichen in ARGUMENT vorgefunden
+     wird, so wird dieses Zeichen durch ein echtes ` ' (Leerzeichen)
+     Zeichen ersetzt.
+
+     Falls das `_' (Unterstrich) Zeichen als Zeichen selbst verwendet
+     werden soll, so muss dieses durch ein f"uhrendes `\' (Backslash)
+     Zeichen hinsichtlich seiner speziellen Bedeutung entwertet werden,
+     z.B. `\_'.  Wenn die Zeichen `\_' selbst als Zeichenfolge
+     verwendet werden sollen, so muss das `\' (Backslash) Zeichen mit
+     sich selbst gesch"utzt werden, z.B. `\\_'.
+
+`--export-text-variables'
+     Bewirkt den Export lokaler Textvariablen von Ressourcendatei zu
+     Ressourcendatei.  *Note Textvariablen::, f"ur weitere Details.
+
+`-D ARGUMENT'
+`--filter-day=ARGUMENT'
+     Gibt nur diejenigen Termine aus, welche nicht durch das angegebene
+     ARGUMENT ausgeschlossen werden.  *Note Datumteil einer Zeile::,
+     sowie ebenfalls *Note Ausschliessen ohne Argument `%?'
+     Spezialtexte: Ausschliessen ohne Argument.  Das ARGUMENT besteht
+     aus einem oder mehreren Zeichen, wie sie im Ausschliessen ohne
+     Argument `%?' Spezialtext verwandt werden; allerdings ohne das
+     jeweils anf"uhrende `%' Zeichen.
+
+     So kann zum Beispiel Gcal dazu veranlasst werden, eine
+     Jahres"ubersicht nur derjenigen Termine aus der Datei `demo.rc'
+     auszugeben, die auf gesetzliche Feiertage fallen, und zudem
+     Samstage oder Sonntage sind:
+
+          gcal -f demo.rc --year --filter-day=Rv
+
+`-P ARGUMENT'
+`--filter-period=ARGUMENT'
+     Gibt nur diejenigen Termine aus, welche nicht durch das angegebene
+     ARGUMENT ausgeschlossen werden.  *Note Datumteil einer Zeile::,
+     sowie ebenfalls *Note Ausschliessen mit Datumargument `%?[DATUM]'
+     Spezialtexte: Ausschliessen mit Datumargument.  Das ARGUMENT
+     besteht aus einem oder mehreren Ausdr"ucken, wie sie im
+     Ausschliessen mit Datumargument `%?[DATUM]' Spezialtext verwandt
+     werden; allerdings ohne das jeweils anf"uhrende `%' Zeichen.  Es
+     k"onnen mehrere dieser `%?[DATUM]' Ausdr"ucke angegeben werden,
+     wenn diese durch ein `,' Zeichen verbunden werden.
+
+     So kann zum Beispiel Gcal dazu veranlasst werden, eine
+     Jahres"ubersicht nur derjenigen Termine aus der Datei `demo.rc'
+     auszugeben, die in den Zeitraum vom 17'ten bis zum 20'ten jeden
+     Monats fallen, und die auf den 31'ten jeden Monats fallen:
+
+          gcal -f demo.rc -y -P i00000017#00000020,i00000031#00000031
+
+`-I SUCHMUSTER'
+`--filter-text=SUCHMUSTER'
+     Gibt nur diejenigen Termine aus, deren vollst"andig expandierter
+     Termintext (4) das angegebene SUCHMUSTER enthalten.  *Note
+     Textteil einer Zeile::, sowie ebenfalls *Note `%?'... Spezialtexte
+     zum Textersatz: Ersetzen.  Das SUCHMUSTER ist ein *regul"arer
+     Ausdruck* (5), wie es vom Unix `ed' Zeileneditor erkannt wird.
+     *Note Regulaere Ausdruecke: Regulaere Ausdruecke, f"ur weitere
+     Informationen.
+
+     So kann zum Beispiel Gcal dazu veranlasst werden, alle Zahnarzt-
+     und Augenarzttermine aus der Datei `doktor.rc' auszugeben, die im
+     laufenden Monat anfallen:
+
+          gcal -f doktor.rc --month -I "[zZ]ahnarzt|[aA]ugenarzt"
+
+     Jedesmal wenn ein `_' (Unterstrich) Zeichen im SUCHMUSTER Argument
+     vorgefunden wird, so wird dieses Zeichen durch ein echtes ` '
+     (Leerzeichen) Zeichen ersetzt.
+
+     Falls das `_' (Unterstrich) Zeichen als Zeichen selbst verwendet
+     werden soll, so muss dieses durch ein f"uhrendes `\' (Backslash)
+     Zeichen hinsichtlich seiner speziellen Bedeutung entwertet werden,
+     z.B. `\_'.  Wenn die Zeichen `\_' selbst als Zeichenfolge
+     verwendet werden sollen, so muss das `\' (Backslash) Zeichen mit
+     sich selbst gesch"utzt werden, z.B. `\\_'.
+
+`-c|C[-]'
+`--today'
+`--list-of-fixed-dates[=short|long]'
+`--descending-fixed-dates[=short|long]'
+     Aktivierung der Terminfunktion und Ausgabe von Terminen.
+
+    `-c'
+    `--today'
+    `--list-of-fixed-dates=short'
+          Aktivierung der Terminfunktion (implizite Benutzung der
+          Standard-Ressourcendatei) und alle Daten in aufsteigender
+          Reihenfolge ausgeben, die sich auf das aktuelle Systemdatum
+          (==heute) beziehen.  Wenn keine Daten zum heutigen Tag
+          vorgefunden werden, so werden keine Termine ausgegeben und
+          das Programm wird mit Fehlerkode abgebrochen.  *Note 1:
+          Fehlerkodes.
+
+    `-c-'
+    `--descending-fixed-dates=short'
+          Aktivierung der Terminfunktion (implizite Benutzung der
+          Standard-Ressourcendatei) und alle Daten in absteigender
+          Reihenfolge ausgeben, die sich auf das aktuelle Systemdatum
+          (==heute) beziehen.  Wenn keine Daten zum heutigen Tag
+          vorgefunden werden, so werden keine Termine ausgegeben und
+          das Programm wird mit Fehlerkode abgebrochen.  *Note 1:
+          Fehlerkodes.
+
+    `-C'
+    `--list-of-fixed-dates=long'
+          Aktivierung der Terminfunktion (implizite Benutzung der
+          Standard-Ressourcendatei) und alle Daten in aufsteigender
+          Reihenfolge ausgeben, die sich auf das aktuelle Systemdatum
+          (==heute) beziehen.  Wenn keine Daten zum heutigen Tag
+          vorgefunden werden, so wird ein nur aus dem Datum bestehender
+          "leerer" Termin ausgegeben.
+
+    `-C-'
+    `--descending-fixed-dates=long'
+          Aktivierung der Terminfunktion (implizite Benutzung der
+          Standard-Ressourcendatei) und alle Daten in absteigender
+          Reihenfolge ausgeben, die sich auf das aktuelle Systemdatum
+          (==heute) beziehen.  Wenn keine Daten zum heutigen Tag
+          vorgefunden werden, so wird ein nur aus dem Datum bestehender
+          "leerer" Termin ausgegeben.
+
+`-f|F DATEINAME[+...]'
+`--resource-file=DATEINAME[+...]'
+     Aktivierung der Terminfunktion und DATEINAME anstelle der
+     Standard-Ressourcendatei benutzen.  Sodann alle Daten in
+     aufsteigender Reihenfolge ausgeben, die in den Terminzeitraum
+     fallen.  Wurde kein besonderer Terminzeitraum angegeben, so wird
+     das aktuelle Systemdatum (==heute) als Terminzeitraum angenommen.
+     Wurde der Optionsbuchstabe `f' bei der Kurzoption benutzt und es
+     werden keinerlei Daten in DATEINAME vorgefunden, die in den
+     Terminzeitraum fallen, so werden keine Termine ausgegeben und das
+     Programm wird mit Fehlerkode abgebrochen.  *Note 1: Fehlerkodes.
+     Wurde der Optionsbuchstabe `F' bei der Kurzoption benutzt und es
+     werden keinerlei Daten in DATEINAME vorgefunden, die in den
+     Terminzeitraum fallen, so wird ein nur aus dem Datum bestehender
+     "leerer" Termin ausgegeben.
+
+     Es kann mehr als eine Ressourcendatei DATEINAME verwendet werden,
+     wenn die zus"atzlichen Ressourcendateien, durch ein `+' Zeichen
+     verbunden, aufgef"uhrt werden, z.B.:
+
+          `--resource-file=./foo+xyz+/data/bar+$HOME/.gcalrc' bzw.
+          `-f ./foo+xyz+/data/bar+$HOME/.gcalrc'
+
+     ber"ucksichtigt alle Dateien, die in dem vorstehenden Argument
+     aufgef"uhrt sind; dabei wird ein spezieller Suchmechanismus zum
+     Auffinden der Dateien benutzt.  *Note Datei-Suchmechanismus:
+     Ressourcendatei, f"ur weitere Details.  Wenn DATEINAME auf
+     `/dev/null' gesetzt ist, so wird dass Vorladen einer
+     Standard-Ressourcendatei verhindert, was n"utzlich ist, wenn leere
+     Terminlisten erzeugt werden sollen.
+
+     Falls das `+' Zeichen als Zeichen selbst verwendet werden soll, so
+     muss dieses durch ein f"uhrendes `\' (Backslash) Zeichen
+     hinsichtlich seiner speziellen Bedeutung entwertet werden, z.B.
+     `\+'.  Wenn die Zeichen `\+' selbst als Zeichenfolge verwendet
+     werden sollen, so muss das `\' (Backslash) Zeichen mit sich selbst
+     gesch"utzt werden, z.B. `\\+'.
+
+     Jedesmal wenn ein `_' (Unterstrich) Zeichen in DATEINAME
+     vorgefunden wird, so wird dieses Zeichen durch ein echtes ` '
+     (Leerzeichen) Zeichen ersetzt.
+
+     Falls das `_' (Unterstrich) Zeichen als Zeichen selbst verwendet
+     werden soll, so muss dieses durch ein f"uhrendes `\' (Backslash)
+     Zeichen hinsichtlich seiner speziellen Bedeutung entwertet werden,
+     z.B. `\_'.  Wenn die Zeichen `\_' selbst als Zeichenfolge
+     verwendet werden sollen, so muss das `\' (Backslash) Zeichen mit
+     sich selbst gesch"utzt werden, z.B. `\\_'.
+
+`-# ZEILE'
+`--here=ZEILE'
+     Aktivierung der Terminfunktion und das ZEILE Argument zusammen mit
+     der Standard-Ressourcendatei bzw. den zus"atzlichen
+     Ressourcendateien benutzen.  Das ZEILE Argument muss einer
+     zul"assigen, logischen Zeile entsprechen, wie sie in einer Gcal
+     Ressourcendatei auftreten darf (*note Struktur einer
+     Ressourcendatei::.), und wird stets zuletzt *nach* der
+     Verarbeitung aller Ressourcendateien ausgewertet, so dass Bez"uge
+     auf exportierte, lokale Datum- oder Textvariablen vorgenommen
+     werden k"onnen.  Diese Option darf mehrfach angegeben werden, und
+     wird in genau der vorgefundenen Reihenfolge abgearbeitet.  Es
+     werden alle Daten in aufsteigender Reihenfolge ausgegeben, die in
+     den Terminzeitraum fallen.  Wurde kein besonderer Terminzeitraum
+     angegeben, so wird das aktuelle Systemdatum (==heute) als
+     Terminzeitraum angenommen.  Werden keinerlei Daten in der ZEILE
+     vorgefunden, die in den Terminzeitraum fallen, so werden keine
+     Termine ausgegeben und das Programm wird mit Fehlerkode
+     abgebrochen.  *Note 1: Fehlerkodes.
+
+     So bewirkt zum Beispiel der Aufruf:
+
+          gcal -# "0*d1so#99so.7 ^%:" --here="#include <foo>" -y
+
+     die implizite Verarbeitung der Standard-Ressourcendatei, bevor die
+     weitere Ressourcendateizeile `0*d1so#99so.7 ^%:' und danach
+     `#include <foo>' verarbeitet werden, und zwar so, als w"aren diese
+     Texte ein physischer Bestandteil der Standard-Ressourcendatei.
+
+     Jedesmal wenn ein `_' (Unterstrich) Zeichen in ZEILE vorgefunden
+     wird, so wird dieses Zeichen durch ein echtes ` ' (Leerzeichen)
+     Zeichen ersetzt.
+
+     Falls das `_' (Unterstrich) Zeichen als Zeichen selbst verwendet
+     werden soll, so muss dieses durch ein f"uhrendes `\' (Backslash)
+     Zeichen hinsichtlich seiner speziellen Bedeutung entwertet werden,
+     z.B. `\_'.  Wenn die Zeichen `\_' selbst als Zeichenfolge
+     verwendet werden sollen, so muss das `\' (Backslash) Zeichen mit
+     sich selbst gesch"utzt werden, z.B. `\\_'.
+
+*Bitte beachten:*
+Wenn die Kurzoption `-c' und/oder ihre Modifizierer `t|[w|m|y[+|-]'
+bzw. die Kurzoption `-f' in *Grossbuchstaben* angegeben werden, z.B.:
+
+     -C
+     -F foo.bar
+     -CeT
+     -c-aW+
+     -CeaxY-
+     -c-M
+
+so gibt Gcal f"ur *jeden* Tag der verlangten Periode Termine aus.
+
+Die Modifizierer einer kombinierten/komplexen/gepackten Kurzoption zur
+Ausgabe von Terminen m"ussen entsprechend der hier vorgegebenen
+Reihenfolge zusammengesetzt werden, da Gcal diese als positionale
+Parameter behandelt:
+
+    Erste Stufe: *Repr"asentation-des-Textes*
+          `a', `A', `B', `e|E', `k', `o', `U', `x', `z', `Z'
+
+    Zweite Stufe: *Setzung-der-zu-ber"ucksichtigenden-Periode*
+          `d', `l', `t|T', `w|W|m|M|y|Y[+|-]', `N+|-', `Nd', `Nw',
+          `*dN[WWW]', `*wN[WWW]', `@e|t|DVAR[[+|-]N]',
+          `@e|t|DVAR[+|-]NWWW', `MMTT', `MMWWWN'
+
+Wenn mit den vorstehenden Modifizierern gearbeitet werden soll, so
+*m"ussen* diese entweder durch eine explizite `-c|C[-]' Kurzoption
+angef"uhrt werden, z.B.:
+
+     -c-t
+     -cw-
+     -CZBdekloUzaxA12+
+
+und es darf nur *ein* zeitraumdefinierender Terminzeitraum-Modifizierer
+angegeben werden (6).
+
+Oder die Modifizierer m"ussen als Einzelzeichenoption, oder
+zusammengefasst zu einem einzelnen Kommandozeilenwort, angegeben
+werden, und es muss zudem entweder die Kurzoption `-c|C[-]',
+`-f|F DATEINAME[+...]' oder `-# ZEILE' (7) beim Aufruf von Gcal
+angegeben werden, z.B.:
+
+     -c- -t
+     -w- -c
+     -a -ABd -e -kloUxz -C12+
+     -F foo.bar -dZA -l*d10
+     --here="; Kommentar" -dZAa
+
+Werden die Modifizierer als Einzelzeichenoption oder zu einem einzelnen
+Kommandozeilenwort zusammengefasst angegeben, und dabei einer der
+`t|T|[w|W|m|M|y|Y[+|-]]' Modifizierer benutzt (8), so ist die Angabe
+einer `-c|C[-]' bzw.  `-f|F DATEINAME[+...]' Kurzoption (9) nicht
+notwendig, um die Terminfunktion von Gcal zu aktivieren, da die
+Terminfunktion durch diese Modifizierer bzw. Aliasnamen implizit
+ausgel"ost wird.
+
+*Note Kodierschema::, wo Tabellen aufgef"uhrt sind, aus denen ersehen
+werden kann, welche *Terminargumente* mit welchem *Datumteil* einer
+Zeile der Ressourcendatei korrespondieren, d.h. bei Anwahl eines
+*Terminarguments* ber"ucksichtigt werden; da Gcal eben nicht alle
+vorhandenen Eintr"age in einer Ressourcendatei ber"ucksichtigt, sondern
+nur solche, die in einem bestimmten Verh"altnis zum *Terminargument*
+stehen, und somit die Ausgabe "uberfl"ussiger Informationen verhindert
+wird.
+
+*Termintext-Modifizierer und Optionen:*
+
+`--biorhythm-axis=ANZAHL'
+     Die Breite der Biorhythmus-Textgrafik -- die durch einen
+     Biorhythmus-Textgrafik `%;[DATUM]' Spezialtext erzeugt werden kann
+     -- wird auf die im ANZAHL Argument angegebene Zahl von Zeichen
+     f"ur jede Achse des Balkens ge"andert.  Das ANZAHL Argument muss
+     eine Ganzzahl zwischen 1...100 sein, die interne Grundeinstellung
+     betr"agt 20 Zeichen.  Wenn das Divisionergebnis von 100 durch
+     ANZAHL einen Divisionsrest ergibt, so wird ANZAHL intern auf die
+     n"achstkleinere Zahl reduziert, welche die Zahl 100 ohne
+     Divisionsrest teilt.  Das bedeutet, dass nur die Zahlen 1, 2, 4,
+     5, 10, 20, 25, 50 und 100 tats"achlich ber"ucksichtigt werden, so
+     dass ein ANZAHL Argument von 19 intern auf 10 reduziert wird.
+
+     Zum Beispiel:
+
+          $ cat bio.rc
+          -| 0*d1#999 %;19620921
+          $ gcal -fbio.rc %19961212 -s0 -xw --biorhythm-axis=19
+          -|
+          -| Do, <12>Dez 1996: 0- G       P1 E        +0
+          -| Fr,  13 Dez 1996: 0-  G   P   1          +0
+          -| Sa,  14 Dez 1996: 0-    @   E 0          +0
+          -| So,  15 Dez 1996: 0-  P  GE   0          +0
+          -| Mo,  16 Dez 1996: 0- P  E  G  0          +0
+          -| Di,  17 Dez 1996: 1-P  E     G0          +0
+          -| Mi,  18 Dez 1996: 0- @        1          +0
+
+     *Note Biorhythmus `%?[DATUM]' Spezialtexte: Biorhythmus, f"ur
+     weitere Details.
+
+`--moonimage-lines=ANZAHL'
+     Die H"ohe der Mondphasen-Textgrafik -- die durch einen
+     Mondphasen-Textgrafik `%:[DATUM]' Spezialtext erzeugt werden kann
+     -- wird auf die im ANZAHL Argument angegebene Zahl von Zeilen
+     ge"andert.  Das ANZAHL Argument muss eine Ganzzahl zwischen 6...30
+     sein, die interne Grundeinstellung betr"agt 12 Zeilen.
+
+     Zum Beispiel:
+
+          $ gcal -f/dev/null -#0*d1#999_%:__%- %19950308 -x --moon=8
+          -|
+          -| Mi, < 8>Mar 1995:          (    @@@@@
+          -|                       (           @@@@@@@@
+          -|                    (               @@@@@@@@@@
+          -|                   (                @@@@@@@@@@@
+          -|                   (                @@@@@@@@@@@
+          -|                    (               @@@@@@@@@@
+          -|                     (             @@@@@@@@@@
+          -|                         (        @@@@@@@ 41%+
+
+     *Note Mondphase `%?[DATUM]' Spezialtexte: Mondphase, f"ur weitere
+     Details.
+
+`a'
+`--include-resource-file-name'
+     Den Namen der verwendeten Ressourcendatei im Termintext
+     zus"atzlich mit ausgeben, z.B.:
+
+          Mo,   1 Jan 1995: (`Ewige Feiertagsliste') Neujahr
+          Mo,   1 Jan 1995: (.gcalrc) Keine weiteren Termine
+          ...
+
+`A'
+`--alternative-format'
+     Anstelle der Ausgabe im "Standard" Listenformat, z.B.:
+
+          Mo,   1 Jan 1995: Neujahr
+          Mo,   1 Jan 1995: Keine weiteren Termine
+          ...
+
+     benutzt Gcal das "Alternative" Listenformat, z.B.:
+
+          Mo,   1 Jan 1995:
+          Neujahr
+          Keine weiteren Termine
+          ...
+
+`B'
+`--bypass-shell-command'
+     Shell Kommando `%![ARGUMENT]' Spezialtexte nicht ausf"uhren,
+     sondern rein textlich ausgeben.  *Note Shell Kommando
+     `%!'[ARGUMENT] Spezialtext: Shell Kommando, f"ur weitere Details.
+
+`e'
+`--include-holidays=long'
+     Alle Daten aus der ewigen Feiertagsliste in die Terminliste
+     einstreuen, d.h. gesetzliche Feiertage und Gedenktage.
+
+`E'
+`--include-holidays=short'
+     Nur diejenigen Daten aus der ewigen Feiertagsliste in die
+     Terminliste einstreuen, die gesetzliche Feiertage sind.
+
+`g[TEXT]'
+`--grouping-text[=TEXT]'
+     Die Termine tageweise mittels des Separators TEXT gruppieren.
+     Wenn kein TEXT angegeben ist, so wird der eingebaute TEXT (10) zum
+     Gruppieren verwendet, z.B.:
+
+          $ gcal -Cw -cg
+          -|
+          -| So,   6 Nov 1994: Text 1
+          -| So,   6 Nov 1994: Text 2
+          -|
+          -| Mo,   7 Nov 1994: Text 3
+          -|
+          -| Di,   8 Nov 1994: Text 4
+          ...
+          
+          
+          $ gcal -Cw -g'-Ein_vom\_Benutzer-~-definierter Text-'
+          -|
+          -| So,   6 Nov 1994: Text 1
+          -| So,   6 Nov 1994: Text 2
+          -| -Ein vom_Benutzer-
+          -| -definierter Text-
+          -| Mo,   7 Nov 1994: Text 3
+          -| -Ein vom_Benutzer-
+          -| -definierter Text-
+          -| Di,   8 Nov 1994: Text 4
+          ...
+
+     Jedesmal wenn ein `~' (Tilde) Zeichen in TEXT vorgefunden wird, so
+     wird dieses Zeichen durch ein echtes `\n' (Newline) Zeichen
+     ersetzt.
+
+     Falls das `~' (Tilde) Zeichen als Zeichen selbst verwendet werden
+     soll, so muss dieses durch ein f"uhrendes `\' (Backslash) Zeichen
+     hinsichtlich seiner speziellen Bedeutung entwertet werden, z.B.
+     `\~'.  Wenn die Zeichen `\~' selbst als Zeichenfolge verwendet
+     werden sollen, so muss das `\' (Backslash) Zeichen mit sich selbst
+     gesch"utzt werden, z.B. `\\~'.
+
+     Jedesmal wenn ein `_' (Unterstrich) Zeichen in TEXT vorgefunden
+     wird, so wird dieses Zeichen durch ein echtes ` ' (Leerzeichen)
+     Zeichen ersetzt.
+
+     Falls das `_' (Unterstrich) Zeichen als Zeichen selbst verwendet
+     werden soll, so muss dieses durch ein f"uhrendes `\' (Backslash)
+     Zeichen hinsichtlich seiner speziellen Bedeutung entwertet werden,
+     z.B. `\_'.  Wenn die Zeichen `\_' selbst als Zeichenfolge
+     verwendet werden sollen, so muss das `\' (Backslash) Zeichen mit
+     sich selbst gesch"utzt werden, z.B. `\\_'.
+
+`k'
+`--include-week-number'
+     Das eine jede Einzelzeile anf"uhrende Datum in einer Terminliste
+     wird mit der ISO-8601:1988 Wochennummer versehen.
+
+     *Bitte beachten:*
+     Es werden die Methoden der ISO-8601:1988 zur Ermittlung der
+     Wochennummern verwendet.  Das bedeutet, dass eine Woche mit einem
+     Montag beginnt, und die erste Woche des Jahres ist diejenige
+     Woche, in welche der erste Donnerstag f"allt, also gleich der
+     Woche ist, in welcher der 4'te Januar auftritt.
+
+`o'
+`--omit-multiple-date-part'
+     Vermeidet die Mehrfachausgabe von einem jede Einzelzeile
+     anf"uhrendem Datum in der Terminliste, falls sich weitere Termine
+     auf dieses Datum beziehen (11), z.B.:
+
+          $ gcal -co
+          -|
+          -| So,   6 Nov 1994: Text 1
+          -|                   Text 2
+          ...
+
+`U'
+`--suppress-date-part'
+     Unterdr"uckt die Ausgabe von einem jede Einzelzeile anf"uhrendem
+     Datum in der Terminliste, z.B.:
+
+          $ gcal -cU
+          -|
+          -| Text 1
+          -| Text 2
+          ...
+
+`x'
+`--exclude-fixed-dates-list-title'
+     Die Ausgabe der "Uberschrift in der Terminliste unterdr"ucken.
+
+`z'
+`--include-consecutive-number'
+     Die laufende Postennummer des Termins ausgeben.
+
+`Z'
+`--zero-dates-only'
+     Nur die Daten ausgeben, zu denen keine Termine vorliegen, d.h. nur
+     die aus dem Datum bestehenden "leeren" Termine.
+
+*Terminzeitraum-Modifizierer und Optionen:*
+
+`--leap-day=february|march'
+     Den "Schalttag" (12) auch in Nicht-Schaltjahren ber"ucksichtigen.
+
+    `--leap-day=february'
+          Ein Termin, der in jedem Jahr gelten soll und der sich auf
+          den Schalttag bezieht, wird in Nicht-Schaltjahren am 28'ten
+          Februar ausgegeben.
+
+    `--leap-day=march'
+          Ein Termin, der in jedem Jahr gelten soll und der sich auf
+          den Schalttag bezieht, wird in Nicht-Schaltjahren am 1'ten
+          M"arz ausgegeben.
+
+`d'
+`--include-today'
+     Wenn eine Datumliste erzeugt wird, so wird das aktuelle Datum in
+     dieser Liste mit eingeschlossen.  *Note `--list-mode': Termin
+     Optionen, wie eine Datumliste erzeugt wird.
+
+`l'
+`--list-mode'
+     Erzeugen einer Datumliste anstelle eines Einzeldatum.
+
+     *Bitte beachten:*
+     In den folgenden Beispielen wird angenommen, dass das aktuelle
+     Systemdatum der *17'te Februar eines beliebigen Jahres* (00000217)
+     ist!
+
+`--period-of-fixed-dates=ARGUMENT'
+`Nd'
+`*dN'
+     Alle Daten zum absoluten Tag N == `1...365|366|999' im aktuellen
+     Jahr ausgeben; das Niveau ist wie bei der einfachen `-c' Option.
+     Wenn f"ur N der Wert 999 angegeben ist, so wird der letzte Tag im
+     Jahr (31'ter Dezember) angenommen.
+
+        * Z.B. `gcal -c10d' bzw. `gcal --period-of-fixed-dates=10d'
+          oder `gcal -c*d10' bzw. `gcal --period-of-fixed-dates=*d10'
+          gibt die Termine aus, die am 10'ten Tag des Jahres
+          stattfinden.
+
+`lNd'
+`l*dN'
+     Liste von Daten, in Abh"angigkeit des Wertes von N gestern oder
+     morgen beginnend, und endend am N'ten absoluten Tag des aktuellen
+     Jahres; das Niveau ist wie bei der `-cy' Option.
+
+        * Z.B. `gcal -cl10d' bzw. `gcal -cl*d10' gibt eine Liste aller
+          derjenigen Termine aus, die am 10'ten Tag des Jahres beginnen
+          und am 16'ten Februar enden.
+
+`N+|-'
+     Alle Daten zum Tag *heute `+/-' N Tage* im aktuellen Jahr
+     ausgeben; das Niveau ist wie bei der einfachen `-c' Option.
+
+        * Z.B. `gcal -c10+' gibt die Termine aus, die 10 Tage nach dem
+          17'ten Februar (heute) stattfinden.
+
+        * Z.B. `gcal -c10-' gibt die Termine aus, die 10 Tage vor dem
+          17'ten Februar (heute) stattfinden.
+
+`lN+|-'
+     Liste von Daten, gestern `-' oder morgen `+' beginnend, und endend
+     am Tag *heute `+/-' N Tage* im aktuellen Jahr ausgeben; das Niveau
+     ist wie bei der `-cy' Option.
+
+        * Z.B. `gcal -cl10+' gibt eine Liste aller derjenigen Termine
+          aus, die am 18'ten Februar beginnen und 10 Tage danach enden.
+
+        * Z.B. `gcal -cl10-' gibt eine Liste aller derjenigen Termine
+          aus, die 10 Tage vor dem 16'ten Februar beginnen und am
+          16'ten Februar enden.
+
+`Nw'
+     Alle Daten zur Woche Nummer N == `0|1...52|53|99' des aktuellen
+     Jahres ausgeben; das Niveau ist wie bei der `-cw' Option.
+
+        * Z.B. `gcal -c0w' gibt alle diejenigen Termine aus, die falls
+          das Vorjahr eine 53'te ISO-Kalenderwoche hat, in der 53'ten
+          ISO-Kalenderwoche des Vorjahres liegen oder falls das Vorjahr
+          keine 53'te ISO-Kalenderwoche hat, in der 1'ten
+          ISO-Kalenderwoche des aktuellen Jahres liegen.
+
+        * Z.B. `gcal -c6w' gibt alle diejenigen Termine aus, die in der
+          6'ten ISO-Kalenderwoche liegen.
+
+        * Z.B. `gcal -c52w' gibt alle diejenigen Termine aus, die in
+          der 52'ten ISO-Kalenderwoche liegen.
+
+        * Z.B. `gcal -c53w' gibt alle diejenigen Termine aus, die in
+          der 53'ten ISO-Kalenderwoche liegen, falls das Jahr eine 53'te
+          ISO-Kalenderwoche hat.  Wenn das Jahr keine 53'te
+          ISO-Kalenderwoche hat, so werden keine Termine ausgegeben und
+          das Programm wird mit Fehlerkode abgebrochen.  *Note 126:
+          Fehlerkodes.
+
+        * Z.B. `gcal -c99w' gibt alle diejenigen Termine aus, die in
+          der letzten ISO-Kalenderwoche liegen, d.h. entweder die 52'te
+          oder die 53'te ISO-Kalenderwoche.
+
+`lNw'
+     Liste von Daten, in Abh"angigkeit der gegebenen Wochennummer
+     N == `0|1...52|53|99' gestern oder morgen beginnend und endend am
+     ersten bzw. letzten Tag der gegebenen Woche N des aktuellen Jahres
+     ausgeben; das Niveau ist wie bei der `-cy' Option.
+
+        * Z.B. `gcal -cl12w' gibt eine Liste aller derjenigen Termine
+          aus, die am 18'ten Februar beginnen und bis zum Ende der
+          12'ten ISO-Kalenderwoche reichen.
+
+        * Z.B. `gcal -cl3w' gibt eine Liste aller derjenigen Termine
+          aus, die am Anfang der 3'ten ISO-Kalenderwoche beginnen und
+          16'ten Februar enden.
+
+`MMTT'
+     Alle Daten zum Tag TT im Monat MM des aktuellen Jahres ausgeben;
+     das Niveau ist wie bei der einfachen `-c' Option.
+
+        * Z.B. `gcal -c0225' gibt die Termine aus, die am 25'ten
+          Februar stattfinden.
+
+`lMMTT'
+     Liste von Daten, in Abh"angigkeit des Wertes MMTT gestern bzw.
+     morgen beginnend, und endend am Tag TT im Monat MM des aktuellen
+     Jahres, ausgeben; das Niveau ist wie bei der `-cy' Option.
+
+        * Z.B. `gcal -cl0225' gibt eine Liste aller derjenigen Termine
+          aus, die am 18'ten Februar beginnen und am 25'ten Februar
+          enden.
+
+        * Z.B. `gcal -cl0109' gibt eine Liste aller derjenigen Termine
+          aus, die am 9'ten Januar beginnen und am 16'ten Februar enden.
+
+`MMWWWN'
+     Alle Daten zum N'ten == `1...5|9' Wochentag WWW im Monat MM des
+     aktuellen Jahres ausgeben; das Niveau ist wie bei der einfachen
+     `-c' Option.
+
+        * Z.B. `gcal -c01mon3' gibt die Termine aus, die am dritten
+          Montag im Januar stattfinden.
+
+        * Z.B. `gcal -c02fr9' gibt die Termine aus, die am letzten
+          Freitag im Februar stattfinden.
+
+`lMMWWWN'
+     Liste von Daten, in Abh"angigkeit des Wertes in MMWWWN gestern
+     bzw. morgen beginnend, und endend am N'ten == `1...5|9' Wochentag
+     WWW im Monat MM des aktuellen Jahres ausgeben; das Niveau ist wie
+     bei der `-cy' Option.
+
+        * Z.B. `gcal -cl01mon3' gibt eine Liste aller derjenigen
+          Termine aus, die am dritten Montag im Januar beginnen und am
+          16'ten Februar enden.
+
+        * Z.B. `gcal -cl02fr9' gibt eine Liste aller derjenigen Termine
+          aus, die am 18'ten Februar beginnen und am letzten Freitag im
+          Februar enden.
+
+`*dNWWW'
+     Alle Daten zum N'ten == `1...51|52|53|99' Wochentag WWW des
+     aktuellen Jahres ausgeben; das Niveau ist wie bei der einfachen
+     `-c' Option.
+
+        * Z.B. `gcal -c*d16son' gibt alle diejenigen Termine aus, die
+          auf den 16'ten Sonntag des Jahres fallen.
+
+        * Z.B. `gcal -c*d52son' gibt alle diejenigen Termine aus, die
+          auf den 52'ten Sonntag des Jahres fallen.  Wenn das Jahr
+          keinen 52'ten Sonntag hat, so werden keine Termine ausgegeben
+          und das Programm wird mit Fehlerkode abgebrochen.  *Note 126:
+          Fehlerkodes.
+
+        * Z.B. `gcal -c*d53son' gibt alle diejenigen Termine aus, die
+          auf den 53'ten Sonntag des Jahres fallen.  Wenn das Jahr
+          keinen 53'ten Sonntag hat, so werden keine Termine ausgegeben
+          und das Programm wird mit Fehlerkode abgebrochen.  *Note 126:
+          Fehlerkodes.
+
+        * Z.B. `gcal -c*d99son' gibt alle diejenigen Termine aus, die
+          auf den letzten Sonntag (13) des Jahres fallen.
+
+`l*dNWWW'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am N'ten == `1...51|52|53|99' Wochentag WWW
+     des aktuellen Jahres ausgeben; das Niveau ist wie bei der `-cy'
+     Option.
+
+        * Z.B. `gcal -cl*d16son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am 16'ten
+          Sonntag des Jahres enden.
+
+        * Z.B. `gcal -cl*d52son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am 52'ten
+          Sonntag des Jahres enden.  Wenn das Jahr keinen 52'ten
+          Sonntag hat, so werden keine Termine ausgegeben und das
+          Programm wird mit Fehlerkode abgebrochen.  *Note 126:
+          Fehlerkodes.
+
+        * Z.B. `gcal -cl*d53son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am 53'ten
+          Sonntag des Jahres enden.  Wenn das Jahr keinen 53'ten
+          Sonntag hat, so werden keine Termine ausgegeben und das
+          Programm wird mit Fehlerkode abgebrochen.  *Note 126:
+          Fehlerkodes.
+
+        * Z.B. `gcal -cl*d99son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am letzten
+          Sonntag (14) des Jahres enden.
+
+`*wN[WWW]'
+     Alle Daten zum Wochentag WWW der N'ten == `0|1...52|53|99'
+     ISO-Kalenderwoche des aktuellen Jahres ausgeben; das Niveau ist
+     wie bei der einfachen `-c' Option.  Wenn kein Wochentag WWW
+     angegeben ist, so wird Montag als Wochentag angenommen.
+
+        * Z.B. `gcal -c*w0son' gibt alle diejenigen Termine aus, die
+          falls das Jahr einen Sonntag hat, der in der 52'ten bzw.
+          53'ten ISO-Kalenderwoche des Vorjahres liegt, auf diesen
+          Sonntag fallen.  Wenn ein solcher Sonntag nicht existiert, so
+          werden keine Termine ausgegeben und das Programm wird mit
+          Fehlerkode abgebrochen.  *Note 126: Fehlerkodes.
+
+        * Z.B. `gcal -c*w16son' gibt alle diejenigen Termine aus, die
+          auf den Sonntag der 16'ten ISO-Kalenderwoche des Jahres
+          fallen.
+
+        * Z.B. `gcal -c*w52son' gibt alle diejenigen Termine aus, die
+          auf den Sonntag der 52'ten ISO-Kalenderwoche des Jahres
+          fallen.  Wenn das Jahr keinen Sonntag der 52'ten
+          ISO-Kalenderwoche hat, so werden keine Termine ausgegeben und
+          das Programm wird mit Fehlerkode abgebrochen.  *Note 126:
+          Fehlerkodes.
+
+        * Z.B. `gcal -c*w53son' gibt alle diejenigen Termine aus, die
+          auf den Sonntag der 53'ten ISO-Kalenderwoche des Jahres
+          fallen.  Wenn das Jahr keinen Sonntag der 53'ten
+          ISO-Kalenderwoche hat, so werden keine Termine ausgegeben und
+          das Programm wird mit Fehlerkode abgebrochen.  *Note 126:
+          Fehlerkodes.
+
+        * Z.B. `gcal -c*w99son' gibt alle diejenigen Termine aus, die
+          auf den Sonntag der letzten ISO-Kalenderwoche (15) des Jahres
+          fallen.
+
+`l*wN[WWW]'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am Wochentag WWW der
+     N'ten == `0|1...51|52|53|99' ISO-Kalenderwoche des aktuellen
+     Jahres ausgeben; das Niveau ist wie bei der `-cy' Option.  Wenn
+     kein Wochentag WWW angegeben ist, so wird Montag als Wochentag
+     angenommen.
+
+        * Z.B. `gcal -cl*w0son' gibt eine Liste aller derjenigen
+          Termine aus, die falls das Jahr einen Sonntag hat, der in der
+          52'ten bzw. 53'ten ISO-Kalenderwoche des Vorjahres liegt, an
+          diesem Sonntag beginnen und am 16'ten Februar enden.  Wenn
+          ein solcher Sonntag nicht existiert, so werden keine Termine
+          ausgegeben und das Programm wird mit Fehlerkode abgebrochen.
+          *Note 126: Fehlerkodes.
+
+        * Z.B. `gcal -cl*w16son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am Sonntag
+          der 16'ten ISO-Kalenderwoche des Jahres enden.
+
+        * Z.B. `gcal -cl*w52son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am Sonntag
+          der 52'ten ISO-Kalenderwoche des Jahres enden.  Wenn das Jahr
+          keinen Sonntag der 52'ten ISO-Kalenderwoche hat, so werden
+          keine Termine ausgegeben und das Programm wird mit Fehlerkode
+          abgebrochen.  *Note 126: Fehlerkodes.
+
+        * Z.B. `gcal -cl*w53son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am Sonntag
+          der 53'ten ISO-Kalenderwoche des Jahres enden.  Wenn das Jahr
+          keinen Sonntag der 53'ten ISO-Kalenderwoche hat, so werden
+          keine Termine ausgegeben und das Programm wird mit Fehlerkode
+          abgebrochen.  *Note 126: Fehlerkodes.
+
+        * Z.B. `gcal -cl*w99son' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am Sonntag
+          der letzten ISO-Kalenderwoche (16) des Jahres enden.
+
+`@e[[+|-]N]'
+     Alle Daten zum N'ten Tag relativ zum Datum Ostersonntag des
+     aktuellen Jahres ausgeben; das Niveau ist wie bei der einfachen
+     `-c' Option.
+
+        * Z.B. `gcal -c@e' gibt die Termine aus, die am Ostersonntag
+          stattfinden.
+
+        * Z.B. `gcal -c@e10' bzw. `gcal -c@e+10' gibt die Termine aus,
+          die 10 Tage nach Ostersonntag stattfinden.
+
+        * Z.B. `gcal -c@e-10' gibt die Termine aus, die 10 Tage vor
+          Ostersonntag stattfinden.
+
+`l@e[[+|-]N]'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am N'ten Tag relativ zum Datum Ostersonntag
+     des aktuellen Jahres ausgeben; das Niveau ist wie bei der `-cy'
+     Option.
+
+        * Z.B. `gcal -cl@e' gibt eine Liste aller derjenigen Termine
+          aus, die am 18'ten Februar beginnen und am Ostersonntag enden.
+
+        * Z.B. `gcal -cl@e10' bzw. `gcal -cl@e+10' gibt eine Liste aller
+          derjenigen Termine aus, die am 18'ten Februar beginnen und 10
+          Tage nach Ostersonntag enden.
+
+        * Z.B. `gcal -cl@e-10' gibt eine Liste aller derjenigen Termine
+          aus, die am 18'ten Februar beginnen und 10 Tage vor
+          Ostersonntag enden.
+
+`@e[+|-]NWWW'
+     Alle Daten zum N'ten Wochentag WWW relativ zum Datum Ostersonntag
+     des aktuellen Jahres ausgeben; das Niveau ist wie bei der
+     einfachen `-c' Option.
+
+        * Z.B. `gcal -c@e3fr' bzw. `gcal -c@e+3fr' gibt die Termine aus,
+          die am 3'ten Freitag nach Ostersonntag stattfinden.
+
+        * Z.B. `gcal -c@e-3fr' gibt die Termine aus, die am 3'ten
+          Freitag vor Ostersonntag stattfinden.
+
+`l@e[+|-]NWWW'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am N'ten Wochentag WWW relativ zum Datum
+     Ostersonntag des aktuellen Jahres ausgeben; das Niveau ist wie bei
+     der `-cy' Option.
+
+        * Z.B. `gcal -cl@e3fr' bzw. `gcal -cl@e+3fr' gibt eine Liste
+          aller derjenigen Termine aus, die am 18'ten Februar beginnen
+          und am 3'ten Freitag nach Ostersonntag enden.
+
+        * Z.B. `gcal -cl@e-3fr' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am 3'ten
+          Freitag vor Ostersonntag enden.
+
+`@t[[+|-]N]'
+     Alle Daten zum N'ten Tag relativ zum heutigen Datum des aktuellen
+     Jahres ausgeben; das Niveau ist wie bei der einfachen `-c' Option.
+
+        * Z.B. `gcal -c@t' gibt die Termine aus, die am heutigen Datum
+          stattfinden (== `gcal -c').
+
+        * Z.B. `gcal -c@t10' bzw. `gcal -c@t+10' gibt die Termine aus,
+          die 10 Tage nach dem heutigen Datum stattfinden (== `gcal
+          -c10+').
+
+        * Z.B. `gcal -c@t-10' gibt die Termine aus, die 10 Tage vor dem
+          heutigen Datum stattfinden (== `gcal -c10-').
+
+`l@t[[+|-]N]'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am N'ten Tag relativ zum heutigen Datum des
+     aktuellen Jahres ausgeben; das Niveau ist wie bei der `-cy' Option.
+
+        * Z.B. `gcal -cl@t' bewirkt nichts.
+
+        * Z.B. `gcal -cl@t10' bzw. `gcal -cl@t+10' gibt eine Liste aller
+          derjenigen Termine aus, die am 18'ten Februar beginnen und 10
+          Tage nach dem heutigen Datum enden (== `gcal -cl10+').
+
+        * Z.B. `gcal -cl@t-10' gibt eine Liste aller derjenigen Termine
+          aus, die am 16'ten Februar beginnen und 10 Tage vor dem
+          heutigen Datum enden (== `gcal -cl10-').
+
+`@t[+|-]NWWW'
+     Alle Daten zum N'ten Wochentag WWW relativ zum heutigen Datum des
+     aktuellen Jahres ausgeben; das Niveau ist wie bei der einfachen
+     `-c' Option.
+
+        * Z.B. `gcal -c@t3fr' bzw. `gcal -c@t+3fr' gibt die Termine aus,
+          die am 3'ten Freitag nach dem heutigen Datum stattfinden.
+
+        * Z.B. `gcal -c@t-3fr' gibt die Termine aus, die am 3'ten
+          Freitag vor dem heutigen Datum stattfinden.
+
+`l@t[+|-]NWWW'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am N'ten Wochentag WWW relativ zum heutigen
+     Datum des aktuellen Jahres ausgeben; das Niveau ist wie bei der
+     `-cy' Option.
+
+        * Z.B. `gcal -cl@t3fr' bzw. `gcal -cl@t+3fr' gibt eine Liste
+          aller derjenigen Termine aus, die am 18'ten Februar beginnen
+          und am 3'ten Freitag nach dem heutigen Datum enden.
+
+        * Z.B. `gcal -cl@t-3fr' gibt eine Liste aller derjenigen
+          Termine aus, die am 16'ten Februar beginnen und am 3'ten
+          Freitag vor dem heutigen Datum enden.
+
+`@DVAR[[+|-]N]'
+     Alle Daten zum N'ten Tag relativ zum Datum der Datumvariablen des
+     aktuellen Jahres ausgeben; das Niveau ist wie bei der einfachen
+     `-c' Option.
+
+        * Z.B. `gcal -v a=0422 -c@a' gibt die Termine aus, die am
+          22'ten April stattfinden.
+
+        * Z.B. `gcal -v a=0422 -c@a10' bzw. `gcal -v a=0422 -c@a+10'
+          gibt die Termine aus, die 10 Tage nach dem 22'ten April
+          stattfinden.
+
+        * Z.B. `gcal -v a=0422 -c@a-10' gibt die Termine aus, die 10
+          Tage vor dem 22'ten April stattfinden.
+
+`l@DVAR[[+|-]N]'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am N'ten Tag relativ zum Datum der
+     Datumvariablen des aktuellen Jahres ausgeben; das Niveau ist wie
+     bei der `-cy' Option.
+
+        * Z.B. `gcal -v a=0422 -cl@a' gibt eine Liste aller derjenigen
+          Termine aus, die am 18'ten Februar beginnen und am 22'ten
+          April enden.
+
+        * Z.B. `gcal -v a=0422 -cl@a10' bzw. `gcal -v a=0422 -cl@a+10'
+          gibt eine Liste aller derjenigen Termine aus, die am 18'ten
+          Februar beginnen und 10 Tage nach dem 22'ten April enden.
+
+        * Z.B. `gcal -v a=0422 -cl@a-10' gibt eine Liste aller
+          derjenigen Termine aus, die am 18'ten Februar beginnen und 10
+          Tage vor dem 22'ten April enden.
+
+`@DVAR[+|-]NWWW'
+     Alle Daten zum N'ten Wochentag WWW relativ zum Datum der
+     Datumvariablen des aktuellen Jahres ausgeben; das Niveau ist wie
+     bei der einfachen `-c' Option.
+
+        * Z.B. `gcal -v a=0122 -c@a2sa' bzw. `gcal -v a=0122 -c@a+2sa'
+          gibt die Termine aus, die zwei Samstage nach dem 22'ten
+          Januar stattfinden.
+
+        * Z.B. `gcal -v a=0122 -c@a-2sa' gibt die Termine aus, die zwei
+          Samstage vor dem 22'ten Januar stattfinden.
+
+`l@DVAR[+|-]NWWW'
+     Liste von Daten, in Abh"angigkeit des Wertes N gestern oder morgen
+     beginnend, und endend am N'ten Wochentag WWW relativ zum Datum der
+     Datumvariablen des aktuellen Jahres ausgeben; das Niveau ist wie
+     bei der `-cy' Option.
+
+        * Z.B. `gcal -v a=0122 -cl@a2sa' bzw. `gcal -v a=0122 -cl@a+2sa'
+          gibt eine Liste aller derjenigen Termine aus, die zwei
+          Samstage nach dem 22'ten Januar beginnen und am 16'ten
+          Februar enden.
+
+        * Z.B. `gcal -v a=0122 -cl@a-2sa' gibt eine Liste aller
+          derjenigen Termine aus, die zwei Samstage vor dem 22'ten
+          Januar beginnen und am 16'ten Februar enden.
+
+`t|T'
+`--tomorrow' Langoption
+     Liste von Daten ausgeben, die sich auf den morgigen Tag beziehen.
+
+        * Z.B. `gcal -ct' gibt alle diejenigen Termine aus, die am
+          18'ten Februar (morgen) stattfinden.
+
+        * Z.B. `gcal -cdt' gibt alle diejenigen Termine aus, die am
+          17'ten Februar (heute) und am 18'ten Februar (morgen)
+          stattfinden.
+
+`w|W[+|-]'
+`--week' Langoption
+`--end-of-week' Langoption
+`--start-of-week' Langoption
+     Liste von Daten ausgeben, die sich auf die Woche beziehen.
+     *Note `--starting-day[=ARGUMENT]': Kalender Optionen.
+
+        * `w' oder `--week' Langoption
+          Liste von Daten vom *Starttag* der aktuellen Woche bis zum
+          letzten Tag der aktuellen Woche ausgeben.
+
+             - Z.B. `gcal -cw' gibt alle diejenigen Termine aus, die in
+               der gesamten Woche, in die der 17'te Februar f"allt,
+               stattfinden.
+
+        * `w+' oder `--end-of-week' Langoption
+          Liste von Daten vom Tag nach dem aktuellen Tag der aktuellen
+          Woche bis zum letzten Tag der aktuellen Woche ausgeben.
+
+             - Z.B. `gcal -cw+' gibt alle diejenigen Termine aus, die am
+               18'ten Februar (morgen) beginnen und am letzten Tag der
+               Woche enden.
+
+             - Z.B. `gcal -cdw+' gibt alle diejenigen Termine aus, die
+               am 17'ten Februar (heute) beginnen und am letzten Tag
+               der Woche enden.
+
+        * `w-' oder `start-of-week' Langoption
+          Liste von Daten vom *Starttag* der aktuellen Woche bis zum Tag
+          vor dem aktuellen Tag der aktuellen Woche ausgeben.
+
+             - Z.B. `gcal -cw-' gibt alle diejenigen Termine aus, die am
+               ersten Tag der Woche beginnen und am 16'ten (gestern)
+               Februar enden.
+
+             - Z.B. `gcal -cdw-' gibt alle diejenigen Termine aus, die
+               am ersten Tag der Woche beginnen und am 17'ten Februar
+               (heute) enden.
+
+`m|M[+|-]'
+`--month' Langoption
+`--end-of-month' Langoption
+`--start-of-month' Langoption
+     Liste von Daten ausgeben, die sich auf den Monat beziehen.
+
+        * `m' oder `--month' Langoption
+          Liste von Daten vom ersten Tag des aktuellen Monats bis zum
+          letzten Tag des aktuellen Monats ausgeben.
+
+             - Z.B. `gcal -cm' gibt alle diejenigen Termine aus, die im
+               gesamten Monat Februar stattfinden.
+
+        * `m+' oder `--end-of-month' Langoption
+          Liste von Daten vom Tag nach dem aktuellen Tag des aktuellen
+          Monats bis zum letzten Tag des aktuellen Monats ausgeben.
+
+             - Z.B. `gcal -cm+' gibt alle diejenigen Termine aus, die am
+               18'ten Februar (morgen) beginnen und am letzten Tag des
+               Monats Februar enden.
+
+             - Z.B. `gcal -cdm+' gibt alle diejenigen Termine aus, die
+               am 17'ten Februar (heute) beginnen und am letzten Tag
+               des Monats Februar enden.
+
+        * `m-' oder `--start-of-month' Langoption
+          Liste von Daten vom ersten Tag des aktuellen Monats bis zum
+          Tag vor dem aktuellen Tag des aktuellen Monats ausgeben.
+
+             - Z.B. `gcal -cm-' gibt alle diejenigen Termine aus, die am
+               ersten Tag des Monats Februar beginnen und am 16'ten
+               Februar (gestern) enden.
+
+             - Z.B. `gcal -cdm-' gibt alle diejenigen Termine aus, die
+               am ersten Tag des Monats Februar beginnen und am 17'ten
+               Februar (heute) enden.
+
+`y|Y[+|-]'
+`--year' Langoption
+`--end-of-year' Langoption
+`--start-of-year' Langoption
+     Liste von Daten ausgeben, die sich auf das Jahr beziehen.
+
+        * `y' oder `--year' Langoption
+          Liste von Daten vom ersten Tag des aktuellen Jahres bis zum
+          letzten Tag des aktuellen Jahres ausgeben.
+
+             - Z.B. `gcal -cy' gibt alle diejenigen Termine aus, die im
+               gesamten Jahr stattfinden.
+
+        * `y+' oder `--end-of-year' Langoption
+          Liste von Daten vom Tag nach dem aktuellen Tag des aktuellen
+          Jahres bis zum letzten Tag des aktuellen Jahres ausgeben.
+
+             - Z.B. `gcal -cy+' gibt alle diejenigen Termine aus, die am
+               18'ten Februar (morgen) beginnen und am letzten Tag des
+               Jahres enden.
+
+             - Z.B. `gcal -cdy+' gibt alle diejenigen Termine aus, die
+               am 17'ten Februar (heute) beginnen und am letzten Tag
+               des Jahres enden.
+
+        * `y-' oder `--start-of-year' Langoption
+          Liste von Daten vom ersten Tag des aktuellen Jahres bis zum
+          Tag vor dem aktuellen Tag des aktuellen Jahres ausgeben.
+
+             - Z.B. `gcal -cy-' gibt alle diejenigen Termine aus, die am
+               ersten Tag des Jahres beginnen und am 16'ten Februar
+               (gestern) enden.
+
+             - Z.B. `gcal -cdy-' gibt alle diejenigen Termine aus, die
+               am ersten Tag des Jahres beginnen und am 17'ten Februar
+               (heute) enden.
+
+  ---------- Footnotes ----------
+
+  (1)  Gross- bzw. Kleinbuchstaben werden nicht unterschieden.  Nicht
+zuweisbar bzw. inoperabel ist die Datumvariable E, welche intern f"ur
+das Datum des Ostersonntags reserviert ist.  Ebenfalls nicht zuweisbar
+bzw.  inoperabel ist die Datumvariable T, welche intern f"ur das
+heutige Datum reserviert ist.
+
+  (2)  Oder dem Namen einer anderen globalen Datumvariablen, aber
+keiner Datumsangabe im `MMWWWN', `e|t|DVAR[+|-]N[WWW]' oder
+`*d|wN[WWW]' Datumformat.
+
+  (3)  Gross- bzw. Kleinbuchstaben werden nicht unterschieden.
+
+  (4)  Ausgenommen Gcal's Zeilenumbruchzeichen `~' und `^', so dass
+`\~' und `\\^' im SUCHMUSTER Argument benutzt werden muss, falls nach
+Texten gesucht werden soll, welche diese Zeichen enthalten.
+
+  (5)  Im Englischen mit *regular expression* bezeichnet.
+
+  (6)  Davon ausgenommen sind die `--include-today' Option bzw. der `d'
+Modifizierer, die `--list-mode' Option bzw.  der `l' Modifizierer, und
+die `--leap-day=february|march' Option.
+
+  (7)  Bzw. deren entsprechende Langoptionen.
+
+  (8)  Oder deren entsprechende Aliasnamen wie `--today',
+`--tomorrow'...
+
+  (9)  Oder deren entsprechende Langoptionen.
+
+  (10)  `RC_GROUP_SEP' "" == nur Leerzeile.
+
+  (11)  Nur falls die `--alternative-format' Option bzw.  der `A'
+Modifizierer nicht angegeben wurde.
+
+  (12)  Der 29'te Februar.
+
+  (13)  Das ist entweder der 51'te, 52'te oder 53'te Sonntag.
+
+  (14)  Das ist entweder der 51'te, 52'te oder 53'te Sonntag.
+
+  (15)  Das ist entweder die 51'te, 52'te oder 53'te ISO-Kalenderwoche.
+
+  (16)  Das ist entweder die 51'te, 52'te oder 53'te ISO-Kalenderwoche.
+

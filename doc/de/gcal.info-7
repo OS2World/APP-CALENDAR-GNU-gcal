@@ -1,0 +1,1200 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Hervorhebung,  Prev: Andere Differenzwerte,  Up: Ersetzen ohne Argument
+
+Hervorhebung `%?' Spezialtexte
+..............................
+
+Folgende Hervorhebung `%?' Spezialtexte werden ber"ucksichtigt:
+
+`%1'
+     `%1' wird ersetzt durch die Start-Hervorhebungssequenz bzw.  das
+     Start-Markierungszeichen, welches zur Hervorhebung des aktuellen
+     Tages benutzt wird (*note `--highlighting=TEXT': Globale
+     Optionen.).  Damit wird erreicht, dass der diesem Spezialtext
+     nachfolgende Text der Zeile in gleicher Weise ausgegeben wird, wie
+     der hervorgehobene bzw. markierte aktuelle Tag.  `%1' wird in
+     Verbindung mit dem `%2' Spezialtext benutzt, welcher die mit `%1'
+     eingeschaltete Hervorhebung wieder ausschaltet bzw. ein
+     Ende-Markierungszeichen produziert.  Sollte einem `%1' Text kein
+     `%2' Text auf der Zeile nachfolgen, so f"ugt Gcal automatisch
+     einen solchen `%2' Text am Zeilenende ein.
+
+     Zum Beispiel:
+
+          In dieser Zeile wird nur %1DIESES%2 Wort hervorgehoben.
+          %1In dieser Zeile wird alles bis hierhin%2 hervorgehoben.
+          Alles ab %1hier bis zum Zeilenende wird hervorgehoben.
+
+`%2'
+     `%2' wird ersetzt durch die Ende-Hervorhebungssequenz bzw. das
+     Ende-Markierungszeichen, welches zur Hervorhebung des aktuellen
+     Tages benutzt wird.  Damit wird erreicht, dass ab der Stelle des
+     Auftretens dieses Spezialtexts eine m"oglicherweise aktive
+     Hervorhebung, entsprechend der des aktuellen Tages, wieder
+     abgeschaltet bzw. ein Ende-Markierungszeichen produziert wird.
+     `%2' wird in Verbindung mit dem `%1' Spezialtext benutzt.  Sollte
+     vor einem `%2' Text kein `%1' Text auf der Zeile vorgefunden
+     werden, so hat der `%2' Text keinerlei Wirkung.
+
+`%3'
+     `%3' wird ersetzt durch die Start-Hervorhebungssequenz bzw.  das
+     Start-Markierungszeichen, welches zur Hervorhebung eines
+     Feiertages benutzt wird (*note `--highlighting=TEXT': Globale
+     Optionen.).  Damit wird erreicht, dass der diesem Spezialtext
+     nachfolgende Text der Zeile in gleicher Weise ausgegeben wird, wie
+     ein hervorgehobener bzw. markierter Feiertag.  `%3' wird in
+     Verbindung mit dem `%4' Spezialtext benutzt, welcher die mit `%3'
+     eingeschaltete Hervorhebung wieder ausschaltet bzw.  ein
+     Ende-Markierungszeichen produziert.  Sollte einem `%3' Text kein
+     `%4' Text auf der Zeile nachfolgen, so f"ugt Gcal automatisch einen
+     solchen `%4' Text am Zeilenende ein.
+
+     Zum Beispiel:
+
+          In dieser Zeile wird nur %3DIESES%4 Wort hervorgehoben.
+          %3In dieser Zeile wird alles bis hierhin%4 hervorgehoben.
+          Alles ab %3hier bis zum Zeilenende wird hervorgehoben.
+
+`%4'
+     `%4' wird ersetzt durch die Ende-Hervorhebungssequenz bzw. das
+     Ende-Markierungszeichen, welches zur Hervorhebung eines Feiertages
+     benutzt wird.  Damit wird erreicht, dass ab der Stelle des
+     Auftretens dieses Spezialtexts eine m"oglicherweise aktive
+     Hervorhebung, entsprechend der eines Feiertages, wieder
+     abgeschaltet bzw. ein Ende-Markierungszeichen produziert wird.
+     `%4' wird in Verbindung mit dem `%3' Spezialtext benutzt.  Sollte
+     vor einem `%4' Text kein `%3' Text auf der Zeile vorgefunden
+     werden, so hat der `%4' Text keinerlei Wirkung.
+
+`%5'
+     `%5' wird ersetzt durch die Start-Hervorhebungssequenz bzw. das
+     Start-Markierungszeichen, welches zur Hervorhebung des aktuellen
+     Tages benutzt wird, falls ein Termin auf das heutige Datum f"allt
+     (*note `--highlighting=TEXT': Globale Optionen.).  Damit wird
+     erreicht, dass der diesem Spezialtext nachfolgende Text der Zeile
+     in gleicher Weise ausgegeben wird, wie der hervorgehobene bzw.
+     markierte aktuelle Tag.  `%5' wird in Verbindung mit dem `%6'
+     Spezialtext benutzt, welcher die mit `%5' eingeschaltete
+     Hervorhebung wieder ausschaltet bzw. ein Ende-Markierungszeichen
+     produziert.  Sollte einem `%5' Text kein `%6' Text auf der Zeile
+     nachfolgen, so f"ugt Gcal automatisch einen solchen `%6' Text am
+     Zeilenende ein.
+
+`%6'
+     `%6' wird ersetzt durch die Ende-Hervorhebungssequenz bzw. das
+     Ende-Markierungszeichen, welches zur Hervorhebung des aktuellen
+     Tages benutzt wird, falls ein Termin auf das heutige Datum f"allt.
+     Damit wird erreicht, dass ab der Stelle des Auftretens dieses
+     Spezialtexts eine m"oglicherweise aktive Hervorhebung,
+     entsprechend der des aktuellen Tages, wieder abgeschaltet bzw. ein
+     Ende-Markierungszeichen produziert wird.  `%6' wird in Verbindung
+     mit dem `%5' Spezialtext benutzt.  Sollte vor einem `%6' Text kein
+     `%5' Text auf der Zeile vorgefunden werden, so hat der `%6' Text
+     keinerlei Wirkung.
+
+`%7'
+     `%7' wird ersetzt durch die Start-Hervorhebungssequenz bzw. das
+     Start-Markierungszeichen, welches zur Hervorhebung eines Feiertages
+     benutzt wird, falls ein Termin auf einen gesetzlichen Feiertag
+     f"allt (*note `--highlighting=TEXT': Globale Optionen.).  Damit
+     wird erreicht, dass der diesem Spezialtext nachfolgende Text der
+     Zeile in gleicher Weise ausgegeben wird, wie ein hervorgehobener
+     bzw. markierter Feiertag.  `%7' wird in Verbindung mit dem `%8'
+     Spezialtext benutzt, welcher die mit `%7' eingeschaltete
+     Hervorhebung wieder ausschaltet bzw.  ein Ende-Markierungszeichen
+     produziert.  Sollte einem `%7' Text kein `%8' Text auf der Zeile
+     nachfolgen, so f"ugt Gcal automatisch einen solchen `%8' Text am
+     Zeilenende ein.
+
+`%8'
+     `%8' wird ersetzt durch die Ende-Hervorhebungssequenz bzw. das
+     Ende-Markierungszeichen, welches zur Hervorhebung eines Feiertages
+     benutzt wird, falls ein Termin auf einen gesetzlichen Feiertag
+     f"allt.  Damit wird erreicht, dass ab der Stelle des Auftretens
+     dieses Spezialtexts eine m"oglicherweise aktive Hervorhebung,
+     entsprechend der eines Feiertages, wieder abgeschaltet bzw. ein
+     Ende-Markierungszeichen produziert wird.  `%8' wird in Verbindung
+     mit dem `%7' Spezialtext benutzt.  Sollte vor einem `%8' Text kein
+     `%7' Text auf der Zeile vorgefunden werden, so hat der `%8' Text
+     keinerlei Wirkung.
+
+`%9'
+     `%9' wird ersetzt durch die Start-Hervorhebungssequenz bzw. das
+     Start-Markierungszeichen, welches zur Hervorhebung des aktuellen
+     Tages benutzt wird, falls ein Termin auf das heutige Datum f"allt;
+     sonst wird `%9' durch die Start-Hervorhebungssequenz bzw. das
+     Start-Markierungszeichen ersetzt, welches zur Hervorhebung eines
+     Feiertages benutzt wird, falls ein Termin auf einen gesetzlichen
+     Feiertag f"allt (*note `--highlighting=TEXT': Globale Optionen.).
+     Damit wird erreicht, dass der diesem Spezialtext nachfolgende Text
+     der Zeile in gleicher Weise ausgegeben wird, wie ein
+     hervorgehobener bzw. markierter aktueller Tag oder Feiertag.  `%9'
+     wird in Verbindung mit dem `%0' Spezialtext benutzt, welcher die
+     mit `%9' eingeschaltete Hervorhebung wieder ausschaltet bzw. ein
+     Ende-Markierungszeichen produziert.  Sollte einem `%9' Text kein
+     `%0' Text auf der Zeile nachfolgen, so f"ugt Gcal automatisch
+     einen solchen `%0' Text am Zeilenende ein.
+
+`%0'
+     `%0' wird ersetzt durch die Ende-Hervorhebungssequenz bzw. das
+     Ende-Markierungszeichen, welches zur Hervorhebung des aktuellen
+     Tages benutzt wird, falls ein Termin auf das heutige Datum f"allt;
+     sonst wird `%0' durch die Ende-Hervorhebungssequenz bzw. das
+     Ende-Markierungszeichen ersetzt, welches zur Hervorhebung eines
+     Feiertages benutzt wird, falls ein Termin auf einen gesetzlichen
+     Feiertag f"allt.  Damit wird erreicht, dass ab der Stelle des
+     Auftretens dieses Spezialtexts eine m"oglicherweise aktive
+     Hervorhebung, entsprechend der des aktuellen Tages oder eines
+     Feiertages, wieder abgeschaltet bzw. ein Ende-Markierungszeichen
+     produziert wird.  `%0' wird in Verbindung mit dem `%9' Spezialtext
+     benutzt.  Sollte vor einem `%0' Text kein `%9' Text auf der Zeile
+     vorgefunden werden, so hat der `%0' Text keinerlei Wirkung.
+
+
+File: gcal.info,  Node: Shell Kommando,  Prev: Ersetzen,  Up: Spezialtexte (lang)
+
+Shell Kommando `%![ARGUMENT]' Spezialtext
+=========================================
+
+Das ARGUMENT, das `%!' bis zum Ende der Zeile folgt, wird der shell als
+Kommando zur weiteren Verarbeitung "ubergeben.  Zuvor werden allerdings
+noch alle `%?'... Spezialtexte zum Textersatz, die im ARGUMENT
+auftreten, von Gcal interpretiert.  *Note `%?'... Spezialtexte zum
+Textersatz: Ersetzen.  Falls Text vor dem `%!' Spezialtext angegeben
+ist, so wird dieser von Gcal wie "ublich verarbeitet.  Wenn die
+einfache `--debug' bzw. `--debug=internal' Option bei Programmstart
+angegeben wurde, so wird ein Text auf dem *Standardfehler-Ger"atekanal*
+ausgegeben, der mit Informationen zum ausgef"uhrten Kommando und dessen
+*exit*-Kode ausgestattet ist (*note `--debug=internal': Globale
+Optionen.).
+
+Falls die `--debug=abort' Option angegeben wurde und sich ein
+*exit*-Kode ungleich Null bei der Ausf"uhrung des Kommandos ergab, so
+wird das Gcal-Programm mit Fehlerkode abgebrochen.  *Note 2:
+Fehlerkodes, sowie *Note `--debug=abort': Globale Optionen, f"ur
+weitere Informationen.
+
+Wenn die `--bypass-shell-command' Option benutzt wird, so werden alle
+`%![ARGUMENT]' Spezialtexte rein textlich ausgegeben und nicht von der
+shell ausgef"uhrt.  *Note `--bypass-shell-command': Termin Optionen,
+f"ur weitere Details.
+
+
+File: gcal.info,  Node: Spezialtexte (kurz),  Next: Kodierschema,  Prev: Spezialtexte (lang),  Up: Top
+
+Zusammenfassung aller `%?'... Spezialtexte
+******************************************
+
+Hier ist eine Kurzliste aller `%?'... Spezialtexte, die im Textteil
+einer Zeile von Gcal Ressourcendateien benutzt werden k"onnen:
+
+`%i[DATUM][#[DATUM]]'
+     Ausschluss aller nicht inklusive Datum Zeitr"aume
+
+`%e[DATUM][#[DATUM]]'
+     Ausschluss aller exklusive Datum Zeitr"aume
+
+`%?' Inklusive Tag Zeitraum
+    `%v'
+          Ausschluss aller nicht gesetzlichen Feiertage
+
+    `%x'
+          Ausschluss aller Nicht-Feiertage
+
+    `%a'
+          Ausschluss aller Nicht-Montage
+
+    `%c'
+          Ausschluss aller Nicht-Dienstage
+
+    `%f'
+          Ausschluss aller Nicht-Mittwoche
+
+    `%g'
+          Ausschluss aller Nicht-Donnerstage
+
+    `%h'
+          Ausschluss aller Nicht-Freitage
+
+    `%l'
+          Ausschluss aller Nicht-Samstage
+
+    `%p'
+          Ausschluss aller Nicht-Sonntage
+
+    `%q'
+          Ausschluss aller Nicht-Montage...Donnerstage
+
+    `%r'
+          Ausschluss aller Nicht-Montage...Freitage
+
+`%?' Exklusive Tag Zeitraum
+    `%V'
+          Ausschluss aller gesetzlichen Feiertage
+
+    `%X'
+          Ausschluss aller Feiertage
+
+    `%A'
+          Ausschluss aller Montage
+
+    `%C'
+          Ausschluss aller Dienstage
+
+    `%F'
+          Ausschluss aller Mittwoche
+
+    `%G'
+          Ausschluss aller Donnerstage
+
+    `%H'
+          Ausschluss aller Freitage
+
+    `%L'
+          Ausschluss aller Samstage
+
+    `%P'
+          Ausschluss aller Sonntage
+
+    `%Q'
+          Ausschluss aller Montage...Donnerstage
+
+    `%R'
+          Ausschluss aller Montage...Freitage
+
+`%?[DATUM]' Wochentagsname
+    `%o[DATUM]'
+          Vollst"andiger Wochentagsname
+
+    `%O[DATUM]'
+          3-Buchstaben Wochentagsname
+
+    `%K[DATUM]'
+          2-Buchstaben Wochentagsname
+
+`%?[DATUM]' Wochentag
+    `%S[DATUM]'
+          Wochentagsnummer, Mon==1...Son==7
+
+    `%I[DATUM]'
+          Wochentagsnummer, Mon==1...Son==7, Ordnungszahlanhang
+
+    `%E[DATUM]'
+          Wochentagsnummer, Mon==0...Son==6
+
+    `%J[DATUM]'
+          Wochentagsnummer, Mon==0...Son==6, Ordnungszahlanhang
+
+    `%([DATUM]'
+          Wochentagsnummer, Son==1...Sam==7
+
+    `%<[DATUM]'
+          Wochentagsnummer, Son==1...Sam==7, Ordnungszahlanhang
+
+    `%)[DATUM]'
+          Wochentagsnummer, Son==0...Sam==6, Ordnungszahlanhang
+
+    `%>[DATUM]'
+          Wochentagsnummer, Son==0...Sam==6, Ordnungszahlanhang
+
+    `%[[DATUM]'
+          Wochentagsnummer, STARTTAG DER WOCHE==1
+
+    `%{[DATUM]'
+          Wochentagsnummer, STARTTAG DER WOCHE==1, Ordnungszahlanhang
+
+    `%][DATUM]'
+          Wochentagsnummer, STARTTAG DER WOCHE==0
+
+    `%}[DATUM]'
+          Wochentagsnummer, STARTTAG DER WOCHE==0, Ordnungszahlanhang
+
+`%?[DATUM]' Tageszahl
+    `%+[DATUM]'
+          Tageszahl
+
+    `%*[DATUM]'
+          Tageszahl, zweiziffrig mit f"uhrender Null
+
+    `%&[DATUM]'
+          Tageszahl, Ordnungszahlanhang
+
+    `%#[DATUM]'
+          Tageszahl, zweiziffrig mit f"uhrender Null, Ordnungszahlanhang
+
+`%?[DATUM]' Tag
+    `%D[DATUM]'
+          Tag
+
+    `%N[DATUM]'
+          Tag, zweiziffrig mit f"uhrender Null
+
+    `%s[DATUM]'
+          Tag, Ordnungszahlanhang
+
+    `%u[DATUM]'
+          Tag, zweiziffrig mit f"uhrender Null, Ordnungszahlanhang
+
+`%k[DATUM]'
+     ISO-Wochennummer
+
+`%?[DATUM]' Monatsname
+    `%M[DATUM]'
+          Vollst"andiger Monatsname
+
+    `%T[DATUM]'
+          3-Buchstaben Monatsname
+
+`%?[DATUM]' Monat
+    `%U[DATUM]'
+          Monat
+
+    `%W[DATUM]'
+          Monat, zweiziffrig mit f"uhrender Null
+
+    `%z[DATUM]'
+          Monat, Ordnungszahlanhang
+
+    `%Z[DATUM]'
+          Monat, zweiziffrig mit f"uhrender Null, Ordnungszahlanhang
+
+`%?[DATUM]' Jahr
+    `%Y[DATUM]'
+          Jahr
+
+    `%=[DATUM]'
+          Jahr, vierziffrig mit f"uhrenden Nullen
+
+`%?[DATUM]' Mondphase
+    `%-[DATUM]'
+          Mondphasentext
+
+    `%_[DATUM]'
+          Mondphasentext, dreiziffrig mit f"uhrenden Nullen
+
+    `%:[DATUM]'
+          Mondphasen-Textgrafik
+
+`%?[DATUM]' Biorhythmus
+    `%,[DATUM]'
+          Biorhythmustext (Folge von Werten)
+
+    `%;[DATUM]'
+          Biorhythmus-Textgrafik (Balken)
+
+`%?[DATUM]' Differenzwert
+    `%yDATUM'
+          Relative Jahreszahl
+
+    `%b[DATUM]'
+          Geburtstag (Alterswert)
+
+    `%B[DATUM]'
+          Geburtstag (Alterswert), Ordnungszahlanhang
+
+`%t[12|24]'
+     Aktuelle Uhrzeit
+
+`%n[[+|-]N]'
+     Textliches Datum im `TT-MMM-JJJJ' Format
+
+`%j[[-]N]'
+     Julianische Tageszahl
+
+`%?' Differenzwert
+    `%d'
+          Relative Tageszahl
+
+    `%w'
+          Relative Wochenzahl
+
+    `%m'
+          Relative Monatszahl
+
+    `%y'
+          Relative Jahreszahl
+
+`%?' Hervorhebung
+    `%1'
+          Start-Hervorhebung 1
+
+    `%2'
+          Ende-Hervorhebung 1
+
+    `%3'
+          Start-Hervorhebung 2
+
+    `%4'
+          Ende-Hervorhebung 2
+
+    `%5'
+          Start-Hervorhebung 1, falls ein Termin auf das heutige Datum
+          f"allt
+
+    `%6'
+          Ende-Hervorhebung 1, falls ein Termin auf das heutige Datum
+          f"allt
+
+    `%7'
+          Start-Hervorhebung 2, falls ein Termin auf einen gesetzlichen
+          Feiertag f"allt
+
+    `%8'
+          Ende-Hervorhebung 2, falls ein Termin auf einen gesetzlichen
+          Feiertag f"allt
+
+    `%9'
+          Start-Hervorhebung 1, falls ein Termin auf das heutige Datum
+          f"allt, sonst Start-Hervorhebung 2, falls ein Termin auf
+          einen gesetzlichen Feiertag f"allt
+
+    `%0'
+          Ende-Hervorhebung 1, falls ein Termin auf das heutige Datum
+          f"allt, sonst Ende-Hervorhebung 2, falls ein Termin auf einen
+          gesetzlichen Feiertag f"allt
+
+`%![ARGUMENT]'
+     Shell f"uhrt ARGUMENT als Kommando aus
+
+
+File: gcal.info,  Node: Kodierschema,  Next: Umgebungsvariablen,  Prev: Spezialtexte (kurz),  Up: Top
+
+Kodierschema
+************
+
+* Menu:
+
+* Kodierschema Tabelle 1::
+* Kodierschema Tabelle 2::
+
+Es folgt nun die tabellarische Aufstellung des Kodierschemas, welches
+f"ur den *Datumteil* (JJJJ...) einer Zeile der Ressourcendatei
+verwendet werden kann, und der Modifizierer, welche die Kurzoption
+`-c|C[]' annehmen darf, bzw. die Argumente, welche die Langoption
+`--period-of-fixed-dates=ARGUMENT' annehmen darf.  Aus diesen Tabellen
+kann ersehen werden, welche *Terminargumente* mit welchem *Datumteil*
+einer Zeile der Ressourcendatei korrespondieren, d.h. bei Anwahl eines
+*Terminarguments* ber"ucksichtigt werden; da Gcal eben nicht alle
+vorhandenen Eintr"age in einer Ressourcendatei ber"ucksichtigt, sondern
+nur solche, die in einem bestimmten Verh"altnis zum *Terminargument*
+stehen, und somit die Ausgabe "uberfl"ussiger Informationen verhindert
+wird.
+
+Im *Datumteil* `JJJJ...':
+
+JJJJ
+     steht f"ur jede Jahreszahl (0001...9999).
+
+MM
+     steht f"ur jede Monatszahl (01...12 oder 99) bzw. jeden Monatsnamen
+     im 3-Buchstaben Kurzformat (Jan, Feb...).
+
+TT
+     steht f"ur jede Tageszahl (1...28, 29, 30, 31 oder 99).
+
+WWW
+     steht f"ur jeden Wochentagsnamen im 2...3-Buchstaben Kurzformat
+     (Mon...Son).
+
+?
+     steht f"ur jeden Einzelbuchstaben des Alphabets (Gross- bzw.
+     Kleinbuchstaben werden nicht unterschieden).
+
+N
+     steht f"ur jede positive Ganzzahl (eine oder mehrere Ziffern).
+
+
+File: gcal.info,  Node: Kodierschema Tabelle 1,  Next: Kodierschema Tabelle 2,  Prev: Kodierschema,  Up: Kodierschema
+
+Kodierschema Tabelle 1
+======================
+
+In dieser Tabelle werden alle m"oglichen Kodierungen von einem Datum im
+*Datumteil* einer Ressourcendatei mit allen dazu m"oglichen Kodierungen
+der Modifizierer der Kurzoption `-c|C[]' gegen"ubergestellt.
+
+*Bitte beachten:*
+Die `-c', `-ct', `-cNd', `-c*d|wN[WWW]', `-c@?[[+|-]N[WWW]]', `-cMMTT'
+und `-cMMWWWN' Optionen ber"ucksichtigen *alle* Kodiervariationen des
+*Datumteils*!
+
+*Datumteil*               *Kurzoption `-c|C[]'*                           
+`00000000'                `-cN+|-'                                        
+`000000TT'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`0000MM00'                `-cN+|-'                                        
+`0000MMTT'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`JJJJ0000'                `-cN+|-'                                        
+`JJJJ00TT'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`JJJJMM00'                `-cN+|-'                                        
+`JJJJMMTT'                `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`000000WWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`0000MMWWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`JJJJ00WWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]'              
+`JJJJMMWWWN'              `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`0000*dN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`JJJJ*dN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`0000*wN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`JJJJ*wN[WWW]'            `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`0000@?[+|-]N[WWW]'       `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+`JJJJ@?[+|-]N[WWW]'       `-cNw|+|-', `-cw[+|-]', `-cm[+|-]', `-cy[+|-]', 
+                          `-clNd|w|+|-', `-cl*d|wN[WWW]',                 
+                          `-cl@?[[+|-]N[WWW]]', `-clMMTT', `-clMMWWWN'    
+
+
+File: gcal.info,  Node: Kodierschema Tabelle 2,  Prev: Kodierschema Tabelle 1,  Up: Kodierschema
+
+Kodierschema Tabelle 2
+======================
+
+In dieser Tabelle werden alle m"oglichen Kodierungen der Modifizierer
+der Kurzoption `-c|C[]' mit allen dazu m"oglichen Kodierungen von einem
+Datum im *Datumteil* einer Ressourcendatei gegen"ubergestellt.
+
+*Kurzoption `-c|C[]'*     *Datumteil*                                     
+`-c'                                                                      
+`-ct'                                                                     
+`-cNd|+|-'                                                                
+`-cMMTT'                                                                  
+`-cMMWWWN'                                                                
+`-c*d|wN[WWW]'                                                            
+`-c@?[[+|-]N[WWW]]'       `00000000', `0000MM00', `JJJJ0000', `JJJJMM00', 
+                          `000000TT', `0000MMTT', `JJJJ00TT', `JJJJMMTT', 
+                          `000000WWWN', `0000MMWWWN', `JJJJ00WWWN',       
+                          `JJJJMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `JJJJ*dN', `JJJJ*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `JJJJ*wN', `JJJJ*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `JJJJ@?[+|-]N', `JJJJ@?[+|-]NWWW'               
+`-cNw'                                                                    
+`-cw[+|-]'                `000000TT', `0000MMTT', `JJJJ00TT', `JJJJMMTT', 
+                          `000000WWWN', `0000MMWWWN', `JJJJ00WWWN',       
+                          `JJJJMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `JJJJ*dN', `JJJJ*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `JJJJ*wN', `JJJJ*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `JJJJ@?[+|-]N', `JJJJ@?[+|-]NWWW'               
+`-cm[+|-]'                `000000TT', `0000MMTT', `JJJJ00TT', `JJJJMMTT', 
+                          `000000WWWN', `0000MMWWWN', `JJJJ00WWWN',       
+                          `JJJJMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `JJJJ*dN', `JJJJ*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `JJJJ*wN', `JJJJ*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `JJJJ@?[+|-]N', `JJJJ@?[+|-]NWWW'               
+`-cy[+|-]'                                                                
+`-clNd|w|+|-'                                                             
+`-clMMTT'                                                                 
+`-clMMWWWN'                                                               
+`-cl*d|wN[WWW]'                                                           
+`-cl@?[[+|-]N[WWW]]'      `0000MMTT', `JJJJMMTT', `0000MMWWWN',           
+                          `JJJJMMWWWN', `0000*dN', `0000*dNWWW',          
+                          `JJJJ*dN', `JJJJ*dNWWW', `0000*wN',             
+                          `0000*wNWWW', `JJJJ*wN', `JJJJ*wNWWW',          
+                          `0000@?[+|-]N', `0000@?[+|-]NWWW',              
+                          `JJJJ@?[+|-]N', `JJJJ@?[+|-]NWWW'               
+
+
+File: gcal.info,  Node: Umgebungsvariablen,  Next: Fehlerkodes,  Prev: Kodierschema,  Up: Top
+
+Umgebungsvariablen
+******************
+
+Hier ist eine Liste aller Umgebungsvariablen, die von Gcal benutzt
+werden:
+
+`COLUMNS'
+`CO'
+     Setzt die Anzahl der Spalten des Bildschirms.  Hat Vorrang vor der
+     Anzahl der Spalten, welche die `TERM' Umgebungsvariable oder das
+     System selbst definiert.
+
+`GCAL'
+     Argumente, die an Gcal automatisch "ubergeben werden.
+
+`GCALANSI'
+     Wenn definiert oder gesetzt, so werden ANSI
+     Escape-Hervorhebungssequenzen als Grundeinstellung benutzt bzw.
+     erg"anzt, falls keine anderen Hervorhebungssequenzen mittels
+     Kommandozeilenoption definiert werden oder in der Termcap
+     Bibliotheksdatei aufgefunden werden.
+
+`GCAL_DATE_FORMAT'
+     Enth"alt den Datumformattext, der die Anordnung von einem
+     auszugebenden Datum bestimmt.  Hat Vorrang vor dem
+     Grundeinstellungs-Datumformattext.
+
+`GCALPATH'
+     Durch (`:') Doppelpunkt separierte Liste von Dateiverzeichnissen,
+     welche durchsucht werden, um die `.gcalrc' Datei zu finden.  Hat
+     Vorrang vor `GCAL_USR_DATADIR' und `GCAL_SYS_DATADIR'.
+
+`GCALPROG'
+     Enth"alt den Dateinamen des ausf"uhrbaren Gcal Programms, welcher
+     vom Programm `tcal' benutzt wird, um Gcal aufzurufen.  Hat Vorrang
+     vor dem beim Kompilationsvorgang in `tcal' eingebrannten Dateinamen
+     `gcal'.
+
+`GCAL_USR_DATADIR'
+     Name eines Dateiverzeichnisses relativ zum `HOME' Dateiverzeichnis,
+     in welchem der Benutzer seine pers"onlichen bzw. *privaten*
+     Ressourcendateien (Termindateien) speichert.  Hat Vorrang vor
+     `GCAL_SYS_DATADIR'.
+
+`GCAL_SYS_DATADIR'
+     Name eines Dateiverzeichnisses absolut zum *Wurzel*/*$(prefix)*
+     Dateiverzeichnis, in welchem der Systemadministrator allgemeine
+     bzw.  *"offentliche* Ressourcendateien (Termindateien) speichert.
+
+`HOME'
+     Name des Heimatverzeichnisses des Benutzers.  Dieses wird benutzt,
+     um die `.gcalrc' Datei zu finden.  Hat Vorrang vor `GCALPATH',
+     `GCAL_USR_DATADIR' und `GCAL_SYS_DATADIR'.
+
+`LANGUAGE'
+     Die Landessprache und sonstige kulturspezifische Konventionen, die
+     Gcal zur Laufzeit verwenden soll.  Hat Vorrang vor `LC_ALL',
+     `LC_MESSAGES' und `LANG'.
+
+`LC_ALL'
+     Die Landessprache und sonstige kulturspezifische Konventionen, die
+     Gcal zur Laufzeit verwenden soll.  Hat Vorrang vor `LC_MESSAGES'
+     und `LANG'.
+
+`LC_MESSAGES'
+     Die Landessprache und sonstige kulturspezifische Konventionen, die
+     Gcal zur Laufzeit verwenden soll.  Hat Vorrang vor `LANG'.
+
+`LANG'
+     Die Landessprache und sonstige kulturspezifische Konventionen, die
+     Gcal zur Laufzeit verwenden soll.
+
+`LINES'
+`LI'
+     Setzt die Anzahl der Zeilen des Bildschirms.  Hat Vorrang vor der
+     Anzahl der Zeilen, welche die `TERM' Umgebungsvariable oder das
+     System selbst definiert.
+
+`MAILPROG'
+     Der Name des Mailprogramms, das verwendet wird, wenn Postversand
+     gew"unscht wird.  *Note `--mail=ADRESSE': Globale Optionen, f"ur
+     weitere Details.
+
+`PAGER'
+     Der Name des externen Paginiererprogramms, das verwendet wird, wenn
+     Paginierung gew"unscht wird.  *Note `--pager': Globale Optionen,
+     f"ur weitere Details.
+
+`PATH'
+     Durch (`:') Doppelpunkt separierte Liste von Dateiverzeichnissen,
+     welche durchsucht werden, um das "externe" Paginiererprogramm zu
+     finden.  *Note `--pager': Globale Optionen, f"ur weitere Details.
+
+`TERM'
+     Der Terminaltyp, auf dem Gcal zum Ablauf kommt.
+
+`TZ'
+     Die Zeitzoneninformation, mit dem der Datumtext in versandten
+     eMails, erzeugten Anwortdateien und erzeugten shell script Dateien
+     versehen wird.
+
+
+File: gcal.info,  Node: Fehlerkodes,  Next: Argumentenindex,  Prev: Umgebungsvariablen,  Up: Top
+
+Fehlerkodes
+***********
+
+Gcal erzeugt folgende *exit*-Kodes:
+
+`127'
+     Hilfeseite, Softwarelizenz bzw. Versionsnummer angefordert
+     (einstellbar).
+
+`126'
+     Unzul"assige Option bei Programmaufruf.
+
+`125'
+     Jahr ausserhalb zul"assigen Bereichs bei Ermittlung des
+     Ostersonntags.
+
+`124'
+     Virtueller Speicher ersch"opft.
+
+`123'
+     Unzul"assiger Datumeintrag in Ressourcen- bzw. Includedatei.
+
+`122'
+     Ung"ultiger Monatseintrag in Ressourcen- bzw. Includedatei.
+
+`121'
+     Ung"ultiger Tageseintrag in Ressourcen- bzw. Includedatei.
+
+`120'
+     Missgebildete *#include* Anweisung in Ressourcen- bzw.
+     Includedatei.
+
+`119'
+     Unzul"assige rekursive/zyklische *#include* Anweisung in
+     Ressourcen- bzw. Includedatei.
+
+`118'
+     Ressourcen- bzw. Includedatei nicht gefunden.
+
+`117'
+     Ung"ultiges N'ter Wochentagsfeld (nur 1...5 oder 9 erlaubt).
+
+`116'
+     Fehlendes *whitespace* Trennzeichen zwischen *Datumteil* und
+     *Textteil*.
+
+`115'
+     Antwortdatei bzw. shell script kann nicht geschrieben werden.
+
+`114'
+     Illegale Datumvariablen-Operation.
+
+`113'
+     Datumvariable undefiniert.
+
+`112'
+     Zuweisung von ung"ultigem Datumwert an Datumvariable.
+
+`111'
+     Versenden der Ausgabe an eMail Adresse hat versagt.
+
+`110'
+     Interner Fehler, C Funktion pipe(), fork(), execlp() oder unlink()
+     hat versagt.
+
+`109'
+     Fehler beim Lesen der Ressourcen-, Include- bzw. Antwortdatei
+     aufgetreten.
+
+`108'
+     Illegales Zeichen in Antwortdatei vorgefunden.
+
+`107'
+     Interner Fehler, ung"ultiger Wert f"ur die Gr"osse einer internen
+     Tabelle aufgetreten.
+
+`106'
+     Ung"ultiger Datumformattext angegeben.
+
+`105'
+     Illegale Textvariablen-Definition.
+
+`104'
+     Ung"ultiges regul"ar-Ausdruck Suchmuster angegeben.
+
+`3'
+     Programmabbruch durch Signal.
+
+`2'
+     *Exit*-Kode ungleich Null bei Kommandoausf"uhrung aufgetreten.
+
+`1'
+     Keine Ausgabe von Terminen obwohl Option `-c|C[]',
+     `-f|F DATEINAME[+...]' oder `-# ZEILE' aktiviert.
+
+`0'
+     Fehlerfreier Programmlauf.
+
+
+File: gcal.info,  Node: Argumentenindex,  Next: Variablenindex,  Prev: Fehlerkodes,  Up: Top
+
+Index von Kommandozeilenargumenten
+**********************************
+
+Hier ist eine alphabetische Liste der Kommandozeilenargumente, die von
+Gcal verarbeitet werden:
+
+* Menu:
+
+* %DATUM:                                Datummodifizierer.
+* -# ZEILE:                              Termin Optionen.
+* -*dN:                                  Termin Optionen.
+* -*dNWWW:                               Termin Optionen.
+* -*wN[WWW]:                             Termin Optionen.
+* --alternative-format:                  Termin Optionen.
+* --biorhythm-axis=ANZAHL:               Termin Optionen.
+* --blocks=1:                            Kalender Optionen.
+* --blocks=12:                           Kalender Optionen.
+* --blocks=2:                            Kalender Optionen.
+* --blocks=3:                            Kalender Optionen.
+* --blocks=4:                            Kalender Optionen.
+* --blocks=6:                            Kalender Optionen.
+* --blocks=ANZAHL:                       Kalender Optionen.
+* --bypass-shell-command:                Termin Optionen.
+* --calendar-dates=both:                 Kalender Optionen.
+* --calendar-dates=special:              Kalender Optionen.
+* --calendar-dates=special|both:         Kalender Optionen.
+* --cc-holidays=CC[+...]:                Kalender Optionen.
+* --christian-holidays:                  Kalender Optionen.
+* --copyleft:                            Allgemeine Optionen.
+* --copyright:                           Allgemeine Optionen.
+* --date-format=de|us|gb|TEXT:           Kalender Optionen.
+* --date-variable=ARGUMENT:              Termin Optionen.
+* --debug=abort:                         Globale Optionen.
+* --debug=all:                           Globale Optionen.
+* --debug=handled:                       Globale Optionen.
+* --debug=internal:                      Globale Optionen.
+* --debug=unhandled:                     Globale Optionen.
+* --debug[=internal|handled|unhandled|all|abort]: Globale Optionen.
+* --descending-fixed-dates=long:         Termin Optionen.
+* --descending-fixed-dates=short:        Termin Optionen.
+* --descending-fixed-dates[=short|long]: Termin Optionen.
+* --descending-holiday-list=long:        Kalender Optionen.
+* --descending-holiday-list=short:       Kalender Optionen.
+* --descending-holiday-list[=long|short]: Kalender Optionen.
+* --disable-highlighting:                Globale Optionen.
+* --end-of-month:                        Termin Optionen.
+* --end-of-week:                         Termin Optionen.
+* --end-of-year:                         Termin Optionen.
+* --exclude-fixed-dates-list-title:      Termin Optionen.
+* --exclude-holiday-list-title:          Kalender Optionen.
+* --exit-status-help-127:                Allgemeine Optionen.
+* --export-date-variables <1>:           Termin Optionen.
+* --export-date-variables:               Datumvariablen.
+* --export-text-variables <1>:           Termin Optionen.
+* --export-text-variables:               Textvariablen.
+* --filter-day=ARGUMENT:                 Termin Optionen.
+* --filter-period=ARGUMENT:              Termin Optionen.
+* --filter-text=SUCHMUSTER:              Termin Optionen.
+* --fixed-dates=both:                    Kalender Optionen.
+* --fixed-dates=special:                 Kalender Optionen.
+* --fixed-dates=special|both:            Kalender Optionen.
+* --force-highlighting:                  Globale Optionen.
+* --gregorian-reform=1582|1700|1752|1753|ARGUMENT: Kalender Optionen.
+* --grouping-text[=TEXT]:                Termin Optionen.
+* --help <1>:                            Allgemeine Optionen.
+* --help <2>:                            Aufruf von gcal2txt.
+* --help <3>:                            Aufruf von tcal.
+* --help:                                Aufruf von txt2gcal.
+* --here=ZEILE:                          Termin Optionen.
+* --highlighting=no:                     Globale Optionen.
+* --highlighting=TEXT:                   Globale Optionen.
+* --highlighting=yes:                    Globale Optionen.
+* --holiday-dates=both:                  Kalender Optionen.
+* --holiday-dates=special:               Kalender Optionen.
+* --holiday-dates=special|both:          Kalender Optionen.
+* --holiday-list=long:                   Kalender Optionen.
+* --holiday-list=short:                  Kalender Optionen.
+* --holiday-list[=long|short]:           Kalender Optionen.
+* --include-consecutive-number:          Termin Optionen.
+* --include-holidays=long:               Termin Optionen.
+* --include-holidays=short:              Termin Optionen.
+* --include-resource-file-name:          Termin Optionen.
+* --include-today:                       Termin Optionen.
+* --include-week-number:                 Termin Optionen.
+* --leap-day=february:                   Termin Optionen.
+* --leap-day=february|march:             Termin Optionen.
+* --leap-day=march:                      Termin Optionen.
+* --license:                             Allgemeine Optionen.
+* --list-mode:                           Termin Optionen.
+* --list-of-fixed-dates=long:            Termin Optionen.
+* --list-of-fixed-dates=short:           Termin Optionen.
+* --list-of-fixed-dates[=short|long]:    Termin Optionen.
+* --long-help=?:                         Allgemeine Optionen.
+* --long-help[=ARGUMENT]:                Allgemeine Optionen.
+* --mail=ADRESSE:                        Globale Optionen.
+* --month:                               Termin Optionen.
+* --moonimage-lines=ANZAHL:              Termin Optionen.
+* --omit-multiple-date-part:             Termin Optionen.
+* --orthodox-calendar:                   Kalender Optionen.
+* --pager:                               Globale Optionen.
+* --period-of-fixed-dates=ARGUMENT:      Termin Optionen.
+* --resource-file=DATEINAME[+...]:       Termin Optionen.
+* --response-file=DATEINAME:             Globale Optionen.
+* --shell-script=DATEINAME:              Globale Optionen.
+* --shift=[+|-]ZAHL:                     Aufruf von tcal.
+* --start-of-month:                      Termin Optionen.
+* --start-of-week:                       Termin Optionen.
+* --start-of-year:                       Termin Optionen.
+* --starting-day=ARGUMENT:               Kalender Optionen.
+* --suppress-calendar:                   Kalender Optionen.
+* --suppress-date-part:                  Termin Optionen.
+* --text-variable=ARGUMENT:              Termin Optionen.
+* --today:                               Termin Optionen.
+* --tomorrow:                            Termin Optionen.
+* --type=special|standard:               Kalender Optionen.
+* --usage=?:                             Allgemeine Optionen.
+* --usage[=ARGUMENT]:                    Allgemeine Optionen.
+* --version <1>:                         Aufruf von txt2gcal.
+* --version <2>:                         Aufruf von tcal.
+* --version <3>:                         Aufruf von gcal2txt.
+* --version:                             Allgemeine Optionen.
+* --week:                                Termin Optionen.
+* --with-week-number:                    Kalender Optionen.
+* --without-standard-holidays:           Kalender Optionen.
+* --year:                                Termin Optionen.
+* --zero-dates-only:                     Termin Optionen.
+* -?:                                    Allgemeine Optionen.
+* -??:                                   Allgemeine Optionen.
+* -@DVAR[+|-]NWWW:                       Termin Optionen.
+* -@DVAR[[+|-]N]:                        Termin Optionen.
+* -@e[+|-]NWWW:                          Termin Optionen.
+* -@e[[+|-]N]:                           Termin Optionen.
+* -@t[+|-]NWWW:                          Termin Optionen.
+* -@t[[+|-]N]:                           Termin Optionen.
+* -A:                                    Termin Optionen.
+* -a:                                    Termin Optionen.
+* -B:                                    Termin Optionen.
+* -b 1:                                  Kalender Optionen.
+* -b 12:                                 Kalender Optionen.
+* -b 2:                                  Kalender Optionen.
+* -b 3:                                  Kalender Optionen.
+* -b 4:                                  Kalender Optionen.
+* -b 6:                                  Kalender Optionen.
+* -b ANZAHL:                             Kalender Optionen.
+* -C:                                    Termin Optionen.
+* -c:                                    Termin Optionen.
+* -c*dN:                                 Termin Optionen.
+* -c*dNWWW:                              Termin Optionen.
+* -c*wN[WWW]:                            Termin Optionen.
+* -c-:                                   Termin Optionen.
+* -C-:                                   Termin Optionen.
+* -c@DVAR[+|-]NWWW:                      Termin Optionen.
+* -c@DVAR[[+|-]N]:                       Termin Optionen.
+* -c@e[+|-]NWWW:                         Termin Optionen.
+* -c@e[[+|-]N]:                          Termin Optionen.
+* -c@t[+|-]NWWW:                         Termin Optionen.
+* -c@t[[+|-]N]:                          Termin Optionen.
+* -c[m|M[+|-]]:                          Termin Optionen.
+* -c[t|T]:                               Termin Optionen.
+* -c[w|W[+|-]]:                          Termin Optionen.
+* -c[y|Y[+|-]]:                          Termin Optionen.
+* -cA:                                   Termin Optionen.
+* -ca:                                   Termin Optionen.
+* -cB:                                   Termin Optionen.
+* -cd:                                   Termin Optionen.
+* -ce:                                   Termin Optionen.
+* -cE:                                   Termin Optionen.
+* -cg[TEXT]:                             Termin Optionen.
+* -ck:                                   Termin Optionen.
+* -cl:                                   Termin Optionen.
+* -cl*dN:                                Termin Optionen.
+* -cl*dNWWW:                             Termin Optionen.
+* -cl*wN[WWW]:                           Termin Optionen.
+* -cl@DVAR[+|-]NWWW:                     Termin Optionen.
+* -cl@DVAR[[+|-]N]:                      Termin Optionen.
+* -cl@e[+|-]NWWW:                        Termin Optionen.
+* -cl@e[[+|-]N]:                         Termin Optionen.
+* -cl@t[+|-]NWWW:                        Termin Optionen.
+* -cl@t[[+|-]N]:                         Termin Optionen.
+* -clMMTT:                               Termin Optionen.
+* -clMMWWWN:                             Termin Optionen.
+* -clN+|-:                               Termin Optionen.
+* -clNd:                                 Termin Optionen.
+* -clNw:                                 Termin Optionen.
+* -cm:                                   Termin Optionen.
+* -cm+:                                  Termin Optionen.
+* -cm-:                                  Termin Optionen.
+* -cMMTT:                                Termin Optionen.
+* -cMMWWWN:                              Termin Optionen.
+* -cN+|-:                                Termin Optionen.
+* -cNd:                                  Termin Optionen.
+* -cNw:                                  Termin Optionen.
+* -co:                                   Termin Optionen.
+* -ct:                                   Termin Optionen.
+* -cT:                                   Termin Optionen.
+* -cU:                                   Termin Optionen.
+* -cw:                                   Termin Optionen.
+* -cw+:                                  Termin Optionen.
+* -cw-:                                  Termin Optionen.
+* -cx:                                   Termin Optionen.
+* -cy:                                   Termin Optionen.
+* -cy+:                                  Termin Optionen.
+* -cy-:                                  Termin Optionen.
+* -cZ:                                   Termin Optionen.
+* -cz:                                   Termin Optionen.
+* -c|C[-]:                               Termin Optionen.
+* -d:                                    Termin Optionen.
+* -D ARGUMENT:                           Termin Optionen.
+* -E:                                    Termin Optionen.
+* -e:                                    Termin Optionen.
+* -f|F DATEINAME[+...]:                  Termin Optionen.
+* -g[TEXT]:                              Termin Optionen.
+* -h:                                    Allgemeine Optionen.
+* -H no:                                 Globale Optionen.
+* -H TEXT:                               Globale Optionen.
+* -H yes:                                Globale Optionen.
+* -hh:                                   Allgemeine Optionen.
+* -i:                                    Kalender Optionen.
+* -I SUCHMUSTER:                         Termin Optionen.
+* -i[-]:                                 Kalender Optionen.
+* -j:                                    Kalender Optionen.
+* -j[b]:                                 Kalender Optionen.
+* -jb:                                   Kalender Optionen.
+* -jc:                                   Kalender Optionen.
+* -jc[b]:                                Kalender Optionen.
+* -jcb:                                  Kalender Optionen.
+* -jn:                                   Kalender Optionen.
+* -jn[b]:                                Kalender Optionen.
+* -jnb:                                  Kalender Optionen.
+* -k:                                    Termin Optionen.
+* -K:                                    Kalender Optionen.
+* -L:                                    Allgemeine Optionen.
+* -l:                                    Termin Optionen.
+* -l*dN:                                 Termin Optionen.
+* -l*dNWWW:                              Termin Optionen.
+* -l*wN[WWW]:                            Termin Optionen.
+* -l@DVAR[+|-]NWWW:                      Termin Optionen.
+* -l@DVAR[[+|-]N]:                       Termin Optionen.
+* -l@e[+|-]NWWW:                         Termin Optionen.
+* -l@e[[+|-]N]:                          Termin Optionen.
+* -l@t[+|-]NWWW:                         Termin Optionen.
+* -l@t[[+|-]N]:                          Termin Optionen.
+* -lMMTT:                                Termin Optionen.
+* -lMMWWWN:                              Termin Optionen.
+* -lN+|-:                                Termin Optionen.
+* -lNd:                                  Termin Optionen.
+* -lNw:                                  Termin Optionen.
+* -m:                                    Termin Optionen.
+* -M:                                    Termin Optionen.
+* -m:                                    Termin Optionen.
+* -m+:                                   Termin Optionen.
+* -m-:                                   Termin Optionen.
+* -m[+|-]:                               Termin Optionen.
+* -M[+|-]:                               Termin Optionen.
+* -m|M[+|-]:                             Termin Optionen.
+* -n:                                    Kalender Optionen.
+* -N:                                    Kalender Optionen.
+* -N-:                                   Kalender Optionen.
+* -n-:                                   Kalender Optionen.
+* -n|N[-]:                               Kalender Optionen.
+* -O:                                    Kalender Optionen.
+* -o:                                    Termin Optionen.
+* -p:                                    Globale Optionen.
+* -P ARGUMENT:                           Termin Optionen.
+* -q CC[+...]:                           Kalender Optionen.
+* -r ARGUMENT:                           Termin Optionen.
+* -R DATEINAME:                          Globale Optionen.
+* -s ARGUMENT:                           Kalender Optionen.
+* -S DATEINAME:                          Globale Optionen.
+* -T:                                    Termin Optionen.
+* -t:                                    Termin Optionen.
+* -u:                                    Kalender Optionen.
+* -U:                                    Termin Optionen.
+* -V:                                    Allgemeine Optionen.
+* -v ARGUMENT:                           Termin Optionen.
+* -w:                                    Termin Optionen.
+* -W:                                    Termin Optionen.
+* -w:                                    Termin Optionen.
+* -w+:                                   Termin Optionen.
+* -w-:                                   Termin Optionen.
+* -W[+|-]:                               Termin Optionen.
+* -w[+|-]:                               Termin Optionen.
+* -w|W[+|-]:                             Termin Optionen.
+* -x:                                    Termin Optionen.
+* -X:                                    Kalender Optionen.
+* -y:                                    Termin Optionen.
+* -Y:                                    Termin Optionen.
+* -y+:                                   Termin Optionen.
+* -y-:                                   Termin Optionen.
+* -y[+|-]:                               Termin Optionen.
+* -Y[+|-]:                               Termin Optionen.
+* -y|Y[+|-]:                             Termin Optionen.
+* -Z:                                    Termin Optionen.
+* -z:                                    Termin Optionen.
+* @DATEI:                                Antwortdatei.
+* Kommando, .:                           3-Monatsmodus Kommandos.
+* Kommando, . JJJJ:                      3-Monatsmodus Kommandos.
+* Kommando, .+:                          3-Monatsmodus Kommandos.
+* Kommando, .+ JJJJ:                     3-Monatsmodus Kommandos.
+* Kommando, .-:                          3-Monatsmodus Kommandos.
+* Kommando, .- JJJJ:                     3-Monatsmodus Kommandos.
+* Kommando, ..:                          3-Monatsmodus Kommandos.
+* Kommando, .. JJJJ:                     3-Monatsmodus Kommandos.
+* Kommando, ::                           Einfache Kommandos.
+* Kommando, :JJJJ:                       Einfache Kommandos.
+* Kommando, JJJJ:                        Einfache Kommandos.
+* Kommando, JJJJ+JJJJ:                   Bereiche von Kommandos.
+* Kommando, JJJJ;...;JJJJ:               Listen von Kommandos.
+* Kommando, KEINES:                      Einfache Kommandos.
+* Kommando, MM JJJJ:                     Einfache Kommandos.
+* Kommando, MM JJJJ-JJJJ:                Bereiche von Kommandos.
+* Kommando, MM,...,MM:                   Listen von Kommandos.
+* Kommando, MM,...,MM JJJJ:              Listen von Kommandos.
+* Kommando, MM,MM/JJJJ,...:              Listen von Kommandos.
+* Kommando, MM-MM:                       Bereiche von Kommandos.
+* Kommando, MM-MM JJJJ:                  Bereiche von Kommandos.
+* Kommando, MM/JJJJ:                     Einfache Kommandos.
+* Kommando, MM/JJJJ,...,MM/JJJJ:         Listen von Kommandos.
+* Kommando, MM/JJJJ-JJJJ:                Bereiche von Kommandos.
+* Kommando, MM/JJJJ-MM/JJJJ:             Bereiche von Kommandos.
+* Kommando, MM::                         Einfache Kommandos.
+* Kommando, MM:;MM:;...:                 Listen von Kommandos.
+* Kommando, MM:;MM:JJJJ,...:             Listen von Kommandos.
+* Kommando, MM:JJJJ:                     Einfache Kommandos.
+* Kommando, MM:JJJJ+MM:JJJJ:             Bereiche von Kommandos.
+* Kommando, MM:JJJJ;...;MM:JJJJ:         Listen von Kommandos.
+* Kommando, MONATSNAME:                  Einfache Kommandos.
+

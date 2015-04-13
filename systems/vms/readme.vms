@@ -1,0 +1,75 @@
+readme.vms file for `gcal'.
+
+
+It was originally written by Klaus Reimann <kr@cip.physik.uni-stuttgart.de>
+for the GZIP distribution and modified by Thomas Esken <esken@uni-muenster.de>
+for the GCAL distribution.
+
+
+Here is a list of the files in [.vms]:
+
+MAKEFILE.GCC    ! Description for (vms-)make,  using gcc
+MAKEFILE.MMS    ! Description for MMS-utility, using vaxc
+MAKEFILE.VMS    ! Description for (vms-)make,  using vaxc
+MAKEGCAL.COM    ! simple and robust DCL-Script, using vaxc
+README.VMS      ! this file, how to install gcal
+
+This file describe, how to compile and install the VMS-Port of gcal.
+
+Installing gcal
+
+Since there are many makefiles there are many possibilities
+compiling and installing gcal. For most of them, it is important,
+that you start them from the SOURCE-Directory (that is where
+gcal.c is), not from the [.vms]-directory. Otherwise the compiler
+won't find the source-files.
+
+Using gcc saves disk-space, but needs longer to compile.
+
+To install gcal one has to perform the following steps:
+  1. Compile sources (*.c)
+
+  2. Link executable gcal.exe
+
+  3. Rename executable (*.exe) to Your prefered exe-directory.
+     If it is on another Device, then you should only copy gcal.exe.
+
+  4. Setting up Symbols for the executable:
+     Place the following lines in Your login.com
+     Change "disk:[directory]" as appropriate.
+       $ gcal   == "$disk:[directory]gcal.exe"
+
+  5. Insert help-file gcal.hlp (--> rename [.doc[.txt]gcal-{us|de}.doc to
+     [.vms]gcal.hlp) in any Help-library, for example in sys$help:helplib.
+     this can be done by $lib sys$help:helplib/help gcal
+     (I did not try this command)
+
+Step 5 must be done by hand.
+Steps 1. through 4. may be done by one of the makefiles:
+
+a) MAKEGCAL.COM
+This was created from MAKEFILE.VMS and later on edited. It uses the
+VAXC-Compiler and does compiling, linking and making the entries.
+Usage:
+- change to the Source-Directory
+- start compiling, linking, entries
+    $@[.vms]makegcal
+if everything is OK. Then you get gcal.exe, continue at Step 5.
+
+b) MAKEFILE.VMS
+Makefile for a vms-make utility (NOT gnu-make).
+Is uses the VAXC-Compiler and has the Advantage over MAKEGCAL.COM
+that make checks dependencies. This is helpfull if You have to
+recompile several times, for example after editing the sources.
+- change to the Source-Directory
+- start compiling, linking, entries
+    $make /input=[.vms]makefile.vms
+if everything is OK. then you get gcal.exe, continue at Step 5.
+
+c) MAKEFILE.GCC
+Same as MAKEFILE.VMS, but uses gcc
+- Use $make /input=[.vms]makefile.gcc   instead of make ....
+
+d) MAKEFILE.MMS
+Makefile for the MMS-utility. Similar to MAKEFILE.VMS
+- Use $mms /description=[.vms]makefile.mms  instead of make ....

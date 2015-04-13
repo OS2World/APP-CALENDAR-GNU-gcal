@@ -1,0 +1,12 @@
+readme.arm file for `gcal'.
+
+
+To build `gcal' for Acorn machines, first create the
+directories:  c  h  o
+because Acorn's RISC-OS don't respect any file suffixes.
+
+Then rename:  *.c files to *_c files
+              *.h files to *_h files
+and move/copy them to the according c or h directories.
+
+Edit and run makefile.gcc after these steps.

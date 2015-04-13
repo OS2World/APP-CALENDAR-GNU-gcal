@@ -1,0 +1,1290 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Top,  Next: Einleitung,  Prev: (dir),  Up: (dir)
+
+Gcal
+****
+
+Gcal ist ein Programm um Kalender auszugeben.  Gcal gibt Monatskalender
+und Jahreskalender, ewige Feiertagslisten sowie Terminlisten auf viele
+verschiedene Arten und Weisen aus.  Es ber"ucksichtigt diejenigen Daten
+korrekt, welche "ubergangen wurden, als der derzeitig g"ultige
+Gregorianische Kalender den vormals g"ultigen Julianischen Kalender
+abl"oste.
+
+Das ist die Ausgabe 2.40 der Gcal Dokumentation vom 06 Mai 1997, f"ur
+Gcal 2.40.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+* Menu:
+
+* Einleitung::       Einf"uhrung in Gcal.
+* Aufruf von Gcal::  Wie starte ich das `gcal' Programm?
+* Ewige Feiertage::  Wie wird eine Ewige Feiertagsliste erzeugt?
+* Termine::          Wie wird eine Terminliste erzeugt?
+
+Anh"ange
+
+* Heutiger Kalender::      Entstehungsgeschichte des Gregorianischen Kalenders.
+* Gcal Hilfsprogramme::    Mitgelieferte Hilfsprogramme.
+* Internationalisierung::  Aspekte zur erfolgten Internationalisierung.
+* Metasymbole::            In diesem Dokument benutzte Metasymbole.
+* Regulaere Ausdruecke::   Beschreibung aller regul"aren Ausdr"ucke.
+* Regexps (kurz)::         Zusammenfassung aller regul"aren Ausdr"ucke.
+* Spezialtexte (lang)::    Beschreibung aller `%?'... Spezialtexte.
+* Spezialtexte (kurz)::    Zusammenfassung aller `%?'... Spezialtexte.
+* Kodierschema::           Kodierschema des Datumteils einer Ressourcendatei.
+* Umgebungsvariablen::     Ber"ucksichtigte Umgebungsvariablen.
+* Fehlerkodes::            Welche Fehlerkodes werden von Gcal zur"uckgegeben?
+
+Indizes
+
+* Argumentenindex::  Verzeichnis der Kommandozeilenargumente.
+* Variablenindex::   Verzeichnis der Umgebungsvariablen.
+* Begriffsindex::    Stichwortverzeichnis.
+
+  -- Detaillierte Aufstellung Von Knoten --
+
+Aufruf von Gcal
+
+* Kommandozeilenargumente::     Kommandozeilenargumente.
+* Die GCAL Umgebungsvariable::  Wie wird die `GCAL' Umgebungsvariable benutzt?
+
+Kommandozeilenargumente
+
+* Optionen::           Wie werden Optionen benutzt?
+* Antwortdatei::       Wie wird eine `@DATEI' Antwortdatei benutzt?
+* Datummodifizierer::  Wie wird der `%DATUM' Datummodifizierer benutzt?
+* Kommandos::          Wie werden Kommandos benutzt?
+
+Optionen
+
+* Allgemeine Optionen::  Wie Allgemeine Optionen benutzt werden.
+* Globale Optionen::     Wie Globale Optionen benutzt werden.
+* Kalender Optionen::    Wie Kalender Optionen benutzt werden.
+* Termin Optionen::      Wie Termin Optionen benutzt werden.
+
+Kommandos
+
+* Einfache Kommandos::       Wie ein Einfaches Kommando benutzt wird.
+* 3-Monatsmodus Kommandos::  Wie ein 3-Monatsmodus Kommando benutzt wird.
+* Listen von Kommandos::     Wie eine Liste von Kommandos benutzt wird.
+* Bereiche von Kommandos::   Wie ein Bereich von Kommandos benutzt wird.
+
+Termine
+
+* Ressourcendatei::           Wie eine Ressourcendatei benutzt wird.
+* Ressourcendateibeispiele::  Beispiele zu Eintr"agen in der Ressourcendatei.
+
+Ressourcendatei
+
+* Struktur einer Ressourcendatei::  Wie wird eine Ressourcendatei erstellt?
+* Datumteil einer Zeile::           Wie muss der Datumteil aussehen?
+* Weitere Datumteil-Attribute::     Was sind weitere Attribute vom Datumteil?
+* Textteil einer Zeile::            Wie muss der Textteil aussehen?
+* Zeile kommentieren::              Wie eine Zeile kommentiert werden kann.
+* Include Anweisungen::             Was sind Include Anweisungen?
+* Spezialtexte::                    Was sind `%?'... Spezialtexte?
+* Datumvariablen::                  Wie Datumvariablen benutzt werden k"onnen.
+* Textvariablen::                   Wie Textvariablen benutzt werden k"onnen.
+
+Weitere Datumteil-Attribute
+
+* Listen von Tagen::               Wie eine Liste von Tagen benutzt wird.
+* Bereiche von Tagen::             Wie ein Bereich von Tagen benutzt wird.
+* Wiederholungsfaktor von Tagen::  Wie ein solcher Faktor benutzt wird.
+* Auftretensfaktor von Tagen::     Wie ein solcher Faktor benutzt wird.
+
+Gcal Hilfsprogramme
+
+* Aufruf von tcal::      Wie starte ich das `tcal' Programm?
+* Aufruf von txt2gcal::  Wie starte ich das `txt2gcal' Programm?
+* Aufruf von gcal2txt::  Wie starte ich das `gcal2txt' Programm?
+
+Regulaere Ausdruecke
+
+* Benutzung von Regexp::  Wie regul"are Ausdr"ucke benutzt werden k"onnen.
+* Regexp Operatoren::     Was sind regul"ar-Ausdruck Operatoren?
+
+Spezialtexte (lang)
+
+* Ausschliessen::   Datum ausschliessen.
+* Ersetzen::        Texte ersetzen.
+* Shell Kommando::  Shell Kommando ausf"uhren.
+
+Ausschliessen
+
+* Ausschliessen mit Datumargument::
+* Ausschliessen ohne Argument::
+
+Ausschliessen mit Datumargument
+
+* Inklusive Datum Zeitraum::
+* Exklusive Datum Zeitraum::
+
+Ausschliessen ohne Argument
+
+* Inklusive Tag Zeitraum::
+* Exklusive Tag Zeitraum::
+
+Ersetzen
+
+* Ersetzen mit Datumargument::
+* Ersetzen mit anderem Argument::
+* Ersetzen ohne Argument::
+
+Ersetzen mit Datumargument
+
+* Wochentagsname::
+* Wochentag::
+* Tageszahl::
+* Tag::
+* Woche::
+* Monatsname::
+* Monat::
+* Jahr::
+* Mondphase::
+* Biorhythmus::
+* Differenzwert::
+
+Ersetzen mit anderem Argument
+
+* Aktuelle Uhrzeit::
+* Textliches Datum::
+* Julianische Tageszahl::
+
+Ersetzen ohne Argument
+
+* Differenzwert::
+* Hervorhebung::
+
+Kodierschema
+
+* Kodierschema Tabelle 1::
+* Kodierschema Tabelle 2::
+
+
+File: gcal.info,  Node: Einleitung,  Next: Aufruf von Gcal,  Prev: Top,  Up: Top
+
+Einleitung
+**********
+
+Neben den "ublichen und altbekannten Kalenderfunktionen wie der Ausgabe
+eines Monatskalenderblatts oder eines Jahreskalenderblatts, oder der
+Ausgabe einer ewigen Feiertagsliste, bietet Gcal die M"oglichkeit,
+Termine am Tag ihres Auftretens auszugeben, und so den Benutzer auf
+einen Termin hinzuweisen.  So ist es vorstellbar, dass beim Starten des
+Computers oder der Arbeitssitzung dem Benutzer von Gcal alle Termine,
+welche an diesem Tag wahrzunehmen sind, am Bildschirm aufgezeigt oder
+via elektronischer Post zugesandt werden.
+
+Der Zeitraum, f"ur welchen Gcal anfallende Termine ber"ucksichtigt,
+kann vom Benutzer frei vorgew"ahlt werden.  So k"onnen Termine, die
+sich z.B. auf den morgigen Tag beziehen, ebenso wie Termine, die in der
+gesamte Woche, dem gesamten Monat oder dem gesamten Jahr auftreten, von
+Gcal ausgegeben werden.  Termine, die an einem bestimmten Tag des
+Jahres auftreten, werden ebenso wie Termine, die relativ zu einem
+anderen, vorgegebenen Datum auftreten, von Gcal ausgegeben; entweder
+nur bezogen auf dieses Einzeldatum oder als Terminliste, beginnend bei
+einem Startdatum und endend am aktuellen Tag (1).
+
+Es bestehen zwei M"oglichkeiten, eine Terminvorschau (2) oder eine
+Terminr"uckschau (3) vorzunehmen.  So kann Gcal einerseits mittels
+einer Option, welche das vom Computer gelieferte aktuelle Systemdatum
+f"ur den Augenblick des Gcal-Programmlaufs auf ein vorgegebenes Datum
+setzt, verwendet werden, um eine Terminvorschau bzw. Terminr"uckschau
+so vorzunehmen, als ob das Systemdatum tats"achlich eben dieses
+vorgegebene Datum w"are, so dass der zu ber"ucksichtigende Zeitraum via
+Option vom Benutzer beliebig vorgegeben werden kann.  Andererseits kann
+mittels eines Kommandos veranlasst werden, anstelle des aktuellen
+Jahres ein anderes Jahr zu ber"ucksichtigen, so dass Gcal anfallende
+Termine f"ur eben dieses andere Jahr ausgibt.  Das hat allerdings zur
+Folge, dass der vorgew"ahlte Zeitraum nicht mehr via Option vom
+Benutzer beliebig gesetzt werden kann, sondern sich in diesem Fall
+stets auf das gesamte Jahr bezieht.
+
+Gcal vermag nicht nur Termine auszugeben, die f"ur ein konkretes Datum
+gespeichert wurden, z.B. `Termin am 1'ten Dezember 1995', sondern auch
+Termine, die in bestimmten Abst"anden immer wieder auftreten.  So ist es
+m"oglich, wiederkehrende Termine wie z.B. `Dieser Termin findet an
+allen Tagen im Monat Mai 1995 statt' oder `Immer am 15'ten November
+eines jeden Jahres' zu vereinbaren.  Diese Terminvereinbarungen werden
+in sogenannten Ressourcendateien gespeichert, und bei Programmaufruf
+kann Gcal via Option mitgeteilt werden, welche Ressourcendateien
+auszuwerten sind.
+
+Einmal f"ur sinnvoll erachtete Aufrufe von Gcal k"onnen hinsichtlich
+der an das Programm "ubergebenen Kommandozeilenargumente dauerhaft in
+einer sogenannten Antwortdatei oder in einer shell script Datei
+gespeichert werden.  Eine Antwortdatei enth"alt ebenso wie eine shell
+script Datei alle Argumente, die an Gcal zur Verarbeitung "ubergeben
+wurden, nur ist eine solche Antwortdatei nicht eigenst"andig
+ablauff"ahig.  Wenn bei einem erneuten Aufruf von Gcal der Name dieser
+automatisch erzeugten Antwortdatei via Option "ubergeben wird, so liest
+Gcal den Inhalt dieser Antwortdatei ein und behandelt diesen so, als ob
+dieser in der Kommandozeile angegeben w"are.  Im Gegensatz dazu wird
+bei Aufruf einer shell script Datei das Gcal Programm direkt mit den in
+der shell script Datei gespeicherten Argumenten sowie den zus"atzlich in
+der Kommandozeile angegebenen Argumenten ausf"uhrt.
+
+Um einen konkreten Eindruck von den weiteren M"oglichkeiten des Gcal
+Programms zu erhalten, werden im n"achsten Kapitel alle verwendbaren
+Kommandozeilenargumente sowie deren Bedeutung vorgestellt.
+
+  ---------- Footnotes ----------
+
+  (1)  Einschliesslich oder ausschliesslich.
+
+  (2)  Termine zuk"unfiger Jahre.
+
+  (3)  Termine vergangener Jahre.
+
+
+File: gcal.info,  Node: Aufruf von Gcal,  Next: Ewige Feiertage,  Prev: Einleitung,  Up: Top
+
+Aufruf von `gcal'
+*****************
+
+* Menu:
+
+* Kommandozeilenargumente::     Kommandozeilenargumente.
+* Die GCAL Umgebungsvariable::  Wie wird die `GCAL' Umgebungsvariable benutzt?
+
+Gcal ist ein kommandozeilenorientiertes Programm.  Es wird
+"ublicherweise vom Kommandointerpretierer des Betriebssystems aus
+aufgerufen (1), und verarbeitet die ihm "ubergebenen Argumente, welche
+Optionen und Kommandos sind.  Optionen m"ussen vor Kommandos angegeben
+werden, d.h. Gcal muss auf folgende Art und Weise aufgerufen werden:
+
+           gcal [ [OPTION...] [%DATUM] [@DATEI...] ]  [KOMMANDO]
+
+
+Wenn Gcal ohne entsprechende Optionen aufgerufen wird bzw. kein Kommando
+angegeben wird, so wird ein Kalender des laufenden Monats ausgegeben.
+Wenn der Kalender eines bestimmten Jahres ausgegeben werden soll, so
+muss das Jahr vollst"andig angegeben werden, z.B. `gcal 94' w"urde
+nicht den Jahreskalender von 1994 ausgeben, sondern den Jahreskalender
+des Jahres 94.
+
+Werden zwei Argumente als Kommando angegeben, so bezieht sich das
+*erste* Argument auf den Monat, und das *zweite* Argument auf das Jahr.
+Werden beim Aufruf fehlerhafte Kommandos angegeben, so wird die
+Programmausf"uhrung unter Benutzung interner Grundeinstellungen von
+Gcal vorgenommen.
+
+In der deutschen Programmversion wird angenommen, dass die
+Gregorianische Reformation am 5'ten Oktober 1582 stattgefunden hat.
+*Note Entstehungsgeschichte des Gregorianischen Kalenders: Heutiger
+Kalender, und *Note Gesichtspunkte zur Internationalisierung:
+Internationalisierung, f"ur weitere Details.
+
+  ---------- Footnotes ----------
+
+  (1)  Im Englischen mit "shell" bezeichnet; dieses
+Betriebssystemprogramm interpretiert Kommandozeilen und f"uhrt diese
+aus.
+
+
+File: gcal.info,  Node: Kommandozeilenargumente,  Next: Die GCAL Umgebungsvariable,  Prev: Aufruf von Gcal,  Up: Aufruf von Gcal
+
+Kommandozeilenargumente
+=======================
+
+* Menu:
+
+* Optionen::           Wie werden Optionen benutzt?
+* Antwortdatei::       Wie wird eine `@DATEI' Antwortdatei benutzt?
+* Datummodifizierer::  Wie wird der `%DATUM' Datummodifizierer benutzt?
+* Kommandos::          Wie werden Kommandos benutzt?
+
+Dieses Kapitel beschreibt alle Argumente der Kommandozeile, die von
+Gcal verarbeitet werden.  Es gibt insgesamt vier verschiedene Typen von
+Kommandozeilenargumenten.  Ein wichtiger Typ von Argumenten sind die
+"Optionen", welche verschiedene Verhaltensweisen bei Gcal ausl"osen.
+Andere Argumenttypen sind die `%DATUM' und die `@DATEI' Option.  Die
+`%DATUM' Option setzt den Zeitraum, welcher von Gcal ber"ucksichtigt
+werden soll, auf ein vorbestimmtes Startdatum; die `@DATEI' Option
+l"adt Optionen und Kommandos aus einer Antwortdatei vor.  Die
+wichtigsten Argumente sind die "Kommandos", welche die Zeitr"aume
+kontrollieren, die von Gcal ber"ucksichtigt werden.
+
+Eine Option wird durch ein f"uhrendes Umschaltzeichen (1) definiert;
+entweder das `-' oder das `/' Zeichen bei traditionellen Kurzoptionen,
+oder zwei `--' bei den mnemotechnischen Langoptionen; einem Kommando
+darf kein Umschaltzeichen vorangehen.  Optionen (2) *m"ussen* vor
+Kommandos angegeben werden!
+
+Abh"angig vom benutzten Betriebssystem bzw. der shell kann es sein,
+dass einige der in der Kommandozeile angegebenen Argumente und Texte
+durch `"' oder `'' Zeichen quotiert, bzw. durch das `\' Zeichen gegen
+die Auswertung durch die shell gesch"utzt bzw. entwertet werden m"ussen.
+
+Hier folgt eine unvollst"andige Liste von Zeichen, die eventuell
+gesch"utzt werden m"ussen:
+
+     `(', `)', `<', `>', `[', `]', `{', `}', `\', `|', `$', `@', `!',
+     `&', `~', `"', `'', ``', `;'
+
+  ---------- Footnotes ----------
+
+  (1)  Im Englischen mit *switch* Zeichen bezeichnet.
+
+  (2)  Inklusive `%DATUM' und `@DATEI'.
+
+
+File: gcal.info,  Node: Optionen,  Next: Antwortdatei,  Prev: Kommandozeilenargumente,  Up: Kommandozeilenargumente
+
+Optionen
+--------
+
+* Menu:
+
+* Allgemeine Optionen::  Wie Allgemeine Optionen benutzt werden.
+* Globale Optionen::     Wie Globale Optionen benutzt werden.
+* Kalender Optionen::    Wie Kalender Optionen benutzt werden.
+* Termin Optionen::      Wie Termin Optionen benutzt werden.
+
+Die Optionen, welche von Gcal verarbeitet werden, k"onnen in vier
+Hauptklassen unterteilt werden.  Die Optionen der "Allgemeinen
+Optionsklasse" sind die Standardoptionen, welche jede GNU Software
+wenigstens teilweise aufweisen sollte.  Die "Globale Optionsklasse"
+enth"alt Optionen, welche die vom Programm erzeugte Ausgabe
+beeinflussen.  Die Optionen der "Kalender Optionsklasse" steuern das
+Kalender Layout, und die Optionen der "Termin Optionsklasse"
+kontrollieren das Layout der Termine und deren Intensit"at.
+
+Gcal ist in der Lage, Kurzoptionen sowie auch GNU Langoptionen zu
+verarbeiten.  Kurzoptionen werden von einem einzelnen Umschaltzeichen
+angef"uhrt, sodann folgt ein Optionszeichen und evtl. ein Modifizierer
+oder ein Argument.  Die meisten Einzelzeichenoptionen (1) k"onnen zu
+einem einzelnen Kommandozeilenwort zusammengefasst werden: `-Ax' ist
+gleichwertig zu `-A -x'.  GNU Langoptionen werden von `--' Zeichen
+angef"uhrt, sodann folgt ein Optionsname und evtl. ein Argument.
+Langoptionen sowie deren Argumente d"urfen abgek"urzt werden, sofern
+die vorgenommene Abk"urzung eindeutig ist.  Wenn ein Argument an eine
+Langoption "ubergeben werden soll, so werden der Optionsname und das
+Argument mit einem `=' Zeichen verbunden.
+
+Eckige Klammern ([ und ]) deuten in den nachfolgenden Aufstellungen an,
+dass eine Option ein optionales Argument annimmt.  Das `|' Zeichen wird
+dazu benutzt, um mehrere zur Auswahl stehende Argumente voneinander
+abzugrenzen.
+
+Gcal verarbeitet GNU Langoptionen in einem besonderen, nicht
+standardgem"assen Weg.  So unterscheidet das Programm f"unf
+verschiedene Typen von Langoptionen:
+
+  1. `--foo'
+     Schaltet die `--foo' Option an.
+
+  2. `--foo=BAR'
+     Schaltet die `--foo' Option mit dem ben"otigtem BAR Argument an.
+
+  3. `--foo[=BAR[|...|BAR]]'
+     Die `--foo' Option darf ein BAR Argument annehmen.  Falls keine
+     Argumentliste gegeben ist, so darf diese Option jedes Argument
+     annehmen.  Wenn aber doch eine Argumentliste gegeben ist, so darf
+     diese Option genau ein Argument aus der gegebenen Liste annehmen.
+     Falls in dieser Hinsicht kein Argument angew"ahlt wird, so wird
+     automatisch das erste BAR Argument aus der Argumentliste
+     angenommen.
+
+  4. `--foo=BAR|...|BAR'
+     Die `--foo' Option muss genau ein BAR Argument annehmen, welches
+     aus der gegebenen Argumentliste angew"ahlt werden muss.
+
+  5. `--foo=BAR|...|BAR|BAZ'
+     Die `--foo' Option muss entweder genau ein BAR Argument annehmen,
+     welches aus der gegebenen BAR Argumentliste angew"ahlt werden muss,
+     oder alternativ das BAZ Argument annehmen.
+
+Traditionelle Kurzoptionen unterscheiden sich wie folgt:
+
+  1. `-x'
+     Schaltet die `-x' Option an.
+
+  2. `-x BAR'
+     Schaltet die `-x' Option mit dem ben"otigtem BAR Argument an.  Das
+     BAR Argument darf durch ein f"uhrendes *whitespace* Zeichen von dem
+     Kurzoptionszeichen `x' abgegrenzt werden.  Das bedeutet, dass
+     folgende Notationen zur Angabe eines Arguments verwendet werden
+     k"onnen, n"amlich `-x BAR' und `-xBAR'.
+
+  3. `-x[BAR|...|BAR]'
+     Die `-x' Option darf einen oder mehrere BAR "Modifizierer"
+     annehmen.  Modifizierer in diesem Sinne sind ein oder mehrere
+     Zeichen, welche einen speziellen Modus definieren, der durch die
+     `-x' Option ausgel"ost wird.  Ein Modifizierer darf nicht durch
+     ein f"uhrendes *whitespace* Zeichen vom Kurzoptionszeichen
+     abgegrenzt werden.
+
+  ---------- Footnotes ----------
+
+  (1)  Sofern diese kein Argument annehmen.
+
+
+File: gcal.info,  Node: Allgemeine Optionen,  Next: Globale Optionen,  Prev: Optionen,  Up: Optionen
+
+Allgemeine Optionen
+...................
+
+`-?'
+`-h'
+`--help'
+     Ausgabe eines verdichteten Hilfetextes, der die meisten aller
+     verf"ugbaren Optionen aufzeigt; sodann erfolgreiche Beendigung des
+     Programms.
+
+`-??'
+`-hh'
+`--usage[=ARGUMENT]'
+`--long-help[=ARGUMENT]'
+     Ausgabe eines erweiterten Hilfetextes, der alle verf"ugbaren
+     Optionen aufzeigt; sodann erfolgreiche Beendigung des Programms.
+     Falls ARGUMENT angegeben wird und ein zul"assiger Langoptionsname
+     ist, so wird nur ein erweiterter Hilfetext zu dem angegebenen
+     Langoptionsnamen ausgegeben, z.B.:
+
+          --long-help=long-help
+
+     gibt einen erweiterten Hilfetext zur Langoption `--long-help' aus.
+
+     Falls ARGUMENT nur aus einem einzelnen `?' Zeichen besteht oder
+     kein g"ultiger Langoptionsname ist, so wird eine Liste aller
+     zul"assigen Langoptionsnamen ausgegeben.
+
+`-L'
+`--license'
+`--copyleft'
+`--copyright'
+     Ausgabe des Software-Lizenztextes; sodann erfolgreiche Beendigung
+     des Programms.
+
+`-V'
+`--version'
+     Ausgabe der Versionsnummer und der Kompilations-Optionen; sodann
+     erfolgreiche Beendigung des Programms.
+
+`--exit-status-help-127'
+     Setzt den Endestatus des Programms auf 127 anstatt auf 0, wenn
+     eine der anderen Optionen der *Allgemeinen Optionsklasse* benutzt
+     wurde.
+
+
+File: gcal.info,  Node: Globale Optionen,  Next: Kalender Optionen,  Prev: Allgemeine Optionen,  Up: Optionen
+
+Globale Optionen
+................
+
+`-R DATEINAME'
+`--response-file=DATEINAME'
+     Inhalt der Umgebungsvariable `GCAL' (*note GCAL:
+     Umgebungsvariablen.), und sodann die Argumente der Kommandozeile
+     (in genau dieser Reihenfolge) in die Datei DATEINAME schreiben,
+     d.h. Antwortdatei `Dateiname' erzeugen.  *Note Antwortdatei::,
+     f"ur weitere Details.
+
+`-S DATEINAME'
+`--shell-script=DATEINAME'
+     Inhalt der Umgebungsvariable `GCAL' (*note GCAL:
+     Umgebungsvariablen.), und sodann die Argumente der Kommandozeile
+     (in genau dieser Reihenfolge) in die shell script Datei DATEINAME
+     schreiben, d.h. shell script `Dateiname' erzeugen.  Eine
+     automatisch erzeugte shell script Datei ist eigenst"anding
+     ablauff"ahig und ruft Gcal direkt mit den im Script gespeicherten
+     Argumenten auf.  Beim Aufruf der shell script Datei d"urfen
+     weitere Kommandozeilenargumente gegeben werden, welche dann zudem
+     an Gcal "ubermittelt werden.
+
+`--debug[=internal|handled|unhandled|all|abort]'
+     Einige Debug-Informationen ausgeben.
+
+    `--debug=internal'
+          Informationstext bei Erreichen programminterner Maxima bzw.
+          bei Auftreten sonstiger Bedingungen ausgeben.
+
+    `--debug=handled'
+          Wie `--debug=internal', zudem werden die Dateinamen
+          ausgegeben, die gehandhabt werden.
+
+    `--debug=unhandled'
+          Wie `--debug=internal', zudem werden die Dateinamen
+          ausgegeben, die nicht gehandhabt werden.
+
+    `--debug=all'
+          Wie `--debug=handled' und `--debug=unhandled' zusammen.
+
+    `--debug=abort'
+          Wie `--debug=all', und Abbruch mit Fehlerkode beim ersten
+          Auftreten eines nicht gehandhabten Dateinamens bzw. beim
+          Auftreten sonstiger, nicht erf"ullbarer Bedingungen.  *Note
+          Fehlerkodes::.
+
+`-p'
+`--pager'
+     S"amtliche Ausgaben von Gcal entweder durch einen *externen*
+     Paginierer oder durch einen einfachen, *internen* Paginierer
+     lenken.  Falls eine `PAGER' Umgebungsvariable gesetzt ist, so wird
+     deren Wert zum Auffinden des externen Paginiererprogramms
+     ber"ucksichtigt.  *Note PAGER: Umgebungsvariablen, f"ur weitere
+     Informationen.
+
+     Falls keine `PAGER' Umgebungsvariable gesetzt ist oder aber deren
+     Wert ung"ultig ist, so versucht Gcal den `less' Paginierer zu
+     benutzen; falls dieses Programm aber w"ahrend des Absuchens des
+     Dateibaums unter Zuhilfenahme der `PATH' Umgebungsvariable nicht
+     vorgefunden wird, so wird Gcal versuchen, das `more'
+     Paginiererprogramm, wenn dieses nicht gefunden wird, das `pg'
+     Paginiererprogramm in gleicher Weise aufzusp"uren (1).  *Note
+     PATH: Umgebungsvariablen.
+
+     Falls alle diese Aktionen versagt haben sollten, so wird Gcal einen
+     einfachen, eingebauten Paginierer benutzen.  Wenn der einfache,
+     interne Paginierer benutzt wird, so ermittelt Gcal die Anzahl der
+     Zeilen, welche vor einer Eingabeaufforderung des internen
+     Paginierers ausgegeben werden, nach folgenden Methoden:
+
+       1. Gcal benutzt die Werte, die in den Umgebungsvariablen `LINES'
+          und `COLUMNS' angegeben sind.  *Note LINES:
+          Umgebungsvariablen, und *Note COLUMNS: Umgebungsvariablen,
+          f"ur weitere Informationen.
+
+       2. Falls vorherige Aktion versagt, so benutzt Gcal die Werte,
+          die in den Umgebungsvariablen `LI' und `CO' angegeben sind.
+          *Note LI: Umgebungsvariablen, sowie *Note CO:
+          Umgebungsvariablen, f"ur weitere Informationen.
+
+       3. Falls vorherige Aktion versagt, so benutzt Gcal die Werte,
+          die in der `termcap' (2) Datei f"ur das verwendete
+          Sichtger"at vorgefunden werden (*note TERM:
+          Umgebungsvariablen.).  Dieser Schritt wird nur auf Systemen
+          ausgef"uhrt, welche die Benutzung von Termcap unterst"utzen.
+
+          Unter MS-DOS, OS/2 und einigen anderen Betriebssystemen
+          benutzt Gcal eine systemabh"angige *low-level* Funktion, und
+          benutzt die Werte, die von dieser geliefert werden.
+
+       4. Falls alle vorherigen Aktionen fehlschlagen, so benutzt Gcal
+          Standardwerte (3).
+
+`-H yes'
+`--force-highlighting'
+`--highlighting=yes'
+     Falls die Ausgabe des Programms "redirektioniert" (4) wird, oder
+     in einer "pipe" (5) benutzt wird, so werden Hervorhebungssequenzen
+     *nicht* automatisch in die entsprechenden Markierungszeichen
+     umgesetzt, sondern unver"andert ausgegeben.  Diese Option hat
+     keine Wirkung, wenn die Ausgabe des Programms mittels
+     elektronischer Post versandt wird.  *Note `--mail=ADRESSE':
+     Globale Optionen.
+
+`-H no'
+`--disable-highlighting'
+`--highlighting=no'
+     Hervorhebungssequenz-/ Markierungszeichen Paare von aktuellen
+     Tagen, Feiertagen bzw. Text unterdr"ucken.
+
+`-H TEXT'
+`--highlighting=TEXT'
+     Setze Hervorhebungssequenz / Markierungszeichen Paare explizit.
+     "Hervorhebungssequenzen" in diesem Sinne sind Folgen von
+     Steuerzeichen, die eine Farbumschaltung oder eine
+     Intensit"atsumschaltung von auszugebendem Text bewirken.  Typische
+     Steuerzeichenfolgen sind die sogenannten ANSI Escape-Sequenzen,
+     welche als erstes Zeichen der Sequenz ein Escape Zeichen
+     aufweisen, und danach weitere Zeichen, die die Art der ANSI
+     Escape-Sequenz definieren.  "Markierungszeichen" in diesem Sinne
+     sind einzelne, druckbare Zeichen, die dem auszugebenden Text
+     vorangehen bzw. folgen.
+
+     Das TEXT Argument muss ein durch `:' (Doppelpunkt) Zeichen
+     abgegrenzter Text der Form
+     SEQ1_START:SEQ1_ENDE:SEQ2_START:SEQ2_ENDE sein.  Die *erste*
+     Sequenz wird dazu benutzt, um einen aktuellen Tag hervorzuheben,
+     die *zweite* Sequenz hebt einen Feiertag hervor.  Die Sequenzen
+     m"ussen in der Form eines Sequenzen-Paares angegeben werden;
+     SEQ?_START schaltet die Hervorhebung/Markierung ein, SEQ?_ENDE
+     schaltet sie wieder aus.  Es werden stets nur zwei Sequenzen-Paare
+     ber"ucksichtigt; falls mehr Sequenzen-Paare angegeben sind, so
+     werden diese ignoriert.  Es d"urfen entweder nur
+     Hervorhebungssequenzen-Paare oder nur Markierungszeichen-Paare
+     definiert werden, d.h. eine gemischte Verwendung beider
+     Hervorhebungsarten ist nicht erlaubt!
+
+     Zum Beispiel:
+
+          `-H \x20:\x20:\x1:#' bzw.
+          `--highlighting=\x20:\x20:\x1:#'
+          markiert den aktuellen Tag in der Form `\x20TAGESDATUM\x20'
+          (6), und Feiertage in der Form `\x1FEIERTAGSDATUM#' mit den
+          gegebenen Markierungszeichen.
+
+          `-H \x1b[34;42m:\x1b[0;40m' oder
+          `-H \033[34;42m:\033[0;40m' oder
+          `-H \E[34;42m:\E[0;40m'
+          definiert zum Hervorheben des aktuellen Tages die hier
+          angegebene ANSI Escape-Startsequenz `\x1b[34;42m' und die
+          ANSI Escape-Endesequenz `\x1b[0;40m'.  Da keine
+          Hervorhebungssequenzen f"ur den Feiertag angegeben sind,
+          werden die internen Grundeinstellungen der
+          Hervorhebungssequenzen f"ur diesen verwendet.  Bitte beachten
+          Sie in diesem Zusammenhang den letzten Absatz in diesem Text,
+          welcher "uber weitere Details informiert.  Und beachten Sie
+          auch *Note GCALANSI: Umgebungsvariablen.
+
+     Steuerzeichensequenzen d"urfen jedes druckbare Zeichen enthalten.
+     Nicht druckbare Zeichen k"onnen oktal oder hexadezimal kodiert
+     werden.  Die Abk"urzung `\E' kodiert direkt das Escape Zeichen
+     (oktal `\033' bzw. hexadezimal `\x1B').
+
+     Ein Zeichen kann durch `\NNN' (Backslash-Oktalziffer(n)) oktal
+     kodiert werden, wobei N eine g"ultige Oktalziffer (0...7) sein
+     muss.  Normalerweise m"ussen drei Oktalziffern angegeben werden.
+     Falls der oktale Zeichenkode nur aus einer oder zwei Oktalziffern
+     besteht, so m"ussen f"uhrende Nullen hinzugef"ugt werden;
+     ausgenommen, das kodierte Oktalzeichen wird zuletzt in einer
+     Einzelsequenz angegeben.
+
+     Ein Zeichen kann durch `\xNN' (Backslash-x-Hexadezimalziffer(n))
+     hexadezimal kodiert werden, wobei N eine g"ultige Hexadezimalziffer
+     (0...9A...Fa...f) sein muss.  Normalerweise m"ussen zwei
+     Hexadezimalziffern angegeben werden.  Falls der hexadezimale
+     Zeichenkode nur aus einer Hexadezimalziffer besteht, so muss eine
+     f"uhrende Null hinzugef"ugt werden; ausgenommen, das kodierte
+     Hexadezimalzeichen wird zuletzt in einer Einzelsequenz angegeben.
+
+     Falls das Sequenzen-Trennzeichen, also das `:' (Doppelpunkt)
+     Zeichen selbst als Markierungszeichen benutzt werden soll, so muss
+     dieses Zeichen entweder oktal `\072' oder hexadezimal `\x3A'
+     kodiert werden.
+
+     Falls das C Preprocessorsymbol USE_PAGER definiert wurde, und die
+     Ausgabe des Programms redirektioniert wird oder in einer pipe
+     verwendet wird, so werden Hervorhebungssequenzen automatisch in
+     die entsprechenden Markierungszeichen umgesetzt, falls USE_PAGER
+     nicht definiert wurde, so bleiben Hervorhebungssequenzen
+     unver"andert.
+
+     Unvollst"andig oder garnicht angegebene Hervorhebungssequenzen
+     werden durch intern fest voreingestellte ANSI
+     Escape-Hervorhebungssequenzen ersetzt, falls eine `GCALANSI'
+     Umgebungsvariable definiert ist, andernfalls vollst"andig durch
+     deren entsprechende Markierungszeichen ersetzt.  *Note GCALANSI:
+     Umgebungsvariablen.
+
+`--mail=ADRESSE'
+     Versand der von Gcal erzeugten Ausgabe via `mail' (7) Programm an
+     die angegebene ADRESSE, z.B.:
+
+          --mail=esken@uni-muenster.de
+
+     Alle von Gcal selbst erzeugten Hervorhebungssequenzen werden beim
+     Versenden einer eMail stets unterdr"uckt bzw. automatisch in ihre
+     entsprechenden Markierungszeichen umgesetzt, ganz gleich, ob die
+     `--force-highlighting' Option angegeben wurde oder nicht.  Dieses
+     Verhalten von Gcal ist deswegen zwingend erforderlich, da sonst
+     das `mail' Programm den Versand der Post evtl. nicht korrekt
+     vollziehen kann.  Beachten Sie bitte in diesem Zusammenhang auch
+     die Hinweise hinsichtlich der Einschr"ankungen im Textteil einer
+     Zeile der Ressourcendatei (*note Textteil einer Zeile::.).
+
+     Falls eine `MAILPROG' Umgebungsvariable definiert und gesetzt ist,
+     so wird deren Inhalt als Programmname des Mailprogramms benutzt
+     anstelle des Standard `mail' Programms.  *Note MAILPROG:
+     Umgebungsvariablen, f"ur weitere Informationen.
+
+  ---------- Footnotes ----------
+
+  (1)  Beachten Sie die Standard-Handbuchseiten zu `less', `more' und
+`pg'.
+
+  (2)  Beachten Sie die Standard-Handbuchseiten zu Termcap.
+
+  (3)  Entweder 23 oder 24 Zeilen, und 80 Spalten.
+
+  (4)  D.h. auf einen anderen Ger"atekanal umgelenkt wird.
+
+  (5)  D.h. als Eingabedatenstrom f"ur ein weiteres Programm dient.
+
+  (6)  D.h. mit vorangehendem und nachfolgendem Leerzeichen.
+
+  (7)  Beachten Sie die Standard-Handbuchseiten zu `mail'.
+
+
+File: gcal.info,  Node: Kalender Optionen,  Next: Termin Optionen,  Prev: Globale Optionen,  Up: Optionen
+
+Kalender Optionen
+.................
+
+`-n|N[-]'
+`--holiday-list[=long|short]'
+`--descending-holiday-list[=long|short]'
+     Ausgabe der ewigen Feiertagsliste.  *Note Ewige Feiertage::, f"ur
+     zus"atzliche Informationen.
+
+    `-n'
+    `--holiday-list=long'
+          Aufsteigend sortierte Ausgabe der ewigen Feiertagsliste mit
+          allen Feiertagen, d.h. den gesetzlichen Feiertagen und den
+          Gedenktagen.
+
+    `-n-'
+    `--descending-holiday-list=long'
+          Absteigend sortierte Ausgabe der ewigen Feiertagsliste mit
+          allen Feiertagen, d.h. den gesetzlichen Feiertagen und den
+          Gedenktagen.
+
+    `-N'
+    `--holiday-list=short'
+          Aufsteigend sortierte Ausgabe der ewigen Feiertagsliste mit
+          nur den gesetzlichen Feiertagen.
+
+    `-N-'
+    `--descending-holiday-list=short'
+          Absteigend sortierte Ausgabe der ewigen Feiertagsliste mit
+          nur den gesetzlichen Feiertagen.
+
+`-X'
+`--exclude-holiday-list-title'
+     Die Ausgabe der "Uberschrift in der ewigen Feiertagsliste
+     unterdr"ucken.
+
+`--without-standard-holidays'
+     Die ewige Feiertagsliste wird ohne Standardfeiertage ausgestattet.
+     Zudem werden auch in Kalenderbl"attern nicht mehr die Tage
+     hervorgehoben, die standardm"assig in die ewige Feiertagsliste
+     eingebracht und hervorgehoben werden.
+
+`--christan-holidays'
+     Die ewige Feiertagsliste wird zus"atzlich mit christlichen
+     Feiertagen ausgestattet.  Zudem werden auch in Kalenderbl"attern
+     die Tage hervorgehoben, die durch diese Option in die ewige
+     Feiertagsliste eingebracht und hervorgehoben werden.
+
+`-q CC[+...]'
+`--cc-holidays=CC[+...]'
+     Die ewige Feiertagsliste wird zus"atzlich mit landesspezifischen
+     Feiertagen ausgestattet.  Zudem werden auch in Kalenderbl"attern
+     die Tage hervorgehoben, die durch diese Option in die ewige
+     Feiertagsliste eingebracht und hervorgehoben werden.
+
+     Das CC Argument ist ein aus zwei Buchstaben bestehender
+     Territoriums- oder Landeskode (1), wie er in der ISO-3166
+     definiert ist, z.B. `GB' f"ur Grossbritannien oder `US' f"ur die
+     USA.  F"ur weitere Einzelheiten hierzu sei auf die einschl"agige
+     Fachliteratur verwiesen.
+
+     Es kann mehr als ein Landeskode CC verwendet werden, wenn die
+     zus"atzlichen Landeskodes, durch ein `+' Zeichen verbunden,
+     aufgef"uhrt werden, z.B.:
+
+          `--cc-holidays=ca+DE+fr+it' bzw.
+          `-q ca+DE+fr+it'
+
+     f"ugt alle diejenigen landesspezifischen Feiertage in die ewige
+     Feiertagsliste ein, die in dem vorstehenden Argument aufgef"uhrt
+     sind, d.h. kanadische, deutsche, franz"osische und italienische
+     Feiertage.
+
+     Derzeit ber"ucksichtigt Gcal die folgenden Landeskodes:
+
+    `at'
+          "Osterreich
+
+    `au'
+          Australien
+
+    `be'
+          Belgien
+
+    `ca'
+          Kanada
+
+    `ch'
+          Schweiz
+
+    `cz'
+          Tschechien
+
+    `de'
+          Deutschland
+
+    `dk'
+          D"anemark
+
+    `es'
+          Spanien
+
+    `fi'
+          Finnland
+
+    `fr'
+          Frankreich
+
+    `gb'
+          Grossbritannien
+
+    `gr'
+          Griechenland
+
+    `hu'
+          Ungarn
+
+    `it'
+          Italien
+
+    `mx'
+          Mexiko
+
+    `nl'
+          Niederlande
+
+    `no'
+          Norwegen
+
+    `pl'
+          Polen
+
+    `pt'
+          Portugal
+
+    `se'
+          Schweden
+
+    `si'
+          Slowenien
+
+    `th'
+          Thailand
+
+    `us'
+          USA
+
+`-i[-]'
+`--type=special|standard'
+     Um das "Standard" Kalenderformat zu erhalten, so sollte Gcal
+     entweder ganz ohne die `-i[-]' Option aufgerufen werden, da diese
+     voreingestellt ist.  *Note Gesichtspunkte zur
+     Internationalisierung: Internationalisierung, f"ur weitere Details.
+     Oder aber, um die Ausgabe eines Kalenderblatts zu erzwingen,
+     sollte Gcal mit der `-i-' bzw. `--type=standard' Option aufgerufen
+     werden:
+
+          $ gcal -i-
+          -|
+          -| September 1994
+          -|
+          -| Montag           5 12 19 26
+          -| Dienstag         6 13 20 27
+          -| Mittwoch         7 14 21 28
+          -| Donnerstag    1  8 15 22 29
+          -| Freitag       2  9 16 23 30
+          -| Samstag       3 10 17 24
+          -| Sonntag       4 11 18 25
+
+     Um das "Spezielle" Kalenderformat (2) zu erhalten, so sollte Gcal
+     mit der `-i' Option bzw. mit der Option `--type=special' gestartet
+     werden (3):
+
+          $ gcal -i
+          -|
+          -|    September 1994
+          -| Mo Di Mi Do Fr Sa So
+          -|           1  2  3  4
+          -|  5  6  7  8  9 10 11
+          -| 12 13 14 15 16 17 18
+          -| 19 20 21 22 23 24 25
+          -| 26 27 28 29 30
+
+`-O'
+`--orthodox-calendar'
+     Die Schaltjahrregel verwenden, die von den "ostlichen orthodoxen
+     Kirchen benutzt wird.
+
+     Ohne die Angabe der `--orthodox-calendar' Option ist Gcal unf"ahig,
+     Gregorianische Jahre nach dem Jahre 2799 f"ur die "ostlichen
+     orthodoxen Kirchen korrekt auszugeben, da diese ein anderes
+     Rechenschema zur Ermittlung der Schaltjahre verwenden.  Die
+     Methode zur Ermittlung der Schaltjahre im gew"ohnlichen
+     Gregorianischen Kalender, die standardm"assig von Gcal verwendet
+     wird, ist wie folgt:
+
+          Ein Schaltjahr ist jedes Jahr, dessen Nummer ohne Rest durch
+          4 geteilt werden kann, und Jahrhundertwenden sind keine
+          Schaltjahre, wenn sie nicht ganzzahlig durch 400 geteilt
+          werden k"onnen.
+
+     Aber die "ostlichen orthodoxen Kirchen berechnen Schaltjahre
+     innerhalb des Gregorianischen Kalenders mittels einer anderen
+     Regel:
+
+          Ein Schaltjahr ist jedes Jahr, dessen Nummer ohne Rest durch
+          4 geteilt werden kann, und Jahrhundertwenden sind
+          Schaltjahre, wenn sie durch 9 geteilt einen Divisionsrest von
+          2 oder 6 aufweisen.
+
+     Der erste Unterschied tritt demnach im Jahre 2800 auf, welches ein
+     Schaltjahr im gew"ohnlichen Gregorianischen Kalender ist, aber im
+     Kalender der "ostlichen orthodoxen Kirchen nur ein Gemeinjahr ist.
+
+`-K'
+`--with-week-number'
+     Das Kalenderblatt mit ISO-8601:1988 Wochennummern ausstatten.
+
+     *Bitte beachten:*
+     Es werden die Methoden der ISO-8601:1988 zur Ermittlung der
+     Wochennummern verwendet.  Das bedeutet, dass eine Woche mit einem
+     Montag beginnt, und die erste Woche des Jahres ist diejenige
+     Woche, in welche der erste Donnerstag f"allt, also gleich der
+     Woche ist, in welcher der 4'te Januar auftritt.
+
+     Sollte der Starttag der Woche nicht auf Montag gesetzt sein (*note
+     `--starting-day=ARGUMENT': Kalender Optionen.), so werden die
+     Wochennummern in den meisten F"allen nicht korrekt dargestellt.
+     Sie sollten also darauf achten, dass bei Verwendung dieser Option
+     der Montag als Starttag der Woche gesetzt ist!  *Note
+     Gesichtspunkte zur Internationalisierung: Internationalisierung,
+     f"ur weitere Details.
+
+`-u'
+`--suppress-calendar'
+     Die Ausgabe eines Kalenderblatts explizit unterdr"ucken.
+
+`-b ANZAHL'
+`--blocks=ANZAHL'
+     Setzen der ANZAHL von Bl"ocken, in die ein Jahreskalender
+     unterteilt wird (zul"assige Argumente: `1|2|3|4|6|12').  Die
+     voreingestellte ANZAHL ist beim *Standard* Kalenderformat `-b 3'
+     bzw. `--blocks=3', und beim *Speziellen* Kalenderformat `-b 4'
+     bzw. `--blocks=4'.  Falls diese Option vorgefunden wird, so
+     impliziert das Programm, dass die Ausgabe eines Jahreskalenders
+     gew"unscht wird!
+
+    `-b 1'
+    `--blocks=1'
+          Gibt einen Block mit allen zw"olf Monaten aus.
+
+    `-b 2'
+    `--blocks=2'
+          Gibt zwei Bl"ocke mit je sechs Monaten aus.
+
+    `-b 3'
+    `--blocks=3'
+          Gibt drei Bl"ocke mit je vier Monaten aus.
+
+    `-b 4'
+    `--blocks=4'
+          Gibt vier Bl"ocke mit je drei Monaten aus.
+
+    `-b 6'
+    `--blocks=6'
+          Gibt sechs Bl"ocke mit je zwei Monaten aus.
+
+    `-b 12'
+    `--blocks=12'
+          Gibt zw"olf Bl"ocke mit je einem Monat aus.
+
+`-j[b]'
+`--calendar-dates=special|both'
+     Benutzen des alternativen Datumformats im Kalenderblatt anstelle
+     des voreingestellten Standardformats, welches die laufenden Tage
+     im Monat ausgibt.
+
+    `-j'
+    `--calendar-dates=special'
+          Ausgabe des Kalenderblatts im speziellen Datumformat.
+          Darunter ist zu verstehen, dass anstelle der Folge der
+          Tagesnummern der Monate die Folge der Tagesnummern des Jahres
+          ausgegeben wird.
+
+    `-jb'
+    `--calendar-dates=both'
+          Ausgabe des Kalenderblatts im Standard- und speziellem
+          Datumformat.
+
+`-jn[b]'
+`--holiday-dates=special|both'
+     Benutzen des alternativen Datumformats in ewiger Feiertagsliste
+     anstelle des voreingestellten Standardformats, welches die
+     laufenden Tage im Monat ausgibt.  *Note
+     `--holiday-list[=long|short]': Kalender Optionen.
+
+    `-jn'
+    `--holiday-dates=special'
+          Ausgabe der ewige Feiertagsliste im speziellen Datumformat.
+          Darunter ist zu verstehen, dass anstelle der Folge der
+          Tagesnummern der Monate die Folge der Tagesnummern des Jahres
+          ausgegeben wird.
+
+    `-jnb'
+    `--holiday-dates=both'
+          Ausgabe der ewige Feiertagsliste im Standard- und speziellem
+          Datumformat.
+
+`-jc[b]'
+`--fixed-dates=special|both'
+     Benutzen des alternativen Datumformats in Terminliste anstelle des
+     voreingestellten Standardformats, welches die laufenden Tage im
+     Monat ausgibt.  *Note `--list-of-fixed-dates[=short|long]': Termin
+     Optionen.
+
+    `-jc'
+    `--fixed-dates=special'
+          Ausgabe der Terminliste im speziellen Datumformat.  Darunter
+          ist zu verstehen, dass anstelle der Folge der Tagesnummern
+          der Monate die Folge der Tagesnummern des Jahres ausgegeben
+          wird.
+
+    `-jcb'
+    `--fixed-dates=both'
+          Ausgabe der Terminliste im Standard- und speziellen
+          Datumformat.
+
+`-s ARGUMENT'
+`--starting-day=ARGUMENT'
+     Setzen des Starttags der Woche
+     (zul"assiges ARGUMENT: `0, 1...7 | today | WOCHENTAGSNAME').
+
+     Zum Beispiel:
+
+          --starting-day=Sonntag oder
+          --starting-day=7 oder
+          -s SONNTAG oder
+          -s sonnt oder
+          -sSo oder
+          -s 7
+
+     bezeichnet den Sonntag (1==Mo, 2==Di ... 7==So).
+
+     Wenn die `-s today' Option (bzw. die `--starting-day=today') oder
+     die `-s 0' Option (bzw. die `--starting-day=0') vorgefunden wird,
+     so wird der Starttag der Woche auf den gerade aktuellen Wochentag
+     gesetzt, welchen das Systemdatum liefert.  *Note Gesichtspunkte
+     zur Internationalisierung: Internationalisierung, f"ur weitere
+     Details.
+
+`--gregorian-reform=1582|1700|1752|1753|ARGUMENT'
+     Setzen des Zeitraums, der bei der Gregorianischen Reformation
+     "ubergangen wurde.  *Note Gesichtspunkte zur
+     Internationalisierung: Internationalisierung, f"ur weitere
+     Details.  Derzeit werden vier fest vorgegebene Zeitr"aume
+     unterst"utzt, und zwar im Jahr 1582, im Jahr 1700, im Jahr 1752
+     und im Jahr 1753.
+
+     Wird Gcal mit der `--gregorian-reform=1582' Option aufgerufen, so
+     wird angenommen, dass die Gregorianische Reformation vom 5'ten bis
+     zum 14'ten Oktober 1582 stattgefunden hat.
+
+     Wird Gcal mit der `--gregorian-reform=1700' Option aufgerufen, so
+     wird angenommen, dass die Gregorianische Reformation vom 19'ten
+     bis zum 28'ten Februar 1700 stattgefunden hat.
+
+     Wird Gcal mit der `--gregorian-reform=1752' Option aufgerufen, so
+     wird angenommen, dass die Gregorianische Reformation vom 3'ten bis
+     zum 13'ten September 1752 stattgefunden hat.
+
+     Wird Gcal mit der `--gregorian-reform=1753' Option aufgerufen, so
+     wird angenommen, dass die Gregorianische Reformation vom 18'ten
+     bis zum 28'ten Februar 1753 stattgefunden hat.
+
+     Soll ein anderer Zeitraum ber"ucksichtigt werden, so kann dieser
+     als ARGUMENT der Form `JJJJ,MM,STARTTAG,ENDETAG' vereinbart
+     werden.  Wenn die Gregorianische Reformation zum Beispiel vom 7'ten
+     bis zum 17'ten April 1802 stattgefunden hat, so kann das wie folgt
+     vereinbart werden:
+
+          --gregorian-reform=1802,4,7,17
+
+     Bitte beachten Sie das es m"oglich ist, dass die Kalender sowie die
+     Terminfunktion (die nun auch in denjenigen Jahren korrekt
+     funktioniert, in denen die Gregorianische Reformation
+     stattgefunden hat) logisch verdorben werden, falls ARGUMENT nicht
+     mit Sorgfalt verwandt wird.
+
+`--date-format=de|us|gb|TEXT'
+     Setzen des Datumformats, welches die Anordnung und Darstellung von
+     einem ausgegebenen Datum beeinflusst.  *Note Gesichtspunkte zur
+     Internationalisierung: Internationalisierung, f"ur weitere
+     Details.  Der Datumformattext wird von Gcal in der ewigen
+     Feiertagsliste, in der Terminliste und in den Kalenderbl"attern
+     ber"ucksichtigt; zudem versucht Gcal intern, stets die
+     bestm"oglichste Darstellung von einem ausgegebenen Datum zu
+     erzielen, wenn fortlaufende Tage des Jahres anstelle fortlaufender
+     Tage des Monats ausgegeben werden sollen.
+
+     Derzeit werden drei fest vorgegebene Datumformate unterst"utzt, und
+     zwar f"ur deutsche Benutzer, US amerikanische Benutzer und
+     Benutzer in Grossbritannien.
+
+     Wird Gcal mit `--date-format=de' aufgerufen, so wird der
+     `%w,  %1%D%2 %b %y' Formattext benutzt.
+
+     Wird Gcal mit `--date-format=us' aufgerufen, so wird der
+     `%W, %b  %1%U%2 %y' Formattext benutzt.
+
+     Wird Gcal mit `--date-format=gb' aufgerufen, so wird der
+     `%W,  %1%U%2 %b %y' Formattext benutzt.
+
+     Soll ein anderer Formattext ber"ucksichtigt werden, so kann dieser
+     entweder in der Umgebungsvariable `GCAL_DATE_FORMAT' angegeben
+     werden (4), oder aber als Optionsargument TEXT vereinbart werden,
+     z.B.:
+
+          --date-format="%Y %D %m ; %1(%A)%2"
+
+     Der Formattext kann alle von Gcal ausgebbare Zeichen enthalten,
+     sowie Zeichenersatzangaben und Formatanweisungen, die zur Laufzeit
+     in ihre entsprechenden Werte umgesetzt werden.  Ein minimaler
+     Datumformattext muss Komponenten aus der Tag-Gruppe, der
+     Monat-Gruppe, der Jahr-Gruppe und der Hervorhebung-Gruppe
+     enthalten.  Eine Komponente aus der Wochentagsname-Gruppe ist
+     optional.  Folgende Formatanweisungen und Zeichenersatzangaben
+     werden gegenw"artig unterst"utzt:
+
+     Tag-Gruppe (genau ein Mitglied muss definiert werden):
+
+    `%d'
+          Tageszahl mit f"uhrenden Nullen
+
+    `%D'
+          Tageszahl mit f"uhrenden Leerzeichen
+
+    `%u'
+          Tageszahl mit f"uhrenden Nullen und nachfolgendem
+          Ordnungszahlanhang
+
+    `%U'
+          Tageszahl mit f"uhrenden Leerzeichen und nachfolgendem
+          Ordnungszahlanhang
+
+     Monat-Gruppe (genau ein Mitglied muss definiert werden):
+
+    `%B'
+          Vollst"andiger Monatsname
+
+    `%b'
+          Abgek"urzter Monatsname (3 Buchstaben)
+
+    `%m'
+          Monatszahl mit f"uhrender Null
+
+    `%M'
+          Monatszahl mit f"uhrendem Leerzeichen
+
+     Jahr-Gruppe (genau ein Mitglied muss definiert werden):
+
+    `%y'
+          Vollst"andige Jahreszahl mit f"uhrenden Nullen
+
+    `%Y'
+          Vollst"andige Jahreszahl mit f"uhrenden Leerzeichen
+
+    `%z'
+          Letzten zwei Ziffern der Jahreszahl mit f"uhrender Null
+
+    `%Z'
+          Letzten zwei Ziffern der Jahreszahl mit f"uhrendem Leerzeichen
+
+     Wochentagsname-Gruppe (ein Mitglied darf definiert werden):
+
+    `%A'
+          Vollst"andiger Wochentagsname
+
+    `%W'
+          Abgek"urzter Wochentagsname (3 Buchstaben)
+
+    `%w'
+          Abgek"urzter Wochentagsname (2 Buchstaben)
+
+     Hervorhebung-Gruppe (alle Mitglieder m"ussen definiert werden, und
+     `%1' muss vor `%2' angegeben werden):
+
+    `%1'
+          Start von Hervorhebungssequenz / Markierungszeichen
+
+    `%2'
+          Ende von Hervorhebungssequenz / Markierungszeichen
+
+     Zeichenersatzangaben:
+
+    `_'
+          Leerzeichen ` '
+
+    `\_'
+          Unterstrichzeichen `_'
+
+    `\%'
+          Prozentzeichen `%'
+
+  ---------- Footnotes ----------
+
+  (1)  Im Englischen mit *country code* bezeichnet.
+
+  (2)  "Ahnlich dem des BSD-`cal' Programms.
+
+  (3)  Auch hier wird die Ausgabe eine Kalenderblatts erzwungen.
+
+  (4)  Allerdings wird `GCAL_DATE_FORMAT' nur dann benutzt, wenn keine
+`--date-format=de|us|gb|TEXT' Option angegeben wird.
+

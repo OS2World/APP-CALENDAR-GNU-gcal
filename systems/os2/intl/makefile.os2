@@ -1,0 +1,56 @@
+# Makefile for OS/2 and emx+gcc
+
+os2:
+	$(MAKE) -f Makefile.os2 gnuintl.dll intl.lib \
+	CC="gcc -Zomf -O" O=".obj" A=".lib" \
+	LFLAGS="-s -Zcrtdll" DLFLAGS="-s -Zcrtdll -Zdll" \
+	AR="emxomfar" RANLIB="emxomfar s" DYN=""
+win32:
+	$(MAKE) -f Makefile.os2 gnuintl.dll intl.a \
+	CC="gcc -Zwin32 -Zcrtdll=crtrsxnt -O" O=".o" A=".a" \
+	LFLAGS="-s" DLFLAGS="-s -Zdll" \
+	AR="ar" RANLIB="ar s" DYN=""
+debug:
+	$(MAKE) -f Makefile.os2 intl.a \
+	CC="gcc -g" O=".o" A=".a" \
+	AR="ar" RANLIB="ar s" ST=""
+
+ST=st
+DYN=dyn
+
+CFLAGS = -I.. -DHAVE_CONFIG_H
+
+OBJECTS = bindtextdom$O dcgettext$O dgettext$O gettext$O \
+	finddomain$O loadmsgcat$O localealias$O textdomain$O \
+	l10nflist$O explodename$O intl-compat$O
+
+.SUFFIXES: .c $O
+
+.c$O:
+	$(CC) $(CFLAGS) -c $<
+
+.PHONY: lib dll
+lib: intl.a
+dll: gnuintl.dll intl.lib
+
+$(OBJECTS): ../config.h libintl.h
+
+libintl.h: libgettext.h
+	copy libgettext.h $@
+
+$(ST)intl$A: $(OBJECTS)
+	-cmd /c del $@
+	$(AR) cru $@ $(OBJECTS)
+	$(AR) s $@
+
+$(DYN)intl.lib: gnuintl.def
+	emximp -o $@ gnuintl.def
+
+$(DYN)intl.a: gnuintl.dll
+	makelib gnuintl.dll -o $@
+
+gnuintl.dll: gnuintl.def $(OBJECTS)
+	$(CC) gnuintl.def -o $@ $(OBJECTS) $(DLFLAGS)
+
+clean:
+	rm -f *.o *.obj *.a *.lib libintl.h

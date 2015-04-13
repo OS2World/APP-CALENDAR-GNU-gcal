@@ -1,0 +1,168 @@
+.\" $Id: gcal.1 v0.44 1997/01/02 00:04:04 tom Exp $
+.\"
+.\" gcal.1:  German [n]roff source of GCAL manual page
+.\"
+.\" Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+.\"
+.\"
+.\" Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+.\" zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+.\" Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+.\" vorgenannte Vermerke erhalten bleiben.
+.\"
+.\" Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+.\" wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+.\" vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und Gesamtheit
+.\" innerhalb der Bestimmungen eines Genehmigungvermerks liegen und zudem mit
+.\" diesem ausgestattet sind, welcher mit diesem hier identisch ist.
+.\"
+.\" Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten Bedingungen
+.\" f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs in eine andere
+.\" Sprache zu erstellen und zu vertreiben, mit der Ausnahme, da"s dieser
+.\" Genehmigungsvermerk in einer "Ubersetzung angegeben sein darf, welche
+.\" von der Free Software Foundation gebilligt wird.
+.\"
+.\"
+.\" ------------------------oOO      \\\_''/      OOo---------------------------
+.\" Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+.\" Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+.\" D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+.\"
+.\"
+.de EX \"Begin example
+.ne 5
+.if n .sp 1
+.if t .sp .5
+.nf
+.in +5n
+..
+.de EE \"End example
+.fi
+.in -5n
+.if n .sp 1
+.if t .sp .5
+..
+.\" Page parameters
+.ll 6.5i
+.pl 11i
+.po 0
+.\"
+.TH GCAL 1 "02 Januar 1997"
+.SH NAME
+gcal \- gibt Monats\-/ Jahreskalender, ewige Feiertagslisten f"ur Julianische\-
+und Gregorianische Jahre und Terminlisten auf viele Arten und Weisen
+aus.
+.SH AUFRUF
+.B gcal
+[[
+.I Option\&...
+] [
+.I %Datum
+] [
+.I @Datei\&...
+]] [
+.I Kommando
+]
+.SH BESCHREIBUNG
+.B Gcal
+ist ein Programm, welches in seiner Funktionsweise den Standard
+Kalenderprogrammen
+.I BSD\-`cal'
+und
+.I `calendar'
+entspricht.
+.sp
+.B Gcal
+gibt Gregorianische Kalender bzw. Julianische Kalender (vor Oktober 1582) aus.
+.sp
+Wenn
+.B gcal
+ohne entsprechende
+.I Optionen
+aufgerufen wird bzw. kein
+.I Kommando
+angegeben ist, so wird ein Kalender des laufenden Monats ausgegeben.
+.sp
+Wenn der Kalender eines bestimmten Jahres ausgegeben werden soll, so mu"s das
+Jahr vollst"andig angegeben werden,
+.EX
+z.B.:  gcal 94
+.EE
+w"urde nicht den Jahreskalender von 1994 ausgeben, sondern den Jahreskalender
+des Jahres 94.
+.sp
+Werden zwei Argumente als
+.I Kommando
+angegeben, so bezieht sich das erste Argument auf den Monat und das zweite
+Argument auf das Jahr.  Werden beim Aufruf unkorrekte
+.I Kommandos
+angegeben, so wird die Programmausf"uhrung unter Benutzung interner
+Grundeinstellungen von
+.B gcal
+vorgenommen.
+.sp
+Es wird angenommen, da"s die Gregorianische Reformation am 5'ten Oktober des
+Jahres 1582 stattgefunden hat.  Um Anschlu"s an den fr"uheren Julianischen
+Kalender zu gewinnen, wurde seinerzeit der Kalender vom 4.10.1582 (Julianisch)
+sofort auf den 15.10.1582 (Gregorianisch) umgestellt, indem einfach 10 Tage in
+der Z"ahlung "ubergangen wurden.  Der Kalender f"ur diesen Monat sieht daher
+ein wenig ungew"ohnlich aus.
+.SH MEHR INFORMATIONEN ZUM PROGRAMM
+Mehr Informationen zum Programm erhalten Sie, wenn Sie
+.B gcal
+wie folgt aufrufen:
+.EX
+gcal -h
+gcal -?
+gcal --help
+
+bzw.
+
+gcal -hh
+gcal -??
+gcal --long-help[=ARG]|[=?]
+gcal --usage[=ARG]|[=?]
+.EE
+Eine detaillierte Online\-Dokumentation sollte in der Hypertext\-Datei
+.I gcal.info
+enthalten sein, die Sie mit Ihrem GNU Infobrowser ansehen k"onnen.
+.bp
+.SH COPYRIGHT
+.in 0
+.sp
+.B Gcal
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+.LP
+Diese Software erhebt keinen Anspruch auf Vollst"andigkeit,
+Verwendungsf"ahigkeit oder Korrektheit. F"ur Sch"aden (implizit
+oder explizit), die aus Nutzung oder Handhabung meiner Software
+hervorgehen, wird grunds"atzlich keine Haftung "ubernommen.
+Bei Nutzung dieser Software erkl"art sich der Benutzer mit
+dieser Vereinbarung in vollem Umfang einverstanden.
+.sp
+.B Gcal
+ist freie Software und wird unter den Bedingungen der `GNU General Public
+License'; herausgegeben von der `Free Software Foundation'; Version 2 oder
+jeder sp"ateren Version vertrieben.
+.sp
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte, Geld\- und
+Sachspenden, Programmierauftr"age usw. sind stets willkommen.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine
+.I Postkarte
+von Ihnen freuen!
+.sp
+Viel Spa"s mit diesem Programm   =8^)
+.SH AUTOR
+.in 2
+.nf
+------------------------oOO      \e\e\e_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\e)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \e____) ~ (____/    MotD : 2old2live, 2young2die
+.fi
+.SH QUERVERWEIS
+tcal(1),
+txt2gcal(1),
+gcal2txt(1),
+cal(1),
+calendar(1)

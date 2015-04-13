@@ -1,0 +1,194 @@
+#  $Id: makefile.vms 0.14 1996/10/17 00:01:04 tom Exp $
+###############################################################################
+#
+#  Vax/VMS VAX-C. Tested with Todd Aven's MAKE/VMS.
+#  Makefile to create the extended `gcal' program
+#
+#
+#  After constructing gcal.exe with this Makefile, you should set up
+#  symbols for gcal.exe...  Edit the example below, changing
+#  "disk:[directory]" as appropriate.
+#
+#$ gcal == "$disk:[directory]gcal.exe"
+#$ tcal == "$disk:[directory]tcal.exe"
+#$ txt2gcal == "$disk:[directory]txt2gcal.exe"
+#$ gcal2txt == "$disk:[directory]gcal2txt.exe"
+#
+#
+#  Copyright (C) 1994-1996      Thomas Esken            <esken@uni-muenster.de>
+#                               Im Hagenfeld 84
+#                               D-48147 M"unster
+#                               GERMANY
+#
+###############################################################################
+#
+#
+#
+DEF = /define=(#
+DEF2 =)#
+#
+#  BEGIN: General program modification symbols,
+#           which may be changed by the user !!
+#
+
+
+
+#  Write the line `USE_EASC = $(DEF)USE_EASC=1$(DEF2)'
+#    in case you want to use the 8-bit extended IBM-ASCII character set
+#    (IBM PC or ISO 8859-1 = ISO Latin-1 or Nextstep character sets).
+#
+#  Write the line `USE_EASC = $(DEF)USE_EASC=0$(DEF2)'
+#    in case you want to use the 7-bit ISO-ASCII/EBCDIC character set.
+#
+#USE_EASC = $(DEF)USE_EASC=1$(DEF2)#
+
+
+
+#  Write the line `USE_DE = $(DEF)USE_DE=1$(DEF2)'
+#    in case you want to use German message texts, holidays
+#    and calendar layout.
+#
+#  Write the line `USE_DE = $(DEF)USE_DE=0$(DEF2)'
+#    in case you want to use English message texts, holidays
+#    and calendar layout.
+#
+#USE_DE = $(DEF)USE_DE=1$(DEF2)#
+
+
+
+#  Write the line `USE_HLS = $(DEF)USE_HLS=1$(DEF2)'
+#    to run this program using control sequences for highlighting the current
+#    day/holidays/text (MS/PC-DOS will use the [n]ansi.sys driver for emitting
+#    ANSI escape highlighting sequences; OS2/Linux/UN*X-like systems will use
+#    Termcap for emitting the terminal specific highlighting sequences.
+#    If this fails, default (generic) ANSI highlighting sequences will be used).
+#
+#  Write the line `USE_HLS = $(DEF)USE_HLS=0$(DEF2)'
+#    to run this program without highlighting...
+#
+USE_HLS = $(DEF)USE_HLS=1$(DEF2)#
+
+
+
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=1$(DEF2)'
+#    in case you want to use an external pager or if it fails
+#    a simple, built-in pager.
+#
+#  Write the line `USE_PAGER = $(DEF)USE_PAGER=0$(DEF2)'
+#    in case you don't like this feature...
+#
+USE_PAGER = $(DEF)USE_PAGER=1$(DEF2)#
+
+
+
+#  Write the line `USE_RC = $(DEF)USE_RC=1$(DEF2)'
+#    for using the special month dates functions (print daily / weekly
+#    monthly / yearly / eternal / special fixed dates as stated in
+#    resource files).
+#
+#  Write the line `USE_RC = $(DEF)USE_RC=0$(DEF2)'
+#    if you don't like this feature...
+#
+USE_RC = $(DEF)USE_RC=1$(DEF2)#
+
+
+
+#  Specify, which directories shall be used for the resource files:
+#
+#  (Define the empty string \"\" if you don't need data directories,
+#  so data files are searched in the actual and $HOME directory only)
+#
+#
+#  Name of user (private access) specific data directory
+#    (relative to $HOME directory)
+#
+GCAL_USR_DATADIR = \"share/gcal\"
+#
+#  Name of system (common access) specific data directory
+#    (static to root directory)
+#
+GCAL_SYS_DATADIR = \"/usr/local/share/gcal\"
+
+
+
+#
+#
+#
+DEFINES = $(USE_EASC) $(USE_DE) $(USE_HLS) $(USE_PAGER) $(USE_RC)
+DEFINES2 = $(DEF)GCAL_USR_DATADIR=$(GCAL_USR_DATADIR)$(DEF2) \
+  $(DEF)GCAL_SYS_DATADIR=$(GCAL_SYS_DATADIR)$(DEF2)
+
+
+
+#
+#  END: general program modification symbols,
+#         which may be changed by the user !!
+#
+
+
+
+#
+CC = cc
+CFLAGS = /define=(VAXC) /warning
+#
+LD = link
+LDFLAGS =
+#
+X = .exe
+O = .obj
+C = .c
+H = .h
+
+OBJ1 = gcal$(O) file-io$(O) hd-data$(O) hd-use$(O) help$(O) print$(O) \
+  rc-check$(O) rc-insert$(O) rc-use$(O) rc-utils$(O) regexp$(O) tty$(O) \
+  utils$(O)
+OBJ2 = tcal$(O)
+OBJ3 = txt2gcal$(O)
+OBJ4 = gcal2txt$(O)
+
+
+
+*$(O): *$(C)
+	define/user sys sys$library
+	$(CC) $* $(DEFINES) $(DEFINES2) $(CFLAGS)
+
+
+
+all : gcal$(X) tcal$(X) txt2gcal$(X) gcal2txt$(X)
+
+gcal$(X) : $(OBJ1)
+	linkobjs:=$(OBJ1)
+	Loop:
+		p = f$locate(" ",linkobjs)
+		if p .lt. f$length(linkobjs)
+			then linkobjs[p,1]:=","
+			goto Loop
+		endif
+	write sys$output "linking ''linkobjs'"
+	$(LD) $(LDFLAGS) /exec=gcal$(X) 'linkobjs',sys$input/opt
+	SYS$LIBRARY:VAXCRTL/SHARE $
+
+tcal$(X) : $(OBJ2)
+	linkobjs:=$(OBJ2)
+	write sys$output "linking ''linkobjs'"
+	$(LD) $(LDFLAGS) /exec=tcal$(X) 'linkobjs',sys$input/opt
+	SYS$LIBRARY:VAXCRTL/SHARE $
+
+txt2gcal$(X) : $(OBJ3)
+	linkobjs:=$(OBJ3)
+	write sys$output "linking ''linkobjs'"
+	$(LD) $(LDFLAGS) /exec=txt2gcal$(X) 'linkobjs',sys$input/opt
+	SYS$LIBRARY:VAXCRTL/SHARE $
+
+gcal2txt$(X) : $(OBJ4)
+	linkobjs:=$(OBJ4)
+	write sys$output "linking ''linkobjs'"
+	$(LD) $(LDFLAGS) /exec=gcal2txt$(X) 'linkobjs',sys$input/opt
+	SYS$LIBRARY:VAXCRTL/SHARE $
+
+clean:
+	delete gcal$(X);0
+	delete tcal$(X);0
+	delete txt2gcal$(X);0
+	delete gcal2txt$(X);0
+	delete *$(O);0

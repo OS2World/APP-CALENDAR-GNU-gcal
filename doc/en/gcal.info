@@ -1,0 +1,143 @@
+This is Info file ./en/gcal.info, produced by Makeinfo version 1.67
+from the input file ./en/gcal.texi.
+
+INFO-DIR-SECTION GNU packages
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                       The GNU calendar program.
+* tcal: (gcal)Invoking tcal.          Run Gcal with tomorrow's date.
+* txt2gcal: (gcal)Invoking txt2gcal.  Convert text file to resource file.
+* gcal2txt: (gcal)Invoking gcal2txt.  Convert resource file to text file.
+END-INFO-DIR-ENTRY
+
+  This file documents Gcal, a program for printing calendars.  Gcal
+displays a calendar for a month or a year, eternal holiday lists and
+fixed date lists, in many ways.  The program correctly omits the dates
+that were skipped when the current Gregorian calendar replaced the
+earlier Julian calendar.
+
+  Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+  This is the second edition of the Gcal documentation.
+
+  Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+  Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+  Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Free Software Foundation.
+
+  Any suggestions, improvements, extensions, bug reports, donations,
+proposals for contract work, and so forth are welcome!  Please send
+them directly to my eMail address.  If you like my work, I'd appreciate
+a postcard from you!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+Indirect:
+gcal.info-1: 2072
+gcal.info-2: 42544
+gcal.info-3: 90151
+gcal.info-4: 138542
+gcal.info-5: 187881
+gcal.info-6: 234904
+gcal.info-7: 282163
+gcal.info-8: 309758
+
+Tag Table:
+(Indirect)
+Node: Top2072
+Node: Gcal Introduction7385
+Node: Invoking Gcal10573
+Node: Command line arguments12027
+Node: Options13725
+Node: Common options17071
+Node: Global options18282
+Node: Calendar options27720
+Node: Fixed date options42544
+Node: Response file87976
+Node: Actual date modifier90151
+Node: Commands99326
+Node: Single commands101465
+Node: 3-Month mode commands103426
+Node: Lists of commands104275
+Node: Ranges of commands105444
+Node: The GCAL environment variable106365
+Node: Eternal Holidays107308
+Node: Fixed Dates111953
+Node: Resource file117008
+Node: Structure of resource file121532
+Node: Date part of a line124121
+Node: Further date part attributes129397
+Node: Lists of days130749
+Node: Ranges of days133905
+Node: Repetition factor of days138542
+Node: Appearance factor of days142666
+Node: Text part of a line149351
+Node: Comment line155122
+Node: Include directives157589
+Node: Special texts processed160706
+Node: Date variables162455
+Node: Text variables169213
+Node: Resource file examples174874
+Node: Todays Calendar183136
+Node: Gcal Utilities187881
+Node: Invoking tcal188573
+Node: Invoking txt2gcal190228
+Node: Invoking gcal2txt192447
+Node: Internationalization194331
+Node: Metasymbols200711
+Node: Regular Expressions202154
+Node: Regexp Usage203835
+Node: Regexp Operators204525
+Node: Regexp Summary215940
+Node: Special Texts218208
+Node: Exclusions219664
+Node: Exclusions with date argument220204
+Node: Inclusive date period221348
+Node: Exclusive date period224723
+Node: Exclusions without any argument228066
+Node: Inclusive day period229109
+Node: Exclusive day period230257
+Node: Replacements231346
+Node: Replacements with date argument232229
+Node: Weekday name233819
+Node: Weekday234904
+Node: Day number240143
+Node: Day241607
+Node: Week242943
+Node: Month name243432
+Node: Month244215
+Node: Year245595
+Node: Moonphase246334
+Node: Biorhythm249103
+Node: Difference value253360
+Node: Replacements with other argument254848
+Node: Actual time255564
+Node: Textual date256231
+Node: Julian day number256900
+Node: Replacements without any argument258691
+Node: Other difference values259107
+Node: Highlighting260037
+Node: Shell Command267051
+Node: Special Texts Summary268370
+Node: Coding Scheme273946
+Node: Coding Scheme Table 1275279
+Node: Coding Scheme Table 2278700
+Node: Environment Variables282163
+Node: Error Codes285488
+Node: Argument Index287525
+Node: Variable Index306751
+Node: Concept Index309758
+
+End Tag Table

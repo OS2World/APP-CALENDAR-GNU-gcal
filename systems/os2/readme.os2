@@ -1,0 +1,34 @@
+readme.os2 file for `gcal'.
+
+
+To build gcal on OS/2 with emx+gcc, the following steps are required:
+
+1. copy config.h from this directory to the main gcal directory
+
+2. copy makefile.os2 from this directory to the src subdirectory
+   of the main gcal directory
+
+3. copy the files from the intl subdirectory of this directory
+   to the intl subdirectory of the main gcal directory and apply
+   the context diffs from patches.os2 to the files there
+
+4. go into the intl subdirectory of the main gcal directory and
+   run "make -f makefile.os2"
+
+5. go into the src subdirectory of the main gcal directory and
+   run "make -f makefile.os2"
+
+
+To install gcal on your system, copy the executable files into
+suitable locations. Check the documentation for any environment 
+variables you may want to set.
+
+This version supports internationalization. To use it, set the
+LANGUAGE environment variable (for german messages, set it to "de").
+
+For that to work, you must set the LOCALEDIR environment variable to
+point to the base locale directory (default is /lib/locale). Into this
+directory, you must copy po/de.gmo (german message catalog, for
+example) from the distribution as de/LC_MESSAGES/gcal.mo and so
+on for other languages.
+

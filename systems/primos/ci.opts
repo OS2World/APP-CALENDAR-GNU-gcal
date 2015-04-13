@@ -1,0 +1,8 @@
+-define PRIMOS
+-define USE_HLS=1
+-define USE_PAGER=1
+-define USE_RC=1
+-include *>PRIMOS>INCLUDE
+-ignoreregister
+-packbytes
+-sof

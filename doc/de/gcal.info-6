@@ -1,0 +1,1328 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Regexps (kurz),  Next: Spezialtexte (lang),  Prev: Regulaere Ausdruecke,  Up: Top
+
+Zusammenfassung aller regul"aren Ausdr"ucke
+*******************************************
+
+Regul"are Ausdr"ucke basieren auf den POSIX ERAs (Erweiterte Regul"are
+Ausdr"ucke).  Regexps werden aus Zeichen zusammengesetzt.  Hier ist
+eine Kurzliste aller dieser Zeichen:
+
+`C'
+     passt auf das Zeichen C (in der Annahme, das C keines der
+     nachfolgend aufgef"uhrten Zeichen ist).
+
+`\C'
+     passt auf das textliche Zeichen C.
+
+`.'
+     passt auf jedes Zeichen.
+
+`^'
+     passt auf den Anfang einer Zeichenkette.
+
+`$'
+     passt auf das Ende einer Zeichenkette.
+
+`[ABC...]'
+     passt auf jedes der Zeichen ABC... (Zeichenliste).
+
+`[[:KLASSE:]]'
+     passt auf jedes Zeichen in der Zeichenklasse KLASSE.  Erlaubte
+     Klassen sind `alnum', `alpha', `blank', `cntrl', `digit', `graph',
+     `lower', `print', `punct', `space', `upper' und `xdigit'.
+
+`[[.SYMBOL.]]'
+     passt auf das Multi-Zeichen vergleichende Element SYMBOL.  `gcal'
+     unterst"utzt gegenw"artig keine vergleichenden Elemente.
+
+`[[=ZEICHEN=]]'
+     passt auf jedes der gleichwertigen Zeichen in ZEICHEN.  `gcal'
+     unterst"utzt gegenw"artig keine Gleichwertigkeitsklassen.
+
+`[^ABC...]'
+     passt auf jedes Zeichen, ausgenommen ABC... (negierte bzw.
+     komplement"are Zeichenliste).
+
+`R1|R2'
+     passt entweder auf R1 oder auf R2 (Alternative).
+
+`R1R2'
+     passt auf R1, und dann auf R2 (Verkettung).
+
+`R+'
+     passt auf ein R oder auf mehrere R's.
+
+`R*'
+     passt auf kein R oder auf mehrere R's.
+
+`R?'
+     passt auf kein R oder auf genau ein R.
+
+`(R)'
+     passt auf R (Gruppierung).
+
+`R{N}'
+`R{N,}'
+`R{N,M}'
+     passt auf letztlich N, N bis hin zu jeder Anzahl, oder N bis M
+     Vorkommen von R (Intervall-Ausdr"ucke).
+
+`\b'
+     passt auf eine leere Zeichenkette entweder zu Anfang oder zu Ende
+     eines Wortes.
+
+`\B'
+     passt auf die leere Zeichenkette innerhalb eines Wortes.
+
+`\<'
+     passt auf die leere Zeichenkette zu Anfang eines Wortes.
+
+`\>'
+     passt auf die leere Zeichenkette zu Ende eines Wortes.
+
+`\w'
+     passt auf jedes Zeichen, welches ein Wort konstituiert
+     (Alphanumerische Zeichen und der Unterstrich).
+
+`\W'
+     passt auf jedes Zeichen, welches kein Wort konstituiert.
+
+`\`'
+     passt auf die leere Zeichenkette zu Anfang eines Puffers (1).
+
+`\''
+     passt auf die leere Zeichenkette zu Ende eines Puffers.
+
+  ---------- Footnotes ----------
+
+  (1)  Identisch mit dem *Textteil* einer Ressourcendateizeile von
+`gcal'.
+
+
+File: gcal.info,  Node: Spezialtexte (lang),  Next: Spezialtexte (kurz),  Prev: Regexps (kurz),  Up: Top
+
+Beschreibung aller `%?'... Spezialtexte
+***************************************
+
+* Menu:
+
+* Ausschliessen::   Datum ausschliessen.
+* Ersetzen::        Texte ersetzen.
+* Shell Kommando::  Shell Kommando ausf"uhren.
+
+Die im Textteil einer Zeile der Gcal Ressourcendatei verwendbaren
+`%?'... Spezialtexte k"onnen grob in drei Kategorien eingeteilt werden.
+So gibt es Spezialtexte, welche die Ausgabe von Terminen in bestimmten
+F"allen unterdr"ucken.  Andere werden durch besondere Texte ersetzt,
+und noch andere veranlassen die shell dazu, externe Kommandos
+auszuf"uhren.  *Note `%?'... Spezialtexte: Spezialtexte, f"ur eine
+allgemeine Beschreibung der Spezialtexte, die im Textteil einer Zeile
+von Gcal Ressourcendateien auftreten d"urfen.
+
+Bei einigen dieser Spezialtexte darf noch optional ein einfaches oder
+besonderes Datumargument (im weiteren mit DATUM bezeichnet) oder ein
+sonstiges Argument (im weiteren mit ARGUMENT bezeichnet) angegeben
+werden.  Wenn ein Spezialtext direkt von einem DATUM Argument gefolgt
+wird, so muss DATUM einem der nachstehenden Datumformate entsprechen:
+
+   * `JJJJ[MM[TT|WWWN]]'
+
+   * `JJJJ*d|wN[WWW]'
+
+   * `JJJJ@e|t|DVAR[[+|-]N[WWW]]'
+
+Spezialtexte, die ein DATUM Argument annehmen d"urfen, *m"ussen* stets
+von einem *whitespace* Zeichen gefolgt werden, welches seinerseits in
+der Ausgabe entfernt wird, und zwar unabh"angig davon, ob DATUM
+angegeben wurde oder nicht!
+
+*Note Zusammenfassung aller `%?'... Spezialtexte: Spezialtexte (kurz),
+f"ur eine Kurzdarstellung aller verwendbaren Spezialtexte.
+
+
+File: gcal.info,  Node: Ausschliessen,  Next: Ersetzen,  Prev: Spezialtexte (lang),  Up: Spezialtexte (lang)
+
+`%?'... Spezialtexte um Datum auszuschliessen
+=============================================
+
+* Menu:
+
+* Ausschliessen mit Datumargument::
+* Ausschliessen ohne Argument::
+
+`%?'... Spezialtexte zum Ausschliessen von Zeitpunkten oder Zeitr"aumen
+sind sehr n"utzlich, wenn sie zusammen mit Datumbereichen verwendet
+werden (*note Bereiche von Tagen::.).  Wird der Termintext ausgegeben,
+so wird stets der gesamte Spezialtext in der Ausgabe unterdr"uckt.
+
+
+File: gcal.info,  Node: Ausschliessen mit Datumargument,  Next: Ausschliessen ohne Argument,  Prev: Ausschliessen,  Up: Ausschliessen
+
+Ausschliessen mit Datumargument `%?[DATUM]' Spezialtexte
+--------------------------------------------------------
+
+* Menu:
+
+* Inklusive Datum Zeitraum::
+* Exklusive Datum Zeitraum::
+
+Zun"achst einmal kann ein "inklusive Datum" Zeitraum `%?[DATUM]'
+Spezialtext angegeben werden, mit der Wirkung, dass nur die Termine,
+die in diesem Zeitraum liegen, ausgegeben werden.  Und die Angabe eines
+"exklusive Datum" Zeitraums `%?[DATUM]' Spezialtexts bewirkt, dass alle
+Termine, die in diesem Zeitraum liegen, nicht ausgegeben werden.
+
+Geschickt kombiniert, bieten sich diese Spezialtexte als wirksame Filter
+an, mit deren Hilfe sich spezielle Zeitr"aume sehr flexibel definieren
+lassen k"onnen, zum Beispiel:
+
+     0*d1#999 Jeder Tag des Jahres: Von Januar...August ausgenommen April\
+              %i00001#00008 %e00004#00004
+     ;
+     0*d1#999 Jeder Tag des Jahres: Von 1991...1993 und ab 1996\
+              ausgenommen Februar 1992 und aller September\
+              %i1991#1993 %i1996# %e19922#19922 %e00009#00009
+
+
+File: gcal.info,  Node: Inklusive Datum Zeitraum,  Next: Exklusive Datum Zeitraum,  Prev: Ausschliessen mit Datumargument,  Up: Ausschliessen mit Datumargument
+
+Inklusive Datum Zeitraum `%i[DATUM][#[DATUM]]' Spezialtext
+..........................................................
+
+`%i[DATUM][#[DATUM]]' bezeichnet einen inklusive Datum Zeitraum, d.h.
+alle Daten, die in dem gegebenen Zeitraum liegen, sind g"ultig und
+werden ausgegeben.  Das bedeutet nat"urlich, dass alle Termine, die
+nicht in diesem Zeitraum liegen, ung"ultig sind und somit auch nicht
+ausgegeben werden.
+
+Das erste angegebene Datum bestimmt das "Startdatum" eines Termins,
+d.h. das erste Datum, an dem dieser Termin auftreten darf.  F"ur das
+Startdatum gelten folgende Regeln hinsichtlich bestimmter
+Auslassungswerte, verdeutlicht am `JJJJ[MM[TT|WWWN]]' Datumformat:
+
+   * Falls JJJJ auf den Wert 0000 gesetzt ist, so wird das laufende Jahr
+     als Jahr angenommen.
+
+   * Falls MM nicht angegeben ist, so wird 01 (==Januar) als Monat
+     angenommen.
+
+   * Falls MM auf den Wert 00 gesetzt ist, so wird der laufende Monat
+     als Monat angenommen, bei 99 der Dezember.
+
+   * Falls TT|WWW nicht angegeben ist, so wird 01 als Tag angenommen.
+
+   * Falls TT auf den Wert 00 gesetzt ist, so wird der laufende Tag als
+     Tag angenommen, bei 99 der letzte Tag des Monats MM.
+
+   * Falls das N Feld angegeben ist (Bereich 1...5 oder 9), so muss
+     auch ein WWW Feld angegeben sein.
+
+Das zweite angegebene Datum bestimmt das "Endedatum" eines Termins,
+d.h. das letzte Datum, an dem dieser Termin auftreten darf.  F"ur das
+Endedatum gelten folgende Regeln hinsichtlich bestimmter
+Auslassungswerte, ebenfalls verdeutlicht am `JJJJ[MM[TT|WWWN]]'
+Datumformat:
+
+   * Falls JJJJ auf den Wert 0000 gesetzt ist, so wird das laufende Jahr
+     als Jahr angenommen.
+
+   * Falls MM nicht angegeben ist, so wird 12 (==Dezember) als Monat
+     angenommen.
+
+   * Falls MM auf den Wert 00 gesetzt ist, so wird der laufende Monat
+     als Monat angenommen, bei 99 der Dezember.
+
+   * Falls TT|WWW nicht angegeben ist, so wird der letzte Tag des
+     Monats MM als Tag angenommen.
+
+   * Falls TT auf den Wert 00 gesetzt ist, so wird der laufende Tag als
+     Tag angenommen, bei 99 der letzte Tag des Monats MM.
+
+   * Falls das N Feld angegeben ist (Bereich 1...5 oder 9), so muss
+     auch ein WWW Feld angegeben sein.
+
+F"ur die anderen erlaubten Datumformate gelten die vorstehenden Regeln
+sinngem"ass!
+
+Wenn das Startdatum, welches im `%i...' Spezialtext kodiert ist,
+gr"osser dem Endedatum ist, so wird der `%i...' Spezialtext ignoriert.
+
+Ist weder Startdatum noch Endedatum angegeben, also nur `%i', so gilt
+der implizite Zeitraum 1'ter Januar 1...31'ter Dezember 9999
+(00010101...99991231).
+
+Ist nur das Startdatum angegeben, also entweder `%iDATUM' oder
+`%iDATUM#', so gilt das implizite Endedatum 31'ter Dezember 9999
+(99991231).
+
+Ist nur das Endedatum angegeben, also `%i#DATUM', so gilt das implizite
+Startdatum 1'ter Januar 1 (00010101).
+
+Zum Beispiel:
+
+     0d*1#999 Jeder Tag des Jahres: nur April und Juli\
+              %i00004#00004 %i00007#00007
+     ;
+     0*d1#999 Jeder Tag des Jahres: von Januar...Oktober\
+              %i#000010
+     ;
+     0*d1#999 Jeder Tag des Jahres: ab August 1990\
+              %i19908
+     ;
+     0*d1#999 Jeder Tag des Jahres: von August...Dezember\
+              %i00008
+     ;
+     0*d1#999 Jeder Tag des Jahres: nur heute%i0@t#0@t
+
+
+File: gcal.info,  Node: Exklusive Datum Zeitraum,  Prev: Inklusive Datum Zeitraum,  Up: Ausschliessen mit Datumargument
+
+Exklusive Datum Zeitraum `%e[DATUM][#[DATUM]]' Spezialtext
+..........................................................
+
+`%e[DATUM][#[DATUM]]' bezeichnet einen exklusive Datum Zeitraum, d.h.
+alle Daten, die in dem gegebenen Zeitraum liegen, sind ung"ultig und
+werden nicht ausgegeben.  Das bedeutet nat"urlich, dass alle Termine,
+die nicht in diesem Zeitraum liegen, g"ultig sind und somit auch
+ausgegeben werden.
+
+Das erste angegebene Datum bestimmt das Startdatum eines Termins, d.h.
+das erste Datum, an dem dieser Termin auftreten darf.  F"ur das
+Startdatum gelten folgende Regeln hinsichtlich bestimmter
+Auslassungswerte, verdeutlicht am `JJJJ[MM[TT|WWWN]]' Datumformat:
+
+   * Falls JJJJ auf den Wert 0000 gesetzt ist, so wird das laufende Jahr
+     als Jahr angenommen.
+
+   * Falls MM nicht angegeben ist, so wird 01 (==Januar) als Monat
+     angenommen.
+
+   * Falls MM auf den Wert 00 gesetzt ist, so wird der laufende Monat
+     als Monat angenommen, bei 99 der Dezember.
+
+   * Falls TT|WWW nicht angegeben ist, so wird 01 als Tag angenommen.
+
+   * Falls TT auf den Wert 00 gesetzt ist, so wird der laufende Tag als
+     Tag angenommen, bei 99 der letzte Tag des Monats MM.
+
+   * Falls das N Feld angegeben ist (Bereich 1...5 oder 9), so muss
+     auch ein WWW Feld angegeben sein.
+
+Das zweite angegebene Datum bestimmt das Endedatum eines Termins, d.h.
+das letzte Datum, an dem dieser Termin auftreten darf.  F"ur das
+Endedatum gelten folgende Regeln hinsichtlich bestimmter
+Auslassungswerte, ebenfalls verdeutlicht am `JJJJ[MM[TT|WWWN]]'
+Datumformat:
+
+   * Falls JJJJ auf den Wert 0000 gesetzt ist, so wird das laufende Jahr
+     als Jahr angenommen.
+
+   * Falls MM nicht angegeben ist, so wird 12 (==Dezember) als Monat
+     angenommen.
+
+   * Falls MM auf den Wert 00 gesetzt ist, so wird der laufende Monat
+     als Monat angenommen, bei 99 der Dezember.
+
+   * Falls TT|WWW nicht angegeben ist, so wird der letzte Tag des
+     Monats MM als Tag angenommen.
+
+   * Falls TT auf den Wert 00 gesetzt ist, so wird der laufende Tag als
+     Tag angenommen, bei 99 der letzte Tag des Monats MM.
+
+   * Falls das N Feld angegeben ist (Bereich 1...5 oder 9), so muss
+     auch ein WWW Feld angegeben sein.
+
+F"ur die anderen erlaubten Datumformate gelten die vorstehenden Regeln
+sinngem"ass!
+
+Wenn das Startdatum, welches im `%e...' Spezialtext kodiert ist,
+gr"osser dem Endedatum ist, so wird der `%e...' Spezialtext ignoriert.
+
+Ist weder Startdatum noch Endedatum angegeben, also nur `%e', so gilt
+der implizite Zeitraum 1'ter Januar 1...31'ter Dezember 9999
+(00010101...99991231).
+
+Ist nur das Startdatum angegeben, also entweder `%eDATUM' oder
+`%eDATUM#', so gilt das implizite Endedatum 31'ter Dezember 9999
+(99991231).
+
+Ist nur das Endedatum angegeben, also `%e#DATUM', so gilt das implizite
+Startdatum 1'ter Januar 1 (00010101).
+
+Zum Beispiel:
+
+     0d*1#999 Jeder Tag des Jahres: ausgenommen April und Juli\
+             %e00004#00004 %e00007#00007
+     ;
+     0*d1#999 Jeder Tag des Jahres: ausgenommen Januar...Oktober\
+              %e#000010
+     ;
+     0*d1#999 Jeder Tag des Jahres: bis Juli 1990\
+              %e19908
+     ;
+     0*d1#999 Jeder Tag des Jahres: ausgenommen August...Dezember\
+              %e00008
+     ;
+     0*d1#999 Jeder Tag des Jahres: ausgenommen heute%e0@t#0@t
+
+
+File: gcal.info,  Node: Ausschliessen ohne Argument,  Prev: Ausschliessen mit Datumargument,  Up: Ausschliessen
+
+Ausschliessen ohne Argument `%?' Spezialtexte
+---------------------------------------------
+
+* Menu:
+
+* Inklusive Tag Zeitraum::
+* Exklusive Tag Zeitraum::
+
+Zun"achst einmal kann ein "inklusive Tag" Zeitraum `%?' Spezialtext
+angegeben werden, mit der Wirkung, dass nur die Termine, die in diesem
+Zeitraum liegen, ausgegeben werden.  Und die Angabe eines "exklusive
+Tag" Zeitraums `%?' Spezialtexts bewirkt, dass alle die Termine, die
+nicht in diesem Zeitraum liegen, ausgegeben werden.
+
+Geschickt kombiniert, bieten auch diese Spezialtexte wirksame Filter,
+mit deren Hilfe sehr spezielle Zeitr"aume definiert werden k"onnen, zum
+Beispiel:
+
+     0*d1#999 Jeder Tag des Jahres: Von Montags...Freitags\
+              ausgenommen Mittwochs und aller gesetzlichen Feiertage\
+              %r%F%V
+     ;
+     00001001#9999 Jeder Tag im letzten Quartal des Jahres: Alle Feiertage\
+                   die nicht auf einen Sonntag fallen%x %P
+
+
+File: gcal.info,  Node: Inklusive Tag Zeitraum,  Next: Exklusive Tag Zeitraum,  Prev: Ausschliessen ohne Argument,  Up: Ausschliessen ohne Argument
+
+Inklusive Tag Zeitraum `%?' Spezialtexte
+........................................
+
+Folgende inklusive Tag Zeitr"aume `%?' Spezialtexte werden
+ber"ucksichtigt, wobei in diesem Zusammenhang mit *inklusive* der
+Zeitraum gemeint ist, welcher nicht ausgeschlossen wird:
+
+`%v'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht als
+     gesetzlicher Feiertag in der *ewigen Feiertagsliste* aufgef"uhrt
+     ist.
+
+`%x'
+     Bewirkt den Ausschluss eines Termins, falls dieser weder als
+     gesetzlicher Feiertag noch als Gedenktag in der *ewigen
+     Feiertagsliste* aufgef"uhrt ist.
+
+`%a'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Montag f"allt.
+
+`%c'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Dienstag f"allt.
+
+`%f'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Mittwoch f"allt.
+
+`%g'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Donnerstag f"allt.
+
+`%h'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Freitag f"allt.
+
+`%l'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Samstag f"allt.
+
+`%p'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Sonntag f"allt.
+
+`%q'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Montag...Donnerstag f"allt.
+
+`%r'
+     Bewirkt den Ausschluss eines Termins, falls dieser nicht auf einen
+     Montag...Freitag f"allt.
+
+
+File: gcal.info,  Node: Exklusive Tag Zeitraum,  Prev: Inklusive Tag Zeitraum,  Up: Ausschliessen ohne Argument
+
+Exklusive Tag Zeitraum `%?' Spezialtexte
+........................................
+
+Folgende exklusive Tag Zeitr"aume `%?' Spezialtexte werden
+ber"ucksichtigt, wobei in diesem Zusammenhang mit *exklusive* der
+Zeitraum gemeint ist, welcher ausgeschlossen wird:
+
+`%V'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen Tag
+     f"allt, der als gesetzlicher Feiertag in der *ewigen
+     Feiertagsliste* aufgef"uhrt ist.
+
+`%X'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen Tag
+     f"allt, der entweder als gesetzlicher Feiertag oder als Gedenktag
+     in der *ewigen Feiertagsliste* aufgef"uhrt ist.
+
+`%A'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen Montag
+     f"allt.
+
+`%C'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Dienstag f"allt.
+
+`%F'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Mittwoch f"allt.
+
+`%G'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Donnerstag f"allt.
+
+`%H'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Freitag f"allt.
+
+`%L'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Samstag f"allt.
+
+`%P'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Sonntag f"allt.
+
+`%Q'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Montag...Donnerstag f"allt.
+
+`%R'
+     Bewirkt den Ausschluss eines Termins, falls dieser auf einen
+     Montag...Freitag f"allt.
+
+
+File: gcal.info,  Node: Ersetzen,  Next: Shell Kommando,  Prev: Ausschliessen,  Up: Spezialtexte (lang)
+
+`%?'... Spezialtexte zum Textersatz
+===================================
+
+* Menu:
+
+* Ersetzen mit Datumargument::
+* Ersetzen mit anderem Argument::
+* Ersetzen ohne Argument::
+
+`%?'... Spezialtexte, die zur Programmlaufzeit durch besonderen Text
+ersetzt werden, bewirken das Einstreuen von Daten in den Termintext,
+deren Auspr"agung im wesentlichen von den Kommandozeilenargumenten
+abh"angen, welche bei Programmausf"uhrung angegeben worden sind.  Wird
+der Termintext ausgegeben, so wird stets der gesamte Spezialtext in der
+Ausgabe entsprechend ersetzt.
+
+Geschickt kombiniert, bieten sich auch diese Spezialtexte als wirksame
+Mechanismen an, mit deren Hilfe sich spezielle Texte sehr flexibel
+erzeugen lassen k"onnen, zum Beispiel:
+
+     0*d1#999 Jeder Tag des Jahres: Heute ist %o, der %n (%+)
+
+
+File: gcal.info,  Node: Ersetzen mit Datumargument,  Next: Ersetzen mit anderem Argument,  Prev: Ersetzen,  Up: Ersetzen
+
+Ersetzen mit Datumargument `%?[DATUM]' Spezialtexte
+---------------------------------------------------
+
+* Menu:
+
+* Wochentagsname::
+* Wochentag::
+* Tageszahl::
+* Tag::
+* Woche::
+* Monatsname::
+* Monat::
+* Jahr::
+* Mondphase::
+* Biorhythmus::
+* Differenzwert::
+
+Neben verschiedenen Darstellungen von einem Wochentagsnamen kann auch
+dessen Wochentagsnummer erzeugt werden.  Ebenso kann der laufende Tag
+des Jahres, die Tagesnummer, die Wochennummer, der Monatsname, die
+Monatsnummer, die Jahresnummer, die Mondphase und der Biorhythmus
+produziert werden, sowie einige n"utzliche Differenzwerte.
+
+F"ur das DATUM, dass diese `%?[DATUM]' Spezialtexte annehmen d"urfen,
+gelten folgende Regeln hinsichtlich bestimmter Auslassungswerte,
+verdeutlicht am `JJJJ[MM[TT|WWWN]]' Datumformat (1):
+
+   * Falls JJJJ... nicht angegeben ist (==*kein* Datum kodiert), so
+     wird das laufende Datum als Datum angenommen.
+
+   * Falls JJJJ auf den Wert 0000 gesetzt ist, so wird das laufende Jahr
+     als Jahr angenommen.
+
+   * Falls MM nicht angegeben oder auf den Wert 00 gesetzt ist, so wird
+     der laufende Monat als Monat angenommen, bei 99 der Dezember.
+
+   * Falls TT|WWW nicht angegeben oder auf den Wert 00 gesetzt ist, so
+     wird der laufende Tag als Tag angenommen, bei 99 der letzte Tag
+     des Monats MM.
+
+   * Falls das N Feld angegeben ist (Bereich 1...5 oder 9), so muss
+     auch ein WWW Feld angegeben sein.
+
+  ---------- Footnotes ----------
+
+  (1)  F"ur die anderen erlaubten Datumformate gelten die nachfolgenden
+Regeln sinngem"ass.
+
+
+File: gcal.info,  Node: Wochentagsname,  Next: Wochentag,  Prev: Ersetzen mit Datumargument,  Up: Ersetzen mit Datumargument
+
+Wochentagsname `%?[DATUM]' Spezialtexte
+.......................................
+
+Folgende Wochentagsname `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%o[DATUM]'
+     Wird in einen vollst"andigen *Wochentagsnamen* f"ur den laufenden
+     Tag umgesetzt, z.B.:
+
+          Der Text `Heute ist %o , der %n' wird umgesetzt in
+          ==> `Heute ist Montag, der 10-Jun-1996', falls das aktuelle
+          Systemdatum der 10'te Juni 1996 ist.
+
+`%O[DATUM]'
+     Wird in einen 3-Buchstaben *Wochentagsnamen* f"ur den laufenden Tag
+     umgesetzt, z.B.:
+
+          Der Text `Heute ist %O0@t+1 , der %n+1' wird umgesetzt in
+          ==> `Heute ist Die, der 11-Jun-1996', falls das aktuelle
+          Systemdatum der 10'te Juni 1996 ist.
+
+`%K[DATUM]'
+     Wird in einen 2-Buchstaben *Wochentagsnamen* f"ur den laufenden Tag
+     umgesetzt, z.B.:
+
+          Der Text `Heute ist %K , der %n' wird umgesetzt in
+          ==> `Heute ist Mo, der 10-Jun-1996', falls das aktuelle
+          Systemdatum der 10'te Juni 1996 ist.
+
+
+File: gcal.info,  Node: Wochentag,  Next: Tageszahl,  Prev: Wochentagsname,  Up: Ersetzen mit Datumargument
+
+Wochentag `%?[DATUM]' Spezialtexte
+..................................
+
+Folgende Wochentagsnummer `%?[DATUM]' Spezialtexte werden
+ber"ucksichtigt:
+
+`%S[DATUM]'
+     Wird in eine *Wochentagsnummer* f"ur den laufenden Tag umgesetzt,
+     die nach der `Montag==1...Sonntag==7' Z"ahlweise ermittelt wird,
+     z.B.:
+
+          Der Text `Heute ist Wochentag %S , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 1, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%I[DATUM]'
+     Wird in eine *Wochentagsnummer* mit nachfolgendem
+     Ordnungszahlanhang f"ur den laufenden Tag umgesetzt, die nach der
+     `Montag==1...Sonntag==7' Z"ahlweise ermittelt wird, z.B.:
+
+          Der Text `Heute ist Wochentag %I0@t+1 , der %n+1' wird
+          umgesetzt in
+          ==> `Heute ist Wochentag 2'ter, der 11-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%E[DATUM]'
+     Wird in eine *Wochentagsnummer* f"ur den laufenden Tag umgesetzt,
+     die nach der `Montag==0...Sonntag==6' Z"ahlweise ermittelt wird,
+     z.B.:
+
+          Der Text `Heute ist Wochentag %E , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 0, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%J[DATUM]'
+     Wird in eine *Wochentagsnummer* mit nachfolgendem
+     Ordnungszahlanhang f"ur den laufenden Tag umgesetzt, die nach der
+     `Montag==0...Sonntag==6' Z"ahlweise ermittelt wird, z.B.:
+
+          Der Text `Heute ist Wochentag %J , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 0'ter, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%([DATUM]'
+     Wird in eine *Wochentagsnummer* f"ur den laufenden Tag umgesetzt,
+     die nach der `Sonntag==1...Samstag==7' Z"ahlweise ermittelt wird,
+     z.B.:
+
+          Der Text `Heute ist Wochentag %( , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 2, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%<[DATUM]'
+     Wird in eine *Wochentagsnummer* mit nachfolgendem
+     Ordnungszahlanhang f"ur den laufenden Tag umgesetzt, die nach der
+     `Sonntag==1...Samstag==7' Z"ahlweise ermittelt wird, z.B.:
+
+          Der Text `Heute ist Wochentag %< , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 2'ter, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%)[DATUM]'
+     Wird in eine *Wochentagsnummer* f"ur den laufenden Tag umgesetzt,
+     die nach der `Sonntag==0...Samstag==6' Z"ahlweise ermittelt wird,
+     z.B.:
+
+          Der Text `Heute ist Wochentag %) , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 1, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%>[DATUM]'
+     Wird in eine *Wochentagsnummer* mit nachfolgendem
+     Ordnungszahlanhang f"ur den laufenden Tag umgesetzt, die nach der
+     `Sonntag==0...Samstag==6' Z"ahlweise ermittelt wird, z.B.:
+
+          Der Text `Heute ist Wochentag %> , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 1'ter, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+`%[[DATUM]'
+     Wird in eine *Wochentagsnummer* f"ur den laufenden Tag umgesetzt,
+     die nach der `STARTTAG DER WOCHE==1...ENDETAG DER WOCHE==7'
+     Z"ahlweise ermittelt wird (*note `--starting-day=ARGUMENT':
+     Kalender Optionen.), z.B.:
+
+          Der Text `Heute ist Wochentag %[ , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 4, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 und der Starttag der
+          Woche ein Freitag (==5) ist.
+
+`%{[DATUM]'
+     Wird in eine *Wochentagsnummer* mit nachfolgendem
+     Ordnungszahlanhang f"ur den laufenden Tag umgesetzt, die nach der
+     `STARTTAG DER WOCHE==1...ENDETAG DER WOCHE==7' Z"ahlweise
+     ermittelt wird
+     (*note `--starting-day=ARGUMENT': Kalender Optionen.), z.B.:
+
+          Der Text `Heute ist Wochentag %{ , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 4'ter, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 und der Starttag der
+          Woche ein Freitag (==5) ist.
+
+`%][DATUM]'
+     Wird in eine *Wochentagsnummer* f"ur den laufenden Tag umgesetzt,
+     die nach der `STARTTAG DER WOCHE==0...ENDETAG DER WOCHE==6'
+     Z"ahlweise ermittelt wird (*note `--starting-day=ARGUMENT':
+     Kalender Optionen.), z.B.:
+
+          Der Text `Heute ist Wochentag %] , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 3, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 und der Starttag der
+          Woche ein Freitag (==5) ist.
+
+`%}[DATUM]'
+     Wird in eine *Wochentagsnummer* mit nachfolgendem
+     Ordnungszahlanhang f"ur den laufenden Tag umgesetzt, die nach der
+     `STARTTAG DER WOCHE==0...ENDETAG DER WOCHE==6' Z"ahlweise
+     ermittelt wird
+     (*note `--starting-day=ARGUMENT': Kalender Optionen.), z.B.:
+
+          Der Text `Heute ist Wochentag %} , der %n' wird umgesetzt in
+          ==> `Heute ist Wochentag 3'ter, der 10-Jun-1996', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 und der Starttag der
+          Woche ein Freitag (==5) ist.
+
+
+File: gcal.info,  Node: Tageszahl,  Next: Tag,  Prev: Wochentag,  Up: Ersetzen mit Datumargument
+
+Tageszahl `%?[DATUM]' Spezialtexte
+..................................
+
+Folgende Tageszahl `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%+[DATUM]'
+     Wird in eine *Tageszahl* f"ur den laufenden Tag im Jahr umgesetzt,
+     z.B.:
+
+          Der Text `Tag %+  des Jahres, der %n' wird umgesetzt in
+          ==> `Tag 53 des Jahres, der 22-Feb-1996', falls das aktuelle
+          Systemdatum der 22'te Februar 1996 ist.
+
+`%*[DATUM]'
+     Wird in eine dreiziffrige *Tageszahl* mit f"uhrenden Nullen f"ur
+     den laufenden Tag im Jahr umgesetzt, z.B.:
+
+          Der Text `Tag %*0@t-1  des Jahres, der %n-1' wird umgesetzt in
+          ==> `Tag 052 des Jahres, der 21-Feb-1996', falls das aktuelle
+          Systemdatum der 22'te Februar 1996 ist.
+
+`%&[DATUM]'
+     Wird in eine *Tageszahl* mit nachfolgendem Ordnungszahlanhang f"ur
+     den laufenden Tag im Jahr umgesetzt, z.B.:
+
+          Der Text `Tag %&  des Jahres, der %n' wird umgesetzt in
+          ==> `Tag 53'ter des Jahres, der 22-Feb-1996', falls das
+          aktuelle Systemdatum der 22'te Februar 1996 ist.
+
+`%#[DATUM]'
+     Wird in eine dreiziffrige *Tageszahl* mit f"uhrenden Nullen und
+     nachfolgendem Ordnungszahlanhang f"ur den laufenden Tag im Jahr
+     umgesetzt, z.B.:
+
+          Der Text `Tag %#  des Jahres, der %n' wird umgesetzt in
+          ==> `Tag 053'ter des Jahres, der 22-Feb-1996', falls das
+          aktuelle Systemdatum der 22'te Februar 1996 ist.
+
+
+File: gcal.info,  Node: Tag,  Next: Woche,  Prev: Tageszahl,  Up: Ersetzen mit Datumargument
+
+Tag `%?[DATUM]' Spezialtexte
+............................
+
+Folgende Tag `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%D[DATUM]'
+     Wird in eine *Tageszahl* f"ur den laufenden Tag im Monat umgesetzt,
+     z.B.:
+
+          Der Text `Tag %D , %n' wird umgesetzt in
+          ==> `Tag 2, 02-Feb-1996', falls das aktuelle Systemdatum der
+          2'te Februar 1996 ist.
+
+`%N[DATUM]'
+     Wird in eine zweiziffrige *Tageszahl* mit f"uhrender Null f"ur den
+     laufenden Tag im Monat umgesetzt, z.B.:
+
+          Der Text `Tag %N0@t-1 , %n-1' wird umgesetzt in
+          ==> `Tag 01, 01-Feb-1996', falls das aktuelle Systemdatum der
+          2'te Februar 1996 ist.
+
+`%s[DATUM]'
+     Wird in eine *Tageszahl* mit nachfolgendem Ordnungszahlanhang f"ur
+     den laufenden Tag im Monat umgesetzt, z.B.:
+
+          Der Text `Tag %s , %n' wird umgesetzt in
+          ==> `Tag 2'ter, 02-Feb-1996', falls das aktuelle Systemdatum
+          der 2'te Februar 1996 ist.
+
+`%u[DATUM]'
+     Wird in eine zweiziffrige *Tageszahl* mit f"uhrender Null und
+     nachfolgendem Ordnungszahlanhang f"ur den laufenden Tag im Monat
+     umgesetzt, z.B.:
+
+          Der Text `Tag %u , %n' wird umgesetzt in
+          ==> `Tag 02'ter, 02-Feb-1996', falls das aktuelle Systemdatum
+          der 2'te Februar 1996 ist.
+
+
+File: gcal.info,  Node: Woche,  Next: Monatsname,  Prev: Tag,  Up: Ersetzen mit Datumargument
+
+Woche `%?[DATUM]' Spezialtext
+.............................
+
+Folgender Woche `%?[DATUM]' Spezialtext wird ber"ucksichtigt:
+
+`%k[DATUM]'
+     Wird in eine *ISO-Wochennummer* f"ur die laufende Woche im Jahr
+     umgesetzt, z.B.:
+
+          Der Text `Heute ist %o  der Kalenderwoche %k' wird umgesetzt
+          in
+          ==> `Heute ist Montag der Kalenderwoche 24', falls das
+          aktuelle Systemdatum der 10'te Juni 1996 ist.
+
+
+File: gcal.info,  Node: Monatsname,  Next: Monat,  Prev: Woche,  Up: Ersetzen mit Datumargument
+
+Monatsname `%?[DATUM]' Spezialtexte
+...................................
+
+Folgende Monatsname `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%M[DATUM]'
+     Wird in einen vollst"andigen *Monatsnamen* f"ur den laufenden Monat
+     im Jahr umgesetzt, z.B.:
+
+          Der Text `Heute ist %M , %n' wird umgesetzt in
+          ==> `Heute ist Juni, 10-Jun-1996', falls das aktuelle
+          Systemdatum der 10'te Juni 1996 ist.
+
+`%T[DATUM]'
+     Wird in einen 3-Buchstaben *Monatsnamen* f"ur den laufenden Monat
+     im Jahr umgesetzt, z.B.:
+
+          Der Text `Heute ist %T19961010 , %n' wird umgesetzt in
+          ==> `Heute ist Okt, 10-Jun-1996', falls das aktuelle
+          Systemdatum der 10'te Juni 1996 ist.
+
+
+File: gcal.info,  Node: Monat,  Next: Jahr,  Prev: Monatsname,  Up: Ersetzen mit Datumargument
+
+Monat `%?[DATUM]' Spezialtexte
+..............................
+
+Folgende Monat `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%U[DATUM]'
+     Wird in eine *Monatszahl* f"ur den laufenden Monat im Jahr
+     umgesetzt, z.B.:
+
+          Der Text `Monat %U , %n' wird umgesetzt in
+          ==> `Monat 2, 22-Feb-1996', falls das aktuelle Systemdatum
+          der 22'te Februar 1996 ist.
+
+`%W[DATUM]'
+     Wird in eine zweiziffrige *Monatszahl* mit f"uhrender Null f"ur
+     den laufenden Monat im Jahr umgesetzt, z.B.:
+
+          Der Text `Monat %W000001 , %n' wird umgesetzt in
+          ==> `Monat 01, 22-Feb-1996', falls das aktuelle Systemdatum
+          der 22'te Februar 1996 ist.
+
+`%z[DATUM]'
+     Wird in eine *Monatszahl* mit nachfolgendem Ordnungszahlanhang
+     f"ur den laufenden Monat im Jahr umgesetzt, z.B.:
+
+          Der Text `Monat %z , %n' wird umgesetzt in
+          ==> `Monat 2'ter, 22-Feb-1996', falls das aktuelle
+          Systemdatum der 22'te Februar 1996 ist.
+
+`%Z[DATUM]'
+     Wird in eine zweiziffrige *Monatszahl* mit f"uhrender Null und
+     nachfolgendem Ordnungszahlanhang f"ur den laufenden Monat im Jahr
+     umgesetzt, z.B.:
+
+          Der Text `Monat %Z , %n' wird umgesetzt in
+          ==> `Monat 02'ter, 22-Feb-1996', falls das aktuelle
+          Systemdatum der 22'te Februar 1996 ist.
+
+
+File: gcal.info,  Node: Jahr,  Next: Mondphase,  Prev: Monat,  Up: Ersetzen mit Datumargument
+
+Jahr `%?[DATUM]' Spezialtexte
+.............................
+
+Folgende Jahr `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%Y[DATUM]'
+     Wird in eine *Jahreszahl* f"ur das laufende Jahr umgesetzt, z.B.:
+
+          Der Text `Jahr %Y , %n' wird umgesetzt in
+          ==> `Jahr 933, 22-Feb-0933', falls das aktuelle Systemdatum
+          der 22'te Februar 933 ist.
+
+`%=[DATUM]'
+     Wird in eine vierziffrige *Jahreszahl* mit f"uhrenden Nullen f"ur
+     das laufende Jahr umgesetzt, z.B.:
+
+          Der Text `Jahr %=0015 , %n' wird umgesetzt in
+          ==> `Jahr 0015, 22-Feb-0933', falls das aktuelle Systemdatum
+          der 22'te Februar 933 ist.
+
+
+File: gcal.info,  Node: Mondphase,  Next: Biorhythmus,  Prev: Jahr,  Up: Ersetzen mit Datumargument
+
+Mondphase `%?[DATUM]' Spezialtexte
+..................................
+
+Gcal benutzt eine sehr einfache Rechenvorschrift um die Mondphase zu
+ermitteln, welche ihrerseits nur N"aherungswerte liefert.  Die
+Mondphase wird stets um 0 Uhr Weltzeit berechnet.  Folgende Mondphase
+`%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%-[DATUM]'
+     Wird in einen *Mondphasentext* f"ur den laufenden Tag im Jahr
+     umgesetzt, z.B.:
+
+          Der Text `Mondphase %- , %n' wird umgesetzt in
+          ==> `Mondphase 94%+, 22-Dez-1996', falls das aktuelle
+          Systemdatum der 22'te Dezember 1996 ist.
+
+     Der konstruierte Mondphasentext besteht aus einem Prozentwert, der
+     "uber den beleuchteten Bruchteil der Mondscheibe informiert, und
+     ein nachfolgendes Zeichen, das etwas "uber den Status des Mondes
+     aussagt.  Ein nachfolgendes `+' Zeichen bezeichnet einen
+     zunehmenden Mond, ein `-' Zeichen einen abnehmenden Mond, ein `@'
+     Zeichen steht f"ur eine Vollmondphase, und ein `!' Zeichen f"ur
+     eine Neumondphase.
+
+`%_[DATUM]'
+     Wird in einen dreiziffrigen *Mondphasentext* mit f"uhrenden Nullen
+     f"ur den laufenden Tag im Jahr umgesetzt, z.B.:
+
+          Der Text `Mondphase %_0@t+1 , %n+1' wird umgesetzt in
+          ==> `Mondphase 098%+, 23-Dez-1996', falls das aktuelle
+          Systemdatum der 22'te Dezember 1996 ist.
+
+     Der konstruierte Mondphasentext besteht aus einem Prozentwert, der
+     "uber den beleuchteten Bruchteil der Mondscheibe informiert, und
+     ein nachfolgendes Zeichen, das etwas "uber den Status des Mondes
+     aussagt.  Ein nachfolgendes `+' Zeichen bezeichnet einen
+     zunehmenden Mond, ein `-' Zeichen einen abnehmenden Mond, ein `@'
+     Zeichen steht f"ur eine Vollmondphase, und ein `!' Zeichen f"ur
+     eine Neumondphase.
+
+`%:[DATUM]'
+     Wird in eine *Mondphasen-Textgrafik* f"ur den laufenden Tag im
+     Jahr umgesetzt, z.B.:
+
+          Der Text `Datum %n %:  --- Mondphase %_ ~Text' wird umgesetzt
+          in
+          ==> `Datum 08-Mar-1995 '
+          ==> `           (       @@@@@@'
+          ==> `      (              @@@@@@@@@'
+          ==> `    (                @@@@@@@@@@@'
+          ==> `  (                   @@@@@@@@@@@@'
+          ==> ` (                    @@@@@@@@@@@@@'
+          ==> `(                      @@@@@@@@@@@@@'
+          ==> `(                      @@@@@@@@@@@@@'
+          ==> ` (                    @@@@@@@@@@@@@'
+          ==> `  (                   @@@@@@@@@@@@'
+          ==> `   (                  @@@@@@@@@@@'
+          ==> `      (             @@@@@@@@@'
+          ==> `           (        @@@@@@@ --- Mondphase 041%+'
+          ==> `Text', falls das aktuelle Systemdatum der 8'te M"arz
+          1995 ist.
+
+     *Note `--moonimage-lines=ANZAHL': Termin Optionen, wo erkl"art
+     wird, wie die Gr"osse einer Mondphasen-Textgrafik ge"andert werden
+     kann.
+
+
+File: gcal.info,  Node: Biorhythmus,  Next: Differenzwert,  Prev: Mondphase,  Up: Ersetzen mit Datumargument
+
+Biorhythmus `%?[DATUM]' Spezialtexte
+....................................
+
+Gcal besitzt die F"ahigkeit, f"ur jedes angegebene Geburtsdatum einen
+"Biorhythmus" zu erzeugen.  Der erzeugte Text zeigt die drei
+Standard-Biorhythmuszyklen, und zwar den 28 Tage w"ahrenden emotionalen
+Zyklus, den 33 Tage w"ahrenden geistigen Zyklus, und den 23 Tage
+w"ahrenden physischen Zyklus.  Der emotionale Zyklus wird vom
+Empfindungsverm"ogen, der geistigen Gesundheit, der Gem"utsverfassung
+und der Kreativit"at beherrscht.  Der geistige Zyklus spiegelt
+Intelligenz, Ged"achtnis, geistige Wachheit und analytisches
+Denkverm"ogen wider.  Der physische Zyklus stellt die K"orperkraft,
+Ausdauer,  Leistungs- und Widerstandsf"ahigkeit dar.  Alle Zyklen
+beginnen im Nullpunkt am Geburtsdatum und schwingen wie Sinuskurven
+zwischen ihren positiven und negativen Maximalwerten.  Die Zeitr"aume
+oberhalb des Nullpunktes zeigen die Tage voller Lebenskraft und
+Leistungsf"ahigkeit an, w"ahrend die Zeitr"aume unterhalb des
+Nullpunktes die Tage verringerter Leistungsf"ahigkeit darstellen.  Der
+Biorhythmus wurde nur zu Unterhaltungszwecken eingebaut!  Die
+Interpretation der Biorhythmustexte liegt in den H"anden des Benutzers.
+
+Gcal z"ahlt "kritische" Tage, "positive" ebenso wie "negative" Tage.
+Kritische Tage sind solche Tage, an denen eine oder mehrere der
+biologischen Zyklen den Nullpunkt "uberqueren.  Zu einem solchen
+Zeitpunkt, so wird gesagt, soll sich der Organismus in einem Stadium
+des Umbruchs befinden, und es scheint angebracht zu sein, Vorsicht
+walten zu lassen.  Positive Tage sind solche Tage, an denen eine oder
+mehrere der biologischen Zyklen einen positiven Maximalwert haben.  Zu
+einem solchen Zeitpunkt, so wird gesagt, soll sich der Organismus in
+einem gesteigerten Stadium befinden.  Negative Tage sind solche Tage,
+an denen eine oder mehrere der biologischen Zyklen einen negativen
+Maximalwert haben.  Zu einem solchen Zeitpunkt, so wird gesagt, soll
+sich der Organismus in einem verminderten Stadium befinden.
+
+Folgende Biorhythmus `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%,[DATUM]'
+     Wird in einen *Biorhythmustext* f"ur den laufenden Tag im Jahr
+     umgesetzt, z.B.:
+
+          Der Text `%,19620921' wird umgesetzt in
+          ==> `1! 0+ 0- , Emo=+022%- Gei=-091%+ Phy=-014%-', falls das
+          aktuelle Systemdatum der 12'te Dezember 1996 ist.
+
+     Das vorangehende Beispiel zeigt den berechneten Biorhythmus als
+     eine Folge von Werten f"ur eine Person an, die am 21'ten September
+     1962 geboren ist.  Der konstruierte Text besteht aus zwei Teilen,
+     und zwar einerseits aus einem Tripel von Gesamtwerten, welches den
+     kritischen, positiven und negativen Tag bezeichnet.  Und aus einem
+     weiteren Tripel von Werten, welches den emotionalen, geistigen und
+     physischen Zyklus bezeichnet.
+
+     Im ersten Tripel von Gesamtwerten bezeichnet ein nachgestelltes `!'
+     Zeichen einen kritischen Tag, ein `+' einen positiven Tag, und ein
+     `-' Anhang markiert einen negativen Tag.
+
+     Im zweiten Tripel von Werten besteht jeder einzelne
+     Zyklus-Prozentwert aus einem anf"uhrenden positiven oder negativen
+     Vorzeichen, welches etwas "uber die Distanz dieses Wertes zum
+     Nullpunkt aussagt, und einem nachgestellten Zeichen, das etwas
+     "uber den Status jedes einzelnen Zyklus' aussagt.  Ein
+     nachfolgendes `+' Zeichen markiert eine zunehmende Phase, ein `-'
+     Anhang bezeichnet eine abnehmende Phase, und ein `@' Kennzeichen
+     den Maximalwert einer Phase.
+
+`%;[DATUM]'
+     Wird in eine *Biorhythmus-Textgrafik* f"ur den laufenden Tag im
+     Jahr umgesetzt, z.B.:
+
+          Der Text `%;19620921' wird umgesetzt in
+          ==> `0-  G               P 1   E                +0', falls
+          das aktuelle Systemdatum der 12'te Dezember 1996 ist.
+
+     Das vorhergehende Beispiel zeigt den berechneten Biorhythmus als
+     eine Zeile einer Textgrafik f"ur eine Person an, die am 21'ten
+     September 1962 geboren ist.  Die konstruierte Zeile ist ein Balken
+     mit einer negativen und positiven Achse von einstellbarer L"ange
+     (*note `--biorhythm-axis=ANZAHL': Termin Optionen.), dessen linke
+     Grenze durch den Gesamtwert der negativen Tage dargestellt wird
+     (die `0-' in diesem Fall), und dessen rechte Grenze durch den
+     Gesamtwert der positiven Tage repr"asentiert wird (die `+0' in
+     diesem Fall).  Der Nullpunkt der Koordinaten wird durch den
+     Gesamtwert der kritischen Tage dargestellt, welcher in diesem Fall
+     die `1' ist.  Der emotionale, geistige und der physische
+     Phasenwert wird entsprechend skaliert auf dem Balken abgetragen,
+     und zwar dargestellt durch den Anfangsbuchstaben des jeweiligen
+     Zyklus' (`E', `G' und `P').  Zusammenfallende Phasenwerte werden
+     durch ein `@' Zeichen markiert.
+
+
+File: gcal.info,  Node: Differenzwert,  Prev: Biorhythmus,  Up: Ersetzen mit Datumargument
+
+Differenzwert `%?[DATUM]' Spezialtexte
+......................................
+
+Folgende Differenzwert `%?[DATUM]' Spezialtexte werden ber"ucksichtigt:
+
+`%yDATUM'
+     Wird in einen *Jahresdifferenzwert* umgesetzt, z.B.:
+
+          Der Text `Silvester 1912 liegt %y1912  Jahre zur"uck' wird
+          umgesetzt in
+          ==> `Silvester 1912 liegt -82 Jahre zur"uck', falls das
+          aktuelle Jahr 1994 ist.
+
+`%b[DATUM]'
+     Wird in einen *Alterswert* umgesetzt, z.B.:
+
+          Der Text `Mein %b1962  Geburtstag%i1952#2062' wird umgesetzt
+          in
+          ==> `Mein 32 Geburtstag', falls das aktuelle Jahr 1994 ist.
+
+     Der Alterswert wird nur dann ausgegeben, wenn sich bei dessen
+     Berechnung ein Wert gr"osser Null ergibt.  Zudem wird der Termin
+     in diesem vorangehenen Beispiel nur w"ahrend der Jahre 1952 bis
+     2062 (einschliesslich) ausgegeben.
+
+`%B[DATUM]'
+     Wird in einen *Alterswert* mit nachfolgendem Ordnungszahlanhang
+     umgesetzt, z.B.:
+
+          Der Text `Mein %B1962  Geburtstag%i1952#2062' wird umgesetzt
+          in
+          ==> `Mein 32'ter Geburtstag', falls das aktuelle Jahr 1994
+          ist.
+
+     Der Alterswert wird nur dann ausgegeben, wenn sich bei dessen
+     Berechnung ein Wert gr"osser Null ergibt.  Zudem wird der Termin
+     in diesem vorangehenen Beispiel nur w"ahrend der Jahre 1952 bis
+     2062 (einschliesslich) ausgegeben.
+
+
+File: gcal.info,  Node: Ersetzen mit anderem Argument,  Next: Ersetzen ohne Argument,  Prev: Ersetzen mit Datumargument,  Up: Ersetzen
+
+Ersetzen mit anderem Argument `%?[ARGUMENT]' Spezialtexte
+---------------------------------------------------------
+
+* Menu:
+
+* Aktuelle Uhrzeit::
+* Textliches Datum::
+* Julianische Tageszahl::
+
+Neben verschiedenen Darstellungen der aktuellen Systemuhrzeit kann auch
+ein fester Datumtext erzeugt werden.  Zudem kann eine Tageszahl
+produziert werden, deren Basisdatum ausgehend vom Julianischen Datum
+beliebig verlagert werden kann.
+
+F"ur das ARGUMENT, dass diese `%?[ARGUMENT]' Spezialtexte annehmen
+d"urfen, gelten keine besonderen Regeln hinsichtlich bestimmter
+Auslassungswerte.
+
+
+File: gcal.info,  Node: Aktuelle Uhrzeit,  Next: Textliches Datum,  Prev: Ersetzen mit anderem Argument,  Up: Ersetzen mit anderem Argument
+
+Aktuelle Uhrzeit `%t[ARGUMENT]' Spezialtext
+...........................................
+
+`%t[12|24]' bezeichnet die *aktuelle Systemuhrzeit*, z.B.:
+
+     Der Text `Uhrzeit: %t --> Zahnarzttermin um 10.00 Uhr' wird
+     umgesetzt in
+     ==> `Uhrzeit: 07.32 --> Zahnarzttermin um 10.00 Uhr', falls die
+     aktuelle Systemuhrzeit 07.32 Uhr (hh.mm) ist.
+
+Wenn nur `%t' angegeben ist, so wird der Systemuhrzeitwert implizit im
+*24-Stunden* Format ausgegeben (==`%t24').  Um im *12-Stunden* Format
+auszugeben, muss die Zahl 12 direkt hinter `%t' angegeben werden, z.B.
+`%t12'.
+
+
+File: gcal.info,  Node: Textliches Datum,  Next: Julianische Tageszahl,  Prev: Aktuelle Uhrzeit,  Up: Ersetzen mit anderem Argument
+
+Textliches Datum `%n[ARGUMENT]' Spezialtext
+...........................................
+
+`%n[[+|-]N]' bezeichnet die laufende bzw. abgefragte *Tagesnummer*
+relativ zum laufenden Datum `+/-' N Tagen und wird in einen, sich auf
+ein absolutes Datum beziehenden *Datumtext* im `TT-MMM-JJJJ' Format
+umgesetzt, z.B.:
+
+     Die Ressourcendateizeile `1962Sep21 10000 Tage alt: %n+10000' wird
+     umgesetzt in
+     ==> `10000 Tage alt: 06-Feb-1990', falls Gcal mit der einfachen
+     `-c' Option und dem `sep 1962' Kommando aufgerufen wird (*note `MM
+     JJJJ': Einfache Kommandos.).
+
+
+File: gcal.info,  Node: Julianische Tageszahl,  Prev: Textliches Datum,  Up: Ersetzen mit anderem Argument
+
+Julianische Tageszahl `%j[ARGUMENT]' Spezialtext
+................................................
+
+`%j[[-]N]' bezeichnet die laufende bzw. abgefragte *Julianische
+Tageszahl* relativ zum aktuellen Systemdatum (==heute).  Diese
+Tageszahl bezieht sich auf das Datum 1'ter Januar 4713 vor Christus,
+welches f"ur astronomische Berechnungen als der Tag Null einer
+durchlaufenden Tagesz"ahlung angesehen wird und als das Julianisches
+Datum (J.D.) bekannt ist.  Der exakte Nullpunkt von diesem Datum ist um
+12 Uhr Weltzeit; der Tageswechsel erfolgt also nicht um Mitternacht,
+sondern um Mittag Weltzeit.  Da Gcal gegen"artig nicht die Zeitzone des
+vom Rechner gelieferten Systemdatum auswertet, wird diese Tageszahl nur
+ganzzahlig dargestellt in der Annahme, dass der Tageswechsel bereits
+Mittags stattgefunden hat.  Wer den Tageswechsel als Mittags noch nicht
+bereits vollzogen haben m"ochte, der soll die sich aus dem Spezialtext
+ergebende Julianische Tageszahl stets um den Faktor eins vermindern,
+z.B. `%j-1'.
+
+Zum Beispiel:
+
+     Die Ressourcendateizeile
+     `0 Julianischer Tag %j seit 01-Jan-4713 v.Chr.' wird umgesetzt in
+     ==> `Julianischer Tag 2437929 seit 01-Jan-4713 v.Chr.', falls Gcal
+     mit den Optionen `-c %19620921' sowie keinem Kommando aufgerufen
+     wird.
+
+Wenn dem `%j' Text eine Zahl direkt folgt, so wird diese Zahl von der
+tats"achlichen Julianischen Tageszahl stets subtrahiert (1), so dass im
+Text mit beliebigen Bezugsgr"ossen gearbeitet werden kann, z.B.:
+
+     Die Ressourcendateizeile
+     `0 Julianischer Tag %j-2415021 seit 01-Jan-1900' wird umgesetzt in
+     ==> `Julianischer Tag 4 seit 01-Jan-1900', falls Gcal mit den
+     Optionen `-c %19000105' sowie keinem Kommando aufgerufen wird.
+
+  ---------- Footnotes ----------
+
+  (1)  Ein negatives Vorzeichen kann der besseren Lesbarkeit wegen
+angegeben werden.
+
+
+File: gcal.info,  Node: Ersetzen ohne Argument,  Prev: Ersetzen mit anderem Argument,  Up: Ersetzen
+
+Ersetzen ohne Argument `%?' Spezialtexte
+----------------------------------------
+
+* Menu:
+
+* Andere Differenzwerte::
+* Hervorhebung::
+
+Neben weiteren n"utzlichen Differenzwerten kann der Termintext auch mit
+verschiedenen Hervorhebungen ausgestattet werden.
+
+
+File: gcal.info,  Node: Andere Differenzwerte,  Next: Hervorhebung,  Prev: Ersetzen ohne Argument,  Up: Ersetzen ohne Argument
+
+Differenzwert `%?' Spezialtexte
+...............................
+
+Folgende andere Differenzwert `%?' Spezialtexte werden ber"ucksichtigt:
+
+`%d'
+     Bezeichnet den laufenden bzw. abgefragten *Tag* relativ zum
+     aktuellen Systemdatum (==heute), z.B.:
+
+          Die Ressourcendateizeile `0 %d Tage vergangen' wird umgesetzt
+          in
+          ==> `-10 Tage vergangen', falls Gcal mit der Option `-c10-'
+          und keinem Kommando aufgerufen wird.
+
+`%w'
+     Bezeichnet die laufende bzw. abgefragte *Woche* relativ zum
+     aktuellen Systemdatum (==heute).
+
+`%m'
+     Bezeichnet den laufenden bzw. abgefragten *Monat* relativ zum
+     aktuellen Systemdatum (==heute).
+
+`%y'
+     Bezeichnet das laufende bzw. abgefragte *Jahr* relativ zum
+     aktuellen Systemdatum (==heute).
+

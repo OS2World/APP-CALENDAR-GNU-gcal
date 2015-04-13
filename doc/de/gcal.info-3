@@ -1,0 +1,1437 @@
+This is Info file ./de/gcal.info, produced by Makeinfo version 1.67
+from the input file ./de/gcal.texi.
+
+INFO-DIR-SECTION GNU Pakete
+START-INFO-DIR-ENTRY
+* Gcal: (gcal).                         Das GNU Kalenderprogramm.
+* tcal: (gcal)Aufruf von tcal.          Gcal mit morgigem Datum aufrufen.
+* txt2gcal: (gcal)Aufruf von txt2gcal.  Textdatei zu Ressourcendatei wandeln.
+* gcal2txt: (gcal)Aufruf von gcal2txt.  Ressourcendatei zu Textdatei wandeln.
+END-INFO-DIR-ENTRY
+
+Diese Datei beschreibt Gcal, ein Programm um Kalender auszugeben.  Gcal
+gibt Monatskalender und Jahreskalender, ewige Feiertagslisten sowie
+Terminlisten auf viele verschiedene Arten und Weisen aus.  Es
+ber"ucksichtigt diejenigen Daten korrekt, welche "ubergangen wurden,
+als der derzeitig g"ultige Gregorianische Kalender den vormals g"ultigen
+Julianischen Kalender abl"oste.
+
+Copyright (C) 1994, 1995, 1996, 1997 Thomas Esken
+
+Das ist die zweite Ausgabe der Gcal Dokumentation.
+
+Hiermit wird die Erlaubnis erteilt, wortgetreue Kopien dieses Handbuchs
+zu erstellen und zu vertreiben, sofern alle gemachten Kopien mit dem
+Copyrightvermerk und diesem Genehmigungsvermerk ausgestattet sind und
+vorgenannte Vermerke erhalten bleiben.
+
+Hiermit wird die Erlaubnis erteilt, ver"anderte Kopien dieses Handbuchs
+wie unter den Bedingungen f"ur wortgetreue Kopien zu erstellen und zu
+vertreiben, sofern die ausgef"uhrten Arbeiten in Ableitung und
+Gesamtheit innerhalb der Bestimmungen eines Genehmigungsvermerks liegen
+und zudem mit diesem ausgestattet sind, welcher mit diesem hier
+identisch ist.
+
+Hiermit wird die Erlaubnis erteilt, wie unter den vorgenannten
+Bedingungen f"ur ver"anderte Versionen "Ubersetzungen dieses Handbuchs
+in eine andere Sprache zu erstellen und zu vertreiben, mit der
+Ausnahme, dass dieser Genehmigungsvermerk in einer "Ubersetzung
+angegeben sein darf, welche von der Free Software Foundation gebilligt
+wird.
+
+Jedwede Vorschl"age, Verbesserungen, Erweiterungen, Fehlerberichte,
+Geld- und Sachspenden, Programmierauftr"age usw. sind stets willkommen.
+Bitte senden Sie diese direkt an meine eMail Adresse.  Wenn Sie dieses
+Werkzeug m"ogen, so w"urde ich mich sehr "uber eine Postkarte von Ihnen
+freuen!
+
+------------------------oOO      \\\_''/      OOo---------------------------
+Thomas Esken               O     (/o-o\)     O  eMail: esken@uni-muenster.de
+Im Hagenfeld 84                 ((  ^  ))       Phone: +49 251 232585
+D-48147 Muenster; Germany    \____) ~ (____/    MotD : 2old2live, 2young2die
+
+
+File: gcal.info,  Node: Antwortdatei,  Next: Datummodifizierer,  Prev: Optionen,  Up: Kommandozeilenargumente
+
+Antwortdatei
+------------
+
+Wenn ein `@DATEI' Argument in der Kommandozeile vorgefunden wird, so
+wird eine "Antwortdatei" namens DATEI benutzt, d.h. Optionen und
+Kommandos werden aus dieser Datei vorgeladen.  Eine Antwortdatei
+`@DATEI' darf Optionen und Kommandos enthalten, aber *keine* Verweise
+auf weitere Antwortdateien.  Werden solche Verweise auf weitere
+Antwortdateien vorgefunden, so werden diese ignoriert.  *Note
+`--response-file=DATEINAME': Globale Optionen, f"ur Hinweise, wie eine
+Antwortdatei automatisch erzeugt werden kann.
+
+Das Suchschema f"ur eine Antwortdatei ist gleich dem Suchschema f"ur
+Ressourcendateien, mit der Ausnahme, dass *keine* Standard-Antwortdatei
+ber"ucksichtigt wird.  *Note Datei-Suchmechanismus: Ressourcendatei,
+f"ur weitere Details.  Es d"urfen mehrere Antwortdateien beim Aufruf
+von Gcal angegeben werden.  Diese werden in genau der Reihenfolge
+abgearbeitet, in der sie in der Kommandozeile angegeben sind, also
+streng sequentiell.
+
+Jede Option und jedes Kommando muss auf einer einzelnen Zeile angegeben
+sein, d.h. durch ein echtes `\n' (Newline) Zeichen getrennt werden.
+Eine Zeile der Antwortdatei, die mit einem `;' (Semikolon) Zeichen
+beginnt, ist ein Kommentar und wird von Gcal vollst"andig ignoriert
+(*note Zeile kommentieren::.).
+
+Optionen m"ussen vor Kommandos definiert werden.  Wenn eine Antwortdatei
+Kommandos enth"alt, so werden alle weiteren Argumente, die nach
+`@DATEI' in der Kommandozeile angegeben sind, ignoriert.
+
+Zum Beispiel:
+
+  1. Inhalt von Antwortdatei `Datei':
+
+          Zeile    Text
+          1        -j
+          2        -Cw
+          EOF
+          
+          $ gcal -i -b 3 @Datei -s 3 1994
+          
+          ==> gcal -i -b 3 -j -Cw -s 3 1994
+
+  2. Inhalt von Antwortdatei `Datei':
+
+          Zeile    Text
+          1        -j
+          2        -Cw
+          3        mai 1992
+          EOF
+          
+          $ gcal -i -b 3 @Datei -s 3 1994
+          
+          ==> gcal -i -b 3 -j -Cw mai
+
+  3. Inhalt von Antwortdatei `Datei':
+
+          Zeile    Text
+          1        -j
+          2        -Cw
+          3        mai
+          4        1992
+          EOF
+          
+          $ gcal -i -b 3 @Datei -s 3 1994
+          
+          ==> gcal -i -b 3 -j -Cw mai 1992
+
+
+File: gcal.info,  Node: Datummodifizierer,  Next: Kommandos,  Prev: Antwortdatei,  Up: Kommandozeilenargumente
+
+Datummodifizierer
+-----------------
+
+Es ist m"oglich, dasjenige Datum anstelle dem aktuellen Systemdatum zu
+verwenden, welches mit der `%DATUM' Option definiert wurde.  Das
+bedeutet, dass Termine f"ur *jedwedes* Jahr gepr"uft werden k"onnen,
+und diese so ber"ucksichtigt werden, als ob sie Termine w"aren, die
+sich rein auf das aktuelle Jahr beziehen.
+
+Das Datum muss in einem dieser Formate angegeben werden:
+
+   * `JJJJ[MM[TT|WWWN]]'
+
+   * `JJJJ*d|wN[WWW]'
+
+   * `JJJJ@e|t|DVAR[[+|-]N[WWW]]'
+
+   * `MONATSNAME[TT]'
+
+   * `WOCHENTAGSNAME[N]'
+
+   * TT
+
+Hierzu einige Beispiele:
+
+     *Bitte beachten:*
+     In den folgenden Beispielen wird angenommen, dass das aktuelle
+     Systemdatum *Mittwoch, der 17'te Februar 1993* (19930217) ist!
+
+Das `JJJJ[MM[TT|WWWN]]' Format:
+        * `gcal %1994' (== JJJJ)
+          Das aktuelle Datum wird auf den 17'ten Februar 1994 gesetzt
+          => 19940217.
+
+        * `gcal %1994M"ar'
+
+        * `gcal %19943'
+
+        * `gcal %199403' (== JJJJMM)
+          Das aktuelle Datum wird auf das Datum 17'ter M"arz 1994
+          gesetzt => 19940317.
+
+        * `gcal %1994M"ar3'
+
+        * `gcal %1994033'
+
+        * `gcal %19940303' (== JJJJMMTT)
+          Das aktuelle Datum wird auf das Datum 3'ter M"arz 1994
+          gesetzt => 19940303.
+
+        * `gcal %1994M"arMit3'
+
+        * `gcal %199403mi3' (== JJJJMMWWWN)
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch im M"arz
+          1994 gesetzt (N == `1...5|9') => 19940316.
+
+        * `gcal %0'
+
+        * `gcal %00'
+
+        * `gcal %000'
+
+        * `gcal %0000' (== JJJJ)
+          Das aktuelle Datum bleibt unver"andert => 19930217.
+
+        * `gcal %0000M"ar'
+
+        * `gcal %00003'
+
+        * `gcal %000003' (== JJJJMM)
+          Das aktuelle Datum wird auf das Datum 17'ter M"arz 1993
+          gesetzt => 19930317.
+
+        * `gcal %0000M"ar3'
+
+        * `gcal %0000033'
+
+        * `gcal %00000303' (== JJJJMMTT)
+          Das aktuelle Datum wird auf das Datum 3'ter M"arz 1993
+          gesetzt => 19930303.
+
+        * `gcal %0000M"arMit3'
+
+        * `gcal %000003mi3' (== JJJJMMWWWN)
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch im M"arz
+          1993 gesetzt (N == `1...5|9') => 19930317.
+
+Das `JJJJ*d|wN[WWW]' Format:
+        * `gcal %1994*d10' (== `JJJJ*dN')
+          Das aktuelle Datum wird auf das Datum des 10'ten absoluten
+          Tages 1994 gesetzt (N == `1...365|366|999') => 19940110.
+
+        * `gcal %1994*d10son' (== `JJJJ*dNWWW')
+          Das aktuelle Datum wird auf das Datum des 10'ten Sonntags 1994
+          gesetzt (N == `1...51|52|53|99') => 19940306.
+
+        * `gcal %0*d10' (== `JJJJ*dN')
+          Das aktuelle Datum wird auf das Datum des 10'ten absoluten
+          Tages 1993 gesetzt => 19930110.
+
+        * `gcal %0*d10son' (== `JJJJ*dNWWW')
+          Das aktuelle Datum wird auf das Datum des 10'ten Sonntags 1993
+          gesetzt => 19930307.
+
+        * `gcal %1994*w10' (== `JJJJ*wN')
+          Das aktuelle Datum wird auf das Datum des Montags der 10'ten
+          ISO-Kalenderwoche 1994 gesetzt (N == `0|1...52|53|99')
+          => 19940307.
+
+        * `gcal %1994*w10son' (== `JJJJ*wNWWW')
+          Das aktuelle Datum wird auf das Datum des Sonntags der 10'ten
+          ISO-Kalenderwoche 1994 gesetzt => 19940313.
+
+        * `gcal %0*w10' (== `JJJJ*wN')
+          Das aktuelle Datum wird auf das Datum des Montags der 10'ten
+          ISO-Kalenderwoche 1993 gesetzt => 19930308.
+
+        * `gcal %0*w10son' (== `JJJJ*wNWWW')
+          Das aktuelle Datum wird auf das Datum des Sonntags der 10'ten
+          ISO-Kalenderwoche 1993 gesetzt => 19930314.
+
+Das `JJJJ@e|t|DVAR[[+|-]N[WWW]]' Format:
+        * `gcal %1994@e' (== `JJJJ@e')
+          Das aktuelle Datum wird auf das Datum des Ostersonntags 1994
+          gesetzt => 19940403.
+
+        * `gcal %1994@e10'
+
+        * `gcal %1994@e+10' (== `JJJJ@e[+]N')
+          Das aktuelle Datum wird auf das Datum 10 Tage nach
+          Ostersonntag 1994 gesetzt => 19940413.
+
+        * `gcal %1994@e-10' (== `JJJJ@e-N')
+          Das aktuelle Datum wird auf das Datum 10 Tage vor
+          Ostersonntag 1994 gesetzt => 19940324.
+
+        * `gcal %0@e'
+
+        * `gcal %00@e'
+
+        * `gcal %000@e'
+
+        * `gcal %0000@e' (== `JJJJ@e')
+          Das aktuelle Datum wird auf das Datum des Ostersonntags 1993
+          gesetzt => 19930411.
+
+        * `gcal %0@e10'
+
+        * `gcal %0@e+10' (== `JJJJ@e[+]N')
+          Das aktuelle Datum wird auf das Datum 10 Tage nach
+          Ostersonntag 1993 gesetzt => 19930421.
+
+        * `gcal %0@e-10' (== `JJJJ@e-N')
+          Das aktuelle Datum wird auf das Datum 10 Tage vor
+          Ostersonntag 1993 gesetzt => 19930401.
+
+        * `gcal %1994@e3Mi'
+
+        * `gcal %1994@e+3Mi' (== `JJJJ@e[+]NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch nach
+          Ostersonntag 1994 gesetzt => 19940420.
+
+        * `gcal %1994@e-3mi' (== `JJJJ@e-NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch vor
+          Ostersonntag 1994 gesetzt => 19940316.
+
+        * `gcal %0@e3mi'
+
+        * `gcal %0@e+3mi' (== `JJJJ@e[+]NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch nach
+          Ostersonntag 1993 gesetzt => 19930428.
+
+        * `gcal %0@e-3mi' (== `JJJJ@e-NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch vor
+          Ostersonntag 1993 gesetzt => 19930324.
+
+        * `gcal %1994@t' (== `JJJJ@t')
+          Das aktuelle Datum wird auf das heutige Datum im Jahr 1994
+          gesetzt => 19940217.
+
+        * `gcal %1994@t10'
+
+        * `gcal %1994@t+10' (== `JJJJ@t[+]N')
+          Das aktuelle Datum wird auf das Datum 10 Tage nach dem
+          heutigen Datum im Jahr 1994 gesetzt => 19940227.
+
+        * `gcal %1994@t-10' (== `JJJJ@t-N')
+          Das aktuelle Datum wird auf das Datum 10 Tage vor dem
+          heutigen Datum im Jahr 1994 gesetzt => 19940207.
+
+        * `gcal %0@t'
+
+        * `gcal %00@t'
+
+        * `gcal %000@t'
+
+        * `gcal %0000@t' (== `JJJJ@t')
+          Das aktuelle Datum wird auf das heutige Datum gesetzt
+          => 19930217.
+
+        * `gcal %0@t10'
+
+        * `gcal %0@t+10' (== `JJJJ@t[+]N')
+          Das aktuelle Datum wird auf das Datum 10 Tage nach dem
+          heutigen Datum gesetzt => 19930227.
+
+        * `gcal %0@t-10' (== `JJJJ@t-N')
+          Das aktuelle Datum wird auf das Datum 10 Tage vor dem
+          heutigen Datum gesetzt => 19930207.
+
+        * `gcal %1994@t3Mi'
+
+        * `gcal %1994@t+3Mi' (== `JJJJ@t[+]NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch nach dem
+          heutigen Datum im Jahr 1994 gesetzt => 19940309.
+
+        * `gcal %1994@t-3mi' (== `JJJJ@t-NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch vor dem
+          heutigen Datum im Jahr 1994 gesetzt => 19940302.
+
+        * `gcal %0@t3mi'
+
+        * `gcal %0@t+3mi' (== `JJJJ@t[+]NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch nach dem
+          heutigen Datum gesetzt => 19930310.
+
+        * `gcal %0@t-3mi' (== `JJJJ@t-NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch vor dem
+          heutigen Datum gesetzt => 19930127.
+
+        * `gcal -v a=0303 %1994@a' (== `JJJJ@DVAR')
+          Das aktuelle Datum wird auf das Datum 3'ter M"arz 1994
+          gesetzt => 19940303.
+
+        * `gcal -v a=0303 %1994@a10'
+
+        * `gcal -v a=0303 %1994@a+10' (== `JJJJ@DVAR[+]N')
+          Das aktuelle Datum wird auf das Datum 10 Tage nach dem 3'ten
+          M"arz 1994 gesetzt => 19940313.
+
+        * `gcal -v a=0303 %1994@a-10' (== `JJJJ@DVAR-N')
+          Das aktuelle Datum wird auf das Datum 10 Tage vor dem 3'ten
+          M"arz 1994 gesetzt => 19940221.
+
+        * `gcal -v a=0303 %0@a' (== `JJJJ@DVAR')
+          Das aktuelle Datum wird auf das Datum 3'ter M"arz 1993
+          gesetzt => 19930303.
+
+        * `gcal -v a=0303 %0@a10'
+
+        * `gcal -v a=0303 %0@a+10' (== `JJJJ@DVAR[+]N')
+          Das aktuelle Datum wird auf das Datum 10 Tage nach dem 3'ten
+          M"arz 1993 gesetzt => 19930313.
+
+        * `gcal -v a=0303 %0@a-10' (== `JJJJ@DVAR-N')
+          Das aktuelle Datum wird auf das Datum 10 Tage vor dem 3'ten
+          M"arz 1993 gesetzt => 19930221.
+
+        * `gcal -v a=0303 %1994@a3mi'
+
+        * `gcal -v a=0303 %1994@a+3mi' (== `JJJJ@DVAR[+]NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch nach dem
+          3'ten M"arz 1994 gesetzt => 19940323.
+
+        * `gcal -v a=0303 %1994@a-3mi' (== `JJJJ@DVAR-NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch vor dem
+          3'ten M"arz 1994 gesetzt => 19940216.
+
+        * `gcal -v a=0303 %0@a3mi'
+
+        * `gcal -v a=0303 %0@a+3mi' (== `JJJJ@DVAR[+]NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch nach dem
+          3'ten M"arz 1993 gesetzt => 19930324.
+
+        * `gcal -v a=0303 %0@a-3mi' (== `JJJJ@DVAR-NWWW')
+          Das aktuelle Datum wird auf das Datum 3'ter Mittwoch vor dem
+          3'ten M"arz 1993 gesetzt => 19930210.
+
+Das `MONATSNAME[TT]' Format:
+        * `gcal %April' (== MONATSNAME)
+          Das aktuelle Datum wird auf das Datum 17'ter April 1993
+          gesetzt => 19930417.
+
+        * `gcal %april3'
+
+        * `gcal %april03' (== MONATSNAME TT)
+          Das aktuelle Datum wird auf das Datum 3'ter April 1993
+          gesetzt => 19930403.
+
+Das `WOCHENTAGSNAME[N]' Format:
+        * `gcal %Freitag' (== WOCHENTAGSNAME)
+          Das aktuelle Datum wird auf das Datum des Freitags der
+          laufenden Woche im Februar 1993 gesetzt => 19930219.
+
+        * `gcal %Freitag2'
+
+        * `gcal %Freitag02' (== WOCHENTAGSNAME N)
+          Das aktuelle Datum wird auf das Datum 2'ter Freitag im
+          Februar 1993 gesetzt (N == `1...5|9') => 19930212.
+
+Das TT Format:
+        * `gcal %3'
+
+        * `gcal %03' (== TT)
+          Das aktuelle Datum wird auf das Datum 3'ter Februar 1993
+          gesetzt => 19930203.
+
+
+File: gcal.info,  Node: Kommandos,  Prev: Datummodifizierer,  Up: Kommandozeilenargumente
+
+Kommandos
+---------
+
+* Menu:
+
+* Einfache Kommandos::       Wie ein Einfaches Kommando benutzt wird.
+* 3-Monatsmodus Kommandos::  Wie ein 3-Monatsmodus Kommando benutzt wird.
+* Listen von Kommandos::     Wie eine Liste von Kommandos benutzt wird.
+* Bereiche von Kommandos::   Wie ein Bereich von Kommandos benutzt wird.
+
+Die Kommandos steuern die Zeitr"aume, die von Gcal ber"ucksichtigt
+werden.  Kommandos k"onnen in vier Hauptklassen eingeteilt werden,
+n"amlich "einzelne" Kommandos, spezielle "3-Monatsmodus" Kommandos,
+"Listen" von Kommandos und "Bereiche" von Kommandos.  Einzelne und
+spezielle 3-Monatsmodus Kommandos erzeugen nur *ein* Kalenderblatt,
+Listen oder Bereiche von Kommandos erzeugen *mehr als ein*
+Kalenderblatt je Programmlauf.  Wenn eine Liste von Kommandos gegeben
+ist, so arbeitet Gcal jedes einzelne Kommando dieser Liste sequentiell
+ab, eins nach dem anderen.  Ein Bereich von Kommandos wird von Gcal
+zuerst in einzelne Kommandos expandiert, sodann arbeitet Gcal jedes
+einzelne Kommando, welches nach der internen Expansion erzeugt wurde,
+sequentiell ab.
+
+Um die verwendete Notation im nachstehenden Text zu verstehen,
+bezeichnet MM entweder eine Zahl, einen Monatsnamen oder eines der
+speziellen 3-Monatsmodus Kommandos `.', `..', `.+' und `.-'.  Es
+k"onnen weder Listen noch Bereiche von Monaten oder Jahren erzeugt
+werden, falls ein spezielles 3-Monatsmodus Kommando angegeben wurde.
+
+Der Bereich von MM ist g"ultig von 1 bis 12 oder g"ultig von Januar bis
+Dezember.  Beide Notationen d"urfen gemischt verwendet werden.
+Monatsnamen d"urfen bis auf ihre ersten drei Zeichen abgek"urzt werden.
+JJJJ ist eine Zahl.  Der Bereich von JJJJ ist g"ultig von 1 bis 9999.
+Ein Bereich (MM-MM JJJJ+JJJJ ...) besteht aus genau zwei Elementen.
+Eine Liste (MM,...,MM JJJJ;...;JJJJ ...) muss mindestens zwei Elemente
+enthalten, und darf unbegrenzt viele Elemente enthalten.
+
+Hier ist eine Aufstellung aller benutzten Bereichs-, Listen- und
+sonstigen Kommandotrennzeichen:
+
+   * Das `-' Zeichen ist das *Bereich von Monaten* Trennzeichen.
+
+   * Das `,' Zeichen ist das *Liste von Monaten* Trennzeichen.
+
+   * Das `+' Zeichen ist das *Bereich von Jahren* Trennzeichen.
+
+   * Das `;' Zeichen ist das *Liste von Jahren* Trennzeichen.
+
+   * Das `/' Zeichen ist das *Monat des Jahres* Trennzeichen.
+
+   * Das `:' Zeichen ist das *Fiskaljahr* Trennzeichen.
+
+
+File: gcal.info,  Node: Einfache Kommandos,  Next: 3-Monatsmodus Kommandos,  Prev: Kommandos,  Up: Kommandos
+
+Einfache Kommandos
+..................
+
+`KEINES'
+     Aktueller Monat des aktuellen Jahres, wird weiterhin als
+     "Einzelmonatsmodus" bezeichnet.
+
+`MONATSNAME'
+     Angegebener Monat des aktuellen Jahres, z.B.:
+
+          gcal mai
+          gcal OKTOBER
+          gcal ja
+
+`JJJJ'
+     Angegebenes Jahr, wird weiterhin als "Einzeljahresmodus"
+     bezeichnet, z.B.:
+
+          gcal 1992
+
+     Aber es gibt eine Ausnahme von dieser generellen Regel.  Wenn die
+     angegebene Jahreszahl kleiner oder gleich zw"olf ist, so nimmt
+     Gcal an, dass ein angegebener Monat des aktuellen Jahres
+     gew"unscht ist.  Wenn ein angegebenes Jahr kleiner oder gleich
+     zw"olf gew"unscht wird, so sollte Gcal entweder so
+
+          gcal 1:6
+
+     oder so
+
+          gcal 6+6
+
+     aufgerufen werden, um beispielsweise das Jahr sechs nach Christus
+     zu erhalten.
+
+`MM JJJJ'
+`MM/JJJJ'
+     Angegebener Monat eines angegebenen Jahres, z.B.:
+
+          gcal 9 1992
+          gcal 9/1992
+          gcal Nov 1777
+          gcal Nov/1777
+
+`:'
+     Einzelnes Fiskaljahr (1), beginnend im *aktuellen Monat* des
+     *aktuellen Jahres* und endend im Monat *aktueller Monat*-1 des
+     *aktuellen Jahres*+1, wird weiterhin als "implizites Fiskaljahr"
+     bezeichnet, z.B.:
+
+          gcal :
+
+`MM:'
+     Einzelnes Fiskaljahr, beginnend im Monat MM des *aktuellen Jahres*
+     und endend im Monat MM-1 des *aktuellen Jahres*+1, wird weiterhin
+     als "explizites Fiskaljahr" bezeichnet, z.B.:
+
+          gcal 6:
+          gcal feb:
+          gcal NOVEMBER:
+
+`:JJJJ'
+     Einzelnes Fiskaljahr, beginnend im aktuellen Monat des Jahres JJJJ
+     und endend im Monat *aktueller Monat*-1 des Jahres JJJJ+1, wird
+     weiterhin auch als "explizites Fiskaljahr" bezeichnet, z.B.:
+
+          gcal :1999
+
+`MM:JJJJ'
+     Einzelnes Fiskaljahr, beginnend im Monat MM des Jahres JJJJ und
+     endend im Monat MM-1 des Jahres JJJJ+1, wird weiterhin auch als
+     "explizites Fiskaljahr" bezeichnet, z.B.:
+
+          gcal 7:1999
+          gcal okt:1992
+          gcal Februar:1777
+
+  ---------- Footnotes ----------
+
+  (1)  Abweichendes Wirtschaftsjahr.
+
+
+File: gcal.info,  Node: 3-Monatsmodus Kommandos,  Next: Listen von Kommandos,  Prev: Einfache Kommandos,  Up: Kommandos
+
+3-Monatsmodus Kommandos
+.......................
+
+`.'
+     Vorheriger, aktueller und n"achster Monat des laufenden Jahres,
+     z.B.:
+
+          gcal .
+
+`. JJJJ'
+     Vorheriger, aktueller und n"achster Monat des angegebenen Jahres,
+     z.B.:
+
+          gcal . 1992
+
+`..'
+     Aktuelles Quartal des laufenden Jahres, z.B.:
+
+          gcal ..
+
+`.. JJJJ'
+     Aktuelles Quartal des angegebenen Jahres, z.B.:
+
+          gcal .. 1992
+
+`.+'
+     Aktueller und die beiden n"achsten Monate des laufenden Jahres,
+     z.B.:
+
+          gcal .+
+
+`.+ JJJJ'
+     Aktueller und die beiden n"achsten Monate des angegebenen Jahres,
+     z.B.:
+
+          gcal .+ 1992
+
+`.-'
+     Aktueller und die beiden vorhergehenden Monate des laufenden
+     Jahres, z.B.:
+
+          gcal .-
+
+`.- JJJJ'
+     Aktueller und die beiden vorhergehenden Monate des angegebenen
+     Jahres, z.B.:
+
+          gcal .- 1992
+
+
+File: gcal.info,  Node: Listen von Kommandos,  Next: Bereiche von Kommandos,  Prev: 3-Monatsmodus Kommandos,  Up: Kommandos
+
+Listen von Kommandos
+....................
+
+`MM,...,MM'
+     Liste von angegebenen Monaten des aktuellen Jahres, z.B.:
+
+          gcal 1,5,12
+          gcal 3,1,5,3
+          gcal juni,9,jan
+
+`MM/JJJJ,...,MM/JJJJ'
+     Liste von angegebenen Monaten in angegebenen Jahren, z.B.:
+
+          gcal 1/1992,5,12/2001
+          gcal juni/1991,9/1801,jan
+
+`MM,...,MM JJJJ'
+     Liste von angegebenen Monaten eines angegebenen Jahres, z.B.:
+
+          gcal 3,7 1999
+          gcal 1,dez,juli 1777
+
+`JJJJ;...;JJJJ'
+     Liste von angegebenen Jahren, z.B.:
+
+          gcal 1992;1777;1899
+
+`MM:JJJJ;...;MM:JJJJ'
+     Liste von angegebenen Fiskaljahren, z.B.:
+
+          gcal 7:1999;8:1992;April:3
+
+*Andere g"ultige Listen:*
+
+`MM,MM/JJJJ,...'
+     Gemischte Monatsliste bestehend aus: `MM MM/JJJJ'
+
+          gcal 6,8,3/1999,feb/3,januar
+
+`MM:;MM:JJJJ,...'
+     Gemischte Liste von Fiskaljahren von aktuellen/angegebenen Jahren
+     bestehend aus: `MM: :JJJJ MM:JJJJ JJJJ'
+
+          gcal 3:;1994;februar:1999;:1777;JAN:
+
+`MM:;MM:;...'
+     Liste von Fiskaljahren des aktuellen Jahres bestehend aus: `MM:'
+
+          gcal 3:;august:;DEZ:
+
+
+File: gcal.info,  Node: Bereiche von Kommandos,  Prev: Listen von Kommandos,  Up: Kommandos
+
+Bereiche von Kommandos
+......................
+
+`MM-MM'
+     Bereich von angegebenen Monaten des aktuellen Jahres, z.B.:
+
+          gcal 3-7
+          gcal 11-8
+          gcal MAI-dez
+          gcal 12-aug
+
+`MM/JJJJ-MM/JJJJ'
+     Bereich von angegebenen Monaten von angegebenen Jahren, z.B.:
+
+          gcal 3/1991-juli/1992
+          gcal dez/1994-3
+          gcal sep-dez/2000
+
+`MM-MM JJJJ'
+     Bereich von angegebenen Monaten eines angegebenen Jahres, z.B.:
+
+          gcal 3-7 1999
+          gcal nov-3 1777
+          gcal aug-dez 1992
+
+`MM JJJJ-JJJJ'
+`MM/JJJJ-JJJJ'
+     Bereich eines angegebenen Monats von angegebenen Jahren, z.B.:
+
+          gcal AUGUST 1494-1497
+          gcal 3/1993-1999
+          gcal nov/3-1777
+
+`JJJJ+JJJJ'
+     Bereich von angegebenen Jahren, z.B.:
+
+          gcal 1992+1994
+
+`MM:JJJJ+MM:JJJJ'
+     Bereich von angegebenen Fiskaljahren, z.B.:
+
+          gcal 7:1999+8:1992
+          gcal aug:1992+juli:1999
+
+
+File: gcal.info,  Node: Die GCAL Umgebungsvariable,  Prev: Kommandozeilenargumente,  Up: Aufruf von Gcal
+
+Die `GCAL' Umgebungsvariable
+============================
+
+In der Umgebungsvariable `GCAL' k"onnen Grundeinstellungen zu Optionen
+f"ur Gcal gespeichert werden (*note GCAL: Umgebungsvariablen.).  Diese
+Optionen werden bei Programmstart zuerst interpretiert, und einige von
+ihnen k"onnen durch explizit gegebene Kommandozeilenargumente oder
+Werte, die in der Antwortdatei `@DATEI' vorhanden sind, "uberschrieben
+werden.  *Note Kommandozeilenargumente::, und *Note Antwortdatei::.
+
+Zum Beispiel:
+
+   * f"ur *sh*:
+
+          GCAL="-i @farbe -b 3"; export GCAL
+
+   * f"ur *csh*:
+
+          setenv GCAL "-i @farbe -b 3"
+
+   * f"ur *MS-DOS*:
+
+          set GCAL=-i @farbe -b 3
+
+Unter Vax/VMS lautet der Name der Umgebungsvariable `GCAL_OPT', um
+einen Konflikt mit dem gesetzten Symbol `GCAL', welches zum Aufruf des
+Programms dient, zu vermeiden.
+
+Zum Beispiel:
+
+   * f"ur *VMS*:
+
+          define GCAL_OPT "-i @farbe -b 3"
+
+
+File: gcal.info,  Node: Ewige Feiertage,  Next: Termine,  Prev: Aufruf von Gcal,  Up: Top
+
+Ewige Feiertage
+***************
+
+Die *ewige Feiertagsliste* wird nur f"ur Jahre nach A.D.29 erzeugt.
+Sie kann auf mehrere Arten und Weisen ausgegeben werden:
+
+Wenn Gcal ohne explizites (Fiskal) Datum mit dem *ewige Feiertagsliste*
+Argument gestartet wird (*note `--holiday-list[=long|short]': Kalender
+Optionen.), z.B.:
+
+     gcal --holiday-list
+     gcal -n
+     gcal -n :
+
+so gibt Gcal ohne einen vorangehenden Kalender alle diejenigen
+Feiertage aus der ewigen Feiertagsliste aus, die sich auf das aktuelle
+Jahr bzw. Fiskaljahr beziehen.
+
+Wenn Gcal mit dem *ewige Feiertagsliste* Argument und einem Monat (plus
+eines Jahres) gestartet wird, z.B.:
+
+     gcal --holiday-list juli
+     gcal -n juli
+     gcal -n 7 1993
+     gcal -n 7/1993
+
+so gibt Gcal einen Monatskalender des angegebenen Monats (des Jahres)
+und nachfolgend alle diejenigen Feiertage aus der ewigen Feiertagsliste
+aus, die sich auf den angegebenen Monat (des angegebenen Jahres)
+beziehen.
+
+Wenn Gcal mit dem *ewige Feiertagsliste* Argument und einem einfachen
+Jahr (oder einem Fiskaljahr) gestartet wird, z.B.:
+
+     gcal --holiday-list 1993
+     gcal -n 1993
+     gcal -n juli:
+     gcal -n :1993
+     gcal -n 7:1993
+
+so gibt Gcal einen Jahreskalender des angegebenen Jahres und nachfolgend
+alle diejenigen Feiertage aus der ewigen Feiertagsliste aus, die sich
+auf das angegebene Jahr bzw. Fiskaljahr beziehen.
+
+Wenn Gcal mit dem *ewige Feiertagsliste* Argument und einem der
+speziellen 3-Monatsmodus Kommandos gestartet wird (*note `. JJJJ':
+3-Monatsmodus Kommandos.), z.B.:
+
+     gcal --holiday-list .
+     gcal -n .
+     gcal -n ..
+     gcal -n .+
+     gcal -n .-
+
+so gibt Gcal die bezogenen 3 Monate im festen Layout/Stil eines
+Jahreskalenders aus, sowie nachfolgend alle diejenigen Feiertage aus
+der ewigen Feiertagsliste aus, die sich auf diese Monate beziehen.
+
+Wenn Gcal mit dem *ewige Feiertagsliste* Argument und einer *Liste*
+oder einem *Bereich* von Kommandos gestartet wird, so werden
+entsprechende Folgen von ewigen Feiertagslisten produziert.  *Note
+`MM,...,MM': Listen von Kommandos, und *Note `MM-MM': Bereiche von
+Kommandos, f"ur weitere Details.
+
+Einige Anmerkungen:
+
+Die folgende Tabelle f"uhrt alle diejenigen Zeichen auf, die zum
+Markieren eines Eintrags in der ewigen Feiertagsliste verwendet werden,
+d.h. direkt vor dessen Datum stehen:
+
+*Zeichen*   *Beschreibung*                                                
+`+'         Gesetzlicher Feiertag, der im gesamten Land g"ultig ist.      
+            Wird automatisch mit Hervorhebungssequenzen bzw.              
+            Markierungszeichen versehen.                                  
+`#'         Gesetzlicher Feiertag, der "uberwiegend im gesamten Land      
+            g"ultig ist.  Wird automatisch mit Hervorhebungssequenzen     
+            bzw. Markierungszeichen versehen.                             
+`*'         Gesetzlicher Feiertag, der nicht "uberwiegend im gesamten     
+            Land g"ultig ist.  Wird nicht mit Hervorhebungssequenzen      
+            bzw. Markierungszeichen versehen.                             
+`-'         Sonstiger Feiertag, der nur zu Erinnerungszwecken dient.      
+            Wird nicht mit Hervorhebungssequenzen bzw.                    
+            Markierungszeichen versehen.                                  
+
+Mittels der `--cc-holidays=CC[+...]' Option kann die ewige
+Feiertagsliste mit zus"atzlichen landesspezifischen Feiertagen
+ausgestattet werden, die dann zusammen mit den Standardfeiertagen in
+dieser Liste enthalten sind.  *Note `--cc-holidays=CC[+...]': Kalender
+Optionen.  So bewirkt zum Beispiel:
+
+     --cc-holidays=de+fr
+
+die Aufnahme von deutschen und franz"osischen Feiertagen in die ewige
+Feiertagsliste.  Da die Aufnahme von landesspezifischen Feiertagen in
+die ewige Feiertagsliste nicht an die vorgenommene
+Internationalisierung von Gcal gekoppelt ist (*note Gesichtspunkte zur
+Internationalisierung: Internationalisierung.), d.h. die
+landesspezifischen Feiertage f"ur ein bestimmtes Territorium bzw.  Land
+werden nicht automatisch bei Programmstart ber"ucksichtigt, liegt es
+somit in der Hand des Endanwenders, mit welchen landesspezifischen
+Feiertagen die ewige Feiertagsliste versehen wird.  *Note Die `GCAL'
+Umgebungsvariable: Die GCAL Umgebungsvariable, f"ur Informationen, wie
+Gcal dazu veranlasst werden kann, die ewige Feiertagsliste bei
+Programmstart automatisch mit landesspezifischen Feiertagen zu versehen.
+
+Die beliebige Auswahl der verschiedenen landesspezifischen Feiertage
+kann recht sinnvoll genutzt werden, wenn beispielsweise Informationen
+"uber ein bestimmtes Territorium bzw. Land ben"otigt werden.
+Angenommen ein Gesch"aftsmann in Deutschland beabsichtigt, im Monat
+November in die USA zu reisen, und m"ochte wissen, welche gesetzlichen
+Feiertage dort auf Werktage fallen, um seine Terminplanung daraufhin
+abstimmen zu k"onnen.  So kann das wie folgt ermittelt werden:
+
+     gcal -f /dev/null -q US -D r -cE nov
+
+
+File: gcal.info,  Node: Termine,  Next: Heutiger Kalender,  Prev: Ewige Feiertage,  Up: Top
+
+Termine
+*******
+
+* Menu:
+
+* Ressourcendatei::           Wie eine Ressourcendatei benutzt wird.
+* Ressourcendateibeispiele::  Beispiele zu Eintr"agen in der Ressourcendatei.
+
+Dieses Kapitel beschreibt, wie Gcal f"ur *Terminzwecke* benutzt werden
+kann.  Dazu darf eine Gcal spezifische Ressourcendatei erzeugt werden,
+welche Termineintr"age enth"alt (*note Ressourcendatei::.).
+
+Jedesmal wenn Gcal im einfachen Einzelmonatsmodus ausgef"uhrt wird,
+d.h. beim Aufruf von Gcal wurde in der Kommandozeile weder ein
+expliziter Monat noch ein explizites Jahr bzw. Fiskaljahr angegeben,
+aber das *Termin* Argument vorgefunden wird, z.B.:
+
+     gcal --list-of-fixed-dates
+     gcal -c
+
+so durchsucht Gcal die Ressourcendatei nach Daten und verarbeitet genau
+solche, die sich auf das aktuelle Systemdatum (==heute) beziehen.
+Sodann gibt Gcal ohne einen vorangehenden Kalender alle diejenigen
+Termine aus der Ressourcendatei aus, die sich auf den aktuellen Tag
+(Woche/Monat/Jahr) des aktuellen Jahres beziehen.
+
+Einige weitere Beispiele hierzu:
+
+     gcal -ce
+     gcal -cw-
+     gcal -c-m
+     gcal -c-y-
+     gcal -jcb -c-et
+     gcal -cey-
+     gcal -jc -cey
+
+Die Liste der Termine kann auf mehrere Arten und Weisen ausgegeben
+werden:
+
+Wenn Gcal mit dem *Termin* Argument und/oder einem Monat und/oder einem
+expliziten Jahr bzw. Fiskaljahr gestartet wird; bzw. mit einem der
+speziellen 3-Monatsmodus Kommandos, z.B.:
+
+     gcal -c juli
+     gcal -ce 7 1994
+     gcal -c-y 7/1994
+     gcal -c 7:1993
+     gcal -c 1993
+     gcal -c .
+     gcal -c .+
+
+so gibt Gcal einen (drei) Monats-/ Jahreskalender des angegebenen bzw.
+aktuellen Monats-/ Jahres aus, und nachfolgend alle diejenigen Termine
+aus der Ressourcendatei, die sich auf den angegebenen Zeitraum beziehen;
+das Niveau ist wie bei der `-cy' Option, wenn sich der Zeitraum auf ein
+Jahr bzw. Fiskaljahr bezieht oder auf eine 3-Monatsperiode, bzw.  wie
+bei der `-cm' Option, wenn sich der Zeitraum auf einen Monat bezieht.
+
+Wenn Gcal ohne explizites Datum mit dem *Termin* Argument *in
+Verbindung mit* dem *ewige Feiertagsliste* Argument gestartet wird,
+z.B.:
+
+     gcal -c -n
+     gcal -Cm -n
+     gcal -Cl1224 -n
+     gcal -cl3+ -n
+
+so gibt Gcal ohne einen vorangehenden Kalender alle diejenigen Termine
+aus der Ressourcendatei aus, die sich auf den angegebenen Zeitraum im
+aktuellen Jahr beziehen, und danach alle diejenigen Feiertage aus der
+ewigen Feiertagsliste aus, die sich auf das gesamte aktuelle Jahr
+beziehen.  *Note Ewige Feiertage::, f"ur weitere Details zur *ewigen
+Feiertagsliste*.
+
+Anmerkung zu vorhergehenden Beispielen:
+
+Falls das *Standard/Spezielle Kalenderformat* Argument oder das
+*Starttag der Woche* Argument (1) zudem mit vorgefunden wird, z.B.:
+
+     gcal -c -n -i
+     gcal -c -i-
+     gcal -n -i- :
+     gcal -n -s Sonntag
+
+so gibt Gcal einen Monats-/ Jahreskalender vor jeder anderen
+angeforderten Liste aus!  *Note `--type=special|standard': Kalender
+Optionen, und *Note `--starting-day[=ARGUMENT]': Kalender Optionen,
+f"ur mehr Informationen.
+
+Jedesmal wenn Gcal im einfachen Einzeljahresmodus ausgef"uhrt wird,
+d.h. beim Aufruf von Gcal wurde in der Kommandozeile weder ein
+expliziter Monat noch ein explizites Jahr bzw. Fiskaljahr angegeben,
+aber das *Termin* Argument (evtl. mit Modifizierern) und das *Anzahl
+der Monatsbl"ocke* Argument vorgefunden wird (*note `--blocks=ANZAHL':
+Kalender Optionen.), z.B.:
+
+     gcal -c --blocks=3
+     gcal -C-em -b 3
+     gcal -c-t -b 6 -jc
+
+so durchsucht Gcal die Ressourcendatei nach Daten und verarbeitet genau
+jene, die sich auf das aktuelle Systemdatum (==heute) beziehen.  Sodann
+gibt Gcal einen vorangehenden Jahreskalender und alle diejenigen
+Termine aus der Ressourcendatei aus, die sich auf den aktuellen Tag
+(Woche/Monat/Jahr) des aktuellen Jahres beziehen.
+
+Es k"onnen aber auch Daten von vergangenen, aktuellen oder zuk"unftigen
+Monaten/Jahren verarbeitet werden.  Das geht einerseits, indem die
+`%DATUM' Option entsprechend verwendet wird (*note
+Datummodifizierer::.), oder andererseits, indem ein Kommando bzw. eine
+*Liste* oder ein *Bereich* von Kommandos verwendet wird.
+
+Zum Beispiel:
+
+`gcal -c -n- 1993'
+     Ausgabe aller Termine in aufsteigender Reihenfolge, welche sich
+     auf das gesamte Jahr 1993 beziehen, sowie der ewigen
+     Feiertagsliste in absteigender Reihenfolge, welche sich auch auf
+     das gesamte Jahr 1993 bezieht; das Niveau ist wie bei der `-cy'
+     Option.
+
+`gcal -c- juli:1993'
+     Ausgabe aller Termine in absteigender Reihenfolge, welche sich auf
+     das Fiskaljahr -- beginnend im Monat Juli 1993 und endend im Monat
+     Juni 1994 -- beziehen; das Niveau ist wie bei der `-cy' Option.
+
+`gcal -ce juli 1993'
+     Ausgabe aller Termine in aufsteigender Reihenfolge, welche sich
+     auf den Monat Juli 1993 beziehen, einschliesslich aller ewigen
+     Feiertage dieses Zeitraums, welche in diese Liste eingef"ugt
+     werden; das Niveau ist wie bei der `-cm' Option.
+
+`gcal -c-e -n 1993+1996'
+     Ausgabe aller Termine in absteigender Reihenfolge, welche sich auf
+     die gesamten Jahre 1993, 1994, 1995 und 1996 beziehen (Jahr f"ur
+     Jahr in Folge), einschliesslich aller ewigen Feiertage dieses
+     Zeitraums, welche in diese Liste eingef"ugt werden, sowie der
+     ewigen Feiertagsliste in aufsteigender Reihenfolge, welche sich
+     ebenfalls auf diese Jahre bezieht; das Niveau ist wie bei der
+     `-cy' Option.
+
+`gcal -cm %19920317'
+     Ausgabe aller Termine in aufsteigender Reihenfolge, welche sich
+     auf den Monat M"arz 1992 beziehen.
+
+`gcal %1994@e -n -c'
+     Ausgabe aller Termine in aufsteigender Reihenfolge, welche sich
+     auf Ostersonntag 1994 beziehen, sowie der ewigen Feiertagsliste in
+     aufsteigender Reihenfolge, welche sich auf das gesamte Jahr 1994
+     bezieht.
+
+  ---------- Footnotes ----------
+
+  (1)  Ausgenommen der `--starting-day=today' bzw.  `--starting-day=0'
+Option.
+
+
+File: gcal.info,  Node: Ressourcendatei,  Next: Ressourcendateibeispiele,  Prev: Termine,  Up: Termine
+
+Ressourcendatei
+===============
+
+* Menu:
+
+* Struktur einer Ressourcendatei::  Wie wird eine Ressourcendatei erstellt?
+* Datumteil einer Zeile::           Wie muss der Datumteil aussehen?
+* Weitere Datumteil-Attribute::     Was sind weitere Attribute vom Datumteil?
+* Textteil einer Zeile::            Wie muss der Textteil aussehen?
+* Zeile kommentieren::              Wie eine Zeile kommentiert werden kann.
+* Include Anweisungen::             Was sind Include Anweisungen?
+* Spezialtexte::                    Was sind `%?'... Spezialtexte?
+* Datumvariablen::                  Wie Datumvariablen benutzt werden k"onnen.
+* Textvariablen::                   Wie Textvariablen benutzt werden k"onnen.
+
+Dieser Abschnitt beschreibt, wie eine "Ressourcendatei", welche
+Termineintr"age enth"alt, benutzt wird.  Der Name der
+Standard-Ressourcendatei ist `$HOME/.gcalrc' (1).
+
+Gcal benutzt einen speziellen Datei-Suchmechanismus:
+
+  1. Das Gcal Programm erwartet die Standard-Ressourcendatei im
+     Dateiverzeichnis, welches in der Umgebungsvariable `HOME'
+     angegeben ist.  Falls die Umgebungsvariable `HOME' weder definiert
+     noch gesetzt ist, so "ubergeht Gcal diesen Schritt.  *Note HOME:
+     Umgebungsvariablen.
+
+  2. Sollte vorherige Aktion versagt haben, so durchsucht Gcal
+     diejenigen Dateiverzeichnisse nach der Standard-Ressourcendatei,
+     welche in der Umgebungsvariable `GCALPATH' (*note GCALPATH:
+     Umgebungsvariablen.) angegeben sind.  Die Umgebungsvariable
+     `GCALPATH' enth"alt eine durch `:' Zeichen (2) getrennte Liste von
+     Dateiverzeichnissen.  Falls eine solche Umgebungsvariable weder
+     definiert noch gesetzt ist, so "ubergeht Gcal auch diesen Schritt.
+
+  3. Sollte vorherige Aktion versagt haben, so inspiziert Gcal das
+     *Benutzer-Datenverzeichnis* (3) nach der Standard-Ressourcendatei.
+     Dieses Verzeichnis ist ein Dateiverzeichnis relativ zum `HOME'
+     Dateiverzeichnis.  Falls eine `GCAL_USR_DATADIR' Umgebungsvariable
+     gesetzt ist, so wird Gcal den Inhalt dieser Umgebungsvariable an
+     den Inhalt der `HOME' Umgebungsvariable anf"ugen, und zuerst diesen
+     Dateiverzeichnisnamen anstelle des beim Kompilationsvorgangs
+     eingebrannten Dateiverzeichnisnamens benutzen (*note
+     GCAL_USR_DATADIR: Umgebungsvariablen.).  Falls die
+     Umgebungsvariable `HOME' weder definiert noch gesetzt ist, so
+     "ubergeht Gcal nat"urlicherweise auch diesen Schritt.
+
+  4. Sollten alle bisherigen Aktionen versagt haben, so inspiziert Gcal
+     das *System-Datenverzeichnis* (4) nach der
+     Standard-Ressourcendatei.  Dieses Verzeichnis ist ein
+     Dateiverzeichnis absolut zum *Wurzel*/*$(prefix)*
+     Dateiverzeichnis.  Falls eine `GCAL_SYS_DATADIR' Umgebungsvariable
+     gesetzt ist, so wird Gcal zuerst diesen Dateiverzeichnisnamen
+     anstelle des beim Kompilationsvorgang eingebrannten
+     Dateiverzeichnisnamens benutzen (*note GCAL_SYS_DATADIR:
+     Umgebungsvariablen.).
+
+Falls die Standard-Ressourcendatei nicht w"ahrend der Schritte 1...4
+des Datei-Suchmechanismus' aufgefunden wurde, so werden keinerlei
+Termine erzeugt!
+
+Falls die `--debug=abort' Option angegeben wurde und keine
+Standard-Ressourcendatei w"ahrend der Schritte 1...4 des
+Datei-Suchmechanismus' aufgefunden wurde, so wird das Gcal-Programm mit
+Fehlerkode abgebrochen.  *Note 118: Fehlerkodes, und *Note
+`--debug=abort': Globale Optionen, f"ur weitere Informationen.
+
+Wenn ein `-f|F DATEINAME[+...]' bzw.  `--resource-file=DATEINAME'
+Kommandozeilenargument vorgefunden wird, so wird eine Datei DATEINAME
+anstelle der Standard-Ressourcendatei als Ressourcendatei benutzt.
+*Note `--resource-file=DATEINAME': Termin Optionen, f"ur weitere
+Informationen.
+
+Anmerkung:
+
+Ein "erweiterter Dateiname" enth"alt ein oder mehrere `/' Zeichen (5)
+und bezeichnet eine Datei, deren Zugriffspfad entweder vom
+Wurzeldateiverzeichnis (6) aus fest vorgegeben ist, wie z.B.
+`/foo/bar/file', oder vom aktuellen Dateiverzeichnis aus fest
+vorgegeben ist, wie z.B.  `./bar/file' oder `../bar/file'.  Falls
+DATEINAME ein erweiterter Dateiname ist:
+
+   * Wenn DATEINAME vorgefunden wird, so wird Gcal diese Datei
+     auswerten.
+
+   * Wenn DATEINAME nicht vorgefunden wird, so wird Gcal diese Datei
+     nicht auswerten.
+
+Ein "einfacher Dateiname" enth"alt keinen Verweis auf einen
+Zugriffspfad, der entweder vom Wurzeldateiverzeichnis oder vom
+aktuellen Dateiverzeichnis aus fest vorgegeben ist, wie z.B. `file'
+oder `bar/file'.  Falls DATEINAME ein einfacher Dateiname ist:
+
+   * Gcal wird versuchen, die Datei DATEINAME unter Zuhilfenahme des
+     zuvor erkl"arten Datei-Suchmechanismus' aufzufinden.
+
+  ---------- Footnotes ----------
+
+  (1)  Unter MS-DOS, OS/2 und einigen anderen Betriebssystemen ist der
+Name der Standard-Ressourcendatei `$HOME/gcalrc' (ohne vorangehenden
+`.').
+
+  (2)  Unter MS-DOS, OS/2 und einigen anderen Betriebssystemen wird ein
+anderes Zeichen verwendet, z.B. `;' unter MS-DOS und OS/2.
+
+  (3)  Normalerweise `$HOME/share/gcal'.
+
+  (4)  Normalerweise `/usr/local/share/gcal' oder
+`$(prefix)/share/gcal'.
+
+  (5)  Betriebssysteme wie z.B. MS-DOS oder OS/2 verwenden das `\'
+Zeichen, mit dem ein Dateiverzeichnis von einem Dateinamen separiert
+wird.
+
+  (6)  Im Englischen mit *root-directory* bezeichnet.
+
+
+File: gcal.info,  Node: Struktur einer Ressourcendatei,  Next: Datumteil einer Zeile,  Prev: Ressourcendatei,  Up: Ressourcendatei
+
+Struktur einer Ressourcendatei
+------------------------------
+
+Eine Gcal Ressourcendatei ist zun"achst einmal eine reine ASCII
+Textdatei, die mit einem beliebigen Texteditor oder durch Umlenkung des
+*Standardausgabe-Ger"atekanals* in eine Datei erzeugt werden kann, z.B.:
+
+     $ echo '19930217 Text'>> Ressourcendatei <RET>
+
+Jede Ressourcendatei muss eine besondere -- aber einfache --
+Zeilenstruktur aufweisen, so dass Gcal auch in der Lage ist, deren
+Inhalt zu interpretieren.  Jeder Termineintrag, der in einer Zeile einer
+Ressourcendatei vorgenommen wird, muss in zwei Teile aufgespalten
+werden, n"amlich einerseits in einen *Datumteil*, und andererseits in
+einen optionalen *Textteil*, die durch mindestens *ein* "whitespace"
+(1) Trennzeichen voneinander abgetrennt werden m"ussen.  Wird kein
+*Textteil* angegeben, so entf"allt nat"urlich auch die Angabe des zur
+Trennung dieser beiden Teile notwendigen *whitespace* Zeichens.
+
+Eine Zeile muss stets mit einem `\n' (Newline) Zeichen enden,
+ausgenommen es ist die letzte Zeile in einer Ressourcendatei.  Die
+maximale L"ange einer Zeile ist allerdings begrenzt auf `INT_MAX' (2)
+Zeichen.  Bei Umlenkung des *Standardausgabe-Ger"atekanals* in eine
+Datei wird der Zeile automatisch ein Newline Zeichen angef"ugt, bei
+Benutzung von einem Texteditor normalerweise dann, wenn die
+geschriebene Zeile mittels der <RET> Taste abgeschlossen wird.  Sollte
+der verwendete Texteditor hinsichtlich der Wirkungsweise der <RET>
+Taste und der Generierung des damit verbundenen Newline Zeichens nicht
+wie angegeben arbeiten, so sollte der Texteditor in diese Betriebsart
+versetzt werden.  Sollte das nicht m"oglich sein, so ist der verwendete
+Texteditor f"ur die Erzeugung von Gcal Ressourcendateien unbrauchbar!
+
+Die Zeilenstruktur eines Termineintrags ist:
+
+     DATUMTEIL [ *whitespace* TEXTTEIL ] *newline*
+
+oder konkreter, z.B.:
+
+     JJJJ[MM[TT|WWWN]] [ *whitespace* TEXT ] *newline*
+
+oder noch konkreter, z.B.:
+
+     19940217 Hallo, ich bin der Text!
+
+Neben Termineintr"agen k"onnen noch weitere Eintr"age in einer
+Ressourcendatei vorgenommen werden, und zwar:
+
+Include Anweisungen...
+
+     #include <DATEINAME>
+     #include "DATEINAME"
+
+Datumvariablenzuweisungen-/ operationen...
+
+     DVAR=NICHTS
+     DVAR=MMTT
+     DVAR=MMWWWN
+     DVAR=*dN[WWW]
+     DVAR=*wN[WWW]
+     DVAR=DVAR[[+|-]N[WWW]]
+     DVAR++
+     DVAR--
+     DVAR+=N[WWW]
+     DVAR-=N[WWW]
+
+Textvariablenzuweisungen...
+
+     TVAR=[TEXT]
+
+Textvariablenreferenzen...
+
+     TVAR
+
+Textvariablenreferenzen zu Anfang einer Zeile der Gcal Ressourcendatei
+d"urfen allerdings nur dann verwendet werden, falls sichergestellt ist,
+dass sich nach deren vollst"andiger Expansion eine g"ultige Zeile der
+Gcal Ressourcendatei ergibt.
+
+  ---------- Footnotes ----------
+
+  (1)  Das sind zum Beispiel *Tab*, *Space*, *Form-Feed* und "ahnliche
+Zeichen.
+
+  (2)  Normalerweise entspricht das zum Beispiel auf einer 16-Bit
+Maschinenarchitektur dem Wert 32.767 == (2^15)-1; auf einer 32-Bit
+Maschinenarchitektur dem Wert 2.147.483.647 == (2^31)-1 usw.
+
+
+File: gcal.info,  Node: Datumteil einer Zeile,  Next: Weitere Datumteil-Attribute,  Prev: Struktur einer Ressourcendatei,  Up: Ressourcendatei
+
+Datumteil einer Zeile
+---------------------
+
+Die Struktur von einem "Datumteil" -- welcher Gcal die Information,
+gibt wann ein Termin stattfindet -- einer Zeile der Gcal Ressourcendatei
+ist
+
+*entweder*: `JJJJ[MM[TT|WWWN]]'
+
+    `JJJJ'
+          (4 Ziffern), ist das Jahr einschliesslich des Jahrhunderts
+          (Bereich 0000...9999).  Es sind f"uhrende Nullen anzugeben
+          falls das Jahr kleiner 1000 ist und weitere Komponenten des
+          Datumteils dem Jahr folgen.
+
+    `MM'
+          (2 Ziffern oder 3 Zeichen), ist der Monat (Bereich 00...12
+          oder 99, bzw.  Jan, Feb...).  99 kodiert stets den letzten
+          Monat eines Jahres (== Dezember). Es sind f"uhrende Nullen
+          anzugeben falls der Monat kleiner 10 ist und weitere
+          Komponenten des Datumteils dem Monat folgen.
+
+    `TT'
+          (2 Ziffern), ist der Tag (Bereich 00...31 oder 99).  99
+          kodiert stets den letzten Tag eines Monats.  Es sind
+          f"uhrende Nullen anzugeben falls der Tag kleiner 10 ist und
+          weitere Komponenten des Datumteils dem Tag folgen.
+
+    `WWW'
+          (2...3 Zeichen), ist ein Wochentagsname im Kurzformat (Bereich
+          Mon...Son).
+
+    `N'
+          (1 Ziffer), ist der N'te Wochentag WWW im Monat (Bereich
+          1...5 oder 9).
+
+             * N == 1...5
+               N'ter WWW Wochentag im Monat.
+
+             * N == 9
+               Letzter WWW Wochentag im Monat.
+
+*oder*: `JJJJ*d|wN[WWW]'
+
+    `JJJJ'
+          (4 Ziffern), ist das Jahr einschliesslich des Jahrhunderts
+          (Bereich 0000...9999).  Es sind f"uhrende Nullen anzugeben
+          falls das Jahr kleiner 1000 ist und weitere Komponenten des
+          Datumteils dem Jahr folgen.
+
+    `*d'
+          (2 Zeichen), ist ein Bezug auf ein gew"ohnliches Tagesdatum.
+
+    `*w'
+          (2 Zeichen), ist ein Bezug auf ein ISO-8601:1988 Wochendatum.
+
+    `N'
+          (1...3 Ziffern), ist der Wert in Tagen oder Wochen, an
+          welchem der Termin auftritt.  99 in Verbindung mit einem
+          Wochentagsnamen im Kurzformat kodiert stets den letzten
+          Wochentag WWW eines Jahres.  999 in Verbindung mit `*d'
+          kodiert stets den letzten Tag eines Jahres, also den 31'ten
+          Dezember.  Falls das berechnete Datum nicht im Jahr auftritt,
+          also ausserhalb der Jahresgrenzen liegt, so wird der Termin
+          unterdr"uckt.
+
+    `WWW'
+          (2...3 Zeichen), ist ein Wochentagsname im Kurzformat (Bereich
+          Mon...Son).
+
+*oder*: `JJJJ@e|t|DVAR[[+|-]N]'
+
+    `JJJJ'
+          (4 Ziffern), ist das Jahr einschliesslich des Jahrhunderts
+          (Bereich 0000...9999).  Es sind f"uhrende Nullen anzugeben
+          falls das Jahr kleiner 1000 ist und weitere Komponenten des
+          Datumteils dem Jahr folgen.
+
+    `@e'
+          (2 Zeichen), ist ein Bezug auf das Datum des Ostersonntags.
+
+    `@t'
+          (2 Zeichen), ist ein Bezug auf das heutige Datum.
+
+    `@DVAR'
+          (2 Zeichen), ist ein Bezug auf ein Datumvariable.
+
+    `[+|-]N'
+          (1...4 alphanumerische Zeichen), ist der optionale Versatz in
+          Tagen, an welchem der Termin relativ zum Datum des
+          Ostersonntags oder zum Datum der Datumvariablen auftritt.
+          -999 kodiert stets den ersten Tag eines Jahres, also den
+          1'ten Januar.  +999 oder 999 kodiert stets den letzten Tag
+          eines Jahres, also den 31'ten Dezember.  Falls das berechnete
+          Datum nicht im Jahr auftritt, also ausserhalb der
+          Jahresgrenzen liegt, so wird der Termin unterdr"uckt.
+
+*oder*: `JJJJ@e|t|DVAR[+|-]NWWW'
+
+    `JJJJ'
+          (4 Ziffern), ist das Jahr einschliesslich des Jahrhunderts
+          (Bereich 0000...9999).  Es sind f"uhrende Nullen anzugeben
+          falls das Jahr kleiner 1000 ist und weitere Komponenten des
+          Datumteils dem Jahr folgen.
+
+    `@e'
+          (2 Zeichen), ist ein Bezug auf das Datum des Ostersonntags.
+
+    `@t'
+          (2 Zeichen), ist ein Bezug auf das heutige Datum.
+
+    `@DVAR'
+          (2 Zeichen), ist ein Bezug auf ein Datumvariable.
+
+    `[+|-]NWWW'
+          (3...7 alphanumerische Zeichen), ist der optionale Versatz in
+          Wochentagen, an welchem der Termin relativ zum Datum des
+          Ostersonntags oder zum Datum der Datumvariablen auftritt.
+          -99 kodiert stets den ersten Wochentag WWW eines Jahres.  +99
+          oder 99 kodiert stets den letzten Wochentag WWW eines Jahres.
+          Falls das berechnete Datum nicht im Jahr auftritt, also
+          ausserhalb der Jahresgrenzen liegt, so wird der Termin
+          unterdr"uckt.
+
+*Bitte beachten:*
+
+   * Falls JJJJ nicht als festes Jahr, sondern als 0000 angegeben ist:
+     Es wird angenommen, dass der Monat und Tag j"ahrliche Ereignisse
+     sind, und der *Textteil* wird f"ur jedes Jahr ausgegeben.
+
+   * Falls MM nicht als fester Monat, sondern als 00 oder garnicht
+     angegeben ist:
+     Es wird angenommen, dass der Tag ein monatliches Ereignis im
+     angegebenen Jahr ist, und der *Textteil* wird f"ur jeden Monat
+     ausgegeben.
+
+   * Falls TT nicht als fester Tag, sondern als 00 oder garnicht
+     angegeben ist:
+     Es wird angenommen, dass der Tag ein t"agliches Ereignis im
+     angegebenen Monat und Jahr ist, und der *Textteil* wird f"ur jeden
+     Tag ausgegeben.
+
+   * Falls ein Wochentagsname WWW im 2...3-Buchstaben Kurzformat
+     angegeben ist, z.B.: `Mon, Die...'
+     Es wird angenommen, dass der gegebene Wochentagsname ein
+     w"ochentliches Ereignis im angegebenen Monat und Jahr ist, und der
+     *Textteil* wird f"ur jede Woche ausgegeben.
+
+
+File: gcal.info,  Node: Weitere Datumteil-Attribute,  Next: Textteil einer Zeile,  Prev: Datumteil einer Zeile,  Up: Ressourcendatei
+
+Weitere Datumteil-Attribute
+---------------------------
+
+* Menu:
+
+* Listen von Tagen::               Wie eine Liste von Tagen benutzt wird.
+* Bereiche von Tagen::             Wie ein Bereich von Tagen benutzt wird.
+* Wiederholungsfaktor von Tagen::  Wie ein solcher Faktor benutzt wird.
+* Auftretensfaktor von Tagen::     Wie ein solcher Faktor benutzt wird.
+
+Der Datumteil, welcher einen Termineintrag in einer Gcal
+Ressourcendateizeile anf"uhrt, darf mit weiteren Attributen
+ausgestattet werden.  Weitere Attribute sind entweder die Angabe einer
+Liste von Tagen oder eines Bereichs von Tagen, in welchem der Termin
+stattfinden soll.  Weitere Attribute sind auch Faktoren, welche eine
+Wiederholungsdauer oder einen Auftretenszeitpunkt eines Termins
+bestimmen.
+
+Grunds"atzlich d"urfen alle folgendermassen strukturierten Datumteile
+in einer Gcal Ressourcendateizeile mit weiteren Attributen versehen
+werden:
+
+   * `JJJJMM...'
+
+   * `JJJJ*d|w...'
+
+   * `JJJJ@e|t|DVAR...'
+
+*Vorsicht:*
+Falls der Datumteil mit weiteren Attributen ausgestattet ist und das
+Jahr, in dem der Termin stattfindet, unbestimmt ist, d.h. das Jahr JJJJ
+ist auf Null gesetzt, so werden solche Datumteile *nur* innerhalb
+einfacher Jahresgrenzen korrekt berechnet, also nicht in denjenigen
+Terminen, welche ausgegeben werden, nachdem das laufende Jahr
+gewechselt hat, z.B. in *Fiskaljahren*.
+
